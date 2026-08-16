@@ -1,0 +1,12 @@
+overlay: 1.0.0
+info:
+  title: Production publish overlay
+  version: 1.0.0
+actions:
+  # Try-it console settings. Deliberately not in the canonical spec: `x-usePkce` is
+  # Scalar/Redocly vocabulary, not OpenAPI, and the spec stays implementation-neutral.
+  - target: $.components.securitySchemes.OAuth2.flows.authorizationCode
+    update:
+      x-usePkce: SHA-256
+      x-scalar-redirect-uri: https://developers.timr.com/
+      # x-default-client-id: <public docs client, once registered>

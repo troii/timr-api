@@ -1,0 +1,19 @@
+{
+  "name": "timr-api-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "spec": "node scripts/compose-spec.mjs ../spec/openapi.yaml ../spec/overlay.yaml guides public/openapi.yaml",
+    "dev": "npm run spec && vite",
+    "build": "npm run spec && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@scalar/api-reference": "1.65.0",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "bump-cli": "^2.9.5",
+    "vite": "8.2.1"
+  }
+}

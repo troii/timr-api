@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>timr API</title>
+    <meta name="description" content="The REST API of the timr time tracking service." />
+    <!-- icon.svg is the shared timr favicon, byte-identical to the one mcp.timr.app serves, and the
+         source the other two are rendered from — keep it in sync rather than redrawing it. The .ico
+         serves browsers without SVG icon support, and declaring a size keeps them from preferring it
+         over the SVG. The touch icon is opaque and square because iOS applies its own corner mask. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

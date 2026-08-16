@@ -1,0 +1,40 @@
+name: Documentation
+
+# Builds the site on a pull request so a broken specification, overlay or guide fails here rather
+# than on the way to production. It does not deploy: production publishes through the Pages
+# environment from main, and a preview would need hosting this workflow does not have.
+on:
+  pull_request:
+    paths: ['spec/**', 'site/**', '.github/workflows/docs.yml']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - run: npm ci
+        working-directory: site
+
+      - run: npm run build
+        working-directory: site
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: site/dist
+          retention-days: 7

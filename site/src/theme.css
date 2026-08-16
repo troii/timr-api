@@ -1,0 +1,62 @@
+/*
+ * timr theme for the API reference.
+ *
+ * Overrides Scalar's theme variables rather than replacing the theme, so anything not named here
+ * keeps a sensible default and a Scalar upgrade cannot leave the page half-styled.
+ *
+ * Scope is deliberate: the accent and the surfaces carry the brand, taken from the #2196f3 primary
+ * documented in the application's colour scheme. The --scalar-color-green/blue/orange/red ramp is
+ * left alone, because it colours the HTTP verbs, and a reader recognising GET from POST at a glance
+ * matters more than those badges being on-brand.
+ *
+ * The sidebar follows the light or dark mode rather than carrying the application's navy in both.
+ * Scalar resolves its sidebar variables against the sidebar element itself, where the theme's own
+ * values win over anything inherited from the document, so forcing the navy into light mode means
+ * overriding the background, text, hover, search and icon colours one by one against a cascade
+ * built to resist it.
+ */
+
+:root {
+  --timr-primary: #2196f3;
+  --timr-primary-strong: #1976d2;
+  --timr-primary-light: #64b5f6;
+}
+
+.light-mode {
+  --scalar-color-1: #1f2225;
+  --scalar-color-2: #4a4f55;
+  --scalar-color-3: #787f87;
+  --scalar-color-accent: var(--timr-primary-strong);
+
+  --scalar-background-1: #ffffff;
+  --scalar-background-2: #f5f5f5;
+  --scalar-background-3: #ebebeb;
+  --scalar-background-accent: #e3f2fd;
+
+  --scalar-border-color: #e0e0e0;
+}
+
+/*
+ * A guide is prose, so it is shown in full. Scalar clamps a tag description to seven lines until
+ * the tag is the selected one, and offers no control to expand it, which left the guides cut off
+ * mid-sentence. Only the guides are unclamped; the API tags keep the clamp, which is what stops
+ * seventeen tag descriptions from pushing the endpoints off the page. Scalar sets the line count
+ * inline, hence !important.
+ */
+[id*="/tag-group/guides"] .markdown {
+  --markdown-clamp: none !important;
+}
+
+.dark-mode {
+  --scalar-color-1: #e7e7e9;
+  --scalar-color-2: #a6a6ac;
+  --scalar-color-3: #77777e;
+  --scalar-color-accent: var(--timr-primary-light);
+
+  --scalar-background-1: #1b1b1d;
+  --scalar-background-2: #232326;
+  --scalar-background-3: #2c2c30;
+  --scalar-background-accent: rgb(33 150 243 / 16%);
+
+  --scalar-border-color: #37373d;
+}
