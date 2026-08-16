@@ -1,0 +1,76 @@
+plugins {
+    alias(libs.plugins.openapi)
+    id 'base'
+}
+
+tasks.register('cleanOpenApiGenerate', Delete) {
+    delete layout.projectDirectory.dir("Timr.Api/Api")
+    delete layout.projectDirectory.dir("Timr.Api/Model")
+}
+
+openApiGenerate {
+    generatorName = 'csharp'
+    outputDir = "$projectDir"
+    templateDir = "$projectDir/templates"
+    configOptions = [
+            apiName               : 'TimrApiClient',
+            packageName           : 'Timr.Api',
+            sourceFolder          : './',
+            nullableReferenceTypes: 'true',
+            useDateTimeOffset     : 'true'
+    ]
+}
+
+tasks.named('openApiGenerate').configure { task ->
+    task.dependsOn('cleanOpenApiGenerate')
+}
+
+// Generated sources are committed into this module's source set, so the restore that reads them runs after
+// generation; a build on its own would otherwise quietly compile the previous generation's output.
+tasks.matching { it.name == 'dotnetRestore' }.configureEach {
+    dependsOn tasks.named('openApiGenerate')
+}
+
+
+def packageVersion = project.version
+File nugetOutputDirectory = layout.buildDirectory.file("nuget/").get().asFile
+
+tasks.register('dotnetRestore', Exec) {
+    group = 'build'
+    description = 'Runs dotnet restore for the timr SDK solution.'
+    workingDir = project.projectDir
+
+    commandLine 'dotnet', 'restore', '.'
+}
+
+tasks.register('dotnetBuild', Exec) {
+    group = 'build'
+    description = 'Builds the timr SDK solution with the shared version.'
+    workingDir = project.projectDir
+
+    dependsOn tasks.named('dotnetRestore')
+    commandLine 'dotnet', 'build', '.',
+            '-c', 'Release',
+            '-p:Version=' + packageVersion
+}
+
+tasks.register('dotnetPack', Exec) {
+    group = 'publishing'
+    description = 'Creates the NuGet package at the module version.'
+    workingDir = project.projectDir
+
+    dependsOn tasks.named('dotnetBuild')
+    doFirst {
+        nugetOutputDirectory.mkdirs()
+    }
+    commandLine 'dotnet', 'pack', 'Timr.Api/Timr.Api.csproj',
+            '-c', 'Release',
+            '--no-build',
+            '-o', nugetOutputDirectory.absolutePath,
+            '-p:Version=' + packageVersion,
+            '-p:PackageVersion=' + packageVersion
+}
+
+tasks.named('assemble').configure { task ->
+    task.dependsOn tasks.named('dotnetBuild')
+}

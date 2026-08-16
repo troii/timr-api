@@ -1,0 +1,12 @@
+.gitignore
+Cartfile
+git_push.sh
+# Scaffolding is hand-maintained: it names the package/module TimrApi while projectName only
+# drives the generated API class (TimrAPI). Regenerating these would rename the module.
+project.yml
+README.md
+Package.swift
+*.podspec
+# Markdown docs are repo-only: neither the wheel nor the SPM/CocoaPods package ships them,
+# and the reference lives at developer.timr.com.
+docs/**

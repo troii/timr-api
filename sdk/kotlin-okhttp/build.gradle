@@ -1,0 +1,65 @@
+plugins {
+    id 'java-library'
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.openapi)
+}
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+kotlin {
+    jvmToolchain(25)
+}
+
+dependencies {
+    implementation libs.kotlin.stdlib
+    implementation libs.kotlin.reflect
+    implementation libs.kotlinx.coroutines.core
+    implementation libs.gson
+    implementation libs.okhttp
+
+    testImplementation libs.junit.jupiter.api
+    testRuntimeOnly libs.junit.jupiter.engine
+    testRuntimeOnly libs.junit.platform.launcher
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def cleanOpenApiGenerateTask = tasks.register('cleanOpenApiGenerate', Delete) {
+    delete fileTree("$projectDir/src/main/kotlin")
+}
+
+openApiGenerate {
+    generatorName = 'kotlin'
+    outputDir = "$projectDir"
+    configOptions = [
+            library             : 'jvm-okhttp4',
+            omitGradleWrapper   : 'true',
+            packageName         : 'com.timr.api',
+            enumPropertyNaming  : 'UPPERCASE',
+            useCoroutines       : 'true',
+            serializationLibrary: 'gson'
+    ]
+}
+
+tasks.named('openApiGenerate').configure { task ->
+    task.dependsOn(cleanOpenApiGenerateTask)
+}
+
+// Generated sources are committed into this module's source set, so everything that reads them runs
+// after generation; `build` on its own would otherwise quietly compile the previous generation's output.
+tasks.matching {
+    it.name in ['compileKotlin', 'compileTestKotlin', 'processResources', 'processTestResources', 'sourcesJar', 'javadoc']
+}.configureEach {
+    dependsOn tasks.named('openApiGenerate')
+}

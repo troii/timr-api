@@ -1,0 +1,32 @@
+[versions]
+openapi-generator = "7.22.0"
+spring-boot = "4.0.5"
+jackson-nullable = "0.2.10"
+jakarta-annotation = "3.0.0"
+jspecify = "1.0.0"
+swagger-annotations = "1.6.14"
+junit-jupiter = "5.12.2"
+junit-platform = "1.12.2"
+kotlin = "2.4.10"
+kotlinx-coroutines = "1.8.0"
+gson = "2.10.1"
+okhttp = "4.12.0"
+
+[libraries]
+jackson-nullable = { module = "org.openapitools:jackson-databind-nullable", version.ref = "jackson-nullable" }
+spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+jakarta-annotation = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jakarta-annotation" }
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+swagger-annotations = { module = "io.swagger:swagger-annotations", version.ref = "swagger-annotations" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+
+[plugins]
+openapi = { id = "org.openapi.generator", version.ref = "openapi-generator" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

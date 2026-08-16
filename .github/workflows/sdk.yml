@@ -1,0 +1,146 @@
+name: SDK
+
+on:
+  push:
+    branches: [main]
+    paths: ['spec/**', 'sdk/**', 'buildSrc/**', 'gradle/**', 'build.gradle', 'settings.gradle', '.github/workflows/sdk.yml']
+  pull_request:
+    paths: ['spec/**', 'sdk/**', 'buildSrc/**', 'gradle/**', 'build.gradle', 'settings.gradle', '.github/workflows/sdk.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write
+
+concurrency:
+  group: sdk-${{ github.event.pull_request.head.ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  generated-sources:
+    name: Generated sources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - name: Generate SDKs
+        run: ./gradlew openApiGenerate --scan
+
+      - name: Verify generated sources are committed
+        run: |
+          # `git diff` alone ignores untracked files, so a newly emitted generated
+          # file would pass while missing from the repository.
+          git add --all --intent-to-add .
+          git diff --exit-code || (
+            echo "Generated sources are out of date. Run ./gradlew openApiGenerate and commit the results."
+            exit 1
+          )
+
+  jvm:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Java RestClient
+            module: java-restclient
+            path: sdk/java-restclient
+          - name: Java RestTemplate
+            module: java-resttemplate
+            path: sdk/java-resttemplate
+          - name: Kotlin OkHttp
+            module: kotlin-okhttp
+            path: sdk/kotlin-okhttp
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - name: Assemble and test
+        run: ./gradlew :${{ matrix.module }}:assemble :${{ matrix.module }}:test --scan
+
+      - name: Publish test report
+        if: failure()
+        uses: mikepenz/action-junit-report@v6
+        with:
+          report_paths: '${{ matrix.path }}/build/test-results/test/TEST-*.xml'
+          check_name: Tests ${{ matrix.name }}
+          detailed_summary: true
+
+  dotnet:
+    name: .NET
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            10.x
+
+      - name: Build .NET SDK
+        run: ./gradlew :dotnet:dotnetBuild --scan
+
+  swift:
+    name: Swift
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - name: Assemble Swift SDK
+        run: ./gradlew :swift:assemble --scan
+
+  python:
+    name: Python
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.9'
+
+      - name: Install SDK
+        working-directory: sdk/python
+        run: |
+          python -m pip install --upgrade pip
+          pip install .
+
+      # Importing the package exercises every module, so a generator change that
+      # emits invalid Python fails here. mypy is not run yet: the generator emits a
+      # duplicate "OAuth2" AuthSettings key for our two-flow OAuth2 scheme.
+      - name: Verify the package imports
+        working-directory: sdk/python
+        run: python -c "import timr_api; print(timr_api.__name__)"
+
+  typescript:
+    name: TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build TypeScript SDK
+        working-directory: sdk/typescript-fetch
+        run: |
+          npm install
+          npm run build

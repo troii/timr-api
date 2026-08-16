@@ -1,0 +1,10 @@
+.github/**
+.gitignore
+.gitlab-ci.yml
+.travis.yml
+git_push.sh
+README.md
+
+# Markdown docs are repo-only: neither the wheel nor the SPM/CocoaPods package ships them,
+# and the reference lives at developer.timr.com.
+docs/**

@@ -11,6 +11,9 @@ site/.spec.overlaid.yaml
 !src/**/build/
 .gradletasknamecache
 
+# Python packaging metadata, written next to the package by setuptools and pip install -e
+*.egg-info/
+
 # IntelliJ
 .idea/*
 !.idea/codeStyles
@@ -18,4 +21,5 @@ site/.spec.overlaid.yaml
 *.iws
 out/
 
-.claude/
+.claude/*
+!.claude/skills

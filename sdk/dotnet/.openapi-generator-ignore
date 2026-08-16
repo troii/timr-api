@@ -1,0 +1,14 @@
+.gitignore
+appveyor.yml
+README.md
+
+api/**
+docs/**
+
+Timr.Api.sln
+
+Timr.Api/Timr.Api.csproj
+Timr.Api/README.md
+Timr.Api/Program.cs
+
+Timr.Api.Test/

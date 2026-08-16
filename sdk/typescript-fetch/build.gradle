@@ -1,0 +1,26 @@
+plugins {
+    alias(libs.plugins.openapi)
+}
+
+openApiGenerate {
+    generatorName = 'typescript-fetch'
+    gitHost = 'github.com'
+    gitUserId = 'troii'
+    gitRepoId = 'timr-api'
+    outputDir = "$projectDir"
+    additionalProperties = [
+            npmName                  : 'timr-api',
+            licenseName              : 'Apache-2.0',
+            npmVersion               : project.version,
+            supportsES6              : 'true'
+    ]
+}
+
+tasks.register('cleanOpenApiGenerate', Delete) {
+    delete fileTree("$projectDir/src/apis")
+    delete fileTree("$projectDir/src/models")
+}
+
+tasks.named('openApiGenerate').configure { task ->
+    task.dependsOn('cleanOpenApiGenerate')
+}

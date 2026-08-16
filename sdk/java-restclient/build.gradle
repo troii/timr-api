@@ -1,0 +1,80 @@
+plugins {
+    alias(libs.plugins.openapi)
+    id 'java-library'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    withSourcesJar()
+    withJavadocJar()
+}
+
+dependencies {
+    implementation platform(libs.spring.boot.dependencies)
+
+    implementation 'tools.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
+    // JsonNullable is exposed in generated model getters/setters, so it is part of the public API
+    api libs.jackson.nullable
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.apache.httpcomponents.client5:httpclient5' // necessary for PATCH support
+    // @jakarta.annotation.Generated is emitted on every model
+    implementation libs.jakarta.annotation
+    // JSpecify annotations appear on generated public signatures, so consumers need them on their compile classpath
+    api libs.jspecify
+    implementation libs.swagger.annotations
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def cleanOpenApiGenerateTask = tasks.register('cleanOpenApiGenerate', Delete) {
+    delete fileTree("$projectDir/src/main/java/com/timr/api/apis")
+    delete fileTree("$projectDir/src/main/java/com/timr/api/models")
+}
+
+openApiGenerate {
+    generatorName = 'java'
+    outputDir = "$projectDir"
+    templateDir = "$projectDir/templates"
+    configOptions = [
+            library               : 'restclient',
+            serializationLibrary  : 'jackson',
+            useSpringBoot4        : 'true',
+            useJackson3           : 'true',
+            dateLibrary           : 'java8',
+            openApiNullable       : 'true',
+            useJspecify           : 'true',
+            containerDefaultToNull: 'true',
+            legacyDiscriminatorBehavior: 'true',
+            interfaceOnly         : 'true',
+            skipDefaultInterface  : 'true',
+            apiPackage            : 'com.timr.api.apis',
+            modelPackage          : 'com.timr.api.models',
+            hideGenerationTimestamp: 'true'
+    ]
+}
+
+tasks.named('openApiGenerate').configure { task ->
+    task.dependsOn(cleanOpenApiGenerateTask)
+}
+
+// Generated sources are committed into this module's source set, so everything that reads them runs
+// after generation; `build` on its own would otherwise quietly compile the previous generation's output.
+tasks.matching {
+    it.name in ['compileJava', 'compileTestJava', 'processResources', 'processTestResources', 'sourcesJar', 'javadoc']
+}.configureEach {
+    dependsOn tasks.named('openApiGenerate')
+}
