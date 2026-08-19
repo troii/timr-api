@@ -8,5 +8,5 @@ actions:
   - target: $.components.securitySchemes.OAuth2.flows.authorizationCode
     update:
       x-usePkce: SHA-256
-      x-scalar-redirect-uri: https://developers.timr.com/
+      x-scalar-redirect-uri: https://developer.timr.com/
       # x-default-client-id: <public docs client, once registered>

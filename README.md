@@ -2,7 +2,7 @@
 
 The public REST API of [timr](https://www.timr.com), the time tracking service: the OpenAPI
 specification that defines it, and the developer documentation published at
-<https://developers.timr.com>.
+<https://developer.timr.com>.
 
 Version 1.0 is the first public release of this API.
 
