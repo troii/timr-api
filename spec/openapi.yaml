@@ -3976,18 +3976,37 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            type: https://errors.timr.com/validation/end-time-required
-            title: Bad Request
-            status: 400
-            detail: The request body failed validation.
-            instance: /working-times
-            timestamp: 2026-07-16T09:30:00Z
-            trace_id: 3f9a1c7e5b2d48a1
-            errors:
-              - type: https://errors.timr.com/validation/end-time-required
-                field: end
-                detail: An end must be given when the working time is not running.
+          examples:
+            fieldValidation:
+              summary: A field failed validation
+              description: >
+                The type names the category and `errors` breaks the failure down per field. One entry
+                per violation.
+              value:
+                type: https://errors.timr.com/validation
+                title: Bad Request
+                status: 400
+                detail: Request validation failed
+                instance: /working-times
+                timestamp: 2026-07-16T09:30:00Z
+                trace_id: 3f9a1c7e5b2d48a1
+                errors:
+                  - type: https://errors.timr.com/validation/paused-working-time
+                    field: break_times
+                    detail: break_times must contain exactly one break time of type 'ongoing'
+            rule:
+              summary: A rule rejected the request as a whole
+              description: >
+                The type names the specific rule and `detail` carries its message in the request
+                locale. There is no `errors` array, because the failure does not belong to a field.
+              value:
+                type: https://errors.timr.com/validation/end-time-required
+                title: Bad Request
+                status: 400
+                detail: End time must be defined
+                instance: /working-times/074e7048-9097-11eb-a8b3-0242ac130003
+                timestamp: 2026-07-16T09:30:00Z
+                trace_id: 5e8b03a2fc194d67
     Forbidden:
       description: Forbidden
       content:
@@ -3998,7 +4017,6 @@ components:
             type: https://errors.timr.com/forbidden
             title: Forbidden
             status: 403
-            detail: The authenticated user is not permitted to access this working time.
             instance: /working-times/074e7048-9097-11eb-a8b3-0242ac130003
             timestamp: 2026-07-16T09:30:00Z
             trace_id: 8c41b0d9e7a2465f
@@ -4009,7 +4027,7 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
           example:
-            type: https://errors.timr.com/reference-not-found/working-time
+            type: https://errors.timr.com/not-found
             title: Not Found
             status: 404
             detail: No working time exists with this identifier.
@@ -4026,7 +4044,7 @@ components:
             type: https://errors.timr.com/conflict/resource-outdated
             title: Conflict
             status: 409
-            detail: The working time was modified by someone else. Fetch it again and reapply the change.
+            detail: The object was edited in the meantime, please reload and try again.
             instance: /working-times/074e7048-9097-11eb-a8b3-0242ac130003
             timestamp: 2026-07-16T09:30:00Z
             trace_id: 1d6c8ae4f0b34927
@@ -4036,14 +4054,37 @@ components:
         application/problem+json:
           schema:
             $ref: '#/components/schemas/Error'
-          example:
-            type: https://errors.timr.com/validation/paused-working-time
-            title: Unprocessable Content
-            status: 422
-            detail: A paused working time cannot be stopped.
-            instance: /working-times/074e7048-9097-11eb-a8b3-0242ac130003
-            timestamp: 2026-07-16T09:30:00Z
-            trace_id: 6a2f9b71e83c4d50
+          examples:
+            referenceNotFound:
+              summary: A referenced entity does not exist
+              description: >
+                The request is well formed, but one of the identifiers in it resolves to nothing. The
+                `errors` entry names the entity and the field that carried it.
+              value:
+                type: https://errors.timr.com/reference-not-found
+                title: Unprocessable Content
+                status: 422
+                detail: Referenced entity not found
+                instance: /drive-logs
+                timestamp: 2026-07-16T09:30:00Z
+                trace_id: 6a2f9b71e83c4d50
+                errors:
+                  - type: https://errors.timr.com/reference-not-found/car
+                    field: car_id
+                    detail: Car not found
+            rule:
+              summary: A business rule rejected the request
+              description: >
+                The request is understood and refers to entities that exist, but recording it would
+                break a rule of the account's configuration.
+              value:
+                type: https://errors.timr.com/validation/task-not-bookable
+                title: Unprocessable Content
+                status: 422
+                detail: Task "Onboarding" is not bookable
+                instance: /project-times
+                timestamp: 2026-07-16T09:30:00Z
+                trace_id: 9f4d1e70b83a26c5
 
   securitySchemes:
     OAuth2:
@@ -4387,10 +4428,8 @@ components:
 
     User:
       description: >
-        A person in the account who records times. Holds identity (`firstname`, `lastname`,
-        `email`), employment dates (`entry_date`, `resign_date`), and the assigned
-        `work_schedule_model` and `holiday_calendar`. Working times, project times and drive logs
-        all belong to a user.
+        A user's identity (`firstname`, `lastname`, `email`), employment dates (`entry_date`, `resign_date`),
+        and the assigned `work_schedule_model` and `holiday_calendar`.
       allOf:
         - $ref: '#/components/schemas/UserPartial'
         - type: object
@@ -4527,9 +4566,7 @@ components:
 
     Team:
       description: >
-        An organizational group of users, arranged hierarchically (`parent_team`, with the full path
-        in `breadcrumbs`). Team membership and leadership determine who can view and manage whose
-        records.
+        A team, placed in the hierarchy by `parent_team`, with the full path from the root in `breadcrumbs`.
       allOf:
         - $ref: '#/components/schemas/TeamPartial'
         - type: object
@@ -4601,9 +4638,7 @@ components:
 
     HolidayCalendarPartial:
       description: >
-        A named set of public holidays assigned to users; timr uses it to determine non-working days
-        when calculating target hours and absences. Holidays in a calendar may be generated
-        automatically or maintained manually.
+        A holiday calendar. Its holidays are either generated automatically or maintained manually.
       type: object
       properties:
         id:
@@ -4895,9 +4930,8 @@ components:
 
     WorkScheduleModel:
       description: >
-        A reusable working-time template assigned to users. It defines the expected target duration
-        per weekday, which timr compares against recorded working times to derive overtime and
-        account balances.
+        The weekday targets a user is measured against: `weeks` holds the layout, `type` selects the
+        calculation mode, and `working_time_rules` the recording constraints.
       allOf:
         - $ref: '#/components/schemas/WorkScheduleModelPartial'
         - type: object
@@ -5138,11 +5172,9 @@ components:
 
     WorkingTime:
       description: >
-        A single working time entry for a user: one continuous stretch from `start` to `end` on a
-        day, classified by its `working_time_type` — whose `category` is one of attendance time,
-        vacation, paid or unpaid time off, suspension, or break time. Attendance entries carry break
-        times, locations and the recording platform; multi-day absences belong to a
-        `working_time_date_span`.
+        One continuous stretch from `start` to `end`, classified by its `working_time_type`. Attendance
+        entries carry `break_times`, locations and the platform they were recorded on; an entry derived from a
+        multi-day absence links back to its `working_time_date_span`.
       type: object
       properties:
         id:
@@ -5408,10 +5440,9 @@ components:
 
     Task:
       description: >
-        A node in the account's task tree that project times are booked on. Tasks are hierarchical
-        (`parent_task`, with the full path in `breadcrumbs`), can be `bookable` and `billable`,
-        carry budgets, and can constrain recording (time windows, location, `lock_date`). Users gain
-        access through task assignments.
+        A task, placed in the tree by `parent_task`, with the full path from the root in `breadcrumbs`.
+        `bookable` and `billable` control recording and invoicing; `lock_date`, time windows and location
+        constrain what may be recorded.
       allOf:
         - $ref: '#/components/schemas/TaskPartial'
         - type: object
@@ -5952,9 +5983,8 @@ components:
 
     ProjectTime:
       description: >
-        Time a user booked on a `task`, from `start` to `end`, optionally `billable`. Where a
-        working time records that a person was at work, a project time records what they worked on.
-        Carries break times, notes and locations.
+        One booking on a `task`, from `start` to `end`, optionally `billable`, with `break_times`, notes and
+        locations.
       type: object
       properties:
         id:
@@ -6131,9 +6161,9 @@ components:
 
     DriveLog:
       description: >
-        A logbook entry for one trip in a `car`: `start`/`end` time, `start_mileage`/`end_mileage`
-        and the resulting `distance`, `purpose`, places `visited`, and a `drive_log_category`
-        (typically business vs private). May include a recorded GPS `route`.
+        One trip in a `car`: `start` and `end`, `start_mileage` and `end_mileage` with the resulting
+        `distance`, the `purpose`, the places `visited`, and its `drive_log_category`. May include a recorded
+        GPS `route`.
       type: object
       properties:
         id:
@@ -6402,8 +6432,8 @@ components:
 
     Car:
       description: >
-        A vehicle that drive logs are recorded against, identified by `name` and license `plate`.
-        `usable` indicates whether it can currently be selected.
+        A vehicle identified by `name` and license `plate`. `usable` says whether it can currently be
+        selected.
       allOf:
         - $ref: '#/components/schemas/CarPartial'
         - type: object
@@ -6456,8 +6486,7 @@ components:
 
     DriveLogCategory:
       description: >
-        A category that classifies a drive log, most importantly as `business` or private, for tax
-        and reporting purposes. Has a `name` and a display `color`.
+        A drive log category with a `name` and a display `color`; `business` marks it as business travel.
       allOf:
         - $ref: '#/components/schemas/DriveLogCategoryPartial'
         - type: object
@@ -6621,15 +6650,9 @@ components:
     WorkingTimeDateSpan:
       type: object
       description: >
-        A working time date span is a continuous, multi-day bracket around day-based working
-        times of a single working time type — typically an absence such as vacation or sick
-        leave. Rather than recording each day individually, the whole period is captured as
-        one working time date span from `start` to `end`, and timr derives one working time
-        per covered day from it. Each of those daily working times links back to its working
-        time date span via `WorkingTime.working_time_date_span`.
-
-        A working time date span can be created directly or become effective through an
-        approved request.
+        A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered
+        day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become
+        effective through an approved request.
       properties:
         id:
           description: Unique identifier. Treat it as an opaque string.
@@ -6758,10 +6781,9 @@ components:
 
     WorkingTimeType:
       description: >
-        The classification applied to a working time. Its `category` groups it as attendance time,
-        vacation, paid time off, unpaid time off, suspension, or break time. The type governs how
-        the time counts toward balances, whether a substitute is required, and automatic break
-        deduction.
+        A working time type. `category` and `sub_category` place it in the classification, `edit_unit` decides
+        whether it is recorded by time or by day, and `requires_substitute` and
+        `automatic_break_deduction_policy` govern how it is recorded and how breaks are deducted.
       type: object
       properties:
         id:
