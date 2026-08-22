@@ -4141,8 +4141,9 @@ components:
     Error:
       description: >
         TIMR error response body, extending the Problem Details base with `timestamp`,
-        `trace_id` and per-field `errors[]` for validation, binding, constraint, and
-        reference-not-found errors. The semantic identifier is encoded in the `type` URI
+        `trace_id` and per-field `errors[]` for validation, binding, constraint,
+        request-body deserialization, and reference-not-found errors. The semantic
+        identifier is encoded in the `type` URI
         (e.g. `https://errors.timr.com/conflict/resource-outdated`).
 
 
@@ -4178,7 +4179,11 @@ components:
         identifies the specific constraint or sub-error category (e.g.
         `validation/not-null` for a Bean Validation `@NotNull`,
         `validation/paused-working-time` for a TIMR custom validator code,
-        `reference-not-found/user` for a `MappingException`).
+        `validation/type-mismatch` for a value that does not fit its target type,
+        `validation/unknown-property` for a property the resource does not declare,
+        `reference-not-found/user` for a `MappingException`). `field` is the JSONPath of the
+        offending property in the request body, rooted at `$` — array elements included.
+        An error about a query parameter names it plainly instead, without the `$.` prefix.
       properties:
         type:
           type: string
