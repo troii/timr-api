@@ -1485,6 +1485,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/WorkingTime'
+        "302":
+          description: >
+            No Working Time was created because the working time type requires a request
+            (recordingMode BY_REQUEST); a Working Time Request was created instead.
+            The Location header points to the created Working Time Request.
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: URI of the created Working Time Request
         "400":
           $ref: '#/components/responses/BadRequest'
         "403":
@@ -6815,10 +6826,8 @@ components:
           allOf:
             - $ref: '#/components/schemas/WorkingTimeTypeSubCategory'
         recording_mode_user:
-          nullable: true
           description: > 
             Specifies how the user can record this working time type.
-            Only relevant for working time types having edit_unit 'half_days' or 'days', otherwise null
           allOf:
             - $ref: '#/components/schemas/RecordingModeUser'
         non_creditable_deductible:
