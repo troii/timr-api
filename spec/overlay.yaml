@@ -3,6 +3,34 @@ info:
   title: Production publish overlay
   version: 1.0.0
 actions:
+  # Introductory portal copy. The canonical specification is synchronized from the service, so the
+  # published documentation replaces its terse contract description here.
+  - target: $.info
+    update:
+      description: |
+        The timr REST API enables you to integrate timr with your own applications, services and business processes.
+
+        Use the API to access supported resources such as **working times, absences, project times, drive logs and related master data**. Depending on the resource, the API provides **read and/or write access**.
+
+        ## Integrate timr with your systems
+
+        API access can operate either on **client level**, across the organization, or within the permissions of an individual **timr user**.
+
+        For integrations that replicate timr data into another system, the API supports **efficient incremental synchronization**, including access to changed and deleted records.
+
+        ### Typical use cases
+
+        The timr REST API can be used to:
+
+        - **Synchronize timr data with external applications**
+        - **Import or update supported data in timr**
+        - **Build custom reports and dashboards**
+        - **Replicate timr data into your own systems**
+
+        ## Need help or missing an endpoint?
+
+        If you have questions about the API, need help with your integration, or require access to data or functionality that is currently not available through the API, please contact our [support team](https://www.timr.com/en/s/support/). We’re happy to review your use case and available options.
+
   # Try-it console settings. Deliberately not in the canonical spec: `x-usePkce` is
   # Scalar/Redocly vocabulary, not OpenAPI, and the spec stays implementation-neutral.
   - target: $.components.securitySchemes.OAuth2.flows.authorizationCode
