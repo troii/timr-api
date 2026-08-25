@@ -5554,8 +5554,6 @@ components:
             - project_time_notes_required
             - start_date
             - end_date
-            - earliest_start_time
-            - latest_end_time
             - active_from
             - active_to
             - custom_field_1
@@ -5627,8 +5625,6 @@ components:
             - bookable
             - billable
             - project_time_notes_required
-            - earliest_start_time
-            - latest_end_time
             - active_from
             - active_to
             - custom_field_1
@@ -6798,8 +6794,7 @@ components:
     WorkingTimeType:
       description: >
         A working time type. `category` and `sub_category` place it in the classification, `edit_unit` decides
-        whether it is recorded by time or by day, and `requires_substitute` and
-        `automatic_break_deduction_policy` govern how it is recorded and how breaks are deducted.
+        whether it is recorded by time or by day, and `requires_substitute` governs how it is recorded.
       type: object
       properties:
         id:
@@ -6830,24 +6825,10 @@ components:
             Specifies how the user can record this working time type.
           allOf:
             - $ref: '#/components/schemas/RecordingModeUser'
-        non_creditable_deductible:
-          type: number
-          nullable: true
-        compensation_deductible:
-          type: number
-          nullable: true
         archived:
           type: boolean
         requires_substitute:
           type: boolean
-        automatic_break_deduction_policy:
-          description: >
-            Policy that defines how automatic break deductions are handled for this working time type.
-            Only applicable for minute based attendance times (WorkingTimeTypeCategory = 'attendance_time' and edit_unit = 'minutes').
-            Defaults to 'deduction_allowed' if not set. Null when not applicable.
-          nullable: true
-          allOf:
-            - $ref: '#/components/schemas/AutomaticBreakDeductionPolicy'
       required:
         - id
         - name
@@ -6858,10 +6839,7 @@ components:
         - category
         - sub_category
         - recording_mode_user
-        - non_creditable_deductible
-        - compensation_deductible
         - archived
-        - automatic_break_deduction_policy
 
     DurationUnit:
       description: Unit a Working Time Type is recorded in. Not to be confused with `DurationType`, which states how an individual recording's duration is expressed.
@@ -6899,14 +6877,6 @@ components:
         - not_allowed
         - allowed
         - by_request
-
-    AutomaticBreakDeductionPolicy:
-      description: How automatic break deduction is handled for this Working Time Type.
-      type: string
-      enum:
-        - deduction_allowed
-        - prefer_not_to_deduct
-        - never_deduct
 
     WorkingTimeTypesPage:
       allOf:
