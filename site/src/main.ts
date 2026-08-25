@@ -9,4 +9,9 @@ createApiReference('#app', {
   // explicit Authorization in Access-Control-Allow-Headers — a wildcard does not cover it.
   proxyUrl: null,
   hideModels: true,
+  // Scalar reorders schema properties twice by default: required ones are hoisted, then the rest
+  // are sorted alphabetically. The specification declares properties in a deliberate reading order
+  // — identifier, then the times, then what they refer to — so both passes are turned off.
+  orderSchemaPropertiesBy: 'preserve',
+  orderRequiredPropertiesFirst: false,
 })
