@@ -33,6 +33,9 @@ left to say so.
 An SDK bumps **major** when its surface breaks, including when it moves to a new path version;
 **minor** when regenerating against a new contract adds to it; **patch** for generator, template or
 packaging fixes. Majors may move together on a new path version and may drift apart afterwards.
+Versions are declared in `sdk/versions.properties`; `sdk/bump-versions.sh minor` carries the whole set
+through a contract change, `patch <sdk>` moves the clients a fix belongs to, and a major stays a hand
+edit.
 
 Which contract an SDK was generated from is recorded by the commit that built it: specification and
 SDKs live in this repository at one revision. The `User-Agent` names the SDK and its version —
