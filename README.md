@@ -15,6 +15,10 @@ The specification is maintained together with the service and published here wit
 is therefore not edited in this repository — see [CONTRIBUTING.md](CONTRIBUTING.md) if something in
 it looks wrong or missing.
 
+The specification carries a version, and each SDK carries a version of its own that states which
+contract it speaks — see [VERSIONING.md](VERSIONING.md) for how they move and what a release of each
+kind means for an integration.
+
 ## Layout
 
 ### `spec/`
