@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
   - url: https://api.timr.com/v1/
@@ -276,50 +276,22 @@ paths:
         "422":
           $ref: '#/components/responses/UnprocessableContent'
 
-  /users/{id}/working-time-accounts/{date}:
-    get:
-      operationId: getUserWorkingTimeAccounts
-      tags:
-        - Time Account
-      summary: Get a User's working time accounts
-      description: Returns the User's working time account balances as of the given day.
-      parameters:
-        - name: id
-          in: path
-          description: ID of the User.
-          required: true
-          example: 074e7048-9097-11eb-a8b3-0242ac130003
-          schema:
-            type: string
-        - name: date
-          in: path
-          description: Day to return the balances for.
-          required: true
-          example: 2026-07-16
-          schema:
-            type: string
-            format: date
-            description: last balancing date
-            example: 2023-03-28
-      responses:
-        "200":
-          description: The User's working time account balances on the given day.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Accounts'
-        "403":
-          $ref: '#/components/responses/Forbidden'
-        "404":
-          $ref: '#/components/responses/NotFound'
-
   /users/{id}/accounts/{date}:
     get:
       operationId: getUserAccounts
       tags:
         - Time Account
       summary: Get a User's accounts
-      description: Returns all of the User's account balances as of the given day, including overtime and surcharge accounts.
+      description: |-
+        Returns all of the User's account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.
+
+        If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.
+
+        **Important:** The target working time is calculated using the User's **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.
+
+        If the User's Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.
+
+        `last_balance_date` identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
       parameters:
         - name: id
           in: path
@@ -4723,7 +4695,7 @@ components:
           nullable: true
           type: string
           format: date
-          description: date of last balance
+          description: The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.
           example: 2023-03-28
         time_account:
           nullable: true
