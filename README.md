@@ -1,15 +1,22 @@
 # timr API
 
 The public REST API of [timr](https://www.timr.com), the time tracking service: the OpenAPI
-specification that defines it, and the developer documentation published at
-<https://developer.timr.com>.
+specification that defines it, the developer documentation published at
+<https://developer.timr.com>, and the client SDKs generated from it.
 
 Version 1.0 is the first public release of this API.
 
 ## How it fits together
 
-The specification is the contract, and the documentation is rendered from it, so it cannot drift
-apart from what the service actually serves.
+The specification is the contract, and everything else here is derived from it. The documentation
+renders it, and every SDK is generated from it, so a single specification update moves the
+documentation and all SDKs together and they cannot drift apart from what the service actually
+serves.
+
+```
+spec/openapi.yaml ──┬── site/  →  developer.timr.com
+                    └── sdk/   →  one client library per language
+```
 
 The specification is maintained together with the service and published here with each release. It
 is therefore not edited in this repository — see [CONTRIBUTING.md](CONTRIBUTING.md) if something in
@@ -42,7 +49,29 @@ copy of the specification as a tag that carries the prose but no operations, gro
 API itself, so a reader moves from a guide to an endpoint within one navigation rather than crossing
 into a separate site. The contract itself never carries them.
 
+### `sdk/`
+
+One generated client library per language, each with the generator configuration it is produced
+from. `sdk/overlay.yaml` applies to all of them, and a module carries an `openapi-overlay.yaml` of
+its own where a language needs something the others do not:
+
+| Directory                | Language and flavour              |
+|--------------------------|-----------------------------------|
+| `sdk/java-restclient/`   | Java, Spring `RestClient`         |
+| `sdk/java-resttemplate/` | Java, Spring `RestTemplate`       |
+| `sdk/kotlin-okhttp/`     | Kotlin, OkHttp, coroutines        |
+| `sdk/python/`            | Python                            |
+| `sdk/typescript-fetch/`  | TypeScript, `fetch`               |
+| `sdk/swift/`             | Swift, Alamofire, async/await     |
+| `sdk/dotnet/`            | C#                                |
+
+The generated sources are committed, so the library you read here is exactly the one you get. They
+are produced by [OpenAPI Generator](https://openapi-generator.tech) and regenerated whenever the
+specification changes; every artifact carries the version of the specification it was built from.
+
 ## Local development
+
+The documentation site:
 
 ```bash
 cd site
@@ -50,10 +79,17 @@ npm ci
 npm run dev
 ```
 
-The console runs the OAuth2 authorization code flow with PKCE against the timr authorization server,
+Its console runs the OAuth2 authorization code flow with PKCE against the timr authorization server,
 which accepts only registered redirect URIs — use `http://127.0.0.1:5173/` rather than `localhost`.
+
+The SDKs:
+
+```bash
+./gradlew openApiGenerate
+./gradlew :kotlin-okhttp:assemble
+```
 
 ## Contributing
 
 Questions, bug reports and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). We are
-especially interested in how the API holds up in real integrations.
+especially interested in how the API and its SDKs hold up in real integrations.

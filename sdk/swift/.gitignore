@@ -1,0 +1,4 @@
+# OpenApiGenerator generated meta files
+.openapi-generator
+.build/
+Package.resolved

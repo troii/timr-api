@@ -1,0 +1,8 @@
+build.gradle
+src/test/**
+docs/**
+gradle/**
+gradlew
+gradlew.bat
+settings.gradle
+README.md

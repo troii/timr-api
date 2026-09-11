@@ -1,0 +1,20 @@
+{
+  "id": "user123",
+  "firstname": "John",
+  "lastname": "Doe",
+  "fullname": "John Doe",
+  "email": "john.doe@example.com",
+  "employee_number": "E123",
+  "external_id": "EXT123",
+  "login": "johndoe",
+  "entry_date": "2023-01-01",
+  "resign_date": null,
+  "work_schedule_model": {
+    "id": "schedule123",
+    "name": "Standard Schedule"
+  },
+  "holiday_calendar": {
+    "id": "calendar123",
+    "description": "Standard Holidays"
+  }
+}

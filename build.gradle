@@ -1,0 +1,65 @@
+import com.timr.gradle.ApplyOpenApiOverlaysTask
+
+// Generate deterministically in UTC, independent of the machine's local time zone,
+// so date/date-time example values in the generated code don't drift per developer.
+// (-Duser.timezone is ignored on macOS once the default TZ is cached, so set it directly.)
+TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
+
+group = 'com.timr'
+
+// Each SDK is versioned on its own, in sdk/versions.properties. One version across all of them would
+// mean a fix to a single client republishing the other six unchanged, and a version derived from the
+// specification could not express a break that is the SDK's own.
+ext.sdkVersions = new Properties().with { versions ->
+    file('sdk/versions.properties').withInputStream { versions.load(it) }
+    versions
+}
+
+allprojects {
+    group = rootProject.group
+}
+
+subprojects {
+    def declared = rootProject.ext.sdkVersions[name]
+    if (!declared) {
+        throw new GradleException("sdk/versions.properties declares no version for ${name}")
+    }
+    version = declared
+}
+
+def generatedOpenApiSpec = { Project sdkProject ->
+    sdkProject.layout.buildDirectory.file('generated/openapi/openapi.yaml')
+}
+
+subprojects { sdkProject ->
+    sdkProject.plugins.withId('org.openapi.generator') {
+        def prepareOpenApiSpec = sdkProject.tasks.register('prepareOpenApiSpec', ApplyOpenApiOverlaysTask) {
+            baseSpec = rootProject.layout.projectDirectory.file('spec/openapi.yaml')
+            overlays.from(
+                    rootProject.layout.projectDirectory.file('sdk/overlay.yaml'),
+                    sdkProject.layout.projectDirectory.file('openapi-overlay.yaml')
+            )
+            outputSpec = generatedOpenApiSpec(sdkProject)
+        }
+
+        sdkProject.tasks.named('openApiGenerate').configure { task ->
+            inputSpec.set(generatedOpenApiSpec(sdkProject))
+            task.dependsOn(prepareOpenApiSpec)
+        }
+    }
+}
+
+tasks.register('openApiGenerate') {
+    group = 'openapi tools'
+    subprojects.each { subproject ->
+        dependsOn subproject.tasks.matching { it.name == 'openApiGenerate' }
+    }
+}
+
+tasks.register('sdkVersions') {
+    group = 'help'
+    description = 'Prints each SDK and the version it publishes at'
+    doLast {
+        subprojects.sort { it.name }.each { println "${it.name}=${it.version}" }
+    }
+}

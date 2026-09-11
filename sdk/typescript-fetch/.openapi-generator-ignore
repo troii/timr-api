@@ -1,0 +1,5 @@
+.gitignore
+docs/**
+# package.json is hand-maintained: what npm publishes and how is not the generator's business, and
+# the version is stamped at publish time from sdk/versions.properties.
+package.json

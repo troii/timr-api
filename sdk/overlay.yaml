@@ -1,0 +1,461 @@
+# Fields explicitly approved for SDK log/toString output.
+# This file is an allow-list: generated SDK toString/log output must exclude fields
+# unless they are annotated with x-log here or in a module-local override.
+overlay: 1.0.0
+info:
+  title: SDK log allow-list
+  version: 1.0.0
+actions:
+  - target: "$['components']['schemas']['Duration']['properties']['type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Duration']['properties']['minutes']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeBase']['properties']['type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeManual']['allOf'][*]['properties']['duration_minutes']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeManual']['allOf'][*]['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeManual']['allOf'][*]['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeOngoing']['allOf'][*]['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeAutomatic']['allOf'][*]['properties']['duration_minutes']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeAutomatic']['allOf'][*]['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['BreakTimeAutomatic']['allOf'][*]['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['UserPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['UsersPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['UsersPartialPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TeamPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Team']['allOf'][1]['properties']['parent_team']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TeamsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TeamsPartialPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TeamUpdate']['properties']['parent_team_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['HolidayCalendarPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['HolidayCalendarsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Holiday']['properties']['date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['HolidaysPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Accounts']['properties']['last_balance_date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Accounts']['properties']['time_account']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Accounts']['properties']['vacation_account']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Accounts']['properties']['overtime_surcharge_accounts']"
+    update:
+      x-log-count: true
+  - target: "$['components']['schemas']['WorkScheduleModelPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkScheduleModel']['allOf'][1]['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkScheduleModel']['allOf'][1]['properties']['type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkScheduleModelsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DailyWorkSchedule']['properties']['normal_working_times']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['NormalWorkingTimes']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['NormalWorkingTimes']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeRules']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['working_time_type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['working_time_date_span']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTime']['properties']['status']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimesPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeUpsert']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeUpsert']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeUpsert']['properties']['duration_type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeUpsert']['properties']['working_time_type_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeUpsert']['properties']['status']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeCreate']['allOf'][1]['properties']['user_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DeletedEntryWithMetadataPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['parent_task']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['bookable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['billable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['lock_date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['active_from']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['active_to']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Task']['allOf'][1]['properties']['budget_planning_type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['parent_task']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['bookable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['billable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['lock_date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['active_from']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['active_to']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskReduced']['allOf'][1]['properties']['budget_planning_type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TasksPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TasksReducedPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['parent_task_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['start_date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['end_date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['bookable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['billable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['lock_date']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskBase']['properties']['budget_planning_type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToUserAssignment']['properties']['user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToUserAssignment']['properties']['recording_lock']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToUserAssignment']['properties']['automatically_assigned']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToUserAssignmentsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToUserAssignmentUpsert']['properties']['recording_lock']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToLeaderAssignment']['properties']['user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToLeaderAssignment']['properties']['automatically_assigned']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToLeaderAssignmentsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToTeamAssignment']['properties']['team']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToTeamAssignment']['properties']['automatically_assigned']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['TaskToTeamAssignmentsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['task']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['billable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTime']['properties']['status']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimesPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimeUpsert']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimeUpsert']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimeUpsert']['properties']['task_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimeUpsert']['properties']['billable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimeUpsert']['properties']['status']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['ProjectTimeCreate']['allOf'][1]['properties']['user_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['start_mileage']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['end_mileage']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['car']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['drive_log_category']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['start_venue']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['end_venue']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['has_track']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLog']['properties']['status']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogUpsert']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogUpsert']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogUpsert']['properties']['drive_log_category_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogUpsert']['properties']['status']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogCreate']['allOf'][1]['properties']['user_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogCreate']['allOf'][1]['properties']['car_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['CarPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['Car']['allOf'][1]['properties']['usable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['CarUpdate']['properties']['usable']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['CarsPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogCategoryPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogCategoryPartial']['properties']['business']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DriveLogCategoriesPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['VenuePartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DeletedEntryPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DeletedEntryPartial']['properties']['last_modified']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DeletedEntryPartial']['properties']['last_modified_by']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['DeletedEntryPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanPartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpan']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpan']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpan']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpan']['properties']['user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpan']['properties']['working_time_type']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpan']['properties']['substitute']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanUpdate']['properties']['start']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanUpdate']['properties']['end']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanUpdate']['properties']['working_time_type_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanUpdate']['properties']['substitute_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeDateSpanCreate']['allOf'][0]['properties']['user_id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeTypePartial']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['id']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['edit_unit']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['category']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['sub_category']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['recording_mode_user']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['archived']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeType']['properties']['requires_substitute']"
+    update:
+      x-log: true
+  - target: "$['components']['schemas']['WorkingTimeTypesPage']['allOf'][1]['properties']['data']"
+    update:
+      x-log: true

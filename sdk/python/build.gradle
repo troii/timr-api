@@ -1,0 +1,38 @@
+plugins {
+    alias(libs.plugins.openapi)
+}
+repositories {
+    mavenCentral()
+}
+
+openApiGenerate {
+    generatorName = 'python'
+    templateDir = "$projectDir/templates"
+    outputDir = "$projectDir"
+    modelPackage = 'models'
+    generateModelTests = false
+    generateApiTests = false
+    gitHost = 'github.com'
+    gitUserId = 'troii'
+    gitRepoId = 'timr-api'
+    configOptions = [
+            packageName                : 'timr_api',
+            packageVersion             : project.version,
+            packageUrl                 : 'https://developer.timr.com',
+            hideGenerationTimestamp    : 'true',
+            useOneOfDiscriminatorLookup: 'true',
+            datetimeFormat             : '%Y-%m-%dT%H:%M:%SZ'
+    ]
+}
+
+tasks.register('cleanOpenApiGenerate', Delete) {
+    delete fileTree("$projectDir/docs")
+    delete fileTree("$projectDir/timr_api")
+}
+
+tasks.named('openApiGenerate').configure { task ->
+    task.dependsOn('cleanOpenApiGenerate')
+    doFirst {
+        TimeZone.setDefault(TimeZone.getTimeZone('UTC'))
+    }
+}

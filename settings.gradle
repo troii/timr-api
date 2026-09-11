@@ -1,0 +1,9 @@
+rootProject.name = 'timr-api'
+
+// Every directory under sdk/ with a build file is a module, named after the directory.
+file('sdk').eachDir { dir ->
+    if (new File(dir, 'build.gradle').exists()) {
+        include dir.name
+        project(":${dir.name}").projectDir = dir
+    }
+}

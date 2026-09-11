@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Timr.Api/Timr.Api.csproj" />
+  <Project Path="Timr.Api.Test/Timr.Api.Test.csproj" />
+</Solution>

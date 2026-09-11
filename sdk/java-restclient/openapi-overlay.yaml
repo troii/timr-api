@@ -1,0 +1,52 @@
+overlay: 1.0.0
+info:
+  title: Java one-of interface support
+  version: 1.0.0
+actions:
+  - target: "$['info']"
+    update:
+      x-getter: true
+      x-implements: true
+      x-is-one-of-interface: true
+  # Inheritance is a generator capability, not part of the contract: the Java generator can
+  # extend a shared base, so the discriminator keeps its enum type instead of degrading to String.
+  - target: "$['components']['schemas']['BreakTimeBase']"
+    update:
+      x-parent: true
+  - target: "$['components']['schemas']['BreakTime']"
+    update:
+      x-is-one-of-interface: true
+  - target: "$['components']['schemas']['BreakTimeUpdate']"
+    update:
+      x-is-one-of-interface: true
+  - target: "$['components']['schemas']['BreakTimeManual']"
+    update:
+      x-implements:
+        - BreakTime
+        - BreakTimeUpdate
+  - target: "$['components']['schemas']['BreakTimeOngoing']"
+    update:
+      x-implements:
+        - BreakTime
+        - BreakTimeUpdate
+  - target: "$['components']['schemas']['BreakTimeAutomatic']"
+    update:
+      x-implements:
+        - BreakTime
+  # VacationAccount is the same oneOf + discriminator shape as BreakTime and needs the same
+  # treatment, otherwise the generator collapses it into one flat class carrying both variants'
+  # fields.
+  - target: "$['components']['schemas']['VacationAccountBase']"
+    update:
+      x-parent: true
+  - target: "$['components']['schemas']['VacationAccount']"
+    update:
+      x-is-one-of-interface: true
+  - target: "$['components']['schemas']['VacationAccountDays']"
+    update:
+      x-implements:
+        - VacationAccount
+  - target: "$['components']['schemas']['VacationAccountMinutes']"
+    update:
+      x-implements:
+        - VacationAccount
