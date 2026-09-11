@@ -1,0 +1,43 @@
+name: Publish Snapshot
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: Which JVM SDK to publish a snapshot of
+        type: choice
+        options: [java-restclient, java-resttemplate, kotlin-okhttp]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-snapshot-${{ github.ref }}-${{ inputs.module }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish ${{ inputs.module }} snapshot
+    runs-on: ubuntu-latest
+    environment: Snapshot
+    env:
+      SNAPSHOT: 'true'
+      MAVEN_REPOSITORY_URL: ${{ vars.MAVEN_SNAPSHOT_URL }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - uses: troii-actions/gcp-auth@v1
+        with:
+          workload-identity-provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service-account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          project: ${{ vars.GCP_PROJECT }}
+
+      - name: Publish snapshot
+        env:
+          MODULE: ${{ inputs.module }}
+        run: ./gradlew ":${MODULE}:publish" --scan
