@@ -2,6 +2,8 @@ plugins {
     id 'java-library'
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.openapi)
+    alias(libs.plugins.google.artifact.registry)
+    id 'maven-publish'
 }
 repositories {
     mavenCentral()
@@ -63,4 +65,60 @@ tasks.matching {
     it.name in ['compileKotlin', 'compileTestKotlin', 'processResources', 'processTestResources', 'sourcesJar', 'javadoc']
 }.configureEach {
     dependsOn tasks.named('openApiGenerate')
+}
+
+def snapshot = rootProject.ext.snapshotBuild
+def artifactVersion = snapshot ? "${project.version}-SNAPSHOT" : project.version
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = 'timr-api-kotlin'
+            version = artifactVersion
+            from components.java
+
+            pom {
+                name = 'timr-api-kotlin'
+                description = 'Official Kotlin client for the timr API, built on OkHttp with coroutines.'
+                url = 'https://developer.timr.com'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                organization {
+                    name = 'troii Software GmbH'
+                    url = 'https://troii.com'
+                }
+                scm {
+                    url = 'https://github.com/troii/timr-api'
+                    connection = 'scm:git:https://github.com/troii/timr-api.git'
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name = 'timr'
+            // A placeholder keeps the publish tasks present; the check below refuses to run them
+            // when the environment has not said where to publish.
+            url = rootProject.ext.publishUrl
+                ?: layout.buildDirectory.dir('unconfigured-repository').get().asFile.toURI()
+        }
+    }
+}
+
+tasks.withType(PublishToMavenRepository).configureEach {
+    doFirst {
+        if (!rootProject.ext.publishUrl) {
+            throw new GradleException('MAVEN_REPOSITORY_URL must be set to publish.')
+        }
+    }
+    doLast {
+        def artifactName = "${publication.groupId}:${publication.artifactId}:${publication.version}"
+        println "Published '${artifactName}' to ${repository.url}"
+    }
 }

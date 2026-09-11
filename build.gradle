@@ -27,6 +27,16 @@ subprojects {
     version = declared
 }
 
+// Where the artifacts go is deployment configuration, not part of this repository. The registry is
+// supplied at publish time through MAVEN_REPOSITORY_URL, so a public checkout carries no
+// infrastructure addresses and each workflow decides where its artifacts belong.
+ext.snapshotBuild = System.getenv('SNAPSHOT') == 'true'
+ext.publishUrl = System.getenv('MAVEN_REPOSITORY_URL')
+// A snapshot needs a version that is unique per build and sorts between the previous release and the
+// next one. Minutes since the epoch stays inside every registry's version rules; Maven is the
+// exception and keeps -SNAPSHOT, which the repository resolves itself.
+ext.snapshotStamp = (System.currentTimeMillis() / 60000L) as long
+
 def generatedOpenApiSpec = { Project sdkProject ->
     sdkProject.layout.buildDirectory.file('generated/openapi/openapi.yaml')
 }
