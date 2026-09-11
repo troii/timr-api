@@ -1,6 +1,6 @@
 name: Release
 
-# A bare version tag releases the contract. A module/version tag publishes one JVM SDK.
+# A bare version tag releases the contract. A module/version tag publishes one SDK.
 on:
   push:
     tags:
@@ -8,6 +8,7 @@ on:
       - 'java-restclient/[0-9]*.[0-9]*.[0-9]*'
       - 'java-resttemplate/[0-9]*.[0-9]*.[0-9]*'
       - 'kotlin-okhttp/[0-9]*.[0-9]*.[0-9]*'
+      - 'dotnet/[0-9]*.[0-9]*.[0-9]*'
 
 permissions:
   contents: write
@@ -53,7 +54,7 @@ jobs:
               module=${GITHUB_REF_NAME%/*}
               version=${GITHUB_REF_NAME##*/}
               case "$module" in
-                java-restclient | java-resttemplate | kotlin-okhttp) ;;
+                java-restclient | java-resttemplate | kotlin-okhttp | dotnet) ;;
                 *)
                   echo "::error::Publishing is not configured for module '${module}'."
                   exit 1
@@ -98,7 +99,7 @@ jobs:
   sdk:
     name: Publish ${{ needs.resolve.outputs.module }} ${{ needs.resolve.outputs.version }}
     needs: [build-verify, resolve]
-    if: needs.resolve.outputs.kind == 'module'
+    if: needs.resolve.outputs.kind == 'module' && needs.resolve.outputs.module != 'dotnet'
     runs-on: ubuntu-latest
     environment: Release
     env:
@@ -121,3 +122,40 @@ jobs:
 
       - name: Summary
         run: echo "Published \`${MODULE}\` \`${VERSION}\` from \`${GITHUB_REF_NAME}\`." >> "$GITHUB_STEP_SUMMARY"
+
+  dotnet:
+    name: Publish .NET ${{ needs.resolve.outputs.version }}
+    needs: [build-verify, resolve]
+    if: needs.resolve.outputs.kind == 'module' && needs.resolve.outputs.module == 'dotnet'
+    runs-on: ubuntu-latest
+    environment: Release
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      VERSION: ${{ needs.resolve.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            10.x
+      - name: Pack the NuGet publication
+        run: ./gradlew :dotnet:dotnetPack --scan
+      - name: Verify the NuGet package
+        run: python3 sdk/dotnet/verify-package.py "sdk/dotnet/build/nuget/timr.Api.${VERSION}.nupkg" --version "$VERSION"
+      - name: Get a short-lived NuGet publishing key
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+      - name: Publish to NuGet
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        run: ./gradlew :dotnet:publish --scan
+      - name: Summary
+        run: echo "Published \`timr.Api\` \`${VERSION}\` to NuGet from \`${GITHUB_REF_NAME}\`." >> "$GITHUB_STEP_SUMMARY"

@@ -32,7 +32,11 @@ tasks.matching { it.name == 'dotnetRestore' }.configureEach {
 }
 
 
-def packageVersion = project.version
+def snapshot = rootProject.ext.snapshotBuild
+def baseVersion = rootProject.ext.sdkVersions[project.name]
+def snapshotStamp = System.getenv('NUGET_SNAPSHOT_STAMP') ?: rootProject.ext.snapshotStamp
+
+def packageVersion = snapshot ? "${baseVersion}-snapshot.${snapshotStamp}" : baseVersion
 File nugetOutputDirectory = layout.buildDirectory.file("nuget/").get().asFile
 
 tasks.register('dotnetRestore', Exec) {
@@ -89,4 +93,23 @@ tasks.named('assemble').configure { task ->
 
 tasks.named('check').configure { task ->
     task.dependsOn tasks.named('dotnetTest')
+}
+
+tasks.register('publish', Exec) {
+    group = 'publishing'
+    description = 'Publishes the NuGet package to nuget.org.'
+
+    dependsOn tasks.named('dotnetPack')
+    doFirst {
+        if (!System.getenv('NUGET_API_KEY')) {
+            throw new GradleException('NUGET_API_KEY environment variable must be set to publish to nuget.org')
+        }
+    }
+
+    // .NET SDK 10.0.300+ reads NUGET_API_KEY without exposing it in command arguments.
+    commandLine 'dotnet', 'nuget', 'push', "${nugetOutputDirectory}/timr.Api.${packageVersion}.nupkg", '--source', 'https://api.nuget.org/v3/index.json'
+
+    doLast {
+        println "Published 'timr.Api:${packageVersion}' to https://www.nuget.org/packages/timr.Api/${packageVersion}"
+    }
 }

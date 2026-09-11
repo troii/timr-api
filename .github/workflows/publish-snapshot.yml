@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       module:
-        description: Which JVM SDK to publish a snapshot of
+        description: Which SDK to publish a snapshot of
         type: choice
-        options: [java-restclient, java-resttemplate, kotlin-okhttp]
+        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet]
 
 permissions:
   contents: read
@@ -17,9 +17,9 @@ concurrency:
 
 jobs:
   publish:
+    if: inputs.module != 'dotnet'
     name: Publish ${{ inputs.module }} snapshot
     runs-on: ubuntu-latest
-    environment: Release
     env:
       SNAPSHOT: 'true'
     steps:
@@ -35,3 +35,39 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
         run: ./gradlew ":${MODULE}:publishToMavenCentral" --scan
+
+  dotnet:
+    name: Publish .NET snapshot
+    if: inputs.module == 'dotnet'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      SNAPSHOT: 'true'
+      NUGET_SNAPSHOT_STAMP: ${{ github.run_id }}.${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            10.x
+      - name: Test and pack the NuGet snapshot
+        run: ./gradlew :dotnet:dotnetTest :dotnet:dotnetPack --scan
+      - name: Verify the NuGet snapshot
+        run: |
+          version=$(sed -n 's/^dotnet=//p' sdk/versions.properties)
+          python3 sdk/dotnet/verify-package.py sdk/dotnet/build/nuget/*.nupkg --version "$version" --snapshot
+      - name: Get a short-lived NuGet publishing key
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER }}
+      - name: Publish snapshot to NuGet
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        run: ./gradlew :dotnet:publish --scan

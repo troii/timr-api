@@ -6,13 +6,14 @@ on:
       module:
         description: SDK whose release credentials and artifacts to validate
         type: choice
-        options: [java-restclient, java-resttemplate, kotlin-okhttp]
+        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet]
 
 permissions:
   contents: read
 
 jobs:
   jvm:
+    if: inputs.module != 'dotnet'
     name: Validate ${{ inputs.module }} publication
     runs-on: ubuntu-latest
     environment: Release
@@ -48,4 +49,30 @@ jobs:
           path: |
             sdk/${{ inputs.module }}/build/libs/*
             sdk/${{ inputs.module }}/build/publications/mavenJava/*
+          retention-days: 7
+
+  dotnet:
+    name: Validate .NET publication
+    if: inputs.module == 'dotnet'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.x
+            10.x
+      - name: Test and pack the NuGet publication
+        run: ./gradlew :dotnet:dotnetTest :dotnet:dotnetPack --scan
+      - name: Verify the NuGet package
+        run: |
+          version=$(sed -n 's/^dotnet=//p' sdk/versions.properties)
+          python3 sdk/dotnet/verify-package.py "sdk/dotnet/build/nuget/timr.Api.${version}.nupkg" --version "$version"
+      - uses: actions/upload-artifact@v6
+        with:
+          name: dotnet-publication
+          path: sdk/dotnet/build/nuget/*.nupkg
           retention-days: 7
