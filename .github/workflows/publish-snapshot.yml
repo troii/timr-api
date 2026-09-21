@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: publish-snapshot-${{ github.ref }}-${{ inputs.module }}
@@ -20,10 +19,9 @@ jobs:
   publish:
     name: Publish ${{ inputs.module }} snapshot
     runs-on: ubuntu-latest
-    environment: Snapshot
+    environment: Release
     env:
       SNAPSHOT: 'true'
-      MAVEN_REPOSITORY_URL: ${{ vars.MAVEN_SNAPSHOT_URL }}
     steps:
       - uses: actions/checkout@v6
 
@@ -31,13 +29,9 @@ jobs:
         with:
           java-version-file: .sdkmanrc
 
-      - uses: troii-actions/gcp-auth@v1
-        with:
-          workload-identity-provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
-          service-account: ${{ vars.GCP_SERVICE_ACCOUNT }}
-          project: ${{ vars.GCP_PROJECT }}
-
-      - name: Publish snapshot
+      - name: Publish snapshot to Maven Central
         env:
           MODULE: ${{ inputs.module }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
         run: ./gradlew ":${MODULE}:publish" --scan

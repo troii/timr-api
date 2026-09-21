@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.openapi)
     id 'java-library'
-    alias(libs.plugins.google.artifact.registry)
+    alias(libs.plugins.maven.publish)
     id 'maven-publish'
 }
 
@@ -15,6 +15,10 @@ java {
     }
     withSourcesJar()
     withJavadocJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
 }
 
 dependencies {
@@ -120,33 +124,28 @@ publishing {
                     name = 'troii Software GmbH'
                     url = 'https://troii.com'
                 }
+                developers {
+                    developer {
+                        id = 'troii'
+                        name = 'troii Software GmbH'
+                        email = 'info@timr.com'
+                        organization = 'troii Software GmbH'
+                        organizationUrl = 'https://troii.com'
+                    }
+                }
                 scm {
                     url = 'https://github.com/troii/timr-api'
                     connection = 'scm:git:https://github.com/troii/timr-api.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/troii/timr-api.git'
                 }
             }
         }
     }
-
-    repositories {
-        maven {
-            name = 'timr'
-            // A placeholder keeps the publish tasks present; the check below refuses to run them
-            // when the environment has not said where to publish.
-            url = rootProject.ext.publishUrl
-                ?: layout.buildDirectory.dir('unconfigured-repository').get().asFile.toURI()
-        }
-    }
 }
 
-tasks.withType(PublishToMavenRepository).configureEach {
-    doFirst {
-        if (!rootProject.ext.publishUrl) {
-            throw new GradleException('MAVEN_REPOSITORY_URL must be set to publish.')
-        }
-    }
-    doLast {
-        def artifactName = "${publication.groupId}:${publication.artifactId}:${publication.version}"
-        println "Published '${artifactName}' to ${repository.url}"
+mavenPublishing {
+    publishToMavenCentral()
+    if (!snapshot) {
+        signAllPublications()
     }
 }

@@ -1,0 +1,51 @@
+name: Validate Publishing
+
+on:
+  workflow_dispatch:
+    inputs:
+      module:
+        description: SDK whose release credentials and artifacts to validate
+        type: choice
+        options: [java-restclient, java-resttemplate, kotlin-okhttp]
+
+permissions:
+  contents: read
+
+jobs:
+  jvm:
+    name: Validate ${{ inputs.module }} publication
+    runs-on: ubuntu-latest
+    environment: Release
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - name: Sign the Maven publication
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
+        run: ./gradlew ":${{ inputs.module }}:signMavenJavaPublication" --scan
+
+      - name: Verify the release bundle
+        env:
+          MODULE: ${{ inputs.module }}
+        run: |
+          publication="sdk/${MODULE}/build/publications/mavenJava"
+          library="sdk/${MODULE}/build/libs"
+          test -s "${publication}/pom-default.xml"
+          test -s "${publication}/pom-default.xml.asc"
+          test -s "${publication}/module.json"
+          test -s "${publication}/module.json.asc"
+          test "$(find "$library" -maxdepth 1 -name '*.jar' -size +0c | wc -l)" -eq 3
+          test "$(find "$library" -maxdepth 1 -name '*.jar.asc' -size +0c | wc -l)" -eq 3
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: ${{ inputs.module }}-signed-publication
+          path: |
+            sdk/${{ inputs.module }}/build/libs/*
+            sdk/${{ inputs.module }}/build/publications/mavenJava/*
+          retention-days: 7
