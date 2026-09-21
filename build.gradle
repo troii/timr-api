@@ -1,3 +1,10 @@
+// Vanniktech shares a typed service across SDK projects and integrates with Kotlin, so both plugins
+// must use the root classloader rather than separate sibling-project classloaders.
+plugins {
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.maven.publish) apply false
+}
+
 import com.timr.gradle.ApplyOpenApiOverlaysTask
 
 // Generate deterministically in UTC, independent of the machine's local time zone,
