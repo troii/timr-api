@@ -96,14 +96,13 @@ jar {
 }
 
 def snapshot = rootProject.ext.snapshotBuild
-def artifactVersion = snapshot ? "${project.version}-SNAPSHOT" : project.version
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId = project.group
             artifactId = 'timr-api-resttemplate'
-            version = artifactVersion
+            version = project.version
             from components.java
 
             pom {
