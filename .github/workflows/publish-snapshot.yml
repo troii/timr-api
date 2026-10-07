@@ -34,4 +34,14 @@ jobs:
           MODULE: ${{ inputs.module }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        run: ./gradlew ":${MODULE}:publish" --scan
+        run: ./gradlew ":${MODULE}:publishToMavenCentral" --scan
+
+      - name: Verify the published snapshot
+        env:
+          MODULE: ${{ inputs.module }}
+        run: |
+          pom="sdk/${MODULE}/build/publications/mavenJava/pom-default.xml"
+          artifact=$(sed -n 's:.*<artifactId>\([^<]*\)</artifactId>.*:\1:p' "$pom" | head -1)
+          version=$(sed -n 's:.*<version>\([^<]*\)</version>.*:\1:p' "$pom" | head -1)
+          url="https://central.sonatype.com/repository/maven-snapshots/com/timr/${artifact}/${version}/maven-metadata.xml"
+          curl --fail --silent --show-error --retry 18 --retry-all-errors --retry-delay 10 "$url" > snapshot-metadata.xml

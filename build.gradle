@@ -21,6 +21,7 @@ ext.sdkVersions = new Properties().with { versions ->
     file('sdk/versions.properties').withInputStream { versions.load(it) }
     versions
 }
+ext.snapshotBuild = System.getenv('SNAPSHOT') == 'true'
 
 allprojects {
     group = rootProject.group
@@ -31,10 +32,9 @@ subprojects {
     if (!declared) {
         throw new GradleException("sdk/versions.properties declares no version for ${name}")
     }
-    version = declared
+    version = rootProject.ext.snapshotBuild ? "${declared}-SNAPSHOT" : declared
 }
 
-ext.snapshotBuild = System.getenv('SNAPSHOT') == 'true'
 // A snapshot needs a version that is unique per build and sorts between the previous release and the
 // next one. Minutes since the epoch stays inside every registry's version rules; Maven is the
 // exception and keeps -SNAPSHOT, which the repository resolves itself.
