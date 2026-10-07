@@ -1,7 +1,11 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id 'java-library'
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.openapi)
+    alias(libs.plugins.maven.publish)
+    id 'maven-publish'
 }
 repositories {
     mavenCentral()
@@ -11,12 +15,17 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(25)
     }
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     withSourcesJar()
     withJavadocJar()
 }
 
 kotlin {
     jvmToolchain(25)
+    compilerOptions {
+        jvmTarget = JvmTarget.JVM_17
+    }
 }
 
 dependencies {
@@ -63,4 +72,55 @@ tasks.matching {
     it.name in ['compileKotlin', 'compileTestKotlin', 'processResources', 'processTestResources', 'sourcesJar', 'javadoc']
 }.configureEach {
     dependsOn tasks.named('openApiGenerate')
+}
+
+def snapshot = rootProject.ext.snapshotBuild
+def artifactVersion = snapshot ? "${project.version}-SNAPSHOT" : project.version
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = project.group
+            artifactId = 'timr-api-kotlin'
+            version = artifactVersion
+            from components.java
+
+            pom {
+                name = 'timr-api-kotlin'
+                description = 'Official Kotlin client for the timr API, built on OkHttp with coroutines.'
+                url = 'https://developer.timr.com'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                organization {
+                    name = 'troii Software GmbH'
+                    url = 'https://troii.com'
+                }
+                developers {
+                    developer {
+                        id = 'troii'
+                        name = 'troii Software GmbH'
+                        email = 'info@timr.com'
+                        organization = 'troii Software GmbH'
+                        organizationUrl = 'https://troii.com'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/troii/timr-api'
+                    connection = 'scm:git:https://github.com/troii/timr-api.git'
+                    developerConnection = 'scm:git:ssh://git@github.com/troii/timr-api.git'
+                }
+            }
+        }
+    }
+}
+
+mavenPublishing {
+    publishToMavenCentral()
+    if (!snapshot) {
+        signAllPublications()
+    }
 }

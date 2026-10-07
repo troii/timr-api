@@ -43,17 +43,18 @@ SDKs live in this repository at one revision. The `User-Agent` names the SDK and
 
 ## Publishing
 
-A release of this repository is a release of the contract: the tag is the contract version, bare, and
-the GitHub release is the one to watch for API changes. SDKs are not released by tagging here; each
-publishes to its registry at its own version.
+A release is a tag. A bare version — `1.4.0` — releases the contract and is the GitHub release to
+watch for API changes. A JVM module tag — `java-restclient/1.2.0` — publishes that one SDK at that
+version and nothing else. Publishing for the other SDKs is not configured yet.
 
 ## Release types
 
-A contract release always carries every SDK with it, regenerated and republished, so no client is left
-describing a contract that moved. An SDK release does not imply a contract release.
+A contract update regenerates every SDK. A contract release is accompanied by new releases of the
+JVM SDKs; publishing for the other SDKs is not configured yet. An SDK release does not imply a
+contract release.
 
 | Change | Version affected | Published |
 | --- | --- | --- |
-| The contract changes | specification minor or patch, SDK minor | documentation, release notes, every SDK |
+| The contract changes | specification minor or patch, SDK minor | documentation, release notes, JVM SDKs |
 | A guide or the site changes | none | documentation |
 | A generator, template or packaging fix | SDK patch | the SDKs concerned |

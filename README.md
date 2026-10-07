@@ -67,7 +67,20 @@ its own where a language needs something the others do not:
 
 The generated sources are committed, so the library you read here is exactly the one you get. They
 are produced by [OpenAPI Generator](https://openapi-generator.tech) and regenerated whenever the
-specification changes; every artifact carries the version of the specification it was built from.
+specification changes. The release commit records exactly which contract each SDK was built from.
+
+### JVM SDKs
+
+The JVM clients target Java 17 and are published to Maven Central under these coordinates:
+
+| Client | Coordinate |
+| --- | --- |
+| Java, Spring `RestClient` | `com.timr:timr-api-restclient:<version>` |
+| Java, Spring `RestTemplate` | `com.timr:timr-api-resttemplate:<version>` |
+| Kotlin, OkHttp and coroutines | `com.timr:timr-api-kotlin:<version>` |
+
+Each client is versioned independently. Use the version shown in `sdk/versions.properties` or the
+latest matching module tag described in [VERSIONING.md](VERSIONING.md).
 
 ## Local development
 
