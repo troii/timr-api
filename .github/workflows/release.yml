@@ -1,0 +1,123 @@
+name: Release
+
+# A bare version tag releases the contract. A module/version tag publishes one JVM SDK.
+on:
+  push:
+    tags:
+      - '[0-9]*.[0-9]*.[0-9]*'
+      - 'java-restclient/[0-9]*.[0-9]*.[0-9]*'
+      - 'java-resttemplate/[0-9]*.[0-9]*.[0-9]*'
+      - 'kotlin-okhttp/[0-9]*.[0-9]*.[0-9]*'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-verify:
+    name: Build & Verify
+    permissions:
+      contents: read
+      checks: write
+    uses: ./.github/workflows/sdk.yml
+
+  resolve:
+    name: Resolve tag
+    runs-on: ubuntu-latest
+    outputs:
+      kind: ${{ steps.tag.outputs.kind }}
+      module: ${{ steps.tag.outputs.module }}
+      version: ${{ steps.tag.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      # A release must point to history that has landed on main.
+      - name: Verify the tag is on main
+        run: |
+          git fetch -q origin main
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::${GITHUB_REF_NAME} points at ${GITHUB_SHA}, which is not on main."
+            exit 1
+          fi
+
+      - name: Read the tag
+        id: tag
+        run: |
+          case "$GITHUB_REF_NAME" in
+            */*)
+              module=${GITHUB_REF_NAME%/*}
+              version=${GITHUB_REF_NAME##*/}
+              case "$module" in
+                java-restclient | java-resttemplate | kotlin-okhttp) ;;
+                *)
+                  echo "::error::Publishing is not configured for module '${module}'."
+                  exit 1
+                  ;;
+              esac
+              declared=$(sed -n "s/^${module}=//p" sdk/versions.properties)
+              if [ "$declared" != "$version" ]; then
+                echo "::error::Tag says ${module} ${version}, sdk/versions.properties says ${declared}. Bump first, tag second."
+                exit 1
+              fi
+              echo "kind=module" >> "$GITHUB_OUTPUT"
+              echo "module=$module" >> "$GITHUB_OUTPUT"
+              echo "version=$version" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              declared=$(sed -n 's/^  version: //p' spec/openapi.yaml | head -1)
+              if [ "$declared" != "$GITHUB_REF_NAME" ]; then
+                echo "::error::Tag says ${GITHUB_REF_NAME}, spec/openapi.yaml says ${declared}."
+                exit 1
+              fi
+              echo "kind=contract" >> "$GITHUB_OUTPUT"
+              echo "version=$GITHUB_REF_NAME" >> "$GITHUB_OUTPUT"
+              ;;
+          esac
+
+  contract:
+    name: Release the contract
+    needs: [build-verify, resolve]
+    if: needs.resolve.outputs.kind == 'contract'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.resolve.outputs.version }}
+        run: |
+          gh release create "$VERSION" \
+            --title "timr API $VERSION" \
+            --notes "Release notes: https://developer.timr.com — the specification at this version is spec/openapi.yaml."
+
+  sdk:
+    name: Publish ${{ needs.resolve.outputs.module }} ${{ needs.resolve.outputs.version }}
+    needs: [build-verify, resolve]
+    if: needs.resolve.outputs.kind == 'module'
+    runs-on: ubuntu-latest
+    environment: Release
+    env:
+      MODULE: ${{ needs.resolve.outputs.module }}
+      VERSION: ${{ needs.resolve.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+
+      - name: Publish to Maven Central
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_SIGNING_PASSWORD }}
+        run: ./gradlew ":${MODULE}:publishAndReleaseToMavenCentral" --scan
+
+      - name: Summary
+        run: echo "Published \`${MODULE}\` \`${VERSION}\` from \`${GITHUB_REF_NAME}\`." >> "$GITHUB_STEP_SUMMARY"
