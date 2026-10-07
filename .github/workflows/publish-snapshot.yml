@@ -34,4 +34,4 @@ jobs:
           MODULE: ${{ inputs.module }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        run: ./gradlew ":${MODULE}:publish" --scan
+        run: ./gradlew ":${MODULE}:publishToMavenCentral" --scan
