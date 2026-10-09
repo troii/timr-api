@@ -33,12 +33,21 @@ import {
     SortDirectionToJSON,
 } from '../models/SortDirection';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface FetchDriveLogCategoriesRequest {
     pageToken?: string;
     limit?: number;
     sortDirection?: SortDirection;
     sortBy?: DriveLogCategoriesSortColumn;
 }
+
+export type FetchDriveLogCategoriesQuery = Pick<
+    FetchDriveLogCategoriesRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetDriveLogCategoryRequest {
     id: string;
@@ -109,8 +118,8 @@ export class DriveLogCategoryApi extends runtime.BaseAPI {
      * Lists the Drive Log Categories the authenticated user or API token can access.
      * List Drive Log Categories
      */
-    async fetchDriveLogCategories(requestParameters: FetchDriveLogCategoriesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLogCategoriesPage> {
-        const response = await this.fetchDriveLogCategoriesRaw(requestParameters, initOverrides);
+    async fetchDriveLogCategories(...[query, initOverrides]: QueryArguments<FetchDriveLogCategoriesQuery>): Promise<DriveLogCategoriesPage> {
+        const response = await this.fetchDriveLogCategoriesRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -166,8 +175,8 @@ export class DriveLogCategoryApi extends runtime.BaseAPI {
      * Returns a single Drive Log Category by its ID.
      * Get a Drive Log Category
      */
-    async getDriveLogCategory(requestParameters: GetDriveLogCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLogCategory> {
-        const response = await this.getDriveLogCategoryRaw(requestParameters, initOverrides);
+    async getDriveLogCategory(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLogCategory> {
+        const response = await this.getDriveLogCategoryRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 

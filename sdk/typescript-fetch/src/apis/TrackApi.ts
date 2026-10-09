@@ -18,6 +18,10 @@ import {
     WaypointToJSON,
 } from '../models/Waypoint';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateTrackRequest {
     id: string;
     waypoint: Array<Waypoint>;
@@ -103,8 +107,8 @@ export class TrackApi extends runtime.BaseAPI {
      * Stores a Track for the Drive Log from the waypoints in the request body. A Drive Log holds at most one Track.
      * Create a Drive Log\'s Track
      */
-    async createTrack(requestParameters: CreateTrackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Waypoint>> {
-        const response = await this.createTrackRaw(requestParameters, initOverrides);
+    async createTrack(id: string, waypoint: Array<Waypoint>, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Waypoint>> {
+        const response = await this.createTrackRaw({ id: id, waypoint: waypoint, }, initOverrides);
         return await response.value();
     }
 
@@ -160,8 +164,8 @@ export class TrackApi extends runtime.BaseAPI {
      * Deletes the Drive Log\'s Track. The Drive Log itself is kept.
      * Delete a Drive Log\'s Track
      */
-    async deleteTrack(requestParameters: DeleteTrackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteTrackRaw(requestParameters, initOverrides);
+    async deleteTrack(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTrackRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -216,8 +220,8 @@ export class TrackApi extends runtime.BaseAPI {
      * Returns the recorded Track of the Drive Log. Responds with 404 when no Track was recorded.
      * Get a Drive Log\'s Track
      */
-    async getTrack(requestParameters: GetTrackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Waypoint>> {
-        const response = await this.getTrackRaw(requestParameters, initOverrides);
+    async getTrack(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Waypoint>> {
+        const response = await this.getTrackRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -283,8 +287,8 @@ export class TrackApi extends runtime.BaseAPI {
      * Replaces the Drive Log\'s Track with the waypoints in the request body.
      * Replace a Drive Log\'s Track
      */
-    async updateTrack(requestParameters: UpdateTrackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Waypoint>> {
-        const response = await this.updateTrackRaw(requestParameters, initOverrides);
+    async updateTrack(id: string, waypoint: Array<Waypoint>, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Waypoint>> {
+        const response = await this.updateTrackRaw({ id: id, waypoint: waypoint, }, initOverrides);
         return await response.value();
     }
 

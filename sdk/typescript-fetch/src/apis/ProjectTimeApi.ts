@@ -58,6 +58,10 @@ import {
     SortDirectionToJSON,
 } from '../models/SortDirection';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateProjectTimeRequest {
     projectTimeCreate: ProjectTimeCreate;
 }
@@ -73,6 +77,11 @@ export interface FetchDeletedProjectTimesRequest {
     sortDirection?: SortDirection;
     sortBy?: DeletedEntrySortColumn;
 }
+
+export type FetchDeletedProjectTimesQuery = Pick<
+    FetchDeletedProjectTimesRequest,
+    'lastModifiedAfter' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface FetchProjectTimesRequest {
     notes?: string;
@@ -90,6 +99,11 @@ export interface FetchProjectTimesRequest {
     sortDirection?: SortDirection;
     sortBy?: ProjectTimesSortColumn;
 }
+
+export type FetchProjectTimesQuery = Pick<
+    FetchProjectTimesRequest,
+    'notes' | 'startFrom' | 'startTo' | 'lastModifiedAfter' | 'task' | 'traverseTaskTree' | 'billable' | 'statuses' | 'users' | 'changed' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetProjectTimeRequest {
     id: string;
@@ -159,8 +173,8 @@ export class ProjectTimeApi extends runtime.BaseAPI {
      * Creates a Project Time from the data in the request body.
      * Create a Project Time
      */
-    async createProjectTime(requestParameters: CreateProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
-        const response = await this.createProjectTimeRaw(requestParameters, initOverrides);
+    async createProjectTime(projectTimeCreate: ProjectTimeCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
+        const response = await this.createProjectTimeRaw({ projectTimeCreate: projectTimeCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -216,8 +230,8 @@ export class ProjectTimeApi extends runtime.BaseAPI {
      * Deletes the Project Time.
      * Delete a Project Time
      */
-    async deleteProjectTime(requestParameters: DeleteProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteProjectTimeRaw(requestParameters, initOverrides);
+    async deleteProjectTime(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteProjectTimeRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -284,8 +298,8 @@ export class ProjectTimeApi extends runtime.BaseAPI {
      * Lists Project Times that were deleted, so a client holding a local copy can reconcile.
      * List deleted Project Times
      */
-    async fetchDeletedProjectTimes(requestParameters: FetchDeletedProjectTimesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletedEntryWithMetadataPage> {
-        const response = await this.fetchDeletedProjectTimesRaw(requestParameters, initOverrides);
+    async fetchDeletedProjectTimes(...[query, initOverrides]: QueryArguments<FetchDeletedProjectTimesQuery>): Promise<DeletedEntryWithMetadataPage> {
+        const response = await this.fetchDeletedProjectTimesRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -389,8 +403,8 @@ export class ProjectTimeApi extends runtime.BaseAPI {
      * Lists the Project Times the authenticated user or API token can access.
      * List Project Times
      */
-    async fetchProjectTimes(requestParameters: FetchProjectTimesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTimesPage> {
-        const response = await this.fetchProjectTimesRaw(requestParameters, initOverrides);
+    async fetchProjectTimes(...[query, initOverrides]: QueryArguments<FetchProjectTimesQuery>): Promise<ProjectTimesPage> {
+        const response = await this.fetchProjectTimesRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -446,8 +460,8 @@ export class ProjectTimeApi extends runtime.BaseAPI {
      * Returns a single Project Time by its ID.
      * Get a Project Time
      */
-    async getProjectTime(requestParameters: GetProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
-        const response = await this.getProjectTimeRaw(requestParameters, initOverrides);
+    async getProjectTime(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
+        const response = await this.getProjectTimeRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -513,8 +527,8 @@ export class ProjectTimeApi extends runtime.BaseAPI {
      * Updates the Project Time with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a Project Time
      */
-    async updateProjectTime(requestParameters: UpdateProjectTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
-        const response = await this.updateProjectTimeRaw(requestParameters, initOverrides);
+    async updateProjectTime(id: string, projectTimeUpdate: ProjectTimeUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<ProjectTime> {
+        const response = await this.updateProjectTimeRaw({ id: id, projectTimeUpdate: projectTimeUpdate, }, initOverrides);
         return await response.value();
     }
 

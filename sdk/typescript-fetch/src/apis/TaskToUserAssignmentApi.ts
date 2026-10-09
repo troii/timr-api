@@ -38,6 +38,10 @@ import {
     TaskToUserAssignmentsSortColumnToJSON,
 } from '../models/TaskToUserAssignmentsSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface DeleteTaskToUserAssignmentRequest {
     taskId: string;
     userId: string;
@@ -50,6 +54,11 @@ export interface FetchTaskToUserAssignmentsRequest {
     sortDirection?: SortDirection;
     sortBy?: TaskToUserAssignmentsSortColumn;
 }
+
+export type FetchTaskToUserAssignmentsQuery = Pick<
+    FetchTaskToUserAssignmentsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetTaskToUserAssignmentRequest {
     taskId: string;
@@ -127,8 +136,8 @@ export class TaskToUserAssignmentApi extends runtime.BaseAPI {
      * Removes the User\'s assignment to the Task.
      * Delete a Task to User Assignment
      */
-    async deleteTaskToUserAssignment(requestParameters: DeleteTaskToUserAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteTaskToUserAssignmentRaw(requestParameters, initOverrides);
+    async deleteTaskToUserAssignment(taskId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTaskToUserAssignmentRaw({ taskId: taskId, userId: userId, }, initOverrides);
     }
 
     /**
@@ -199,8 +208,8 @@ export class TaskToUserAssignmentApi extends runtime.BaseAPI {
      * Lists the Users assigned to the Task, together with the budget and recording settings of each assignment.
      * List Task to User Assignments
      */
-    async fetchTaskToUserAssignments(requestParameters: FetchTaskToUserAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToUserAssignmentsPage> {
-        const response = await this.fetchTaskToUserAssignmentsRaw(requestParameters, initOverrides);
+    async fetchTaskToUserAssignments(taskId: string, ...[query, initOverrides]: QueryArguments<FetchTaskToUserAssignmentsQuery>): Promise<TaskToUserAssignmentsPage> {
+        const response = await this.fetchTaskToUserAssignmentsRaw({ ...query, taskId: taskId, }, initOverrides);
         return await response.value();
     }
 
@@ -264,8 +273,8 @@ export class TaskToUserAssignmentApi extends runtime.BaseAPI {
      * Returns the assignment of a single User to the Task.
      * Get a Task to User Assignment
      */
-    async getTaskToUserAssignment(requestParameters: GetTaskToUserAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToUserAssignment> {
-        const response = await this.getTaskToUserAssignmentRaw(requestParameters, initOverrides);
+    async getTaskToUserAssignment(taskId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToUserAssignment> {
+        const response = await this.getTaskToUserAssignmentRaw({ taskId: taskId, userId: userId, }, initOverrides);
         return await response.value();
     }
 
@@ -339,8 +348,8 @@ export class TaskToUserAssignmentApi extends runtime.BaseAPI {
      * Assigns the User to the Task, or updates the existing assignment. Returns 201 when the assignment is created and 200 when it already existed. On update, only the properties present in the request body change.
      * Create or update a Task to User Assignment
      */
-    async upsertTaskToUserAssignment(requestParameters: UpsertTaskToUserAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToUserAssignment> {
-        const response = await this.upsertTaskToUserAssignmentRaw(requestParameters, initOverrides);
+    async upsertTaskToUserAssignment(taskId: string, userId: string, taskToUserAssignmentUpsert: TaskToUserAssignmentUpsert, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToUserAssignment> {
+        const response = await this.upsertTaskToUserAssignmentRaw({ taskId: taskId, userId: userId, taskToUserAssignmentUpsert: taskToUserAssignmentUpsert, }, initOverrides);
         return await response.value();
     }
 

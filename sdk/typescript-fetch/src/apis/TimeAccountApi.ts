@@ -18,6 +18,10 @@ import {
     AccountsToJSON,
 } from '../models/Accounts';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface GetUserAccountsRequest {
     id: string;
     date: Date;
@@ -97,8 +101,8 @@ export class TimeAccountApi extends runtime.BaseAPI {
      * Returns all of the User\'s account balances as of the given day, including overtime and surcharge accounts.
      * Get a User\'s accounts
      */
-    async getUserAccounts(requestParameters: GetUserAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
-        const response = await this.getUserAccountsRaw(requestParameters, initOverrides);
+    async getUserAccounts(id: string, date: Date, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
+        const response = await this.getUserAccountsRaw({ id: id, date: date, }, initOverrides);
         return await response.value();
     }
 
@@ -166,8 +170,8 @@ export class TimeAccountApi extends runtime.BaseAPI {
      * Returns the User\'s working time account balances as of the given day.
      * Get a User\'s working time accounts
      */
-    async getUserWorkingTimeAccounts(requestParameters: GetUserWorkingTimeAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
-        const response = await this.getUserWorkingTimeAccountsRaw(requestParameters, initOverrides);
+    async getUserWorkingTimeAccounts(id: string, date: Date, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
+        const response = await this.getUserWorkingTimeAccountsRaw({ id: id, date: date, }, initOverrides);
         return await response.value();
     }
 

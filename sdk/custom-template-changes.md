@@ -1,6 +1,6 @@
 # Custom OpenAPI Generator templates
 
-The Java, Swift and Python SDK modules override some of the generator's Mustache templates. This
+The Java, TypeScript, Swift and Python SDK modules override some of the generator's Mustache templates. This
 file records only what **differs** from upstream, so a version bump can be reconciled by diffing our
 copy against the matching upstream file and checking each difference below still applies.
 
@@ -129,6 +129,12 @@ Upstream baseline: `python/*.mustache`.
   `pyproject.mustache` hardcodes `>=3.9`, so the two shipped files contradict each other and neither
   is configurable. The generated code is 3.9-compatible — no PEP 604 unions, `typing_extensions.Self`
   rather than `typing.Self` — so 3.9 is the truthful bound.
+
+## TypeScript
+
+Upstream baseline: `typescript-fetch/apis.mustache` from the generator jar. The module uses `useSingleRequestParameter=false` with a custom public calling convention: path parameters and bodies are direct arguments, while query parameters form an operation-specific `Query` type. `Pick<Request, query keys>` reuses the request's field types and optionality. `operationParameters.mustache` renders the signature and `operationRequest.mustache` combines its arguments for the existing `Raw` method. Serialization, validation and response decoding remain upstream.
+
+`QueryArguments<T>` makes the query object optional only when all its properties are optional. Required query fields keep both the object and those fields required. The method's final argument remains `initOverrides`; the query object contains only query parameters. `npm test` covers the public types and request behavior.
 
 ## Verifying a refork
 

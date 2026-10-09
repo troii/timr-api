@@ -43,12 +43,21 @@ import {
     SortDirectionToJSON,
 } from '../models/SortDirection';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface FetchHolidayCalendarsRequest {
     pageToken?: string;
     limit?: number;
     sortDirection?: SortDirection;
     sortBy?: HolidayCalendarsSortColumn;
 }
+
+export type FetchHolidayCalendarsQuery = Pick<
+    FetchHolidayCalendarsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface FetchHolidaysRequest {
     id: string;
@@ -57,6 +66,11 @@ export interface FetchHolidaysRequest {
     sortDirection?: SortDirection;
     sortBy?: HolidaysSortColumn;
 }
+
+export type FetchHolidaysQuery = Pick<
+    FetchHolidaysRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetHolidayCalendarRequest {
     id: string;
@@ -127,8 +141,8 @@ export class HolidayCalendarApi extends runtime.BaseAPI {
      * Lists the Holiday Calendars the authenticated user or API token can access.
      * List Holiday Calendars
      */
-    async fetchHolidayCalendars(requestParameters: FetchHolidayCalendarsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HolidayCalendarsPage> {
-        const response = await this.fetchHolidayCalendarsRaw(requestParameters, initOverrides);
+    async fetchHolidayCalendars(...[query, initOverrides]: QueryArguments<FetchHolidayCalendarsQuery>): Promise<HolidayCalendarsPage> {
+        const response = await this.fetchHolidayCalendarsRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -200,8 +214,8 @@ export class HolidayCalendarApi extends runtime.BaseAPI {
      * Lists the Holidays in the Holiday Calendar.
      * List Holidays
      */
-    async fetchHolidays(requestParameters: FetchHolidaysRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HolidaysPage> {
-        const response = await this.fetchHolidaysRaw(requestParameters, initOverrides);
+    async fetchHolidays(id: string, ...[query, initOverrides]: QueryArguments<FetchHolidaysQuery>): Promise<HolidaysPage> {
+        const response = await this.fetchHolidaysRaw({ ...query, id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -257,8 +271,8 @@ export class HolidayCalendarApi extends runtime.BaseAPI {
      * Returns a single Holiday Calendar by its ID.
      * Get a Holiday Calendar
      */
-    async getHolidayCalendar(requestParameters: GetHolidayCalendarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HolidayCalendarPartial> {
-        const response = await this.getHolidayCalendarRaw(requestParameters, initOverrides);
+    async getHolidayCalendar(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<HolidayCalendarPartial> {
+        const response = await this.getHolidayCalendarRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 

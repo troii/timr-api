@@ -112,6 +112,7 @@ from the repository root to build `sdk/typescript-fetch/build/npm/`. Packing sta
 and `package-lock.json` from `sdk/versions.properties`; snapshot builds add the prerelease suffix.
 **Validate Publishing**, with `module=typescript-fetch`, tests and packs the SDK and attaches the
 tarball without uploading it. The package contains compiled JavaScript, declarations, README and license.
+The [npm README](sdk/typescript-fetch/README.md) is hand-maintained and preserved during generation. TypeScript methods accept path IDs and bodies directly, with query parameters in a typed options object: `getCar(id)`, `createCar(body)` and `fetchCars({ pageToken, limit })`. The API templates implement this convention; `npm test` checks request serialization and public types.
 
 ### Publishing approval and credentials
 

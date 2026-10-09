@@ -58,6 +58,10 @@ import {
     WorkScheduleModelToJSON,
 } from '../models/WorkScheduleModel';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateUserRequest {
     userCreate: UserCreate;
 }
@@ -70,6 +74,11 @@ export interface FetchUserTeamLeadershipsRequest {
     sortBy?: TeamsSortColumn;
 }
 
+export type FetchUserTeamLeadershipsQuery = Pick<
+    FetchUserTeamLeadershipsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
+
 export interface FetchUserTeamMembershipsRequest {
     id: string;
     pageToken?: string;
@@ -77,6 +86,11 @@ export interface FetchUserTeamMembershipsRequest {
     sortDirection?: SortDirection;
     sortBy?: TeamsSortColumn;
 }
+
+export type FetchUserTeamMembershipsQuery = Pick<
+    FetchUserTeamMembershipsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface FetchUsersRequest {
     name?: string;
@@ -91,6 +105,11 @@ export interface FetchUsersRequest {
     sortDirection?: SortDirection;
     sortBy?: UsersSortColumn;
 }
+
+export type FetchUsersQuery = Pick<
+    FetchUsersRequest,
+    'name' | 'entryDateFrom' | 'entryDateTo' | 'resignDateFrom' | 'resignDateTo' | 'resigned' | 'employeeNumber' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetUserRequest {
     id: string;
@@ -164,8 +183,8 @@ export class UserApi extends runtime.BaseAPI {
      * Creates a User from the data in the request body.
      * Create a User
      */
-    async createUser(requestParameters: CreateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
-        const response = await this.createUserRaw(requestParameters, initOverrides);
+    async createUser(userCreate: UserCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
+        const response = await this.createUserRaw({ userCreate: userCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -237,8 +256,8 @@ export class UserApi extends runtime.BaseAPI {
      * Lists the Teams the User leads.
      * List a User\'s Team leaderships
      */
-    async fetchUserTeamLeaderships(requestParameters: FetchUserTeamLeadershipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamsPartialPage> {
-        const response = await this.fetchUserTeamLeadershipsRaw(requestParameters, initOverrides);
+    async fetchUserTeamLeaderships(id: string, ...[query, initOverrides]: QueryArguments<FetchUserTeamLeadershipsQuery>): Promise<TeamsPartialPage> {
+        const response = await this.fetchUserTeamLeadershipsRaw({ ...query, id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -310,8 +329,8 @@ export class UserApi extends runtime.BaseAPI {
      * Lists the Teams the User is a member of.
      * List a User\'s Team memberships
      */
-    async fetchUserTeamMemberships(requestParameters: FetchUserTeamMembershipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamsPartialPage> {
-        const response = await this.fetchUserTeamMembershipsRaw(requestParameters, initOverrides);
+    async fetchUserTeamMemberships(id: string, ...[query, initOverrides]: QueryArguments<FetchUserTeamMembershipsQuery>): Promise<TeamsPartialPage> {
+        const response = await this.fetchUserTeamMembershipsRaw({ ...query, id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -403,8 +422,8 @@ export class UserApi extends runtime.BaseAPI {
      * Lists the Users the authenticated user or API token can access.
      * List Users
      */
-    async fetchUsers(requestParameters: FetchUsersRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsersPage> {
-        const response = await this.fetchUsersRaw(requestParameters, initOverrides);
+    async fetchUsers(...[query, initOverrides]: QueryArguments<FetchUsersQuery>): Promise<UsersPage> {
+        const response = await this.fetchUsersRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -460,8 +479,8 @@ export class UserApi extends runtime.BaseAPI {
      * Returns a single User by its ID.
      * Get a User
      */
-    async getUser(requestParameters: GetUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
-        const response = await this.getUserRaw(requestParameters, initOverrides);
+    async getUser(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
+        const response = await this.getUserRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -517,8 +536,8 @@ export class UserApi extends runtime.BaseAPI {
      * Returns the Work Schedule Model assigned to the User, with all durations expressed in minutes.
      * Get a User\'s Work Schedule Model
      */
-    async getUserWorkScheduleModel(requestParameters: GetUserWorkScheduleModelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleModel> {
-        const response = await this.getUserWorkScheduleModelRaw(requestParameters, initOverrides);
+    async getUserWorkScheduleModel(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleModel> {
+        const response = await this.getUserWorkScheduleModelRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -584,8 +603,8 @@ export class UserApi extends runtime.BaseAPI {
      * Updates the User with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a User
      */
-    async updateUser(requestParameters: UpdateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
-        const response = await this.updateUserRaw(requestParameters, initOverrides);
+    async updateUser(id: string, userUpdate: UserUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<User> {
+        const response = await this.updateUserRaw({ id: id, userUpdate: userUpdate, }, initOverrides);
         return await response.value();
     }
 

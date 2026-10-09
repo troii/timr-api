@@ -33,6 +33,10 @@ import {
     TaskToLeaderAssignmentsSortColumnToJSON,
 } from '../models/TaskToLeaderAssignmentsSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateTaskToLeaderAssignmentRequest {
     taskId: string;
     userId: string;
@@ -50,6 +54,11 @@ export interface FetchTaskToLeaderAssignmentsRequest {
     sortDirection?: SortDirection;
     sortBy?: TaskToLeaderAssignmentsSortColumn;
 }
+
+export type FetchTaskToLeaderAssignmentsQuery = Pick<
+    FetchTaskToLeaderAssignmentsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetTaskToLeaderAssignmentRequest {
     taskId: string;
@@ -121,8 +130,8 @@ export class TaskToLeaderAssignmentApi extends runtime.BaseAPI {
      * Assigns the User to the Task as a leader. Returns 201 when the assignment is created and 200 when it already existed.
      * Create a Task to Leader Assignment
      */
-    async createTaskToLeaderAssignment(requestParameters: CreateTaskToLeaderAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToLeaderAssignment> {
-        const response = await this.createTaskToLeaderAssignmentRaw(requestParameters, initOverrides);
+    async createTaskToLeaderAssignment(taskId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToLeaderAssignment> {
+        const response = await this.createTaskToLeaderAssignmentRaw({ taskId: taskId, userId: userId, }, initOverrides);
         return await response.value();
     }
 
@@ -186,8 +195,8 @@ export class TaskToLeaderAssignmentApi extends runtime.BaseAPI {
      * Removes the User\'s leader assignment to the Task.
      * Delete a Task to Leader Assignment
      */
-    async deleteTaskToLeaderAssignment(requestParameters: DeleteTaskToLeaderAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteTaskToLeaderAssignmentRaw(requestParameters, initOverrides);
+    async deleteTaskToLeaderAssignment(taskId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTaskToLeaderAssignmentRaw({ taskId: taskId, userId: userId, }, initOverrides);
     }
 
     /**
@@ -258,8 +267,8 @@ export class TaskToLeaderAssignmentApi extends runtime.BaseAPI {
      * Lists the Users assigned to the Task as leaders.
      * List Task to Leader Assignments
      */
-    async fetchTaskToLeaderAssignments(requestParameters: FetchTaskToLeaderAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToLeaderAssignmentsPage> {
-        const response = await this.fetchTaskToLeaderAssignmentsRaw(requestParameters, initOverrides);
+    async fetchTaskToLeaderAssignments(taskId: string, ...[query, initOverrides]: QueryArguments<FetchTaskToLeaderAssignmentsQuery>): Promise<TaskToLeaderAssignmentsPage> {
+        const response = await this.fetchTaskToLeaderAssignmentsRaw({ ...query, taskId: taskId, }, initOverrides);
         return await response.value();
     }
 
@@ -323,8 +332,8 @@ export class TaskToLeaderAssignmentApi extends runtime.BaseAPI {
      * Returns the leader assignment of a single User to the Task.
      * Get a Task to Leader Assignment
      */
-    async getTaskToLeaderAssignment(requestParameters: GetTaskToLeaderAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToLeaderAssignment> {
-        const response = await this.getTaskToLeaderAssignmentRaw(requestParameters, initOverrides);
+    async getTaskToLeaderAssignment(taskId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToLeaderAssignment> {
+        const response = await this.getTaskToLeaderAssignmentRaw({ taskId: taskId, userId: userId, }, initOverrides);
         return await response.value();
     }
 

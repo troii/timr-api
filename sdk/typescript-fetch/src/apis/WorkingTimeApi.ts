@@ -63,6 +63,10 @@ import {
     WorkingTimesSortColumnToJSON,
 } from '../models/WorkingTimesSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateWorkingTimeRequest {
     workingTimeCreate: WorkingTimeCreate;
 }
@@ -79,6 +83,11 @@ export interface FetchDeletedWorkingTimesRequest {
     sortBy?: DeletedEntrySortColumn;
 }
 
+export type FetchDeletedWorkingTimesQuery = Pick<
+    FetchDeletedWorkingTimesRequest,
+    'lastModifiedAfter' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
+
 export interface FetchWorkingTimesRequest {
     notes?: string;
     startFrom?: Date;
@@ -94,6 +103,11 @@ export interface FetchWorkingTimesRequest {
     sortDirection?: SortDirection;
     sortBy?: WorkingTimesSortColumn;
 }
+
+export type FetchWorkingTimesQuery = Pick<
+    FetchWorkingTimesRequest,
+    'notes' | 'startFrom' | 'startTo' | 'lastModifiedAfter' | 'workingTimeTypes' | 'workingTimeTypeCategories' | 'statuses' | 'users' | 'changed' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetWorkingTimeRequest {
     id: string;
@@ -163,8 +177,8 @@ export class WorkingTimeApi extends runtime.BaseAPI {
      * Creates a Working Time from the data in the request body.
      * Create a Working Time
      */
-    async createWorkingTime(requestParameters: CreateWorkingTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTime> {
-        const response = await this.createWorkingTimeRaw(requestParameters, initOverrides);
+    async createWorkingTime(workingTimeCreate: WorkingTimeCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTime> {
+        const response = await this.createWorkingTimeRaw({ workingTimeCreate: workingTimeCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -220,8 +234,8 @@ export class WorkingTimeApi extends runtime.BaseAPI {
      * Deletes the Working Time.
      * Delete a Working Time
      */
-    async deleteWorkingTime(requestParameters: DeleteWorkingTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteWorkingTimeRaw(requestParameters, initOverrides);
+    async deleteWorkingTime(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteWorkingTimeRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -288,8 +302,8 @@ export class WorkingTimeApi extends runtime.BaseAPI {
      * Lists Working Times that were deleted, so a client holding a local copy can reconcile.
      * List deleted Working Times
      */
-    async fetchDeletedWorkingTimes(requestParameters: FetchDeletedWorkingTimesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletedEntryWithMetadataPage> {
-        const response = await this.fetchDeletedWorkingTimesRaw(requestParameters, initOverrides);
+    async fetchDeletedWorkingTimes(...[query, initOverrides]: QueryArguments<FetchDeletedWorkingTimesQuery>): Promise<DeletedEntryWithMetadataPage> {
+        const response = await this.fetchDeletedWorkingTimesRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -389,8 +403,8 @@ export class WorkingTimeApi extends runtime.BaseAPI {
      * Lists the Working Times the authenticated user or API token can access.
      * List Working Times
      */
-    async fetchWorkingTimes(requestParameters: FetchWorkingTimesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimesPage> {
-        const response = await this.fetchWorkingTimesRaw(requestParameters, initOverrides);
+    async fetchWorkingTimes(...[query, initOverrides]: QueryArguments<FetchWorkingTimesQuery>): Promise<WorkingTimesPage> {
+        const response = await this.fetchWorkingTimesRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -446,8 +460,8 @@ export class WorkingTimeApi extends runtime.BaseAPI {
      * Returns a single Working Time by its ID.
      * Get a Working Time
      */
-    async getWorkingTime(requestParameters: GetWorkingTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTime> {
-        const response = await this.getWorkingTimeRaw(requestParameters, initOverrides);
+    async getWorkingTime(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTime> {
+        const response = await this.getWorkingTimeRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -513,8 +527,8 @@ export class WorkingTimeApi extends runtime.BaseAPI {
      * Updates the Working Time with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a Working Time
      */
-    async updateWorkingTime(requestParameters: UpdateWorkingTimeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTime> {
-        const response = await this.updateWorkingTimeRaw(requestParameters, initOverrides);
+    async updateWorkingTime(id: string, workingTimeUpdate: WorkingTimeUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTime> {
+        const response = await this.updateWorkingTimeRaw({ id: id, workingTimeUpdate: workingTimeUpdate, }, initOverrides);
         return await response.value();
     }
 

@@ -33,6 +33,10 @@ import {
     TaskToTeamAssignmentsSortColumnToJSON,
 } from '../models/TaskToTeamAssignmentsSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateTaskToTeamAssignmentRequest {
     taskId: string;
     teamId: string;
@@ -50,6 +54,11 @@ export interface FetchTaskToTeamAssignmentsRequest {
     sortDirection?: SortDirection;
     sortBy?: TaskToTeamAssignmentsSortColumn;
 }
+
+export type FetchTaskToTeamAssignmentsQuery = Pick<
+    FetchTaskToTeamAssignmentsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetTaskToTeamAssignmentRequest {
     taskId: string;
@@ -121,8 +130,8 @@ export class TaskToTeamAssignmentApi extends runtime.BaseAPI {
      * Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
      * Create a Task to Team Assignment
      */
-    async createTaskToTeamAssignment(requestParameters: CreateTaskToTeamAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToTeamAssignment> {
-        const response = await this.createTaskToTeamAssignmentRaw(requestParameters, initOverrides);
+    async createTaskToTeamAssignment(taskId: string, teamId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToTeamAssignment> {
+        const response = await this.createTaskToTeamAssignmentRaw({ taskId: taskId, teamId: teamId, }, initOverrides);
         return await response.value();
     }
 
@@ -186,8 +195,8 @@ export class TaskToTeamAssignmentApi extends runtime.BaseAPI {
      * Removes the Team\'s assignment to the Task.
      * Delete a Task to Team Assignment
      */
-    async deleteTaskToTeamAssignment(requestParameters: DeleteTaskToTeamAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteTaskToTeamAssignmentRaw(requestParameters, initOverrides);
+    async deleteTaskToTeamAssignment(taskId: string, teamId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTaskToTeamAssignmentRaw({ taskId: taskId, teamId: teamId, }, initOverrides);
     }
 
     /**
@@ -258,8 +267,8 @@ export class TaskToTeamAssignmentApi extends runtime.BaseAPI {
      * Lists the Teams assigned to the Task.
      * List Task to Team Assignments
      */
-    async fetchTaskToTeamAssignments(requestParameters: FetchTaskToTeamAssignmentsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToTeamAssignmentsPage> {
-        const response = await this.fetchTaskToTeamAssignmentsRaw(requestParameters, initOverrides);
+    async fetchTaskToTeamAssignments(taskId: string, ...[query, initOverrides]: QueryArguments<FetchTaskToTeamAssignmentsQuery>): Promise<TaskToTeamAssignmentsPage> {
+        const response = await this.fetchTaskToTeamAssignmentsRaw({ ...query, taskId: taskId, }, initOverrides);
         return await response.value();
     }
 
@@ -323,8 +332,8 @@ export class TaskToTeamAssignmentApi extends runtime.BaseAPI {
      * Returns the assignment of a single Team to the Task.
      * Get a Task to Team Assignment
      */
-    async getTaskToTeamAssignment(requestParameters: GetTaskToTeamAssignmentRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToTeamAssignment> {
-        const response = await this.getTaskToTeamAssignmentRaw(requestParameters, initOverrides);
+    async getTaskToTeamAssignment(taskId: string, teamId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TaskToTeamAssignment> {
+        const response = await this.getTaskToTeamAssignmentRaw({ taskId: taskId, teamId: teamId, }, initOverrides);
         return await response.value();
     }
 

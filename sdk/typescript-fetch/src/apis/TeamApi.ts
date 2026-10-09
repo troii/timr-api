@@ -58,6 +58,10 @@ import {
     UsersSortColumnToJSON,
 } from '../models/UsersSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface AddTeamLeaderRequest {
     teamId: string;
     userId: string;
@@ -84,6 +88,11 @@ export interface FetchTeamLeadersRequest {
     sortBy?: UsersSortColumn;
 }
 
+export type FetchTeamLeadersQuery = Pick<
+    FetchTeamLeadersRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
+
 export interface FetchTeamMembersRequest {
     id: string;
     pageToken?: string;
@@ -92,6 +101,11 @@ export interface FetchTeamMembersRequest {
     sortBy?: UsersSortColumn;
 }
 
+export type FetchTeamMembersQuery = Pick<
+    FetchTeamMembersRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
+
 export interface FetchTeamsRequest {
     name?: string;
     pageToken?: string;
@@ -99,6 +113,11 @@ export interface FetchTeamsRequest {
     sortDirection?: SortDirection;
     sortBy?: TeamsSortColumn;
 }
+
+export type FetchTeamsQuery = Pick<
+    FetchTeamsRequest,
+    'name' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetTeamRequest {
     id: string;
@@ -194,8 +213,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Adds the User to the Team as a leader. Returns 201 when the leadership is created and 200 when it already existed.
      * Add a Team Leader
      */
-    async addTeamLeader(requestParameters: AddTeamLeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
-        const response = await this.addTeamLeaderRaw(requestParameters, initOverrides);
+    async addTeamLeader(teamId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
+        const response = await this.addTeamLeaderRaw({ teamId: teamId, userId: userId, }, initOverrides);
         return await response.value();
     }
 
@@ -259,8 +278,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Adds the User to the Team as a member. Returns 201 when the membership is created and 200 when it already existed.
      * Add a Team Member
      */
-    async addTeamMember(requestParameters: AddTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
-        const response = await this.addTeamMemberRaw(requestParameters, initOverrides);
+    async addTeamMember(teamId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
+        const response = await this.addTeamMemberRaw({ teamId: teamId, userId: userId, }, initOverrides);
         return await response.value();
     }
 
@@ -318,8 +337,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Creates a Team from the data in the request body.
      * Create a Team
      */
-    async createTeam(requestParameters: CreateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Team> {
-        const response = await this.createTeamRaw(requestParameters, initOverrides);
+    async createTeam(teamCreate: TeamCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Team> {
+        const response = await this.createTeamRaw({ teamCreate: teamCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -375,8 +394,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Deletes the Team. Members and leaders are unassigned, the Users themselves are not deleted.
      * Delete a Team
      */
-    async deleteTeam(requestParameters: DeleteTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteTeamRaw(requestParameters, initOverrides);
+    async deleteTeam(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTeamRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -447,8 +466,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Lists the Users who lead the Team.
      * List Team Leaders
      */
-    async fetchTeamLeaders(requestParameters: FetchTeamLeadersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsersPartialPage> {
-        const response = await this.fetchTeamLeadersRaw(requestParameters, initOverrides);
+    async fetchTeamLeaders(id: string, ...[query, initOverrides]: QueryArguments<FetchTeamLeadersQuery>): Promise<UsersPartialPage> {
+        const response = await this.fetchTeamLeadersRaw({ ...query, id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -520,8 +539,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Lists the Users who are members of the Team.
      * List Team Members
      */
-    async fetchTeamMembers(requestParameters: FetchTeamMembersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UsersPartialPage> {
-        const response = await this.fetchTeamMembersRaw(requestParameters, initOverrides);
+    async fetchTeamMembers(id: string, ...[query, initOverrides]: QueryArguments<FetchTeamMembersQuery>): Promise<UsersPartialPage> {
+        const response = await this.fetchTeamMembersRaw({ ...query, id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -589,8 +608,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Lists the Teams the authenticated user or API token can access.
      * List Teams
      */
-    async fetchTeams(requestParameters: FetchTeamsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TeamsPage> {
-        const response = await this.fetchTeamsRaw(requestParameters, initOverrides);
+    async fetchTeams(...[query, initOverrides]: QueryArguments<FetchTeamsQuery>): Promise<TeamsPage> {
+        const response = await this.fetchTeamsRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -646,8 +665,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Returns a single Team by its ID.
      * Get a Team
      */
-    async getTeam(requestParameters: GetTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Team> {
-        const response = await this.getTeamRaw(requestParameters, initOverrides);
+    async getTeam(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Team> {
+        const response = await this.getTeamRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -711,8 +730,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Returns the leadership of a single User in the Team.
      * Get a Team Leader
      */
-    async getTeamLeader(requestParameters: GetTeamLeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
-        const response = await this.getTeamLeaderRaw(requestParameters, initOverrides);
+    async getTeamLeader(teamId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
+        const response = await this.getTeamLeaderRaw({ teamId: teamId, userId: userId, }, initOverrides);
         return await response.value();
     }
 
@@ -776,8 +795,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Returns the membership of a single User in the Team.
      * Get a Team Member
      */
-    async getTeamMember(requestParameters: GetTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
-        const response = await this.getTeamMemberRaw(requestParameters, initOverrides);
+    async getTeamMember(teamId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<UserPartial> {
+        const response = await this.getTeamMemberRaw({ teamId: teamId, userId: userId, }, initOverrides);
         return await response.value();
     }
 
@@ -841,8 +860,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Removes the User\'s leadership of the Team. The User itself is not deleted.
      * Remove a Team Leader
      */
-    async removeTeamLeader(requestParameters: RemoveTeamLeaderRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.removeTeamLeaderRaw(requestParameters, initOverrides);
+    async removeTeamLeader(teamId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.removeTeamLeaderRaw({ teamId: teamId, userId: userId, }, initOverrides);
     }
 
     /**
@@ -905,8 +924,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Removes the User\'s membership in the Team. The User itself is not deleted.
      * Remove a Team Member
      */
-    async removeTeamMember(requestParameters: RemoveTeamMemberRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.removeTeamMemberRaw(requestParameters, initOverrides);
+    async removeTeamMember(teamId: string, userId: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.removeTeamMemberRaw({ teamId: teamId, userId: userId, }, initOverrides);
     }
 
     /**
@@ -971,8 +990,8 @@ export class TeamApi extends runtime.BaseAPI {
      * Updates the Team with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a Team
      */
-    async updateTeam(requestParameters: UpdateTeamRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Team> {
-        const response = await this.updateTeamRaw(requestParameters, initOverrides);
+    async updateTeam(id: string, teamUpdate: TeamUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Team> {
+        const response = await this.updateTeamRaw({ id: id, teamUpdate: teamUpdate, }, initOverrides);
         return await response.value();
     }
 

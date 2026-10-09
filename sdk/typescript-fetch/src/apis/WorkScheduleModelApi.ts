@@ -33,6 +33,10 @@ import {
     WorkScheduleModelsPageToJSON,
 } from '../models/WorkScheduleModelsPage';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface DeleteWorkScheduleModelRequest {
     id: string;
 }
@@ -43,6 +47,11 @@ export interface FetchWorkScheduleModelsRequest {
     sortDirection?: SortDirection;
     sortBy?: WorkScheduleModelSortColumn;
 }
+
+export type FetchWorkScheduleModelsQuery = Pick<
+    FetchWorkScheduleModelsRequest,
+    'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetWorkScheduleModelRequest {
     id: string;
@@ -105,8 +114,8 @@ export class WorkScheduleModelApi extends runtime.BaseAPI {
      * Deletes the Work Schedule Model. It cannot be deleted while it is still assigned to a User.
      * Delete a Work Schedule Model
      */
-    async deleteWorkScheduleModel(requestParameters: DeleteWorkScheduleModelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteWorkScheduleModelRaw(requestParameters, initOverrides);
+    async deleteWorkScheduleModel(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteWorkScheduleModelRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -169,8 +178,8 @@ export class WorkScheduleModelApi extends runtime.BaseAPI {
      * Lists the Work Schedule Models the authenticated user or API token can access.
      * List Work Schedule Models
      */
-    async fetchWorkScheduleModels(requestParameters: FetchWorkScheduleModelsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleModelsPage> {
-        const response = await this.fetchWorkScheduleModelsRaw(requestParameters, initOverrides);
+    async fetchWorkScheduleModels(...[query, initOverrides]: QueryArguments<FetchWorkScheduleModelsQuery>): Promise<WorkScheduleModelsPage> {
+        const response = await this.fetchWorkScheduleModelsRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -226,8 +235,8 @@ export class WorkScheduleModelApi extends runtime.BaseAPI {
      * Returns a single Work Schedule Model by its ID.
      * Get a Work Schedule Model
      */
-    async getWorkScheduleModel(requestParameters: GetWorkScheduleModelRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleModel> {
-        const response = await this.getWorkScheduleModelRaw(requestParameters, initOverrides);
+    async getWorkScheduleModel(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkScheduleModel> {
+        const response = await this.getWorkScheduleModelRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 

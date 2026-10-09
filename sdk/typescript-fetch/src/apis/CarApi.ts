@@ -43,6 +43,10 @@ import {
     SortDirectionToJSON,
 } from '../models/SortDirection';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateCarRequest {
     carCreate: CarCreate;
 }
@@ -55,6 +59,11 @@ export interface FetchCarsRequest {
     sortDirection?: SortDirection;
     sortBy?: CarsSortColumn;
 }
+
+export type FetchCarsQuery = Pick<
+    FetchCarsRequest,
+    'nameOrPlate' | 'usable' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetCarRequest {
     id: string;
@@ -124,8 +133,8 @@ export class CarApi extends runtime.BaseAPI {
      * Creates a Car from the data in the request body.
      * Create a Car
      */
-    async createCar(requestParameters: CreateCarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Car> {
-        const response = await this.createCarRaw(requestParameters, initOverrides);
+    async createCar(carCreate: CarCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Car> {
+        const response = await this.createCarRaw({ carCreate: carCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -197,8 +206,8 @@ export class CarApi extends runtime.BaseAPI {
      * Lists the Cars the authenticated user or API token can access.
      * List Cars
      */
-    async fetchCars(requestParameters: FetchCarsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CarsPage> {
-        const response = await this.fetchCarsRaw(requestParameters, initOverrides);
+    async fetchCars(...[query, initOverrides]: QueryArguments<FetchCarsQuery>): Promise<CarsPage> {
+        const response = await this.fetchCarsRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -254,8 +263,8 @@ export class CarApi extends runtime.BaseAPI {
      * Returns a single Car by its ID.
      * Get a Car
      */
-    async getCar(requestParameters: GetCarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Car> {
-        const response = await this.getCarRaw(requestParameters, initOverrides);
+    async getCar(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Car> {
+        const response = await this.getCarRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -321,8 +330,8 @@ export class CarApi extends runtime.BaseAPI {
      * Updates the Car with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a Car
      */
-    async updateCar(requestParameters: UpdateCarRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Car> {
-        const response = await this.updateCarRaw(requestParameters, initOverrides);
+    async updateCar(id: string, carUpdate: CarUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Car> {
+        const response = await this.updateCarRaw({ id: id, carUpdate: carUpdate, }, initOverrides);
         return await response.value();
     }
 

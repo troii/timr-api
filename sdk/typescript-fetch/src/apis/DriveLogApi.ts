@@ -58,6 +58,10 @@ import {
     SortDirectionToJSON,
 } from '../models/SortDirection';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateDriveLogRequest {
     driveLogCreate: DriveLogCreate;
 }
@@ -73,6 +77,11 @@ export interface FetchDeletedDriveLogsRequest {
     sortDirection?: SortDirection;
     sortBy?: DeletedEntrySortColumn;
 }
+
+export type FetchDeletedDriveLogsQuery = Pick<
+    FetchDeletedDriveLogsRequest,
+    'lastModifiedAfter' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface FetchDriveLogsRequest {
     startFrom?: Date;
@@ -90,6 +99,11 @@ export interface FetchDriveLogsRequest {
     sortDirection?: SortDirection;
     sortBy?: DriveLogsSortColumn;
 }
+
+export type FetchDriveLogsQuery = Pick<
+    FetchDriveLogsRequest,
+    'startFrom' | 'startTo' | 'lastModifiedAfter' | 'cars' | 'driveLogCategories' | 'statuses' | 'users' | 'details' | 'changed' | 'hasTrack' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetDriveLogRequest {
     id: string;
@@ -159,8 +173,8 @@ export class DriveLogApi extends runtime.BaseAPI {
      * Creates a Drive Log from the data in the request body.
      * Create a Drive Log
      */
-    async createDriveLog(requestParameters: CreateDriveLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLog> {
-        const response = await this.createDriveLogRaw(requestParameters, initOverrides);
+    async createDriveLog(driveLogCreate: DriveLogCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLog> {
+        const response = await this.createDriveLogRaw({ driveLogCreate: driveLogCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -216,8 +230,8 @@ export class DriveLogApi extends runtime.BaseAPI {
      * Deletes the Drive Log, including its Track.
      * Delete a Drive Log
      */
-    async deleteDriveLog(requestParameters: DeleteDriveLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteDriveLogRaw(requestParameters, initOverrides);
+    async deleteDriveLog(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteDriveLogRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -284,8 +298,8 @@ export class DriveLogApi extends runtime.BaseAPI {
      * Lists Drive Logs that were deleted, so a client holding a local copy can reconcile.
      * List deleted Drive Logs
      */
-    async fetchDeletedDriveLogs(requestParameters: FetchDeletedDriveLogsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletedEntryPage> {
-        const response = await this.fetchDeletedDriveLogsRaw(requestParameters, initOverrides);
+    async fetchDeletedDriveLogs(...[query, initOverrides]: QueryArguments<FetchDeletedDriveLogsQuery>): Promise<DeletedEntryPage> {
+        const response = await this.fetchDeletedDriveLogsRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -389,8 +403,8 @@ export class DriveLogApi extends runtime.BaseAPI {
      * Lists the Drive Logs the authenticated user or API token can access.
      * List Drive Logs
      */
-    async fetchDriveLogs(requestParameters: FetchDriveLogsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLogsPage> {
-        const response = await this.fetchDriveLogsRaw(requestParameters, initOverrides);
+    async fetchDriveLogs(...[query, initOverrides]: QueryArguments<FetchDriveLogsQuery>): Promise<DriveLogsPage> {
+        const response = await this.fetchDriveLogsRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -446,8 +460,8 @@ export class DriveLogApi extends runtime.BaseAPI {
      * Returns a single Drive Log by its ID.
      * Get a Drive Log
      */
-    async getDriveLog(requestParameters: GetDriveLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLog> {
-        const response = await this.getDriveLogRaw(requestParameters, initOverrides);
+    async getDriveLog(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLog> {
+        const response = await this.getDriveLogRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -513,8 +527,8 @@ export class DriveLogApi extends runtime.BaseAPI {
      * Updates the Drive Log with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a Drive Log
      */
-    async updateDriveLog(requestParameters: UpdateDriveLogRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLog> {
-        const response = await this.updateDriveLogRaw(requestParameters, initOverrides);
+    async updateDriveLog(id: string, driveLogUpdate: DriveLogUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DriveLog> {
+        const response = await this.updateDriveLogRaw({ id: id, driveLogUpdate: driveLogUpdate, }, initOverrides);
         return await response.value();
     }
 

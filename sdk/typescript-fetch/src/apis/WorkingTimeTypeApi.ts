@@ -53,6 +53,10 @@ import {
     WorkingTimeTypesSortColumnToJSON,
 } from '../models/WorkingTimeTypesSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface DeleteWorkingTimeTypeRequest {
     id: string;
 }
@@ -71,6 +75,11 @@ export interface FetchWorkingTimeTypesRequest {
     sortDirection?: SortDirection;
     sortBy?: WorkingTimeTypesSortColumn;
 }
+
+export type FetchWorkingTimeTypesQuery = Pick<
+    FetchWorkingTimeTypesRequest,
+    'name' | 'shortName' | 'description' | 'categories' | 'subCategories' | 'editUnits' | 'archived' | 'recordingModes' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetWorkingTimeTypeRequest {
     id: string;
@@ -133,8 +142,8 @@ export class WorkingTimeTypeApi extends runtime.BaseAPI {
      * Deletes the Working Time Type. It cannot be deleted while Working Times still reference it.
      * Delete a Working Time Type
      */
-    async deleteWorkingTimeType(requestParameters: DeleteWorkingTimeTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteWorkingTimeTypeRaw(requestParameters, initOverrides);
+    async deleteWorkingTimeType(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteWorkingTimeTypeRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -229,8 +238,8 @@ export class WorkingTimeTypeApi extends runtime.BaseAPI {
      * Lists the Working Time Types the authenticated user or API token can access.
      * List Working Time Types
      */
-    async fetchWorkingTimeTypes(requestParameters: FetchWorkingTimeTypesRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeTypesPage> {
-        const response = await this.fetchWorkingTimeTypesRaw(requestParameters, initOverrides);
+    async fetchWorkingTimeTypes(...[query, initOverrides]: QueryArguments<FetchWorkingTimeTypesQuery>): Promise<WorkingTimeTypesPage> {
+        const response = await this.fetchWorkingTimeTypesRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -286,8 +295,8 @@ export class WorkingTimeTypeApi extends runtime.BaseAPI {
      * Returns a single Working Time Type by its ID.
      * Get a Working Time Type
      */
-    async getWorkingTimeType(requestParameters: GetWorkingTimeTypeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeType> {
-        const response = await this.getWorkingTimeTypeRaw(requestParameters, initOverrides);
+    async getWorkingTimeType(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeType> {
+        const response = await this.getWorkingTimeTypeRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 

@@ -53,6 +53,10 @@ import {
     WorkingTimeDateSpansSortColumnToJSON,
 } from '../models/WorkingTimeDateSpansSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateWorkingTimeDateSpanRequest {
     workingTimeDateSpanCreate: WorkingTimeDateSpanCreate;
 }
@@ -69,6 +73,11 @@ export interface FetchDeletedWorkingTimeDateSpansRequest {
     sortBy?: DeletedEntrySortColumn;
 }
 
+export type FetchDeletedWorkingTimeDateSpansQuery = Pick<
+    FetchDeletedWorkingTimeDateSpansRequest,
+    'lastModifiedAfter' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
+
 export interface FetchWorkingTimeDateSpansRequest {
     from?: Date;
     to?: Date;
@@ -80,6 +89,11 @@ export interface FetchWorkingTimeDateSpansRequest {
     sortDirection?: SortDirection;
     sortBy?: WorkingTimeDateSpansSortColumn;
 }
+
+export type FetchWorkingTimeDateSpansQuery = Pick<
+    FetchWorkingTimeDateSpansRequest,
+    'from' | 'to' | 'lastModifiedAfter' | 'workingTimeTypes' | 'users' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetWorkingTimeDateSpanRequest {
     id: string;
@@ -149,8 +163,8 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
      * Creates a Working Time Date Span from the data in the request body, and the day-based Working Times it covers.
      * Create a Working Time Date Span
      */
-    async createWorkingTimeDateSpan(requestParameters: CreateWorkingTimeDateSpanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpan> {
-        const response = await this.createWorkingTimeDateSpanRaw(requestParameters, initOverrides);
+    async createWorkingTimeDateSpan(workingTimeDateSpanCreate: WorkingTimeDateSpanCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpan> {
+        const response = await this.createWorkingTimeDateSpanRaw({ workingTimeDateSpanCreate: workingTimeDateSpanCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -206,8 +220,8 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
      * Deletes the Working Time Date Span together with the Working Times it covers.
      * Delete a Working Time Date Span
      */
-    async deleteWorkingTimeDateSpan(requestParameters: DeleteWorkingTimeDateSpanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.deleteWorkingTimeDateSpanRaw(requestParameters, initOverrides);
+    async deleteWorkingTimeDateSpan(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteWorkingTimeDateSpanRaw({ id: id, }, initOverrides);
     }
 
     /**
@@ -274,8 +288,8 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
      * Lists Working Time Date Spans that were deleted, so a client holding a local copy can reconcile.
      * List deleted Working Time Date Spans
      */
-    async fetchDeletedWorkingTimeDateSpans(requestParameters: FetchDeletedWorkingTimeDateSpansRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<DeletedEntryWithMetadataPage> {
-        const response = await this.fetchDeletedWorkingTimeDateSpansRaw(requestParameters, initOverrides);
+    async fetchDeletedWorkingTimeDateSpans(...[query, initOverrides]: QueryArguments<FetchDeletedWorkingTimeDateSpansQuery>): Promise<DeletedEntryWithMetadataPage> {
+        const response = await this.fetchDeletedWorkingTimeDateSpansRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -359,8 +373,8 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
      * Lists the Working Time Date Spans the authenticated user or API token can access.
      * List Working Time Date Spans
      */
-    async fetchWorkingTimeDateSpans(requestParameters: FetchWorkingTimeDateSpansRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpanPage> {
-        const response = await this.fetchWorkingTimeDateSpansRaw(requestParameters, initOverrides);
+    async fetchWorkingTimeDateSpans(...[query, initOverrides]: QueryArguments<FetchWorkingTimeDateSpansQuery>): Promise<WorkingTimeDateSpanPage> {
+        const response = await this.fetchWorkingTimeDateSpansRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -416,8 +430,8 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
      * Returns a single Working Time Date Span by its ID.
      * Get a Working Time Date Span
      */
-    async getWorkingTimeDateSpan(requestParameters: GetWorkingTimeDateSpanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpan> {
-        const response = await this.getWorkingTimeDateSpanRaw(requestParameters, initOverrides);
+    async getWorkingTimeDateSpan(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpan> {
+        const response = await this.getWorkingTimeDateSpanRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -483,8 +497,8 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
      * Updates the Working Time Date Span with the fields present in the request body, and adjusts the Working Times it covers. Fields that are omitted stay unchanged.
      * Update a Working Time Date Span
      */
-    async updateWorkingTimeDateSpan(requestParameters: UpdateWorkingTimeDateSpanRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpan | null | undefined > {
-        const response = await this.updateWorkingTimeDateSpanRaw(requestParameters, initOverrides);
+    async updateWorkingTimeDateSpan(id: string, workingTimeDateSpanUpdate: WorkingTimeDateSpanUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WorkingTimeDateSpan | null | undefined > {
+        const response = await this.updateWorkingTimeDateSpanRaw({ id: id, workingTimeDateSpanUpdate: workingTimeDateSpanUpdate, }, initOverrides);
         switch (response.raw.status) {
             case 200:
                 return await response.value();

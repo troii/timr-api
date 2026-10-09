@@ -48,6 +48,10 @@ import {
     TasksSortColumnToJSON,
 } from '../models/TasksSortColumn';
 
+type QueryArguments<T> = {} extends T
+    ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]
+    : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
+
 export interface CreateTaskRequest {
     taskCreate: TaskCreate;
 }
@@ -65,6 +69,11 @@ export interface FetchTasksRequest {
     sortBy?: TasksSortColumn;
 }
 
+export type FetchTasksQuery = Pick<
+    FetchTasksRequest,
+    'parentTaskId' | 'traverseTaskTree' | 'name' | 'bookable' | 'billable' | 'activeAt' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
+
 export interface FetchUserTasksRequest {
     id: string;
     parentTaskId?: string;
@@ -78,6 +87,11 @@ export interface FetchUserTasksRequest {
     sortDirection?: SortDirection;
     sortBy?: TasksSortColumn;
 }
+
+export type FetchUserTasksQuery = Pick<
+    FetchUserTasksRequest,
+    'parentTaskId' | 'traverseTaskTree' | 'name' | 'bookable' | 'billable' | 'activeAt' | 'pageToken' | 'limit' | 'sortDirection' | 'sortBy'
+>;
 
 export interface GetTaskRequest {
     id: string;
@@ -147,8 +161,8 @@ export class TaskApi extends runtime.BaseAPI {
      * Creates a Task from the data in the request body.
      * Create a Task
      */
-    async createTask(requestParameters: CreateTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
-        const response = await this.createTaskRaw(requestParameters, initOverrides);
+    async createTask(taskCreate: TaskCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
+        const response = await this.createTaskRaw({ taskCreate: taskCreate, }, initOverrides);
         return await response.value();
     }
 
@@ -236,8 +250,8 @@ export class TaskApi extends runtime.BaseAPI {
      * Lists the Tasks the authenticated user or API token can access.
      * List Tasks
      */
-    async fetchTasks(requestParameters: FetchTasksRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TasksPage> {
-        const response = await this.fetchTasksRaw(requestParameters, initOverrides);
+    async fetchTasks(...[query, initOverrides]: QueryArguments<FetchTasksQuery>): Promise<TasksPage> {
+        const response = await this.fetchTasksRaw({ ...query, }, initOverrides);
         return await response.value();
     }
 
@@ -333,8 +347,8 @@ export class TaskApi extends runtime.BaseAPI {
      * Lists the Tasks the User is assigned to and may record on.
      * List a User\'s Tasks
      */
-    async fetchUserTasks(requestParameters: FetchUserTasksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<TasksReducedPage> {
-        const response = await this.fetchUserTasksRaw(requestParameters, initOverrides);
+    async fetchUserTasks(id: string, ...[query, initOverrides]: QueryArguments<FetchUserTasksQuery>): Promise<TasksReducedPage> {
+        const response = await this.fetchUserTasksRaw({ ...query, id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -390,8 +404,8 @@ export class TaskApi extends runtime.BaseAPI {
      * Returns a single Task by its ID.
      * Get a Task
      */
-    async getTask(requestParameters: GetTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
-        const response = await this.getTaskRaw(requestParameters, initOverrides);
+    async getTask(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
+        const response = await this.getTaskRaw({ id: id, }, initOverrides);
         return await response.value();
     }
 
@@ -457,8 +471,8 @@ export class TaskApi extends runtime.BaseAPI {
      * Updates the Task with the fields present in the request body. Fields that are omitted stay unchanged.
      * Update a Task
      */
-    async updateTask(requestParameters: UpdateTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
-        const response = await this.updateTaskRaw(requestParameters, initOverrides);
+    async updateTask(id: string, taskUpdate: TaskUpdate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
+        const response = await this.updateTaskRaw({ id: id, taskUpdate: taskUpdate, }, initOverrides);
         return await response.value();
     }
 
