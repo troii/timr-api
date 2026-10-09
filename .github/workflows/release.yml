@@ -10,6 +10,7 @@ on:
       - 'kotlin-okhttp/[0-9]*.[0-9]*.[0-9]*'
       - 'dotnet/[0-9]*.[0-9]*.[0-9]*'
       - 'typescript-fetch/[0-9]*.[0-9]*.[0-9]*'
+      - 'swift/[0-9]*.[0-9]*.[0-9]*'
       - 'python/[0-9]*.[0-9]*.[0-9]*'
 
 permissions:
@@ -56,7 +57,7 @@ jobs:
               module=${GITHUB_REF_NAME%/*}
               version=${GITHUB_REF_NAME##*/}
               case "$module" in
-                java-restclient | java-resttemplate | kotlin-okhttp | dotnet | typescript-fetch | python) ;;
+                java-restclient | java-resttemplate | kotlin-okhttp | dotnet | typescript-fetch | swift | python) ;;
                 *)
                   echo "::error::Publishing is not configured for module '${module}'."
                   exit 1
@@ -205,6 +206,55 @@ jobs:
       - name: Summary
         run: |
           jq -r '"\nPublished [\(.name) \(.version)](https://www.npmjs.com/package/\(.name)/v/\(.version))."' sdk/typescript-fetch/package.json >> "$GITHUB_STEP_SUMMARY"
+
+  swift:
+    name: Publish Swift ${{ needs.resolve.outputs.version }}
+    needs: [build-verify, resolve]
+    if: needs.resolve.outputs.kind == 'module' && needs.resolve.outputs.module == 'swift'
+    runs-on: macos-latest
+    environment: Release
+    permissions:
+      contents: read
+    env:
+      VERSION: ${{ needs.resolve.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Export and test the Swift package
+        id: export
+        run: |
+          set -euo pipefail
+          git config user.name "GitHub Actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          export=$(git subtree split --prefix sdk/swift "$GITHUB_SHA")
+          echo "commit=$export" >> "$GITHUB_OUTPUT"
+          package="$RUNNER_TEMP/swift-publication"
+          mkdir -p "$package"
+          git archive "$export" | tar -x -C "$package"
+          grep -F "s.version = '$VERSION'" "$package/TimrApi.podspec"
+          ruby -c "$package/TimrApi.podspec"
+          swift test --package-path "$package"
+      - name: Publish the Swift version tag
+        env:
+          GH_TOKEN: ${{ secrets.SWIFT_REPO_TOKEN }}
+          EXPORT_COMMIT: ${{ steps.export.outputs.commit }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN" || { echo "::error::Configure SWIFT_REPO_TOKEN in the Release environment."; exit 1; }
+          gh auth setup-git
+          remote=https://github.com/troii/timr-api-swift.git
+          existing=$(git ls-remote "$remote" "refs/tags/${VERSION}")
+          if [ -n "$existing" ]; then
+            test "${existing%%[[:space:]]*}" = "$EXPORT_COMMIT" || { echo "::error::The Swift version tag already points at different content."; exit 1; }
+          else
+            git push "$remote" "${EXPORT_COMMIT}:refs/tags/${VERSION}"
+          fi
+          published=$(git ls-remote "$remote" "refs/tags/${VERSION}")
+          test "${published%%[[:space:]]*}" = "$EXPORT_COMMIT"
+      - name: Summary
+        run: echo "Published [TimrApi ${VERSION}](https://github.com/troii/timr-api-swift/tree/${VERSION}) from \`${GITHUB_REF_NAME}\`." >> "$GITHUB_STEP_SUMMARY"
 
   python:
     name: Publish Python ${{ needs.resolve.outputs.version }}

@@ -15,7 +15,24 @@ workflow runs the SDK checks and requires approval through the `Release` environ
 uploading. A bare contract version tag creates the API's GitHub release; SDK publications use their
 own tags.
 
-Swift publishing is postponed. Its generated sources remain in `sdk/swift/`.
+Swift publication is postponed; its publishing workflow is prepared as described below.
+
+### Swift publication
+
+The Swift client is distributed from [troii/timr-api-swift](https://github.com/troii/timr-api-swift),
+with `Package.swift` at the repository root. A `swift/<version>` tag here exports the committed
+`sdk/swift/` history and publishes a matching bare version tag there. The destination's branches
+are not updated. SwiftPM consumes the version tag; CocoaPods can use the same Git repository and
+tag with the included `TimrApi.podspec`. No CocoaPods Trunk upload is configured.
+
+Create the destination as a public repository before the first publication. The release workflow
+needs a fine-grained GitHub token in the `Release` environment, restricted to the destination
+repository with Contents read/write permission. The source repository's `GITHUB_TOKEN` cannot
+write to a different repository.
+
+Run `swift test --package-path sdk/swift` locally. **Validate Publishing**, with `module=swift`,
+exports and tests the standalone package and attaches its source archive without publishing.
+Swift snapshots are not configured; use the validation artifact to inspect an unpublished build.
 
 ### Authentication
 

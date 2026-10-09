@@ -12,12 +12,7 @@ final class ApiSmokeTests: XCTestCase {
         }
 
         let request = UserAPI.getUserWithRequestBuilder(id: "user123")
-        let fixture = URL(fileURLWithPath: #file)
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-            .appendingPathComponent("test-fixtures/user.json")
+        let fixture = try XCTUnwrap(Bundle.module.url(forResource: "user", withExtension: "json"))
         let user = try CodableHelper.jsonDecoder.decode(User.self, from: Data(contentsOf: fixture))
 
         XCTAssertEqual(request.method, "GET")

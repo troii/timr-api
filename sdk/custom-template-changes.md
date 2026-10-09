@@ -112,6 +112,8 @@ them in models where upstream would not.
 
 Upstream baseline: `swift5/*.mustache`.
 
+- **`Package.swift.mustache`** and **`Podspec.mustache`** — use `moduleName` for the packaging identity `TimrApi`, while `projectName=Timr` produces the `TimrAPI` class. The package declares Swift tools 5.5 for async/await and includes its smoke-test fixture as a test resource. The pod declares Swift 5.5, takes its version from `sdk/versions.properties` through `podVersion`, and resolves its source from the dedicated Swift repository's version tag. `renamePodspec` gives the generated file the matching `TimrApi.podspec` name.
+
 - **`APIs.mustache`** — `Task` is written as `_Concurrency.Task`, because the API has a `Task`
   schema whose generated model shadows Swift's `Task` and breaks `Task.checkCancellation()`.
   `addCredential()` also returns `Self` and is no longer called from the initializer, so credentials

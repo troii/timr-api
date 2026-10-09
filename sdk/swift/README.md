@@ -12,6 +12,8 @@ types, work schedule models and holiday calendars.
 
 ### Swift Package Manager
 
+Requires Swift 5.5 or newer. The async methods require iOS 13, macOS 10.15, tvOS 13 or watchOS 6.
+
 ```swift
 .package(url: "https://github.com/troii/timr-api-swift", from: "1.0.0")
 ```
@@ -19,7 +21,7 @@ types, work schedule models and holiday calendars.
 ### CocoaPods
 
 ```ruby
-pod 'TimrApi'
+pod 'TimrApi', :git => 'https://github.com/troii/timr-api-swift.git', :tag => '1.0.0'
 ```
 
 ## Usage

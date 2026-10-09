@@ -6,7 +6,7 @@ on:
       module:
         description: SDK whose release credentials and artifacts to validate
         type: choice
-        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet, typescript-fetch, python]
+        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet, typescript-fetch, swift, python]
 
 permissions:
   contents: read
@@ -109,6 +109,32 @@ jobs:
         with:
           name: dotnet-publication
           path: sdk/dotnet/build/nuget/*.nupkg
+          retention-days: 7
+
+  swift:
+    name: Validate Swift publication
+    if: inputs.module == 'swift'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Export and test the Swift package
+        run: |
+          set -euo pipefail
+          git config user.name "GitHub Actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          export=$(git subtree split --prefix sdk/swift "$GITHUB_SHA")
+          package="$RUNNER_TEMP/swift-publication"
+          mkdir -p "$package"
+          git archive "$export" | tar -x -C "$package"
+          ruby -c "$package/TimrApi.podspec"
+          swift test --package-path "$package"
+          git archive --format=tar.gz --output="$RUNNER_TEMP/timr-api-swift.tar.gz" "$export"
+      - uses: actions/upload-artifact@v6
+        with:
+          name: swift-publication
+          path: ${{ runner.temp }}/timr-api-swift.tar.gz
           retention-days: 7
 
   python:

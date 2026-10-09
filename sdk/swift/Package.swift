@@ -1,4 +1,4 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.5
 
 import PackageDescription
 
@@ -33,7 +33,8 @@ let package = Package(
         .testTarget(
             name: "TimrApiTests",
             dependencies: ["TimrApi"],
-            path: "Tests/TimrApiTests"
+            path: "Tests/TimrApiTests",
+            resources: [.process("Fixtures")]
         ),
     ]
 )

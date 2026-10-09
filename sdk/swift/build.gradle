@@ -3,10 +3,7 @@ plugins {
     id "swift-library"
 }
 
-// swift5 ties the API class, the Swift module, the SwiftPM package and the podspec filename all to
-// projectName. The class should read TimrAPI while the module and pod are TimrApi, so projectName
-// supplies the class and moduleName — read by our Package.swift and Podspec templates — supplies the
-// packaging identity.
+// The API class uses TimrAPI; the package and module use TimrApi.
 def apiClassPrefix = 'Timr'
 def moduleName = 'TimrApi'
 
@@ -32,13 +29,25 @@ openApiGenerate {
             podHomepage        : "https://developer.timr.com",
             podDocumentationURL: "https://developer.timr.com",
             podLicense         : "'Apache-2.0'",
-            podSource          : "{ :git => 'https://github.com/troii/timr-api.git', :tag => s.version.to_s }"
+            podVersion         : project.version.toString(),
+            podSource          : "{ :git => 'https://github.com/troii/timr-api-swift.git', :tag => s.version.to_s }"
     ]
 }
 
 tasks.named('openApiGenerate').configure { task ->
     task.dependsOn(cleanOpenApiGenerateTask)
-    task.finalizedBy('normalizeSwiftStringLiterals')
+    task.finalizedBy('renamePodspec', 'normalizeSwiftStringLiterals')
+}
+
+// CocoaPods requires the podspec filename to match the pod name.
+tasks.register('renamePodspec') {
+    doLast {
+        def generated = file("$projectDir/${apiClassPrefix}.podspec")
+        if (generated.exists()) {
+            file("$projectDir/${moduleName}.podspec").text = generated.text
+            generated.delete()
+        }
+    }
 }
 
 // OpenAPI Generator escapes forward slashes even though Swift string literals do not support that escape.
