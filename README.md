@@ -114,9 +114,33 @@ and `package-lock.json` from `sdk/versions.properties`; snapshot builds add the 
 tarball without uploading it. The package contains compiled JavaScript, declarations, README and license.
 The [npm README](sdk/typescript-fetch/README.md) is hand-maintained and preserved during generation. TypeScript methods accept path IDs and bodies directly, with query parameters in a typed options object: `getCar(id)`, `createCar(body)` and `fetchCars({ pageToken, limit })`. The API templates implement this convention; `npm test` checks request serialization and public types.
 
+### Python SDK
+
+The Python client is packaged as `timr-api` on PyPI and imported as `timr_api`.
+A `python/<version>` tag publishes the wheel and source distribution to PyPI.
+**Publish Snapshot**, with `module=python`, publishes development versions to TestPyPI without
+deployment approval. Their PEP 440 version is `<version>.dev<stamp>`, where CI uses the run ID
+and attempt to make the numeric stamp unique.
+
+Both indexes use Trusted Publishing. Register these GitHub publishers for `troii/timr-api`, using
+pending publishers if the project does not exist yet:
+
+| Index | Project | Workflow | Environment |
+| --- | --- | --- | --- |
+| PyPI | `timr-api` | `release.yml` | `Release` |
+| TestPyPI | `timr-api` | `publish-snapshot.yml` | leave blank |
+
+No PyPI API token or publishing username is stored in GitHub. PyPI and TestPyPI have separate
+accounts and publisher configurations.
+
+Install Python's `build` and `twine` packages, then run `./gradlew :python:pythonPack` to regenerate
+and build `sdk/python/build/dist/`. **Validate Publishing**, with `module=python`, builds both
+distributions, checks their metadata, tests the installed wheel and attaches the files without
+uploading to an index.
+
 ### Publishing approval and credentials
 
-Stable JVM, .NET and TypeScript publications use the `Release` environment and require approval. Snapshot
+Stable JVM, .NET, TypeScript and Python publications use the `Release` environment and require approval. Snapshot
 publication uses no GitHub environment and needs no deployment approval.
 
 Maven snapshots read `MAVEN_CENTRAL_USERNAME` and `MAVEN_CENTRAL_PASSWORD` from repository secrets.
@@ -124,6 +148,7 @@ Stable Maven publications read the same credential names and the signing key and
 `Release` environment secrets. Signed JVM validation also uses `Release` for access to signing keys.
 NuGet obtains a short-lived publishing key through GitHub OIDC for each upload.
 npm authenticates through GitHub OIDC; no npm publishing token is stored in GitHub.
+PyPI and TestPyPI also authenticate through GitHub OIDC.
 
 ## Local development
 

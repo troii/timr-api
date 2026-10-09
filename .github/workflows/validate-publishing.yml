@@ -6,7 +6,7 @@ on:
       module:
         description: SDK whose release credentials and artifacts to validate
         type: choice
-        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet, typescript-fetch]
+        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet, typescript-fetch, python]
 
 permissions:
   contents: read
@@ -97,4 +97,29 @@ jobs:
         with:
           name: dotnet-publication
           path: sdk/dotnet/build/nuget/*.nupkg
+          retention-days: 7
+
+  python:
+    name: Validate Python publication
+    if: inputs.module == 'python'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.9'
+      - name: Build and test the Python distributions
+        run: |
+          python -m pip install build twine pytest
+          ./gradlew :python:pythonPack --scan
+          python -m twine check --strict sdk/python/build/dist/*
+          python -m pip install sdk/python/build/dist/*.whl
+          python -m pytest sdk/python/tests
+      - uses: actions/upload-artifact@v6
+        with:
+          name: python-publication
+          path: sdk/python/build/dist/*
           retention-days: 7

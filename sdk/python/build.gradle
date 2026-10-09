@@ -5,6 +5,10 @@ repositories {
     mavenCentral()
 }
 
+def baseVersion = rootProject.ext.sdkVersions[project.name]
+def snapshotStamp = System.getenv('PYTHON_SNAPSHOT_STAMP') ?: rootProject.ext.snapshotStamp
+def pythonPackageVersion = rootProject.ext.snapshotBuild ? "${baseVersion}.dev${snapshotStamp}" : baseVersion
+
 openApiGenerate {
     generatorName = 'python'
     templateDir = "$projectDir/templates"
@@ -17,12 +21,25 @@ openApiGenerate {
     gitRepoId = 'timr-api'
     configOptions = [
             packageName                : 'timr_api',
-            packageVersion             : project.version,
+            packageVersion             : pythonPackageVersion,
             packageUrl                 : 'https://developer.timr.com',
             hideGenerationTimestamp    : 'true',
             useOneOfDiscriminatorLookup: 'true',
             datetimeFormat             : '%Y-%m-%dT%H:%M:%SZ'
     ]
+}
+
+def distDirectory = layout.buildDirectory.dir('dist')
+def cleanPythonDist = tasks.register('cleanPythonDist', Delete) {
+    delete distDirectory
+}
+
+tasks.register('pythonPack', Exec) {
+    group = 'publishing'
+    description = 'Builds the Python wheel and source distribution.'
+    dependsOn tasks.named('openApiGenerate'), cleanPythonDist
+    workingDir = projectDir
+    commandLine 'python3', '-m', 'build', '--outdir', distDirectory.get().asFile.absolutePath
 }
 
 tasks.register('cleanOpenApiGenerate', Delete) {

@@ -45,16 +45,18 @@ SDKs live in this repository at one revision. The `User-Agent` names the SDK and
 
 A release is a tag. A bare version — `1.4.0` — releases the contract and is the GitHub release to
 watch for API changes. A module tag — `java-restclient/1.2.0` or `dotnet/1.2.0` — publishes that one SDK
-at that version and nothing else. Publishing for Python, Swift and TypeScript is not configured yet.
+at that version and nothing else.
+A `python/<version>` tag publishes the Python wheel and source distribution to PyPI.
+Publishing for Swift is not configured yet.
 
 ## Release types
 
 A contract update regenerates every SDK. A contract release is accompanied by new releases of the
-JVM, .NET and TypeScript SDKs; publishing for the other SDKs is not configured yet. An SDK release does not imply a
+JVM, .NET, TypeScript and Python SDKs; publishing for Swift is not configured yet. An SDK release does not imply a
 contract release.
 
 | Change | Version affected | Published |
 | --- | --- | --- |
-| The contract changes | specification minor or patch, SDK minor | documentation, release notes, JVM, .NET and TypeScript SDKs |
+| The contract changes | specification minor or patch, SDK minor | documentation, release notes, JVM, .NET, TypeScript and Python SDKs |
 | A guide or the site changes | none | documentation |
 | A generator, template or packaging fix | SDK patch | the SDKs concerned |
