@@ -9,6 +9,7 @@ on:
       - 'java-resttemplate/[0-9]*.[0-9]*.[0-9]*'
       - 'kotlin-okhttp/[0-9]*.[0-9]*.[0-9]*'
       - 'dotnet/[0-9]*.[0-9]*.[0-9]*'
+      - 'typescript-fetch/[0-9]*.[0-9]*.[0-9]*'
 
 permissions:
   contents: write
@@ -54,7 +55,7 @@ jobs:
               module=${GITHUB_REF_NAME%/*}
               version=${GITHUB_REF_NAME##*/}
               case "$module" in
-                java-restclient | java-resttemplate | kotlin-okhttp | dotnet) ;;
+                java-restclient | java-resttemplate | kotlin-okhttp | dotnet | typescript-fetch) ;;
                 *)
                   echo "::error::Publishing is not configured for module '${module}'."
                   exit 1
@@ -99,7 +100,7 @@ jobs:
   sdk:
     name: Publish ${{ needs.resolve.outputs.module }} ${{ needs.resolve.outputs.version }}
     needs: [build-verify, resolve]
-    if: needs.resolve.outputs.kind == 'module' && needs.resolve.outputs.module != 'dotnet'
+    if: needs.resolve.outputs.kind == 'module' && contains(fromJSON('["java-restclient", "java-resttemplate", "kotlin-okhttp"]'), needs.resolve.outputs.module)
     runs-on: ubuntu-latest
     environment: Release
     env:
@@ -157,3 +158,32 @@ jobs:
         run: ./gradlew :dotnet:publish --scan
       - name: Summary
         run: echo "Published \`timr.Api\` \`${VERSION}\` to NuGet from \`${GITHUB_REF_NAME}\`." >> "$GITHUB_STEP_SUMMARY"
+
+  typescript:
+    name: Publish TypeScript ${{ needs.resolve.outputs.version }}
+    needs: [build-verify, resolve]
+    if: needs.resolve.outputs.kind == 'module' && needs.resolve.outputs.module == 'typescript-fetch'
+    runs-on: ubuntu-latest
+    environment: Release
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      VERSION: ${{ needs.resolve.outputs.version }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: Install dependencies
+        working-directory: sdk/typescript-fetch
+        run: npm ci
+      - name: Publish to npm
+        run: ./gradlew :typescript-fetch:publish --scan
+      - name: Summary
+        run: echo "Published \`timr-api\` \`${VERSION}\` to npm from \`${GITHUB_REF_NAME}\`." >> "$GITHUB_STEP_SUMMARY"

@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.openapi)
 }
 
+def snapshot = rootProject.ext.snapshotBuild
+def baseVersion = rootProject.ext.sdkVersions[project.name]
+def snapshotStamp = System.getenv('NPM_SNAPSHOT_STAMP') ?: rootProject.ext.snapshotStamp
+def npmPackageVersion = snapshot ? "${baseVersion}-snapshot.${snapshotStamp}" : baseVersion
+def npmPackage = layout.buildDirectory.file("npm/timr-api-${npmPackageVersion}.tgz")
+
 openApiGenerate {
     generatorName = 'typescript-fetch'
     gitHost = 'github.com'
@@ -24,4 +30,30 @@ tasks.register('cleanOpenApiGenerate', Delete) {
 
 tasks.named('openApiGenerate').configure { task ->
     task.dependsOn('cleanOpenApiGenerate')
+}
+
+tasks.register('stampNpmVersion', Exec) {
+    group = 'publishing'
+    description = 'Sets the npm version from sdk/versions.properties.'
+    workingDir = projectDir
+    commandLine 'npm', 'version', npmPackageVersion, '--no-git-tag-version', '--allow-same-version', '--ignore-scripts'
+}
+
+tasks.register('npmPack', Exec) {
+    group = 'publishing'
+    description = 'Builds and packs the npm publication.'
+    dependsOn tasks.named('stampNpmVersion')
+    workingDir = projectDir
+    doFirst {
+        npmPackage.get().asFile.parentFile.mkdirs()
+    }
+    commandLine 'npm', 'pack', '--pack-destination', layout.buildDirectory.dir('npm').get().asFile.absolutePath
+}
+
+tasks.register('publish', Exec) {
+    group = 'publishing'
+    description = 'Publishes the npm package with provenance.'
+    dependsOn tasks.named('npmPack')
+    workingDir = projectDir
+    commandLine 'npm', 'publish', npmPackage.get().asFile.absolutePath, '--provenance', '--tag', snapshot ? 'next' : 'latest'
 }

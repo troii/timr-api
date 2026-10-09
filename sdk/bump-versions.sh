@@ -29,7 +29,7 @@ case $level in
 esac
 
 declared=$(grep -oE '^[^#][^=]*' "$versions" | sed 's/[[:space:]]*$//')
-publishable=$'java-restclient\njava-resttemplate\nkotlin-okhttp\ndotnet'
+publishable=$'java-restclient\njava-resttemplate\nkotlin-okhttp\ndotnet\ntypescript-fetch'
 
 # Resolve every requested name before touching the file, so a typo cannot leave a half applied bump.
 if [ $# -eq 0 ]; then

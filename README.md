@@ -95,15 +95,34 @@ To inspect the package locally, run `./gradlew :dotnet:dotnetTest :dotnet:dotnet
 written to `sdk/dotnet/build/nuget/`; **Validate Publishing**, with `module=dotnet`, runs the tests,
 packs the SDK and attaches the package as a workflow artifact without uploading to NuGet.
 
+### TypeScript SDK
+
+The TypeScript client is published as `timr-api` on npm. A `typescript-fetch/<version>` tag publishes
+that version under the `latest` dist-tag. **Publish Snapshot**, with `module=typescript-fetch`,
+publishes `<version>-snapshot.<run-id>.<attempt>` under `next`.
+
+Publishing uses npm Trusted Publishing and provenance. Configure GitHub publishers for `troii/timr-api`:
+`publish-snapshot.yml` with no environment, and `release.yml` with environment `Release`; both must
+allow direct `npm publish`. The package must exist on npm before its trusted publishers can be set up.
+The source repository must be public for provenance. The initial package upload uses an authorized
+npm account; subsequent uploads use the configured trusted publishers.
+
+Run `npm ci` and `npm test` in `sdk/typescript-fetch/`, then `./gradlew :typescript-fetch:npmPack`
+from the repository root to build `sdk/typescript-fetch/build/npm/`. Packing stamps `package.json`
+and `package-lock.json` from `sdk/versions.properties`; snapshot builds add the prerelease suffix.
+**Validate Publishing**, with `module=typescript-fetch`, tests and packs the SDK and attaches the
+tarball without uploading it. The package contains compiled JavaScript, declarations, README and license.
+
 ### Publishing approval and credentials
 
-Stable JVM and .NET publications use the `Release` environment and require approval. Snapshot
+Stable JVM, .NET and TypeScript publications use the `Release` environment and require approval. Snapshot
 publication uses no GitHub environment and needs no deployment approval.
 
 Maven snapshots read `MAVEN_CENTRAL_USERNAME` and `MAVEN_CENTRAL_PASSWORD` from repository secrets.
 Stable Maven publications read the same credential names and the signing key and password from
 `Release` environment secrets. Signed JVM validation also uses `Release` for access to signing keys.
 NuGet obtains a short-lived publishing key through GitHub OIDC for each upload.
+npm authenticates through GitHub OIDC; no npm publishing token is stored in GitHub.
 
 ## Local development
 

@@ -6,7 +6,7 @@ on:
       module:
         description: Which SDK to publish a snapshot of
         type: choice
-        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet]
+        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet, typescript-fetch]
 
 permissions:
   contents: read
@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   publish:
-    if: inputs.module != 'dotnet'
+    if: contains(fromJSON('["java-restclient", "java-resttemplate", "kotlin-okhttp"]'), inputs.module)
     name: Publish ${{ inputs.module }} snapshot
     runs-on: ubuntu-latest
     env:
@@ -67,3 +67,31 @@ jobs:
         env:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: ./gradlew :dotnet:publish --scan
+
+  typescript:
+    name: Publish TypeScript snapshot
+    if: inputs.module == 'typescript-fetch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      SNAPSHOT: 'true'
+      NPM_SNAPSHOT_STAMP: ${{ github.run_id }}.${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: Install dependencies and test the TypeScript SDK
+        working-directory: sdk/typescript-fetch
+        run: |
+          npm ci
+          npm test
+      - name: Publish snapshot to npm
+        run: ./gradlew :typescript-fetch:publish --scan

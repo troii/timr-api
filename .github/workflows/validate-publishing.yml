@@ -6,14 +6,14 @@ on:
       module:
         description: SDK whose release credentials and artifacts to validate
         type: choice
-        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet]
+        options: [java-restclient, java-resttemplate, kotlin-okhttp, dotnet, typescript-fetch]
 
 permissions:
   contents: read
 
 jobs:
   jvm:
-    if: inputs.module != 'dotnet'
+    if: contains(fromJSON('["java-restclient", "java-resttemplate", "kotlin-okhttp"]'), inputs.module)
     name: Validate ${{ inputs.module }} publication
     runs-on: ubuntu-latest
     environment: Release
@@ -49,6 +49,32 @@ jobs:
           path: |
             sdk/${{ inputs.module }}/build/libs/*
             sdk/${{ inputs.module }}/build/publications/mavenJava/*
+          retention-days: 7
+
+  typescript:
+    name: Validate TypeScript publication
+    if: inputs.module == 'typescript-fetch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: troii-actions/setup-jvm@v1
+        with:
+          java-version-file: .sdkmanrc
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install dependencies and test the TypeScript SDK
+        working-directory: sdk/typescript-fetch
+        run: |
+          npm ci
+          npm test
+      - name: Pack the npm publication
+        run: ./gradlew :typescript-fetch:npmPack --scan
+      - uses: actions/upload-artifact@v6
+        with:
+          name: typescript-publication
+          path: sdk/typescript-fetch/build/npm/*.tgz
           retention-days: 7
 
   dotnet:
