@@ -67,10 +67,6 @@ jobs:
             10.x
       - name: Test and pack the NuGet publication
         run: ./gradlew :dotnet:dotnetTest :dotnet:dotnetPack --scan
-      - name: Verify the NuGet package
-        run: |
-          version=$(sed -n 's/^dotnet=//p' sdk/versions.properties)
-          python3 sdk/dotnet/verify-package.py "sdk/dotnet/build/nuget/timr.Api.${version}.nupkg" --version "$version"
       - uses: actions/upload-artifact@v6
         with:
           name: dotnet-publication

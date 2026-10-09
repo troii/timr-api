@@ -91,8 +91,8 @@ Both use NuGet Trusted Publishing with the repository variable `NUGET_USER=troii
 The snapshot trust policy leaves its environment blank; the stable release policy specifies `Release`.
 
 To inspect the package locally, run `./gradlew :dotnet:dotnetTest :dotnet:dotnetPack`. The package is
-written to `sdk/dotnet/build/nuget/`; **Validate Publishing**, with `module=dotnet`, also checks it and
-attaches it as a workflow artifact without uploading to NuGet.
+written to `sdk/dotnet/build/nuget/`; **Validate Publishing**, with `module=dotnet`, runs the tests,
+packs the SDK and attaches the package as a workflow artifact without uploading to NuGet.
 
 ### Publishing approval and credentials
 

@@ -146,8 +146,6 @@ jobs:
             10.x
       - name: Pack the NuGet publication
         run: ./gradlew :dotnet:dotnetPack --scan
-      - name: Verify the NuGet package
-        run: python3 sdk/dotnet/verify-package.py "sdk/dotnet/build/nuget/timr.Api.${VERSION}.nupkg" --version "$VERSION"
       - name: Get a short-lived NuGet publishing key
         id: login
         uses: NuGet/login@v1

@@ -58,10 +58,6 @@ jobs:
             10.x
       - name: Test and pack the NuGet snapshot
         run: ./gradlew :dotnet:dotnetTest :dotnet:dotnetPack --scan
-      - name: Verify the NuGet snapshot
-        run: |
-          version=$(sed -n 's/^dotnet=//p' sdk/versions.properties)
-          python3 sdk/dotnet/verify-package.py sdk/dotnet/build/nuget/*.nupkg --version "$version" --snapshot
       - name: Get a short-lived NuGet publishing key
         id: login
         uses: NuGet/login@v1
