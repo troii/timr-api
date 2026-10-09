@@ -3,7 +3,7 @@
 #
 #   sdk/bump-versions.sh minor              every SDK, for a release that follows a specification update
 #   sdk/bump-versions.sh patch python       one or more SDKs, for a generator, template or packaging fix
-#   sdk/bump-versions.sh tag [java-restclient ...]  tag HEAD for one or more publishable JVM SDKs
+#   sdk/bump-versions.sh tag [java-restclient ...]  tag HEAD for one or more publishable SDKs
 #
 # A specification update carries every client with it, so the whole set moves together; a fix that is
 # one client's own moves that client alone. Names are the module directories under sdk/. See
@@ -29,7 +29,7 @@ case $level in
 esac
 
 declared=$(grep -oE '^[^#][^=]*' "$versions" | sed 's/[[:space:]]*$//')
-publishable=$'java-restclient\njava-resttemplate\nkotlin-okhttp'
+publishable=$'java-restclient\njava-resttemplate\nkotlin-okhttp\ndotnet'
 
 # Resolve every requested name before touching the file, so a typo cannot leave a half applied bump.
 if [ $# -eq 0 ]; then

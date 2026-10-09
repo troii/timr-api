@@ -82,6 +82,29 @@ The JVM clients target Java 17 and are published to Maven Central under these co
 Each client is versioned independently. Use the version shown in `sdk/versions.properties` or the
 latest matching module tag described in [VERSIONING.md](VERSIONING.md).
 
+### .NET SDK
+
+The .NET client is packaged as `timr.Api` for .NET 8 and .NET 10. A `dotnet/<version>` tag publishes
+that version to NuGet. The manually dispatched **Publish Snapshot** workflow publishes a prerelease
+as `<version>-snapshot.<run-id>.<attempt>`; it does not change which stable version consumers resolve.
+Both use NuGet Trusted Publishing with the repository variable `NUGET_USER`, set to the username of
+the account that created the trust policies. The package owner selected in the policy can differ.
+The snapshot trust policy leaves its environment blank; the stable release policy specifies `Release`.
+
+To inspect the package locally, run `./gradlew :dotnet:dotnetTest :dotnet:dotnetPack`. The package is
+written to `sdk/dotnet/build/nuget/`; **Validate Publishing**, with `module=dotnet`, runs the tests,
+packs the SDK and attaches the package as a workflow artifact without uploading to NuGet.
+
+### Publishing approval and credentials
+
+Stable JVM and .NET publications use the `Release` environment and require approval. Snapshot
+publication uses no GitHub environment and needs no deployment approval.
+
+Maven snapshots read `MAVEN_CENTRAL_USERNAME` and `MAVEN_CENTRAL_PASSWORD` from repository secrets.
+Stable Maven publications read the same credential names and the signing key and password from
+`Release` environment secrets. Signed JVM validation also uses `Release` for access to signing keys.
+NuGet obtains a short-lived publishing key through GitHub OIDC for each upload.
+
 ## Local development
 
 The documentation site:
