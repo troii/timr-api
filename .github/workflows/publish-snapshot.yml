@@ -35,6 +35,13 @@ jobs:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
         run: ./gradlew ":${MODULE}:publishToMavenCentral" --scan
+      - name: Summary
+        env:
+          MODULE: ${{ inputs.module }}
+        run: |
+          read -r group artifact version < <(yq -p=xml -o=tsv '.project | [.groupId, .artifactId, .version]' "sdk/${MODULE}/build/publications/mavenJava/pom-default.xml")
+          path="${group//.//}/${artifact}/${version}/maven-metadata.xml"
+          printf '\nPublished [%s:%s:%s](https://central.sonatype.com/repository/maven-snapshots/%s).\n' "$group" "$artifact" "$version" "$path" >> "$GITHUB_STEP_SUMMARY"
 
   dotnet:
     name: Publish .NET snapshot
@@ -67,6 +74,10 @@ jobs:
         env:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: ./gradlew :dotnet:publish --scan
+      - name: Summary
+        run: |
+          read -r name version < <(unzip -p sdk/dotnet/build/nuget/*.nupkg '*.nuspec' | yq -p=xml -o=tsv '.package.metadata | [.id, .version]')
+          printf '\nPublished [%s %s](https://www.nuget.org/packages/%s/%s).\n' "$name" "$version" "$name" "$version" >> "$GITHUB_STEP_SUMMARY"
 
   typescript:
     name: Publish TypeScript snapshot
@@ -95,6 +106,9 @@ jobs:
           npm test
       - name: Publish snapshot to npm
         run: ./gradlew :typescript-fetch:publish --scan
+      - name: Summary
+        run: |
+          jq -r '"\nPublished [\(.name) \(.version)](https://www.npmjs.com/package/\(.name)/v/\(.version))."' sdk/typescript-fetch/package.json >> "$GITHUB_STEP_SUMMARY"
 
   python:
     name: Publish Python snapshot
@@ -126,3 +140,8 @@ jobs:
         with:
           packages-dir: sdk/python/build/dist
           repository-url: https://test.pypi.org/legacy/
+      - name: Summary
+        run: |
+          read -r name version < <(awk '/^Name: / {name = $2} /^Version: / {version = $2} /^[[:space:]]*$/ {print name, version; exit}' sdk/python/*.egg-info/PKG-INFO)
+          project=$(printf '%s' "$name" | tr '[:upper:]' '[:lower:]' | sed -E 's/[-_.]+/-/g')
+          printf '\nPublished [%s %s](https://test.pypi.org/project/%s/%s/).\n' "$name" "$version" "$project" "$version" >> "$GITHUB_STEP_SUMMARY"
