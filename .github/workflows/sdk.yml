@@ -24,9 +24,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: troii-actions/setup-jvm@v1
+      - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
+
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          add-job-summary: on-failure
 
       - name: Generate SDKs
         run: ./gradlew openApiGenerate --scan
@@ -60,9 +64,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: troii-actions/setup-jvm@v1
+      - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
+
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          add-job-summary: on-failure
 
       - name: Assemble and test
         run: ./gradlew :${{ matrix.module }}:assemble :${{ matrix.module }}:test --scan
@@ -81,9 +89,13 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - uses: troii-actions/setup-jvm@v1
+      - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
+
+      - uses: gradle/actions/setup-gradle@v6
+        with:
+          add-job-summary: on-failure
 
       - uses: actions/setup-dotnet@v5
         with:
