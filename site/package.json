@@ -15,5 +15,8 @@
   "devDependencies": {
     "bump-cli": "^2.9.5",
     "vite": "8.2.1"
+  },
+  "overrides": {
+    "@ai-sdk/provider-utils": "4.0.33"
   }
 }
