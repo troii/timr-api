@@ -1,0 +1,26 @@
+name: Gradle dependency submission
+
+on:
+  push:
+    branches: [main]
+    paths: ['sdk/**', 'buildSrc/**', 'gradle/**', 'build.gradle', 'settings.gradle', '.github/workflows/dependency-submission.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-java@v6
+        with:
+          java-version-file: .sdkmanrc
+
+      - name: Generate and submit Gradle dependency graph
+        uses: gradle/actions/dependency-submission@v6
