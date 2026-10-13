@@ -23,14 +23,17 @@ tasks.withType(JavaCompile).configureEach {
 dependencies {
     implementation platform(libs.spring.boot.dependencies)
 
-    implementation 'tools.jackson.core:jackson-databind'
+    implementation libs.jackson.databind
+    implementation libs.jackson.core
     implementation 'com.fasterxml.jackson.core:jackson-annotations'
     // JsonNullable is exposed in generated model getters/setters, so it is part of the public API
     api libs.jackson.nullable
 
     // api because RestTemplate and HttpMethod appear in this client's public signatures.
     api 'org.springframework:spring-web'
-    implementation 'org.apache.httpcomponents.client5:httpclient5' // PATCH support and connection pooling
+    implementation libs.httpclient5 // PATCH support and connection pooling
+    implementation libs.httpcore5
+    implementation libs.httpcore5.h2
     implementation 'org.springframework:spring-context'
 
     // @jakarta.annotation.Generated is emitted on every model

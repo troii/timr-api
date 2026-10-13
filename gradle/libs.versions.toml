@@ -1,6 +1,9 @@
 [versions]
 openapi-generator = "7.22.0"
-spring-boot = "4.0.5"
+spring-boot = "4.0.8"
+jackson = "3.1.7"
+httpclient5 = "5.6.5"
+httpcore5 = "5.4.4"
 jackson-nullable = "0.2.10"
 jakarta-annotation = "3.0.0"
 jspecify = "1.0.0"
@@ -16,6 +19,11 @@ maven-publish = "0.37.0"
 [libraries]
 jackson-nullable = { module = "org.openapitools:jackson-databind-nullable", version.ref = "jackson-nullable" }
 spring-boot-dependencies = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-core = { module = "tools.jackson.core:jackson-core", version.ref = "jackson" }
+httpclient5 = { module = "org.apache.httpcomponents.client5:httpclient5", version.ref = "httpclient5" }
+httpcore5 = { module = "org.apache.httpcomponents.core5:httpcore5", version.ref = "httpcore5" }
+httpcore5-h2 = { module = "org.apache.httpcomponents.core5:httpcore5-h2", version.ref = "httpcore5" }
 jakarta-annotation = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jakarta-annotation" }
 jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
 swagger-annotations = { module = "io.swagger:swagger-annotations", version.ref = "swagger-annotations" }

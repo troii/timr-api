@@ -24,7 +24,8 @@ tasks.withType(JavaCompile).configureEach {
 dependencies {
     implementation platform(libs.spring.boot.dependencies)
 
-    implementation 'tools.jackson.core:jackson-databind'
+    implementation libs.jackson.databind
+    implementation libs.jackson.core
     implementation 'com.fasterxml.jackson.core:jackson-annotations'
     // JsonNullable is exposed in generated model getters/setters, so it is part of the public API
     api libs.jackson.nullable
@@ -34,7 +35,9 @@ dependencies {
     api 'org.springframework:spring-web'
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
-    implementation 'org.apache.httpcomponents.client5:httpclient5' // PATCH support and connection pooling
+    implementation libs.httpclient5 // PATCH support and connection pooling
+    implementation libs.httpcore5
+    implementation libs.httpcore5.h2
     // @jakarta.annotation.Generated is emitted on every model
     implementation libs.jakarta.annotation
     // JSpecify annotations appear on generated public signatures, so consumers need them on their compile classpath
