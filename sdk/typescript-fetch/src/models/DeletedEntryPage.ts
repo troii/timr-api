@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DeletedEntryPartial } from './DeletedEntryPartial';
+import { mapValues } from '../runtime.js';
+import type { DeletedEntryPartial } from './DeletedEntryPartial.js';
 import {
     DeletedEntryPartialFromJSON,
     DeletedEntryPartialFromJSONTyped,
     DeletedEntryPartialToJSON,
     DeletedEntryPartialToJSONTyped,
-} from './DeletedEntryPartial';
+} from './DeletedEntryPartial.js';
 
 /**
  * 

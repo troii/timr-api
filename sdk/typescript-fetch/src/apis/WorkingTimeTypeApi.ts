@@ -11,47 +11,47 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DurationUnit,
     DurationUnitFromJSON,
     DurationUnitToJSON,
-} from '../models/DurationUnit';
+} from '../models/DurationUnit.js';
 import {
     type RecordingModeUser,
     RecordingModeUserFromJSON,
     RecordingModeUserToJSON,
-} from '../models/RecordingModeUser';
+} from '../models/RecordingModeUser.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type WorkingTimeType,
     WorkingTimeTypeFromJSON,
     WorkingTimeTypeToJSON,
-} from '../models/WorkingTimeType';
+} from '../models/WorkingTimeType.js';
 import {
     type WorkingTimeTypeCategory,
     WorkingTimeTypeCategoryFromJSON,
     WorkingTimeTypeCategoryToJSON,
-} from '../models/WorkingTimeTypeCategory';
+} from '../models/WorkingTimeTypeCategory.js';
 import {
     type WorkingTimeTypeSubCategory,
     WorkingTimeTypeSubCategoryFromJSON,
     WorkingTimeTypeSubCategoryToJSON,
-} from '../models/WorkingTimeTypeSubCategory';
+} from '../models/WorkingTimeTypeSubCategory.js';
 import {
     type WorkingTimeTypesPage,
     WorkingTimeTypesPageFromJSON,
     WorkingTimeTypesPageToJSON,
-} from '../models/WorkingTimeTypesPage';
+} from '../models/WorkingTimeTypesPage.js';
 import {
     type WorkingTimeTypesSortColumn,
     WorkingTimeTypesSortColumnFromJSON,
     WorkingTimeTypesSortColumnToJSON,
-} from '../models/WorkingTimeTypesSortColumn';
+} from '../models/WorkingTimeTypesSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

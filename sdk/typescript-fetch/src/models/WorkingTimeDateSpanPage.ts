@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { WorkingTimeDateSpan } from './WorkingTimeDateSpan';
+import { mapValues } from '../runtime.js';
+import type { WorkingTimeDateSpan } from './WorkingTimeDateSpan.js';
 import {
     WorkingTimeDateSpanFromJSON,
     WorkingTimeDateSpanFromJSONTyped,
     WorkingTimeDateSpanToJSON,
     WorkingTimeDateSpanToJSONTyped,
-} from './WorkingTimeDateSpan';
+} from './WorkingTimeDateSpan.js';
 
 /**
  * 

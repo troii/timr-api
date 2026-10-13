@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { ErrorEntry } from './ErrorEntry';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { ErrorEntry } from './ErrorEntry.js';
 import {
     ErrorEntryFromJSON,
     ErrorEntryFromJSONTyped,
     ErrorEntryToJSON,
     ErrorEntryToJSONTyped,
-} from './ErrorEntry';
+} from './ErrorEntry.js';
 
 /**
  * TIMR error response body, extending the Problem Details base with `timestamp`, `trace_id` and per-field `errors[]` for validation, binding, constraint, request-body deserialization, and reference-not-found errors. The semantic identifier is encoded in the `type` URI (e.g. `https://errors.timr.com/conflict/resource-outdated`).

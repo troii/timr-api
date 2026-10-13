@@ -11,27 +11,27 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type TaskToTeamAssignment,
     TaskToTeamAssignmentFromJSON,
     TaskToTeamAssignmentToJSON,
-} from '../models/TaskToTeamAssignment';
+} from '../models/TaskToTeamAssignment.js';
 import {
     type TaskToTeamAssignmentsPage,
     TaskToTeamAssignmentsPageFromJSON,
     TaskToTeamAssignmentsPageToJSON,
-} from '../models/TaskToTeamAssignmentsPage';
+} from '../models/TaskToTeamAssignmentsPage.js';
 import {
     type TaskToTeamAssignmentsSortColumn,
     TaskToTeamAssignmentsSortColumnFromJSON,
     TaskToTeamAssignmentsSortColumnToJSON,
-} from '../models/TaskToTeamAssignmentsSortColumn';
+} from '../models/TaskToTeamAssignmentsSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

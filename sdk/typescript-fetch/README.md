@@ -13,11 +13,11 @@ npm install timr-api
 Obtain an OAuth2 access token using the [authentication guide](https://developer.timr.com), then pass it with the `Bearer` prefix:
 
 ```ts
-import { Configuration, UserApi, WorkingTimeApi, WorkingTimeStatus } from 'timr-api';
+import { UserApi, WorkingTimeApi, WorkingTimeStatus } from 'timr-api';
 
-const config = new Configuration({
+const config = {
   accessToken: 'Bearer YOUR_ACCESS_TOKEN',
-});
+};
 
 async function main() {
   const user = await new UserApi(config).getUser('USER_ID');
@@ -40,6 +40,9 @@ main().catch(console.error);
 
 The client uses `https://api.timr.com/v1` by default. Obtain and refresh tokens in your application; the SDK sends the configured token with each request.
 
+Pass options directly to an API constructor. An `accessToken` callback can read your current token on
+each request. Existing callers can continue passing a `Configuration` instance.
+
 `getUser` sends a GET request; `createWorkingTime` sends a POST request with the object as its body. Replace the user and working time type IDs with values from your account. This example uses a working time type recorded in hours.
 
 Pass query filters by name: `new UserApi(config).fetchUsers({ pageToken: 'PAGE_TOKEN', limit: 10 })`.
@@ -47,6 +50,18 @@ Pass query filters by name: `new UserApi(config).fetchUsers({ pageToken: 'PAGE_T
 ## API reference
 
 See the [API reference and guides](https://developer.timr.com) for endpoints, request fields, pagination and authentication. Types are included for editor completion.
+
+## Module formats
+
+The package provides native ESM and CommonJS with matching TypeScript declarations. Use the package
+entry point in both formats; generated files under `dist/` are not public import paths.
+
+```js
+// CommonJS
+const { UserApi } = require('timr-api');
+```
+
+The ESM `import` form is shown in the quickstart. Browser bundlers resolve the ESM entry point too.
 
 ## License
 

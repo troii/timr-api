@@ -11,12 +11,12 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type Accounts,
     AccountsFromJSON,
     AccountsToJSON,
-} from '../models/Accounts';
+} from '../models/Accounts.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

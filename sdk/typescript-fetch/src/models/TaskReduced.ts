@@ -11,28 +11,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { TaskPartial } from './TaskPartial';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { TaskPartial } from './TaskPartial.js';
 import {
     TaskPartialFromJSON,
     TaskPartialFromJSONTyped,
     TaskPartialToJSON,
     TaskPartialToJSONTyped,
-} from './TaskPartial';
-import type { TaskLocation } from './TaskLocation';
+} from './TaskPartial.js';
+import type { TaskLocation } from './TaskLocation.js';
 import {
     TaskLocationFromJSON,
     TaskLocationFromJSONTyped,
     TaskLocationToJSON,
     TaskLocationToJSONTyped,
-} from './TaskLocation';
-import type { BudgetPlanningType } from './BudgetPlanningType';
+} from './TaskLocation.js';
+import type { BudgetPlanningType } from './BudgetPlanningType.js';
 import {
     BudgetPlanningTypeFromJSON,
     BudgetPlanningTypeFromJSONTyped,
     BudgetPlanningTypeToJSON,
     BudgetPlanningTypeToJSONTyped,
-} from './BudgetPlanningType';
+} from './BudgetPlanningType.js';
 
 /**
  * 

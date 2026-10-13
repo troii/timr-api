@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * You can define the location of a task by setting this property. If the task has a parent task, the location is inherited if nothing else is explicitly defined. If you set this property to null, the location will be deleted.
  * 

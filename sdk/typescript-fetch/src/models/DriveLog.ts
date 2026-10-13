@@ -11,63 +11,63 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { Platform } from './Platform';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { Platform } from './Platform.js';
 import {
     PlatformFromJSON,
     PlatformFromJSONTyped,
     PlatformToJSON,
     PlatformToJSONTyped,
-} from './Platform';
-import type { DriveLogStatus } from './DriveLogStatus';
+} from './Platform.js';
+import type { DriveLogStatus } from './DriveLogStatus.js';
 import {
     DriveLogStatusFromJSON,
     DriveLogStatusFromJSONTyped,
     DriveLogStatusToJSON,
     DriveLogStatusToJSONTyped,
-} from './DriveLogStatus';
-import type { Duration } from './Duration';
+} from './DriveLogStatus.js';
+import type { Duration } from './Duration.js';
 import {
     DurationFromJSON,
     DurationFromJSONTyped,
     DurationToJSON,
     DurationToJSONTyped,
-} from './Duration';
-import type { DriveLogCategoryPartial } from './DriveLogCategoryPartial';
+} from './Duration.js';
+import type { DriveLogCategoryPartial } from './DriveLogCategoryPartial.js';
 import {
     DriveLogCategoryPartialFromJSON,
     DriveLogCategoryPartialFromJSONTyped,
     DriveLogCategoryPartialToJSON,
     DriveLogCategoryPartialToJSONTyped,
-} from './DriveLogCategoryPartial';
-import type { VenuePartial } from './VenuePartial';
+} from './DriveLogCategoryPartial.js';
+import type { VenuePartial } from './VenuePartial.js';
 import {
     VenuePartialFromJSON,
     VenuePartialFromJSONTyped,
     VenuePartialToJSON,
     VenuePartialToJSONTyped,
-} from './VenuePartial';
-import type { UserPartial } from './UserPartial';
+} from './VenuePartial.js';
+import type { UserPartial } from './UserPartial.js';
 import {
     UserPartialFromJSON,
     UserPartialFromJSONTyped,
     UserPartialToJSON,
     UserPartialToJSONTyped,
-} from './UserPartial';
-import type { CarPartial } from './CarPartial';
+} from './UserPartial.js';
+import type { CarPartial } from './CarPartial.js';
 import {
     CarPartialFromJSON,
     CarPartialFromJSONTyped,
     CarPartialToJSON,
     CarPartialToJSONTyped,
-} from './CarPartial';
-import type { Location } from './Location';
+} from './CarPartial.js';
+import type { Location } from './Location.js';
 import {
     LocationFromJSON,
     LocationFromJSONTyped,
     LocationToJSON,
     LocationToJSONTyped,
-} from './Location';
+} from './Location.js';
 
 /**
  * One trip in a `car`: `start` and `end`, `start_mileage` and `end_mileage` with the resulting `distance`, the `purpose`, the places `visited`, and its `drive_log_category`. May include a recorded GPS `route`.

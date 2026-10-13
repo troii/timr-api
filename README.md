@@ -166,6 +166,12 @@ The SDKs:
 ./gradlew :kotlin-okhttp:assemble
 ```
 
+The TypeScript SDK uses one `sdk/typescript-fetch/tsconfig.json` to check its sources and
+`tsdown.config.mjs` to bundle ESM and CommonJS with matching declarations into `dist/`. Its
+`package.json` exports select the format for `import` and `require`. Run `npm ci` and `npm test` in
+`sdk/typescript-fetch/` using Node 24. The tests cover request behavior and an installed tarball's
+Node entry points, public types and browser bundling.
+
 ## Contributing
 
 Questions, bug reports and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). We are

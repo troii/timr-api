@@ -11,27 +11,27 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DriveLogCategoriesPage,
     DriveLogCategoriesPageFromJSON,
     DriveLogCategoriesPageToJSON,
-} from '../models/DriveLogCategoriesPage';
+} from '../models/DriveLogCategoriesPage.js';
 import {
     type DriveLogCategoriesSortColumn,
     DriveLogCategoriesSortColumnFromJSON,
     DriveLogCategoriesSortColumnToJSON,
-} from '../models/DriveLogCategoriesSortColumn';
+} from '../models/DriveLogCategoriesSortColumn.js';
 import {
     type DriveLogCategory,
     DriveLogCategoryFromJSON,
     DriveLogCategoryToJSON,
-} from '../models/DriveLogCategory';
+} from '../models/DriveLogCategory.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

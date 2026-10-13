@@ -11,37 +11,37 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type Car,
     CarFromJSON,
     CarToJSON,
-} from '../models/Car';
+} from '../models/Car.js';
 import {
     type CarCreate,
     CarCreateFromJSON,
     CarCreateToJSON,
-} from '../models/CarCreate';
+} from '../models/CarCreate.js';
 import {
     type CarUpdate,
     CarUpdateFromJSON,
     CarUpdateToJSON,
-} from '../models/CarUpdate';
+} from '../models/CarUpdate.js';
 import {
     type CarsPage,
     CarsPageFromJSON,
     CarsPageToJSON,
-} from '../models/CarsPage';
+} from '../models/CarsPage.js';
 import {
     type CarsSortColumn,
     CarsSortColumnFromJSON,
     CarsSortColumnToJSON,
-} from '../models/CarsSortColumn';
+} from '../models/CarsSortColumn.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

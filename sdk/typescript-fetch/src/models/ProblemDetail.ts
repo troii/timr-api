@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * RFC 9457 Problem Details base members (`type`, `title`, `status`, `detail`, `instance`) — the common shape of all error response bodies.
  * 

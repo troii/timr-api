@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DurationType } from './DurationType';
+import { mapValues } from '../runtime.js';
+import type { DurationType } from './DurationType.js';
 import {
     DurationTypeFromJSON,
     DurationTypeFromJSONTyped,
     DurationTypeToJSON,
     DurationTypeToJSONTyped,
-} from './DurationType';
+} from './DurationType.js';
 
 /**
  * 

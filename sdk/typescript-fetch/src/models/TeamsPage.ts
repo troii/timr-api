@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Team } from './Team';
+import { mapValues } from '../runtime.js';
+import type { Team } from './Team.js';
 import {
     TeamFromJSON,
     TeamFromJSONTyped,
     TeamToJSON,
     TeamToJSONTyped,
-} from './Team';
+} from './Team.js';
 
 /**
  * 

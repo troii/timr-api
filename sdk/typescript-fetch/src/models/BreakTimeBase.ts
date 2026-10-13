@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { BreakTimeType } from './BreakTimeType';
+import { mapValues } from '../runtime.js';
+import type { BreakTimeType } from './BreakTimeType.js';
 import {
     BreakTimeTypeFromJSON,
     BreakTimeTypeFromJSONTyped,
     BreakTimeTypeToJSON,
     BreakTimeTypeToJSONTyped,
-} from './BreakTimeType';
+} from './BreakTimeType.js';
 
 /**
  * Members shared by every kind of break time, including the discriminator.

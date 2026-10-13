@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { TaskToTeamAssignment } from './TaskToTeamAssignment';
+import { mapValues } from '../runtime.js';
+import type { TaskToTeamAssignment } from './TaskToTeamAssignment.js';
 import {
     TaskToTeamAssignmentFromJSON,
     TaskToTeamAssignmentFromJSONTyped,
     TaskToTeamAssignmentToJSON,
     TaskToTeamAssignmentToJSONTyped,
-} from './TaskToTeamAssignment';
+} from './TaskToTeamAssignment.js';
 
 /**
  * 

@@ -11,28 +11,28 @@
  * Do not edit the class manually.
  */
 
-import { parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { BreakTimeAutomatic } from './BreakTimeAutomatic';
+import { parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { BreakTimeAutomatic } from './BreakTimeAutomatic.js';
 import {
     instanceOfBreakTimeAutomatic,
     BreakTimeAutomaticFromJSON,
     BreakTimeAutomaticFromJSONTyped,
     BreakTimeAutomaticToJSON,
-} from './BreakTimeAutomatic';
-import type { BreakTimeManual } from './BreakTimeManual';
+} from './BreakTimeAutomatic.js';
+import type { BreakTimeManual } from './BreakTimeManual.js';
 import {
     instanceOfBreakTimeManual,
     BreakTimeManualFromJSON,
     BreakTimeManualFromJSONTyped,
     BreakTimeManualToJSON,
-} from './BreakTimeManual';
-import type { BreakTimeOngoing } from './BreakTimeOngoing';
+} from './BreakTimeManual.js';
+import type { BreakTimeOngoing } from './BreakTimeOngoing.js';
 import {
     instanceOfBreakTimeOngoing,
     BreakTimeOngoingFromJSON,
     BreakTimeOngoingFromJSONTyped,
     BreakTimeOngoingToJSON,
-} from './BreakTimeOngoing';
+} from './BreakTimeOngoing.js';
 
 /**
  * @type BreakTime

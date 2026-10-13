@@ -11,52 +11,52 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type Team,
     TeamFromJSON,
     TeamToJSON,
-} from '../models/Team';
+} from '../models/Team.js';
 import {
     type TeamCreate,
     TeamCreateFromJSON,
     TeamCreateToJSON,
-} from '../models/TeamCreate';
+} from '../models/TeamCreate.js';
 import {
     type TeamUpdate,
     TeamUpdateFromJSON,
     TeamUpdateToJSON,
-} from '../models/TeamUpdate';
+} from '../models/TeamUpdate.js';
 import {
     type TeamsPage,
     TeamsPageFromJSON,
     TeamsPageToJSON,
-} from '../models/TeamsPage';
+} from '../models/TeamsPage.js';
 import {
     type TeamsSortColumn,
     TeamsSortColumnFromJSON,
     TeamsSortColumnToJSON,
-} from '../models/TeamsSortColumn';
+} from '../models/TeamsSortColumn.js';
 import {
     type UserPartial,
     UserPartialFromJSON,
     UserPartialToJSON,
-} from '../models/UserPartial';
+} from '../models/UserPartial.js';
 import {
     type UsersPartialPage,
     UsersPartialPageFromJSON,
     UsersPartialPageToJSON,
-} from '../models/UsersPartialPage';
+} from '../models/UsersPartialPage.js';
 import {
     type UsersSortColumn,
     UsersSortColumnFromJSON,
     UsersSortColumnToJSON,
-} from '../models/UsersSortColumn';
+} from '../models/UsersSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

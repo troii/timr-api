@@ -11,56 +11,56 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { ProjectTimeStatus } from './ProjectTimeStatus';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { ProjectTimeStatus } from './ProjectTimeStatus.js';
 import {
     ProjectTimeStatusFromJSON,
     ProjectTimeStatusFromJSONTyped,
     ProjectTimeStatusToJSON,
     ProjectTimeStatusToJSONTyped,
-} from './ProjectTimeStatus';
-import type { TaskPartial } from './TaskPartial';
+} from './ProjectTimeStatus.js';
+import type { TaskPartial } from './TaskPartial.js';
 import {
     TaskPartialFromJSON,
     TaskPartialFromJSONTyped,
     TaskPartialToJSON,
     TaskPartialToJSONTyped,
-} from './TaskPartial';
-import type { Platform } from './Platform';
+} from './TaskPartial.js';
+import type { Platform } from './Platform.js';
 import {
     PlatformFromJSON,
     PlatformFromJSONTyped,
     PlatformToJSON,
     PlatformToJSONTyped,
-} from './Platform';
-import type { Duration } from './Duration';
+} from './Platform.js';
+import type { Duration } from './Duration.js';
 import {
     DurationFromJSON,
     DurationFromJSONTyped,
     DurationToJSON,
     DurationToJSONTyped,
-} from './Duration';
-import type { BreakTime } from './BreakTime';
+} from './Duration.js';
+import type { BreakTime } from './BreakTime.js';
 import {
     BreakTimeFromJSON,
     BreakTimeFromJSONTyped,
     BreakTimeToJSON,
     BreakTimeToJSONTyped,
-} from './BreakTime';
-import type { UserPartial } from './UserPartial';
+} from './BreakTime.js';
+import type { UserPartial } from './UserPartial.js';
 import {
     UserPartialFromJSON,
     UserPartialFromJSONTyped,
     UserPartialToJSON,
     UserPartialToJSONTyped,
-} from './UserPartial';
-import type { Location } from './Location';
+} from './UserPartial.js';
+import type { Location } from './Location.js';
 import {
     LocationFromJSON,
     LocationFromJSONTyped,
     LocationToJSON,
     LocationToJSONTyped,
-} from './Location';
+} from './Location.js';
 
 /**
  * One booking on a `task`, from `start` to `end`, optionally `billable`, with `break_times`, notes and locations.

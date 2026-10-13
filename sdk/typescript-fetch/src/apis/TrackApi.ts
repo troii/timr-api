@@ -11,12 +11,12 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type Waypoint,
     WaypointFromJSON,
     WaypointToJSON,
-} from '../models/Waypoint';
+} from '../models/Waypoint.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

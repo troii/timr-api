@@ -20,6 +20,7 @@ openApiGenerate {
             licenseName              : 'Apache-2.0',
             npmVersion               : project.version,
             supportsES6              : 'true',
+            importFileExtension      : '.js',
             useSingleRequestParameter: 'false'
     ]
 }
@@ -44,6 +45,7 @@ tasks.register('npmPack', Exec) {
     group = 'publishing'
     description = 'Builds and packs the npm publication.'
     dependsOn tasks.named('stampNpmVersion')
+    dependsOn tasks.named('openApiGenerate')
     workingDir = projectDir
     doFirst {
         npmPackage.get().asFile.parentFile.mkdirs()

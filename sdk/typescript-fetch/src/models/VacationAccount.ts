@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { VacationAccountDays } from './VacationAccountDays';
+import { parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { VacationAccountDays } from './VacationAccountDays.js';
 import {
     instanceOfVacationAccountDays,
     VacationAccountDaysFromJSON,
     VacationAccountDaysFromJSONTyped,
     VacationAccountDaysToJSON,
-} from './VacationAccountDays';
-import type { VacationAccountMinutes } from './VacationAccountMinutes';
+} from './VacationAccountDays.js';
+import type { VacationAccountMinutes } from './VacationAccountMinutes.js';
 import {
     instanceOfVacationAccountMinutes,
     VacationAccountMinutesFromJSON,
     VacationAccountMinutesFromJSONTyped,
     VacationAccountMinutesToJSON,
-} from './VacationAccountMinutes';
+} from './VacationAccountMinutes.js';
 
 /**
  * @type VacationAccount

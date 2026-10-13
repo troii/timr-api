@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { WorkingTimeType } from './WorkingTimeType';
+import { mapValues } from '../runtime.js';
+import type { WorkingTimeType } from './WorkingTimeType.js';
 import {
     WorkingTimeTypeFromJSON,
     WorkingTimeTypeFromJSONTyped,
     WorkingTimeTypeToJSON,
     WorkingTimeTypeToJSONTyped,
-} from './WorkingTimeType';
+} from './WorkingTimeType.js';
 
 /**
  * 

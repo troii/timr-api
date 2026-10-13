@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { RecordingLockType } from './RecordingLockType';
+import { mapValues } from '../runtime.js';
+import type { RecordingLockType } from './RecordingLockType.js';
 import {
     RecordingLockTypeFromJSON,
     RecordingLockTypeFromJSONTyped,
     RecordingLockTypeToJSON,
     RecordingLockTypeToJSONTyped,
-} from './RecordingLockType';
-import type { UserPartial } from './UserPartial';
+} from './RecordingLockType.js';
+import type { UserPartial } from './UserPartial.js';
 import {
     UserPartialFromJSON,
     UserPartialFromJSONTyped,
     UserPartialToJSON,
     UserPartialToJSONTyped,
-} from './UserPartial';
+} from './UserPartial.js';
 
 /**
  * 

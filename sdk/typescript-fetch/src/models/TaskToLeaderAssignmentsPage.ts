@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { TaskToLeaderAssignment } from './TaskToLeaderAssignment';
+import { mapValues } from '../runtime.js';
+import type { TaskToLeaderAssignment } from './TaskToLeaderAssignment.js';
 import {
     TaskToLeaderAssignmentFromJSON,
     TaskToLeaderAssignmentFromJSONTyped,
     TaskToLeaderAssignmentToJSON,
     TaskToLeaderAssignmentToJSONTyped,
-} from './TaskToLeaderAssignment';
+} from './TaskToLeaderAssignment.js';
 
 /**
  * 

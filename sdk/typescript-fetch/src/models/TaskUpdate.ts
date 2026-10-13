@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { BudgetPlanningTypeRequest } from './BudgetPlanningTypeRequest';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { BudgetPlanningTypeRequest } from './BudgetPlanningTypeRequest.js';
 import {
     BudgetPlanningTypeRequestFromJSON,
     BudgetPlanningTypeRequestFromJSONTyped,
     BudgetPlanningTypeRequestToJSON,
     BudgetPlanningTypeRequestToJSONTyped,
-} from './BudgetPlanningTypeRequest';
-import type { TaskLocation } from './TaskLocation';
+} from './BudgetPlanningTypeRequest.js';
+import type { TaskLocation } from './TaskLocation.js';
 import {
     TaskLocationFromJSON,
     TaskLocationFromJSONTyped,
     TaskLocationToJSON,
     TaskLocationToJSONTyped,
-} from './TaskLocation';
+} from './TaskLocation.js';
 
 /**
  * 

@@ -11,37 +11,37 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type HolidayCalendarPartial,
     HolidayCalendarPartialFromJSON,
     HolidayCalendarPartialToJSON,
-} from '../models/HolidayCalendarPartial';
+} from '../models/HolidayCalendarPartial.js';
 import {
     type HolidayCalendarsPage,
     HolidayCalendarsPageFromJSON,
     HolidayCalendarsPageToJSON,
-} from '../models/HolidayCalendarsPage';
+} from '../models/HolidayCalendarsPage.js';
 import {
     type HolidayCalendarsSortColumn,
     HolidayCalendarsSortColumnFromJSON,
     HolidayCalendarsSortColumnToJSON,
-} from '../models/HolidayCalendarsSortColumn';
+} from '../models/HolidayCalendarsSortColumn.js';
 import {
     type HolidaysPage,
     HolidaysPageFromJSON,
     HolidaysPageToJSON,
-} from '../models/HolidaysPage';
+} from '../models/HolidaysPage.js';
 import {
     type HolidaysSortColumn,
     HolidaysSortColumnFromJSON,
     HolidaysSortColumnToJSON,
-} from '../models/HolidaysSortColumn';
+} from '../models/HolidaysSortColumn.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

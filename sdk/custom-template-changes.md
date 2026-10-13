@@ -147,6 +147,10 @@ Upstream baseline: `typescript-fetch/apis.mustache` from the generator jar. The 
 
 `QueryArguments<T>` makes the query object optional only when all its properties are optional. Required query fields keep both the object and those fields required. The method's final argument remains `initOverrides`; the query object contains only query parameters. `npm test` covers the public types and request behavior.
 
+`runtime.mustache` accepts plain `ConfigurationParameters` in API constructors and normalizes them
+through the existing `Configuration` implementation. Existing `Configuration` instances are retained,
+preserving shared configuration, default values and token callbacks.
+
 ## Verifying a refork
 
 Compilation depends on generation, so one invocation regenerates and rebuilds:

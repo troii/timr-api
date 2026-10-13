@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { BreakTimeType } from './BreakTimeType';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { BreakTimeType } from './BreakTimeType.js';
 import {
     BreakTimeTypeFromJSON,
     BreakTimeTypeFromJSONTyped,
     BreakTimeTypeToJSON,
     BreakTimeTypeToJSONTyped,
-} from './BreakTimeType';
+} from './BreakTimeType.js';
 
 /**
  * 

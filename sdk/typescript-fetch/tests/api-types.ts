@@ -1,7 +1,17 @@
-import { CarApi, UserApi } from '../dist';
+import { CarApi, Configuration, UserApi } from 'timr-api';
 
 const cars = new CarApi();
 const users = new UserApi();
+
+const configuredCars = new CarApi({
+    basePath: 'https://example.test/v1',
+    accessToken: () => 'Bearer token',
+});
+configuredCars.getCar('CAR_ID');
+new CarApi(new Configuration({ accessToken: 'Bearer token' })).getCar('CAR_ID');
+
+// @ts-expect-error Token options retain their declared types.
+new CarApi({ accessToken: 123 });
 
 cars.getCar('CAR_ID');
 cars.createCar({ name: 'Company car', plate: 'LL-123AB' });

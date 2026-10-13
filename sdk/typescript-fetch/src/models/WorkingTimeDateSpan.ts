@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { WorkingTimeTypePartial } from './WorkingTimeTypePartial';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { WorkingTimeTypePartial } from './WorkingTimeTypePartial.js';
 import {
     WorkingTimeTypePartialFromJSON,
     WorkingTimeTypePartialFromJSONTyped,
     WorkingTimeTypePartialToJSON,
     WorkingTimeTypePartialToJSONTyped,
-} from './WorkingTimeTypePartial';
-import type { UserPartial } from './UserPartial';
+} from './WorkingTimeTypePartial.js';
+import type { UserPartial } from './UserPartial.js';
 import {
     UserPartialFromJSON,
     UserPartialFromJSONTyped,
     UserPartialToJSON,
     UserPartialToJSONTyped,
-} from './UserPartial';
+} from './UserPartial.js';
 
 /**
  * A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become effective through an approved request.

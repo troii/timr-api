@@ -11,52 +11,52 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DeletedEntryPage,
     DeletedEntryPageFromJSON,
     DeletedEntryPageToJSON,
-} from '../models/DeletedEntryPage';
+} from '../models/DeletedEntryPage.js';
 import {
     type DeletedEntrySortColumn,
     DeletedEntrySortColumnFromJSON,
     DeletedEntrySortColumnToJSON,
-} from '../models/DeletedEntrySortColumn';
+} from '../models/DeletedEntrySortColumn.js';
 import {
     type DriveLog,
     DriveLogFromJSON,
     DriveLogToJSON,
-} from '../models/DriveLog';
+} from '../models/DriveLog.js';
 import {
     type DriveLogCreate,
     DriveLogCreateFromJSON,
     DriveLogCreateToJSON,
-} from '../models/DriveLogCreate';
+} from '../models/DriveLogCreate.js';
 import {
     type DriveLogStatus,
     DriveLogStatusFromJSON,
     DriveLogStatusToJSON,
-} from '../models/DriveLogStatus';
+} from '../models/DriveLogStatus.js';
 import {
     type DriveLogUpdate,
     DriveLogUpdateFromJSON,
     DriveLogUpdateToJSON,
-} from '../models/DriveLogUpdate';
+} from '../models/DriveLogUpdate.js';
 import {
     type DriveLogsPage,
     DriveLogsPageFromJSON,
     DriveLogsPageToJSON,
-} from '../models/DriveLogsPage';
+} from '../models/DriveLogsPage.js';
 import {
     type DriveLogsSortColumn,
     DriveLogsSortColumnFromJSON,
     DriveLogsSortColumnToJSON,
-} from '../models/DriveLogsSortColumn';
+} from '../models/DriveLogsSortColumn.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

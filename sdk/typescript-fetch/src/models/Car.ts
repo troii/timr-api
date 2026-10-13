@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * A vehicle identified by `name` and license `plate`. `usable` says whether it can currently be selected.
  * 

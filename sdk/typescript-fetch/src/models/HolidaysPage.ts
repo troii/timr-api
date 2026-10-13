@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Holiday } from './Holiday';
+import { mapValues } from '../runtime.js';
+import type { Holiday } from './Holiday.js';
 import {
     HolidayFromJSON,
     HolidayFromJSONTyped,
     HolidayToJSON,
     HolidayToJSONTyped,
-} from './Holiday';
+} from './Holiday.js';
 
 /**
  * 

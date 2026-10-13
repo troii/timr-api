@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { RecordingLockType } from './RecordingLockType';
+import { mapValues } from '../runtime.js';
+import type { RecordingLockType } from './RecordingLockType.js';
 import {
     RecordingLockTypeFromJSON,
     RecordingLockTypeFromJSONTyped,
     RecordingLockTypeToJSON,
     RecordingLockTypeToJSONTyped,
-} from './RecordingLockType';
+} from './RecordingLockType.js';
 
 /**
  * 

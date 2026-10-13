@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * Field-level or sub-error entry, shaped like a sub-ProblemDetail. The `type` URI identifies the specific constraint or sub-error category (e.g. `validation/not-null` for a Bean Validation `@NotNull`, `validation/paused-working-time` for a TIMR custom validator code, `validation/type-mismatch` for a value that does not fit its target type, `validation/unknown-property` for a property the resource does not declare, `reference-not-found/user` for a `MappingException`). `field` is the JSONPath of the offending property in the request body, rooted at `$` — array elements included. An error about a query parameter names it plainly instead, without the `$.` prefix.
  * 

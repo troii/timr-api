@@ -11,57 +11,57 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DeletedEntrySortColumn,
     DeletedEntrySortColumnFromJSON,
     DeletedEntrySortColumnToJSON,
-} from '../models/DeletedEntrySortColumn';
+} from '../models/DeletedEntrySortColumn.js';
 import {
     type DeletedEntryWithMetadataPage,
     DeletedEntryWithMetadataPageFromJSON,
     DeletedEntryWithMetadataPageToJSON,
-} from '../models/DeletedEntryWithMetadataPage';
+} from '../models/DeletedEntryWithMetadataPage.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type WorkingTime,
     WorkingTimeFromJSON,
     WorkingTimeToJSON,
-} from '../models/WorkingTime';
+} from '../models/WorkingTime.js';
 import {
     type WorkingTimeCreate,
     WorkingTimeCreateFromJSON,
     WorkingTimeCreateToJSON,
-} from '../models/WorkingTimeCreate';
+} from '../models/WorkingTimeCreate.js';
 import {
     type WorkingTimeStatus,
     WorkingTimeStatusFromJSON,
     WorkingTimeStatusToJSON,
-} from '../models/WorkingTimeStatus';
+} from '../models/WorkingTimeStatus.js';
 import {
     type WorkingTimeTypeCategory,
     WorkingTimeTypeCategoryFromJSON,
     WorkingTimeTypeCategoryToJSON,
-} from '../models/WorkingTimeTypeCategory';
+} from '../models/WorkingTimeTypeCategory.js';
 import {
     type WorkingTimeUpdate,
     WorkingTimeUpdateFromJSON,
     WorkingTimeUpdateToJSON,
-} from '../models/WorkingTimeUpdate';
+} from '../models/WorkingTimeUpdate.js';
 import {
     type WorkingTimesPage,
     WorkingTimesPageFromJSON,
     WorkingTimesPageToJSON,
-} from '../models/WorkingTimesPage';
+} from '../models/WorkingTimesPage.js';
 import {
     type WorkingTimesSortColumn,
     WorkingTimesSortColumnFromJSON,
     WorkingTimesSortColumnToJSON,
-} from '../models/WorkingTimesSortColumn';
+} from '../models/WorkingTimesSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Car } from './Car';
+import { mapValues } from '../runtime.js';
+import type { Car } from './Car.js';
 import {
     CarFromJSON,
     CarFromJSONTyped,
     CarToJSON,
     CarToJSONTyped,
-} from './Car';
+} from './Car.js';
 
 /**
  * 

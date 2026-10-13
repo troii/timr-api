@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { Task } from './Task';
+import { mapValues } from '../runtime.js';
+import type { Task } from './Task.js';
 import {
     TaskFromJSON,
     TaskFromJSONTyped,
     TaskToJSON,
     TaskToJSONTyped,
-} from './Task';
+} from './Task.js';
 
 /**
  * 

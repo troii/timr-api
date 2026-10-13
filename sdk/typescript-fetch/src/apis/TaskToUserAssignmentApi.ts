@@ -11,32 +11,32 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type TaskToUserAssignment,
     TaskToUserAssignmentFromJSON,
     TaskToUserAssignmentToJSON,
-} from '../models/TaskToUserAssignment';
+} from '../models/TaskToUserAssignment.js';
 import {
     type TaskToUserAssignmentUpsert,
     TaskToUserAssignmentUpsertFromJSON,
     TaskToUserAssignmentUpsertToJSON,
-} from '../models/TaskToUserAssignmentUpsert';
+} from '../models/TaskToUserAssignmentUpsert.js';
 import {
     type TaskToUserAssignmentsPage,
     TaskToUserAssignmentsPageFromJSON,
     TaskToUserAssignmentsPageToJSON,
-} from '../models/TaskToUserAssignmentsPage';
+} from '../models/TaskToUserAssignmentsPage.js';
 import {
     type TaskToUserAssignmentsSortColumn,
     TaskToUserAssignmentsSortColumnFromJSON,
     TaskToUserAssignmentsSortColumnToJSON,
-} from '../models/TaskToUserAssignmentsSortColumn';
+} from '../models/TaskToUserAssignmentsSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

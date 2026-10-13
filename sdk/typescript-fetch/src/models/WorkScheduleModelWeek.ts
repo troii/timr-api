@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DailyWorkSchedule } from './DailyWorkSchedule';
+import { mapValues } from '../runtime.js';
+import type { DailyWorkSchedule } from './DailyWorkSchedule.js';
 import {
     DailyWorkScheduleFromJSON,
     DailyWorkScheduleFromJSONTyped,
     DailyWorkScheduleToJSON,
     DailyWorkScheduleToJSONTyped,
-} from './DailyWorkSchedule';
+} from './DailyWorkSchedule.js';
 
 /**
  * 

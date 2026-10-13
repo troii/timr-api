@@ -11,35 +11,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { DurationType } from './DurationType';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { DurationType } from './DurationType.js';
 import {
     DurationTypeFromJSON,
     DurationTypeFromJSONTyped,
     DurationTypeToJSON,
     DurationTypeToJSONTyped,
-} from './DurationType';
-import type { LocationCreate } from './LocationCreate';
+} from './DurationType.js';
+import type { LocationCreate } from './LocationCreate.js';
 import {
     LocationCreateFromJSON,
     LocationCreateFromJSONTyped,
     LocationCreateToJSON,
     LocationCreateToJSONTyped,
-} from './LocationCreate';
-import type { BreakTimeUpdate } from './BreakTimeUpdate';
+} from './LocationCreate.js';
+import type { BreakTimeUpdate } from './BreakTimeUpdate.js';
 import {
     BreakTimeUpdateFromJSON,
     BreakTimeUpdateFromJSONTyped,
     BreakTimeUpdateToJSON,
     BreakTimeUpdateToJSONTyped,
-} from './BreakTimeUpdate';
-import type { WorkingTimeStatus } from './WorkingTimeStatus';
+} from './BreakTimeUpdate.js';
+import type { WorkingTimeStatus } from './WorkingTimeStatus.js';
 import {
     WorkingTimeStatusFromJSON,
     WorkingTimeStatusFromJSONTyped,
     WorkingTimeStatusToJSON,
     WorkingTimeStatusToJSONTyped,
-} from './WorkingTimeStatus';
+} from './WorkingTimeStatus.js';
 
 /**
  * 

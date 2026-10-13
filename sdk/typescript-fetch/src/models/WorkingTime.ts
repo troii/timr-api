@@ -11,63 +11,63 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { WorkingTimeDateSpanPartial } from './WorkingTimeDateSpanPartial';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { WorkingTimeDateSpanPartial } from './WorkingTimeDateSpanPartial.js';
 import {
     WorkingTimeDateSpanPartialFromJSON,
     WorkingTimeDateSpanPartialFromJSONTyped,
     WorkingTimeDateSpanPartialToJSON,
     WorkingTimeDateSpanPartialToJSONTyped,
-} from './WorkingTimeDateSpanPartial';
-import type { Platform } from './Platform';
+} from './WorkingTimeDateSpanPartial.js';
+import type { Platform } from './Platform.js';
 import {
     PlatformFromJSON,
     PlatformFromJSONTyped,
     PlatformToJSON,
     PlatformToJSONTyped,
-} from './Platform';
-import type { Duration } from './Duration';
+} from './Platform.js';
+import type { Duration } from './Duration.js';
 import {
     DurationFromJSON,
     DurationFromJSONTyped,
     DurationToJSON,
     DurationToJSONTyped,
-} from './Duration';
-import type { WorkingTimeStatus } from './WorkingTimeStatus';
+} from './Duration.js';
+import type { WorkingTimeStatus } from './WorkingTimeStatus.js';
 import {
     WorkingTimeStatusFromJSON,
     WorkingTimeStatusFromJSONTyped,
     WorkingTimeStatusToJSON,
     WorkingTimeStatusToJSONTyped,
-} from './WorkingTimeStatus';
-import type { BreakTime } from './BreakTime';
+} from './WorkingTimeStatus.js';
+import type { BreakTime } from './BreakTime.js';
 import {
     BreakTimeFromJSON,
     BreakTimeFromJSONTyped,
     BreakTimeToJSON,
     BreakTimeToJSONTyped,
-} from './BreakTime';
-import type { WorkingTimeTypePartial } from './WorkingTimeTypePartial';
+} from './BreakTime.js';
+import type { WorkingTimeTypePartial } from './WorkingTimeTypePartial.js';
 import {
     WorkingTimeTypePartialFromJSON,
     WorkingTimeTypePartialFromJSONTyped,
     WorkingTimeTypePartialToJSON,
     WorkingTimeTypePartialToJSONTyped,
-} from './WorkingTimeTypePartial';
-import type { UserPartial } from './UserPartial';
+} from './WorkingTimeTypePartial.js';
+import type { UserPartial } from './UserPartial.js';
 import {
     UserPartialFromJSON,
     UserPartialFromJSONTyped,
     UserPartialToJSON,
     UserPartialToJSONTyped,
-} from './UserPartial';
-import type { Location } from './Location';
+} from './UserPartial.js';
+import type { Location } from './Location.js';
 import {
     LocationFromJSON,
     LocationFromJSONTyped,
     LocationToJSON,
     LocationToJSONTyped,
-} from './Location';
+} from './Location.js';
 
 /**
  * One continuous stretch from `start` to `end`, classified by its `working_time_type`. Attendance entries carry `break_times`, locations and the platform they were recorded on; an entry derived from a multi-day absence links back to its `working_time_date_span`.

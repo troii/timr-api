@@ -6,5 +6,7 @@ package.json
 
 # The npm README is a hand-maintained quickstart.
 README.md
-# Type tests are checked separately and excluded from publication.
+# Source checking is configured separately from distribution bundling.
 tsconfig.json
+# tsdown builds both module formats.
+tsconfig.esm.json

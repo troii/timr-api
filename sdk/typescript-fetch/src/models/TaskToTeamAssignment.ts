@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { TeamPartial } from './TeamPartial';
+import { mapValues } from '../runtime.js';
+import type { TeamPartial } from './TeamPartial.js';
 import {
     TeamPartialFromJSON,
     TeamPartialFromJSONTyped,
     TeamPartialToJSON,
     TeamPartialToJSONTyped,
-} from './TeamPartial';
+} from './TeamPartial.js';
 
 /**
  * 

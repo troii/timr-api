@@ -11,27 +11,27 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type WorkScheduleModel,
     WorkScheduleModelFromJSON,
     WorkScheduleModelToJSON,
-} from '../models/WorkScheduleModel';
+} from '../models/WorkScheduleModel.js';
 import {
     type WorkScheduleModelSortColumn,
     WorkScheduleModelSortColumnFromJSON,
     WorkScheduleModelSortColumnToJSON,
-} from '../models/WorkScheduleModelSortColumn';
+} from '../models/WorkScheduleModelSortColumn.js';
 import {
     type WorkScheduleModelsPage,
     WorkScheduleModelsPageFromJSON,
     WorkScheduleModelsPageToJSON,
-} from '../models/WorkScheduleModelsPage';
+} from '../models/WorkScheduleModelsPage.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

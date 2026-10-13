@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { WorkScheduleModelPartial } from './WorkScheduleModelPartial';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { WorkScheduleModelPartial } from './WorkScheduleModelPartial.js';
 import {
     WorkScheduleModelPartialFromJSON,
     WorkScheduleModelPartialFromJSONTyped,
     WorkScheduleModelPartialToJSON,
     WorkScheduleModelPartialToJSONTyped,
-} from './WorkScheduleModelPartial';
-import type { HolidayCalendarPartial } from './HolidayCalendarPartial';
+} from './WorkScheduleModelPartial.js';
+import type { HolidayCalendarPartial } from './HolidayCalendarPartial.js';
 import {
     HolidayCalendarPartialFromJSON,
     HolidayCalendarPartialFromJSONTyped,
     HolidayCalendarPartialToJSON,
     HolidayCalendarPartialToJSONTyped,
-} from './HolidayCalendarPartial';
+} from './HolidayCalendarPartial.js';
 
 /**
  * A user's identity (`firstname`, `lastname`, `email`), employment dates (`entry_date`, `resign_date`), and the assigned `work_schedule_model` and `holiday_calendar`.

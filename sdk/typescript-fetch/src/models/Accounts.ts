@@ -11,28 +11,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { TimeAccount } from './TimeAccount';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { TimeAccount } from './TimeAccount.js';
 import {
     TimeAccountFromJSON,
     TimeAccountFromJSONTyped,
     TimeAccountToJSON,
     TimeAccountToJSONTyped,
-} from './TimeAccount';
-import type { VacationAccount } from './VacationAccount';
+} from './TimeAccount.js';
+import type { VacationAccount } from './VacationAccount.js';
 import {
     VacationAccountFromJSON,
     VacationAccountFromJSONTyped,
     VacationAccountToJSON,
     VacationAccountToJSONTyped,
-} from './VacationAccount';
-import type { OvertimeSurchargeAccounts } from './OvertimeSurchargeAccounts';
+} from './VacationAccount.js';
+import type { OvertimeSurchargeAccounts } from './OvertimeSurchargeAccounts.js';
 import {
     OvertimeSurchargeAccountsFromJSON,
     OvertimeSurchargeAccountsFromJSONTyped,
     OvertimeSurchargeAccountsToJSON,
     OvertimeSurchargeAccountsToJSONTyped,
-} from './OvertimeSurchargeAccounts';
+} from './OvertimeSurchargeAccounts.js';
 
 /**
  * 

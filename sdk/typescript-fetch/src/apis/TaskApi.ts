@@ -11,42 +11,42 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type Task,
     TaskFromJSON,
     TaskToJSON,
-} from '../models/Task';
+} from '../models/Task.js';
 import {
     type TaskCreate,
     TaskCreateFromJSON,
     TaskCreateToJSON,
-} from '../models/TaskCreate';
+} from '../models/TaskCreate.js';
 import {
     type TaskUpdate,
     TaskUpdateFromJSON,
     TaskUpdateToJSON,
-} from '../models/TaskUpdate';
+} from '../models/TaskUpdate.js';
 import {
     type TasksPage,
     TasksPageFromJSON,
     TasksPageToJSON,
-} from '../models/TasksPage';
+} from '../models/TasksPage.js';
 import {
     type TasksReducedPage,
     TasksReducedPageFromJSON,
     TasksReducedPageToJSON,
-} from '../models/TasksReducedPage';
+} from '../models/TasksReducedPage.js';
 import {
     type TasksSortColumn,
     TasksSortColumnFromJSON,
     TasksSortColumnToJSON,
-} from '../models/TasksSortColumn';
+} from '../models/TasksSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

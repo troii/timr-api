@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { ProjectTime } from './ProjectTime';
+import { mapValues } from '../runtime.js';
+import type { ProjectTime } from './ProjectTime.js';
 import {
     ProjectTimeFromJSON,
     ProjectTimeFromJSONTyped,
     ProjectTimeToJSON,
     ProjectTimeToJSONTyped,
-} from './ProjectTime';
+} from './ProjectTime.js';
 
 /**
  * 

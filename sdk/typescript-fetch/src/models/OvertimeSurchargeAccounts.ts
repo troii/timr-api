@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { OvertimeSurchargeRule } from './OvertimeSurchargeRule';
+import { mapValues } from '../runtime.js';
+import type { OvertimeSurchargeRule } from './OvertimeSurchargeRule.js';
 import {
     OvertimeSurchargeRuleFromJSON,
     OvertimeSurchargeRuleFromJSONTyped,
     OvertimeSurchargeRuleToJSON,
     OvertimeSurchargeRuleToJSONTyped,
-} from './OvertimeSurchargeRule';
-import type { OvertimeSurchargeAccount } from './OvertimeSurchargeAccount';
+} from './OvertimeSurchargeRule.js';
+import type { OvertimeSurchargeAccount } from './OvertimeSurchargeAccount.js';
 import {
     OvertimeSurchargeAccountFromJSON,
     OvertimeSurchargeAccountFromJSONTyped,
     OvertimeSurchargeAccountToJSON,
     OvertimeSurchargeAccountToJSONTyped,
-} from './OvertimeSurchargeAccount';
+} from './OvertimeSurchargeAccount.js';
 
 /**
  * 

@@ -11,47 +11,47 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DeletedEntrySortColumn,
     DeletedEntrySortColumnFromJSON,
     DeletedEntrySortColumnToJSON,
-} from '../models/DeletedEntrySortColumn';
+} from '../models/DeletedEntrySortColumn.js';
 import {
     type DeletedEntryWithMetadataPage,
     DeletedEntryWithMetadataPageFromJSON,
     DeletedEntryWithMetadataPageToJSON,
-} from '../models/DeletedEntryWithMetadataPage';
+} from '../models/DeletedEntryWithMetadataPage.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type WorkingTimeDateSpan,
     WorkingTimeDateSpanFromJSON,
     WorkingTimeDateSpanToJSON,
-} from '../models/WorkingTimeDateSpan';
+} from '../models/WorkingTimeDateSpan.js';
 import {
     type WorkingTimeDateSpanCreate,
     WorkingTimeDateSpanCreateFromJSON,
     WorkingTimeDateSpanCreateToJSON,
-} from '../models/WorkingTimeDateSpanCreate';
+} from '../models/WorkingTimeDateSpanCreate.js';
 import {
     type WorkingTimeDateSpanPage,
     WorkingTimeDateSpanPageFromJSON,
     WorkingTimeDateSpanPageToJSON,
-} from '../models/WorkingTimeDateSpanPage';
+} from '../models/WorkingTimeDateSpanPage.js';
 import {
     type WorkingTimeDateSpanUpdate,
     WorkingTimeDateSpanUpdateFromJSON,
     WorkingTimeDateSpanUpdateToJSON,
-} from '../models/WorkingTimeDateSpanUpdate';
+} from '../models/WorkingTimeDateSpanUpdate.js';
 import {
     type WorkingTimeDateSpansSortColumn,
     WorkingTimeDateSpansSortColumnFromJSON,
     WorkingTimeDateSpansSortColumnToJSON,
-} from '../models/WorkingTimeDateSpansSortColumn';
+} from '../models/WorkingTimeDateSpansSortColumn.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

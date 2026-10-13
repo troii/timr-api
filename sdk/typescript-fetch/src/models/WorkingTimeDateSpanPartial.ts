@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues } from '../runtime.js';
 /**
  * References the date span this working time belongs to, if any. All working times generated for a date span reference the same span; working times recorded on their own have none.
  * 

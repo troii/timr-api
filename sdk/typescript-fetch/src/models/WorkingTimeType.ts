@@ -11,35 +11,35 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DurationUnit } from './DurationUnit';
+import { mapValues } from '../runtime.js';
+import type { DurationUnit } from './DurationUnit.js';
 import {
     DurationUnitFromJSON,
     DurationUnitFromJSONTyped,
     DurationUnitToJSON,
     DurationUnitToJSONTyped,
-} from './DurationUnit';
-import type { RecordingModeUser } from './RecordingModeUser';
+} from './DurationUnit.js';
+import type { RecordingModeUser } from './RecordingModeUser.js';
 import {
     RecordingModeUserFromJSON,
     RecordingModeUserFromJSONTyped,
     RecordingModeUserToJSON,
     RecordingModeUserToJSONTyped,
-} from './RecordingModeUser';
-import type { WorkingTimeTypeCategory } from './WorkingTimeTypeCategory';
+} from './RecordingModeUser.js';
+import type { WorkingTimeTypeCategory } from './WorkingTimeTypeCategory.js';
 import {
     WorkingTimeTypeCategoryFromJSON,
     WorkingTimeTypeCategoryFromJSONTyped,
     WorkingTimeTypeCategoryToJSON,
     WorkingTimeTypeCategoryToJSONTyped,
-} from './WorkingTimeTypeCategory';
-import type { WorkingTimeTypeSubCategory } from './WorkingTimeTypeSubCategory';
+} from './WorkingTimeTypeCategory.js';
+import type { WorkingTimeTypeSubCategory } from './WorkingTimeTypeSubCategory.js';
 import {
     WorkingTimeTypeSubCategoryFromJSON,
     WorkingTimeTypeSubCategoryFromJSONTyped,
     WorkingTimeTypeSubCategoryToJSON,
     WorkingTimeTypeSubCategoryToJSONTyped,
-} from './WorkingTimeTypeSubCategory';
+} from './WorkingTimeTypeSubCategory.js';
 
 /**
  * A working time type. `category` and `sub_category` place it in the classification, `edit_unit` decides whether it is recorded by time or by day, and `requires_substitute` governs how it is recorded.

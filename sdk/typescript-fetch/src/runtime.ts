@@ -92,8 +92,11 @@ export class BaseAPI {
     private static readonly jsonRegex = /^(:?application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(:?;.*)?$/i;
     private middleware: Middleware[];
 
-    constructor(protected configuration = DefaultConfig) {
-        this.middleware = configuration.middleware;
+    protected configuration: Configuration;
+
+    constructor(configuration: Configuration | ConfigurationParameters = DefaultConfig) {
+        this.configuration = configuration instanceof Configuration ? configuration : new Configuration(configuration);
+        this.middleware = this.configuration.middleware;
     }
 
     withMiddleware<T extends BaseAPI>(this: T, ...middlewares: Middleware[]) {

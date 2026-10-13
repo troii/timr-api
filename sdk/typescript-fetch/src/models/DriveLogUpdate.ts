@@ -11,21 +11,21 @@
  * Do not edit the class manually.
  */
 
-import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
-import type { DriveLogStatus } from './DriveLogStatus';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime.js';
+import type { DriveLogStatus } from './DriveLogStatus.js';
 import {
     DriveLogStatusFromJSON,
     DriveLogStatusFromJSONTyped,
     DriveLogStatusToJSON,
     DriveLogStatusToJSONTyped,
-} from './DriveLogStatus';
-import type { LocationUpdate } from './LocationUpdate';
+} from './DriveLogStatus.js';
+import type { LocationUpdate } from './LocationUpdate.js';
 import {
     LocationUpdateFromJSON,
     LocationUpdateFromJSONTyped,
     LocationUpdateToJSON,
     LocationUpdateToJSONTyped,
-} from './LocationUpdate';
+} from './LocationUpdate.js';
 
 /**
  * 

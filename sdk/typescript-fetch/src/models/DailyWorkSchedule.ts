@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { NormalWorkingTimes } from './NormalWorkingTimes';
+import { mapValues } from '../runtime.js';
+import type { NormalWorkingTimes } from './NormalWorkingTimes.js';
 import {
     NormalWorkingTimesFromJSON,
     NormalWorkingTimesFromJSONTyped,
     NormalWorkingTimesToJSON,
     NormalWorkingTimesToJSONTyped,
-} from './NormalWorkingTimes';
+} from './NormalWorkingTimes.js';
 
 /**
  * 

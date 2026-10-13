@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { VacationUnit } from './VacationUnit';
+import { mapValues } from '../runtime.js';
+import type { VacationUnit } from './VacationUnit.js';
 import {
     VacationUnitFromJSON,
     VacationUnitFromJSONTyped,
     VacationUnitToJSON,
     VacationUnitToJSONTyped,
-} from './VacationUnit';
+} from './VacationUnit.js';
 
 /**
  * 

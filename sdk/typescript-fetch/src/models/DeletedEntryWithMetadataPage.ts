@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DeletedEntryWithMetadata } from './DeletedEntryWithMetadata';
+import { mapValues } from '../runtime.js';
+import type { DeletedEntryWithMetadata } from './DeletedEntryWithMetadata.js';
 import {
     DeletedEntryWithMetadataFromJSON,
     DeletedEntryWithMetadataFromJSONTyped,
     DeletedEntryWithMetadataToJSON,
     DeletedEntryWithMetadataToJSONTyped,
-} from './DeletedEntryWithMetadata';
+} from './DeletedEntryWithMetadata.js';
 
 /**
  * 

@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { TaskReduced } from './TaskReduced';
+import { mapValues } from '../runtime.js';
+import type { TaskReduced } from './TaskReduced.js';
 import {
     TaskReducedFromJSON,
     TaskReducedFromJSONTyped,
     TaskReducedToJSON,
     TaskReducedToJSONTyped,
-} from './TaskReduced';
+} from './TaskReduced.js';
 
 /**
  * 

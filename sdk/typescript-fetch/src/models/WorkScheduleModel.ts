@@ -11,28 +11,28 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { WorkScheduleModelType } from './WorkScheduleModelType';
+import { mapValues } from '../runtime.js';
+import type { WorkScheduleModelType } from './WorkScheduleModelType.js';
 import {
     WorkScheduleModelTypeFromJSON,
     WorkScheduleModelTypeFromJSONTyped,
     WorkScheduleModelTypeToJSON,
     WorkScheduleModelTypeToJSONTyped,
-} from './WorkScheduleModelType';
-import type { WorkScheduleModelWeek } from './WorkScheduleModelWeek';
+} from './WorkScheduleModelType.js';
+import type { WorkScheduleModelWeek } from './WorkScheduleModelWeek.js';
 import {
     WorkScheduleModelWeekFromJSON,
     WorkScheduleModelWeekFromJSONTyped,
     WorkScheduleModelWeekToJSON,
     WorkScheduleModelWeekToJSONTyped,
-} from './WorkScheduleModelWeek';
-import type { WorkingTimeRules } from './WorkingTimeRules';
+} from './WorkScheduleModelWeek.js';
+import type { WorkingTimeRules } from './WorkingTimeRules.js';
 import {
     WorkingTimeRulesFromJSON,
     WorkingTimeRulesFromJSONTyped,
     WorkingTimeRulesToJSON,
     WorkingTimeRulesToJSONTyped,
-} from './WorkingTimeRules';
+} from './WorkingTimeRules.js';
 
 /**
  * The weekday targets a user is measured against: `weeks` holds the layout, `type` selects the calculation mode, and `working_time_rules` the recording constraints.

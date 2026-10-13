@@ -3,7 +3,30 @@ const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
 
-const { CarApi, Configuration, UserApi } = require('../dist');
+const { CarApi, Configuration, UserApi } = require('timr-api');
+
+test('plain options supply defaults and read the current token for every request', async () => {
+  let token = 'Bearer first-token';
+  const requests = [];
+  const api = new UserApi({
+    accessToken: () => token,
+    fetchApi: async (url, init) => {
+      requests.push({ url, init });
+      return new Response(JSON.stringify({ next_page_token: null, data: [] }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+  });
+
+  await api.fetchUsers({ limit: 10 });
+  token = 'Bearer refreshed-token';
+  await api.fetchUsers({ limit: 20 });
+
+  assert.equal(requests[0].url, 'https://api.timr.com/v1/users?limit=10');
+  assert.equal(requests[1].url, 'https://api.timr.com/v1/users?limit=20');
+  assert.equal(requests[0].init.headers.Authorization, 'Bearer first-token');
+  assert.equal(requests[1].init.headers.Authorization, 'Bearer refreshed-token');
+});
 
 test('authenticated request reaches the endpoint and decodes its response', async () => {
   const responseBody = fs.readFileSync(

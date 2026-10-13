@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { TaskToUserAssignment } from './TaskToUserAssignment';
+import { mapValues } from '../runtime.js';
+import type { TaskToUserAssignment } from './TaskToUserAssignment.js';
 import {
     TaskToUserAssignmentFromJSON,
     TaskToUserAssignmentFromJSONTyped,
     TaskToUserAssignmentToJSON,
     TaskToUserAssignmentToJSONTyped,
-} from './TaskToUserAssignment';
+} from './TaskToUserAssignment.js';
 
 /**
  * 

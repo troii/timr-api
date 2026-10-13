@@ -11,52 +11,52 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 import {
     type TeamsPartialPage,
     TeamsPartialPageFromJSON,
     TeamsPartialPageToJSON,
-} from '../models/TeamsPartialPage';
+} from '../models/TeamsPartialPage.js';
 import {
     type TeamsSortColumn,
     TeamsSortColumnFromJSON,
     TeamsSortColumnToJSON,
-} from '../models/TeamsSortColumn';
+} from '../models/TeamsSortColumn.js';
 import {
     type User,
     UserFromJSON,
     UserToJSON,
-} from '../models/User';
+} from '../models/User.js';
 import {
     type UserCreate,
     UserCreateFromJSON,
     UserCreateToJSON,
-} from '../models/UserCreate';
+} from '../models/UserCreate.js';
 import {
     type UserUpdate,
     UserUpdateFromJSON,
     UserUpdateToJSON,
-} from '../models/UserUpdate';
+} from '../models/UserUpdate.js';
 import {
     type UsersPage,
     UsersPageFromJSON,
     UsersPageToJSON,
-} from '../models/UsersPage';
+} from '../models/UsersPage.js';
 import {
     type UsersSortColumn,
     UsersSortColumnFromJSON,
     UsersSortColumnToJSON,
-} from '../models/UsersSortColumn';
+} from '../models/UsersSortColumn.js';
 import {
     type WorkScheduleModel,
     WorkScheduleModelFromJSON,
     WorkScheduleModelToJSON,
-} from '../models/WorkScheduleModel';
+} from '../models/WorkScheduleModel.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

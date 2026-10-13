@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { HolidayCalendarPartial } from './HolidayCalendarPartial';
+import { mapValues } from '../runtime.js';
+import type { HolidayCalendarPartial } from './HolidayCalendarPartial.js';
 import {
     HolidayCalendarPartialFromJSON,
     HolidayCalendarPartialFromJSONTyped,
     HolidayCalendarPartialToJSON,
     HolidayCalendarPartialToJSONTyped,
-} from './HolidayCalendarPartial';
+} from './HolidayCalendarPartial.js';
 
 /**
  * 

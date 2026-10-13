@@ -11,52 +11,52 @@
  * Do not edit the class manually.
  */
 
-import * as runtime from '../runtime';
+import * as runtime from '../runtime.js';
 import {
     type DeletedEntrySortColumn,
     DeletedEntrySortColumnFromJSON,
     DeletedEntrySortColumnToJSON,
-} from '../models/DeletedEntrySortColumn';
+} from '../models/DeletedEntrySortColumn.js';
 import {
     type DeletedEntryWithMetadataPage,
     DeletedEntryWithMetadataPageFromJSON,
     DeletedEntryWithMetadataPageToJSON,
-} from '../models/DeletedEntryWithMetadataPage';
+} from '../models/DeletedEntryWithMetadataPage.js';
 import {
     type ProjectTime,
     ProjectTimeFromJSON,
     ProjectTimeToJSON,
-} from '../models/ProjectTime';
+} from '../models/ProjectTime.js';
 import {
     type ProjectTimeCreate,
     ProjectTimeCreateFromJSON,
     ProjectTimeCreateToJSON,
-} from '../models/ProjectTimeCreate';
+} from '../models/ProjectTimeCreate.js';
 import {
     type ProjectTimeStatus,
     ProjectTimeStatusFromJSON,
     ProjectTimeStatusToJSON,
-} from '../models/ProjectTimeStatus';
+} from '../models/ProjectTimeStatus.js';
 import {
     type ProjectTimeUpdate,
     ProjectTimeUpdateFromJSON,
     ProjectTimeUpdateToJSON,
-} from '../models/ProjectTimeUpdate';
+} from '../models/ProjectTimeUpdate.js';
 import {
     type ProjectTimesPage,
     ProjectTimesPageFromJSON,
     ProjectTimesPageToJSON,
-} from '../models/ProjectTimesPage';
+} from '../models/ProjectTimesPage.js';
 import {
     type ProjectTimesSortColumn,
     ProjectTimesSortColumnFromJSON,
     ProjectTimesSortColumnToJSON,
-} from '../models/ProjectTimesSortColumn';
+} from '../models/ProjectTimesSortColumn.js';
 import {
     type SortDirection,
     SortDirectionFromJSON,
     SortDirectionToJSON,
-} from '../models/SortDirection';
+} from '../models/SortDirection.js';
 
 type QueryArguments<T> = {} extends T
     ? [query?: T, initOverrides?: RequestInit | runtime.InitOverrideFunction]

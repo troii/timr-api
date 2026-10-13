@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { DriveLogCategory } from './DriveLogCategory';
+import { mapValues } from '../runtime.js';
+import type { DriveLogCategory } from './DriveLogCategory.js';
 import {
     DriveLogCategoryFromJSON,
     DriveLogCategoryFromJSONTyped,
     DriveLogCategoryToJSON,
     DriveLogCategoryToJSONTyped,
-} from './DriveLogCategory';
+} from './DriveLogCategory.js';
 
 /**
  * 

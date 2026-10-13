@@ -44,6 +44,9 @@ environment.
 | TypeScript | `./gradlew :typescript-fetch:npmPack` after `npm ci` and `npm test` | `sdk/typescript-fetch/build/npm/` |
 | Python | `./gradlew :python:pythonPack` | `sdk/python/build/dist/` |
 
-TypeScript packing stamps `package.json` and `package-lock.json` with the publication version.
+TypeScript packing stamps `package.json` and `package-lock.json` with the publication version and
+builds `dist/index.mjs`, `dist/index.cjs` and their `.d.mts`/`.d.cts` declarations. Conditional
+exports route ESM and CommonJS consumers to the corresponding files. `npm test` installs a tarball
+in a temporary consumer project to verify both formats, their public types and browser bundling.
 Python packing regenerates the package with its publication version. Their hand-maintained READMEs
 are preserved during generation.

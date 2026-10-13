@@ -11,14 +11,14 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-import type { FlexTimeIndicator } from './FlexTimeIndicator';
+import { mapValues } from '../runtime.js';
+import type { FlexTimeIndicator } from './FlexTimeIndicator.js';
 import {
     FlexTimeIndicatorFromJSON,
     FlexTimeIndicatorFromJSONTyped,
     FlexTimeIndicatorToJSON,
     FlexTimeIndicatorToJSONTyped,
-} from './FlexTimeIndicator';
+} from './FlexTimeIndicator.js';
 
 /**
  * 
