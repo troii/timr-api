@@ -12,8 +12,8 @@ requires-python = ">=3.11"
 
 dependencies = [
   "urllib3 (>=2.8.0,<3.0.0)",
-  "python-dateutil (>=2.8.2)",
-  "pydantic (>=2.11)",
+  "python-dateutil (>=2.9.0.post0)",
+  "pydantic (>=2.14.0)",
   "typing-extensions (>=4.7.1)",
 ]
 
@@ -32,12 +32,12 @@ build = [
 requires-poetry = ">=2.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">= 9.0.3"
+pytest = ">=9.1.1"
 filelock = ">= 3.20.3"
-pytest-cov = ">= 2.8.1"
-tox = ">= 3.9.0"
+pytest-cov = ">=7.1.0"
+tox = ">=4.65.1"
 flake8 = ">= 4.0.0"
-types-python-dateutil = ">= 2.8.19.14"
+types-python-dateutil = ">=2.9.0.20260807"
 mypy = ">= 1.5"
 
 
