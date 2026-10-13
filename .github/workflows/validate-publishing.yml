@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: Release
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-java@v6
         with:
@@ -47,7 +47,7 @@ jobs:
           test "$(find "$library" -maxdepth 1 -name '*.jar' -size +0c | wc -l)" -eq 3
           test "$(find "$library" -maxdepth 1 -name '*.jar.asc' -size +0c | wc -l)" -eq 3
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.module }}-signed-publication
           path: |
@@ -60,7 +60,7 @@ jobs:
     if: inputs.module == 'typescript-fetch'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -68,7 +68,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           add-job-summary: on-failure
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           package-manager-cache: false
@@ -79,7 +79,7 @@ jobs:
           npm test
       - name: Pack the npm publication
         run: ./gradlew :typescript-fetch:npmPack --scan
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: typescript-publication
           path: sdk/typescript-fetch/build/npm/*.tgz
@@ -90,7 +90,7 @@ jobs:
     if: inputs.module == 'dotnet'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -98,14 +98,14 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           add-job-summary: on-failure
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.x
             10.x
       - name: Test and pack the NuGet publication
         run: ./gradlew :dotnet:dotnetTest :dotnet:dotnetPack --scan
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: dotnet-publication
           path: sdk/dotnet/build/nuget/*.nupkg
@@ -116,7 +116,7 @@ jobs:
     if: inputs.module == 'python'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -135,7 +135,7 @@ jobs:
           python -m twine check --strict sdk/python/build/dist/*
           python -m pip install sdk/python/build/dist/*.whl
           python -m pytest sdk/python/tests
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: python-publication
           path: sdk/python/build/dist/*

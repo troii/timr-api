@@ -23,7 +23,7 @@ jobs:
     env:
       SNAPSHOT: 'true'
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-java@v6
         with:
@@ -58,7 +58,7 @@ jobs:
       SNAPSHOT: 'true'
       NUGET_SNAPSHOT_STAMP: ${{ github.run_id }}.${{ github.run_attempt }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -66,7 +66,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           add-job-summary: on-failure
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.x
@@ -98,7 +98,7 @@ jobs:
       SNAPSHOT: 'true'
       NPM_SNAPSHOT_STAMP: ${{ github.run_id }}.${{ github.run_attempt }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -106,7 +106,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           add-job-summary: on-failure
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
@@ -132,7 +132,7 @@ jobs:
     env:
       SNAPSHOT: 'true'
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc

@@ -35,7 +35,7 @@ jobs:
       module: ${{ steps.tag.outputs.module }}
       version: ${{ steps.tag.outputs.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -88,7 +88,7 @@ jobs:
     if: needs.resolve.outputs.kind == 'contract'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Create the GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -108,7 +108,7 @@ jobs:
       MODULE: ${{ needs.resolve.outputs.module }}
       VERSION: ${{ needs.resolve.outputs.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: actions/setup-java@v6
         with:
@@ -143,7 +143,7 @@ jobs:
     env:
       VERSION: ${{ needs.resolve.outputs.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -151,7 +151,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           add-job-summary: on-failure
-      - uses: actions/setup-dotnet@v5
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.x
@@ -184,7 +184,7 @@ jobs:
     env:
       VERSION: ${{ needs.resolve.outputs.version }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
@@ -192,7 +192,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v6
         with:
           add-job-summary: on-failure
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
@@ -216,7 +216,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v6
         with:
           java-version-file: .sdkmanrc
