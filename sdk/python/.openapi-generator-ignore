@@ -5,6 +5,14 @@
 git_push.sh
 README.md
 
+# Dependency manifests are hand-maintained; Gradle stamps the version when packaging.
+pyproject.toml
+requirements.txt
+test-requirements.txt
+
+# Packaging is defined by pyproject.toml.
+setup.py
+
 # Markdown docs are repo-only: neither the wheel nor the SPM/CocoaPods package ships them,
 # and the reference lives at developer.timr.com.
 docs/**

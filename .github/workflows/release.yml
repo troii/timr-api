@@ -226,10 +226,11 @@ jobs:
           add-job-summary: on-failure
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.9'
+          python-version: '3.11'
       - name: Build and check the Python distributions
         run: |
-          python -m pip install build twine
+          python -m pip install --upgrade pip # --group requires pip 25.1+, newer than the pip bundled with Python 3.11.
+          python -m pip install --group sdk/python/pyproject.toml:build
           ./gradlew :python:pythonPack --scan
           python -m twine check --strict sdk/python/build/dist/*
       - name: Publish to PyPI

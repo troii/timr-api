@@ -1,6 +1,6 @@
 [project]
 name = "timr_api"
-version = "1.0.0"
+version = "2.0.0"
 description = "timr API"
 authors = [
   {name = "troii Software GmbH",email = "info@timr.com"},
@@ -8,23 +8,32 @@ authors = [
 license = { text = "Apache 2.0" }
 readme = "README.md"
 keywords = ["OpenAPI", "OpenAPI-Generator", "timr API"]
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 
 dependencies = [
-  "urllib3 (>=2.1.0,<3.0.0)",
+  "urllib3 (>=2.8.0,<3.0.0)",
   "python-dateutil (>=2.8.2)",
   "pydantic (>=2.11)",
   "typing-extensions (>=4.7.1)",
 ]
 
 [project.urls]
+Homepage = "https://developer.timr.com"
 Repository = "https://github.com/troii/timr-api"
+
+[dependency-groups]
+build = [
+  "build",
+  "twine",
+  "tomlkit>=0.15.1",
+]
 
 [tool.poetry]
 requires-poetry = ">=2.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">= 7.2.1"
+pytest = ">= 9.0.3"
+filelock = ">= 3.20.3"
 pytest-cov = ">= 2.8.1"
 tox = ">= 3.9.0"
 flake8 = ">= 4.0.0"
@@ -35,6 +44,12 @@ mypy = ">= 1.5"
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["timr_api*"]
+
+[tool.setuptools.package-data]
+timr_api = ["py.typed"]
 
 [tool.pylint.'MESSAGES CONTROL']
 extension-pkg-whitelist = "pydantic"

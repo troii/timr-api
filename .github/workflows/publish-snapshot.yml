@@ -142,10 +142,11 @@ jobs:
           add-job-summary: on-failure
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.9'
+          python-version: '3.11'
       - name: Build and test the Python snapshot
         run: |
-          python -m pip install build twine pytest
+          python -m pip install --upgrade pip # --group requires pip 25.1+, newer than the pip bundled with Python 3.11.
+          python -m pip install --group sdk/python/pyproject.toml:build -r sdk/python/test-requirements.txt
           export PYTHON_SNAPSHOT_STAMP="$((GITHUB_RUN_ID * 10000 + GITHUB_RUN_ATTEMPT))"
           ./gradlew :python:pythonPack --scan
           python -m twine check --strict sdk/python/build/dist/*

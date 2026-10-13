@@ -125,10 +125,7 @@ generated package uncompilable.
 
 Upstream baseline: `python/*.mustache`.
 
-- **`setup.mustache`** — `PYTHON_REQUIRES` is `>= 3.9`. Upstream hardcodes `>= 3.10` there while
-  `pyproject.mustache` hardcodes `>=3.9`, so the two shipped files contradict each other and neither
-  is configurable. The generated code is 3.9-compatible — no PEP 604 unions, `typing_extensions.Self`
-  rather than `typing.Self` — so 3.9 is the truthful bound.
+Packaging is defined by the hand-maintained `pyproject.toml`. It and both requirements files are excluded from generation, as is `setup.py`. Gradle stamps the manifest version from `sdk/versions.properties` when packaging, including snapshots.
 
 ## TypeScript
 

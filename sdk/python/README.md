@@ -10,7 +10,7 @@ types, work schedule models and holiday calendars.
 
 ## Requirements
 
-Python 3.9+
+Python 3.11+
 
 ## Installation
 

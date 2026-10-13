@@ -9,6 +9,24 @@ def baseVersion = rootProject.ext.sdkVersions[project.name]
 def snapshotStamp = System.getenv('PYTHON_SNAPSHOT_STAMP') ?: rootProject.ext.snapshotStamp
 def pythonPackageVersion = rootProject.ext.snapshotBuild ? "${baseVersion}.dev${snapshotStamp}" : baseVersion
 
+def stampPythonVersion = tasks.register('stampPythonVersion', Exec) {
+    group = 'publishing'
+    description = 'Sets the Python manifest version from sdk/versions.properties.'
+    inputs.property('packageVersion', pythonPackageVersion)
+    workingDir = projectDir
+    commandLine 'python3', '-c', '''
+import sys
+import tomlkit
+
+with open("pyproject.toml", encoding="utf-8") as source:
+    manifest = tomlkit.load(source)
+if manifest["project"]["version"] != sys.argv[1]:
+    manifest["project"]["version"] = sys.argv[1]
+    with open("pyproject.toml", "w", encoding="utf-8") as target:
+        tomlkit.dump(manifest, target)
+''', pythonPackageVersion
+}
+
 openApiGenerate {
     generatorName = 'python'
     templateDir = "$projectDir/templates"
@@ -37,7 +55,7 @@ def cleanPythonDist = tasks.register('cleanPythonDist', Delete) {
 tasks.register('pythonPack', Exec) {
     group = 'publishing'
     description = 'Builds the Python wheel and source distribution.'
-    dependsOn tasks.named('openApiGenerate'), cleanPythonDist
+    dependsOn tasks.named('openApiGenerate'), stampPythonVersion, cleanPythonDist
     workingDir = projectDir
     commandLine 'python3', '-m', 'build', '--outdir', distDirectory.get().asFile.absolutePath
 }

@@ -116,20 +116,24 @@ jobs:
         run: swift test --package-path sdk/swift
 
   python:
-    name: Python
+    name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.11', '3.14']
     steps:
       - uses: actions/checkout@v6
 
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.9'
+          python-version: ${{ matrix.python-version }}
 
       - name: Install SDK and test runner
         working-directory: sdk/python
         run: |
           python -m pip install --upgrade pip
-          pip install . pytest
+          pip install . -r test-requirements.txt
 
       # Importing the package exercises every module, so a generator change that
       # emits invalid Python fails here. mypy is not run yet: the generator emits a
