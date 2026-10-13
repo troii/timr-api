@@ -47,7 +47,7 @@ jobs:
           test "$(find "$library" -maxdepth 1 -name '*.jar' -size +0c | wc -l)" -eq 3
           test "$(find "$library" -maxdepth 1 -name '*.jar.asc' -size +0c | wc -l)" -eq 3
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.module }}-signed-publication
           path: |
@@ -79,7 +79,7 @@ jobs:
           npm test
       - name: Pack the npm publication
         run: ./gradlew :typescript-fetch:npmPack --scan
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: typescript-publication
           path: sdk/typescript-fetch/build/npm/*.tgz
@@ -105,7 +105,7 @@ jobs:
             10.x
       - name: Test and pack the NuGet publication
         run: ./gradlew :dotnet:dotnetTest :dotnet:dotnetPack --scan
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: dotnet-publication
           path: sdk/dotnet/build/nuget/*.nupkg
@@ -135,7 +135,7 @@ jobs:
           python -m twine check --strict sdk/python/build/dist/*
           python -m pip install sdk/python/build/dist/*.whl
           python -m pytest sdk/python/tests
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: python-publication
           path: sdk/python/build/dist/*
