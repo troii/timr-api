@@ -1,0 +1,46 @@
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
+
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
+
+  - package-ecosystem: npm
+    directories:
+      - /site
+      - /sdk/typescript-fetch
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
+
+  - package-ecosystem: nuget
+    directory: /sdk/dotnet
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
+
+  - package-ecosystem: pip
+    directory: /sdk/python
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
+
+  - package-ecosystem: swift
+    directory: /sdk/swift
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
