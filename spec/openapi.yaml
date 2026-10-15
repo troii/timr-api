@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.1.0
+  version: 1.2.0
 
 servers:
   - url: https://api.timr.com/v1/
@@ -46,6 +46,11 @@ tags:
   - name: Project Time
     description: >
       Time booked on a Task. Where a Working Time records that a person was at work, a Project Time records what they worked on.
+  - name: Project Time Attachment
+    description: >
+      Files attached to a Project Time, such as before-and-after photos documenting the work. Only attachments whose
+      upload has completed are returned. Adding or deleting an attachment does not change the `last_modified` of the
+      Project Time, so changed attachments can't be found with the `last_modified_after` filter of the Project Times.
   - name: Task
     description: >
       The account's task tree that Project Times are booked on. Tasks are hierarchical, can be bookable and billable, carry budgets, and can constrain recording. Users gain access through assignments.
@@ -58,6 +63,11 @@ tags:
   - name: Task to Team Assignment
     description: >
       Grants a whole Team access to a Task, instead of assigning each of its Users individually.
+  - name: Task Attachment
+    description: >
+      Files attached to a Task, such as instructions or photos. Only attachments whose upload has completed are returned.
+      Attachments are not inherited: only the attachments attached directly to the Task are returned. Attachments of a
+      parent Task are not part of the result and have to be fetched from the parent Task itself.
   - name: Drive Log
     description: >
       Logbook entries for trips in a Car: times, mileage, purpose, places visited, and the category separating business from private travel.
@@ -1891,6 +1901,187 @@ paths:
         "400":
           $ref: '#/components/responses/BadRequest'
 
+  /project-times/{project_time_id}/attachments:
+    get:
+      operationId: fetchProjectTimeAttachments
+      tags:
+        - Project Time Attachment
+      summary: List Project Time Attachments
+      description: >
+        Lists the attachments of a running or completed Project Time whose upload has completed.
+      parameters:
+        - name: project_time_id
+          in: path
+          description: ID of the Project Time.
+          required: true
+          example: 074e7048-9097-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of entries per page. Values above 500 are capped at 500.
+          required: false
+          schema:
+            minimum: 1
+            default: 20
+            type: integer
+            format: int32
+        - name: sort_direction
+          in: query
+          description: Direction to sort the entries in.
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortDirection'
+            default: asc
+        - name: sort_by
+          in: query
+          description: Property to sort the entries by.
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/AttachmentsSortColumn'
+            default: uploaded_at
+      responses:
+        "200":
+          description: Page of Project Time Attachments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentsPage'
+          headers:
+            Link:
+              schema:
+                type: string
+                format: uri
+              description: link to the next page including filter parameters and page token
+          links:
+            GetProjectTimeAttachmentsNextPage:
+              operationId: fetchProjectTimeAttachments
+              parameters:
+                page_token: '$response.body#/next_page_token'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      operationId: createProjectTimeAttachment
+      tags:
+        - Project Time Attachment
+      summary: Upload a Project Time Attachment
+      description: >
+        Registers the upload of a single file to a running or completed Project Time and returns a pre-signed URL to
+        upload it to. Upload the file with a PUT request to `upload.url`, sending exactly the headers in `upload.headers`,
+        before `upload.expires_at`. The attachment is only returned by the other endpoints once its upload has completed.
+        Uploads that are not completed are discarded automatically. Only images can be uploaded, and the size of a file
+        and the number of attachments per Project Time are limited.
+      parameters:
+        - name: project_time_id
+          in: path
+          description: ID of the Project Time.
+          required: true
+          example: 074e7048-9097-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+      requestBody:
+        description: Metadata of the file to upload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentMetadata'
+      responses:
+        "201":
+          description: The registered upload with the URL to upload the file to.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUploadResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+  /project-times/{project_time_id}/attachments/{attachment_id}:
+    get:
+      operationId: getProjectTimeAttachment
+      tags:
+        - Project Time Attachment
+      summary: Get a Project Time Attachment
+      description: >
+        Returns a single attachment of a running or completed Project Time. Only attachments whose upload has completed
+        are found.
+      parameters:
+        - name: project_time_id
+          in: path
+          description: ID of the Project Time.
+          required: true
+          example: 074e7048-9097-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+        - name: attachment_id
+          in: path
+          description: ID of the Project Time Attachment.
+          required: true
+          example: 01972ff0-14a2-7814-926c-11d07a1dc20b
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The requested Project Time Attachment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteProjectTimeAttachment
+      tags:
+        - Project Time Attachment
+      summary: Delete a Project Time Attachment
+      description: >
+        Deletes a single attachment of a running or completed Project Time. Only attachments whose upload has completed
+        are found. Attachments of a completed Project Time can only be deleted while its status is `changeable`.
+      parameters:
+        - name: project_time_id
+          in: path
+          description: ID of the Project Time.
+          required: true
+          example: 074e7048-9097-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+        - name: attachment_id
+          in: path
+          description: ID of the Project Time Attachment.
+          required: true
+          example: 01972ff0-14a2-7814-926c-11d07a1dc20b
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Deleted. No content is returned.
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "422":
+          $ref: '#/components/responses/UnprocessableContent'
+
   /tasks:
     get:
       operationId: fetchTasks
@@ -2644,6 +2835,185 @@ paths:
           $ref: '#/components/responses/NotFound'
         "409":
           $ref: '#/components/responses/Conflict'
+
+  /tasks/{task_id}/attachments:
+    get:
+      operationId: fetchTaskAttachments
+      tags:
+        - Task Attachment
+      summary: List Task Attachments
+      description: >
+        Lists the attachments whose upload has completed. Only attachments attached directly to the Task are returned;
+        attachments of parent Tasks are not included and have to be fetched from the parent Task itself.
+      parameters:
+        - name: task_id
+          in: path
+          description: ID of the Task.
+          required: true
+          example: 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+        - name: page_token
+          in: query
+          description: Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Maximum number of entries per page. Values above 500 are capped at 500.
+          required: false
+          schema:
+            minimum: 1
+            default: 20
+            type: integer
+            format: int32
+        - name: sort_direction
+          in: query
+          description: Direction to sort the entries in.
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/SortDirection'
+            default: asc
+        - name: sort_by
+          in: query
+          description: Property to sort the entries by.
+          required: false
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/AttachmentsSortColumn'
+            default: uploaded_at
+      responses:
+        "200":
+          description: Page of Task Attachments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentsPage'
+          headers:
+            Link:
+              schema:
+                type: string
+                format: uri
+              description: link to the next page including filter parameters and page token
+          links:
+            GetTaskAttachmentsNextPage:
+              operationId: fetchTaskAttachments
+              parameters:
+                page_token: '$response.body#/next_page_token'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      operationId: createTaskAttachment
+      tags:
+        - Task Attachment
+      summary: Upload a Task Attachment
+      description: >
+        Registers the upload of a single file to the Task and returns a pre-signed URL to upload it to. Upload the file
+        with a PUT request to `upload.url`, sending exactly the headers in `upload.headers`, before `upload.expires_at`.
+        The attachment is only returned by the other endpoints once its upload has completed. Uploads that are not
+        completed are discarded automatically. The size of a file and the number of attachments per Task are limited.
+      parameters:
+        - name: task_id
+          in: path
+          description: ID of the Task.
+          required: true
+          example: 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+      requestBody:
+        description: Metadata of the file to upload.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentMetadata'
+      responses:
+        "201":
+          description: The registered upload with the URL to upload the file to.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentUploadResponse'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+  /tasks/{task_id}/attachments/{attachment_id}:
+    get:
+      operationId: getTaskAttachment
+      tags:
+        - Task Attachment
+      summary: Get a Task Attachment
+      description: >
+        Returns a single attachment of the Task. Only attachments whose upload has completed and that are attached
+        directly to the Task are found; an attachment of a parent Task has to be fetched from the parent Task itself.
+      parameters:
+        - name: task_id
+          in: path
+          description: ID of the Task.
+          required: true
+          example: 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+        - name: attachment_id
+          in: path
+          description: ID of the Task Attachment.
+          required: true
+          example: 01972ff0-14a2-7814-926c-11d07a1dc20b
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: The requested Task Attachment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attachment'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      operationId: deleteTaskAttachment
+      tags:
+        - Task Attachment
+      summary: Delete a Task Attachment
+      description: >
+        Deletes a single attachment of the Task. Only attachments whose upload has completed and that are attached
+        directly to the Task are found; an attachment of a parent Task has to be deleted on the parent Task itself.
+      parameters:
+        - name: task_id
+          in: path
+          description: ID of the Task.
+          required: true
+          example: 5c2a9f38-9d47-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+        - name: attachment_id
+          in: path
+          description: ID of the Task Attachment.
+          required: true
+          example: 01972ff0-14a2-7814-926c-11d07a1dc20b
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Deleted. No content is returned.
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
 
   /drive-logs:
     get:
@@ -5988,6 +6358,154 @@ components:
       type: string
       enum:
         - team_name
+
+    Attachment:
+      description: >
+        A file attached to an entity, such as a Task or a Project Time. Only attachments whose upload has completed are returned.
+      type: object
+      properties:
+        id:
+          description: Unique identifier. Treat it as an opaque string.
+          type: string
+          format: uuid
+          example: 01972ff0-14a2-7814-926c-11d07a1dc20b
+        download:
+          description: >
+            Temporary URL to download the file, or null if the file cannot be downloaded. Clients have to handle null,
+            as future versions may also return attachments whose upload has not completed yet.
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/AttachmentDownload'
+        metadata:
+          $ref: '#/components/schemas/AttachmentMetadata'
+        uploaded_by:
+          description: The User who uploaded the file, or null if that User no longer exists.
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/UserPartial'
+        uploaded_at:
+          description: >
+            When the upload of the file completed.
+            RFC 3339 date-time (ISO-8601)
+          allOf:
+            - $ref: '#/components/schemas/DateTime'
+      required:
+        - id
+        - download
+        - metadata
+        - uploaded_by
+        - uploaded_at
+
+    AttachmentsPage:
+      allOf:
+        - $ref: '#/components/schemas/PagingInformation'
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
+          required:
+            - data
+
+    AttachmentsSortColumn:
+      description: Sort property for Attachments. `uploaded_at` orders by the time the upload completed.
+      type: string
+      enum:
+        - uploaded_at
+
+    AttachmentUploadResponse:
+      description: A registered upload of a file, with the pre-signed URL to upload the file to.
+      type: object
+      properties:
+        id:
+          description: Unique identifier of the attachment. Treat it as an opaque string.
+          type: string
+          format: uuid
+          example: 01972ff0-14a2-7814-926c-11d07a1dc20b
+        metadata:
+          $ref: '#/components/schemas/AttachmentMetadata'
+        upload:
+          $ref: '#/components/schemas/AttachmentUpload'
+      required:
+        - id
+        - metadata
+        - upload
+
+    AttachmentUpload:
+      description: >
+        Pre-signed URL to upload the file directly to the storage, without further authentication. Upload the file
+        with a PUT request, sending exactly the given headers, before `expires_at`.
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://s3.eu-central-1.amazonaws.com/timr-attachments/01972ff0-14a2-7814-926c-11d07a1dc20b?X-Amz-Signature=...
+        headers:
+          $ref: '#/components/schemas/AttachmentUploadHeaders'
+        expires_at:
+          description: >
+            When the URL stops being valid.
+            RFC 3339 date-time (ISO-8601)
+          allOf:
+            - $ref: '#/components/schemas/DateTime'
+      required:
+        - url
+        - headers
+        - expires_at
+
+    AttachmentUploadHeaders:
+      description: >
+        Headers to send with the upload request, with exactly these values. Which headers are included can change, so
+        send all of them. The upload is also signed for `Host` and `Content-Length` (`metadata.size`), which HTTP clients
+        set automatically; adding them manually can break the request.
+        All values are strings, as HTTP header values are text ([RFC 9110, section 5.5](https://www.rfc-editor.org/rfc/rfc9110#section-5.5)).
+      type: object
+      additionalProperties:
+        type: string
+      example:
+        Content-Type: image/jpeg
+        Content-Disposition: attachment; filename="before_cleanup.jpeg"; filename*=UTF-8''before_cleanup.jpeg
+
+    AttachmentDownload:
+      description: >
+        Pre-signed URL to download the file directly from the storage, without further authentication. The URL is
+        only valid for a limited time; request the attachment again to get a new URL.
+      type: object
+      properties:
+        url:
+          type: string
+          example: https://s3.eu-central-1.amazonaws.com/timr-attachments/01972ff0-14a2-7814-926c-11d07a1dc20b?X-Amz-Signature=...
+      required:
+        - url
+
+    AttachmentMetadata:
+      description: Metadata of the attached file, as provided when it was uploaded.
+      type: object
+      properties:
+        file_name:
+          type: string
+          example: before_cleanup.jpeg
+        content_type:
+          description: Media type of the file.
+          type: string
+          example: image/jpeg
+        size:
+          description: Size of the file in bytes.
+          type: integer
+          format: int64
+          example: 204800
+        file_last_modified:
+          description: >
+            When the file was last modified on the device it was uploaded from.
+            RFC 3339 date-time (ISO-8601)
+          allOf:
+            - $ref: '#/components/schemas/DateTime'
+      required:
+        - file_name
+        - content_type
+        - size
+        - file_last_modified
 
     ProjectTime:
       description: >
