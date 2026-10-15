@@ -146,6 +146,10 @@ SDKs are published independently through `<module>/<version>` tags, with approva
 `Release` environment. Build, package validation and registry authentication instructions are in
 [sdk/README.md](sdk/README.md).
 
+A bare `<version>` tag releases the API contract. After verifying the generated sources and SDKs,
+the workflow creates a GitHub Release linking to the documentation. If a release already exists for
+that tag, it keeps its title and notes unchanged and succeeds.
+
 ## Local development
 
 The documentation site:
