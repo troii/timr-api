@@ -103,6 +103,60 @@ public class TaskApi extends BaseApi {
         return apiClient.invokeAPI("/tasks", HttpMethod.POST, Collections.<String, Object>emptyMap(), localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
+     * Delete a Task
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+     * <p><b>204</b> - Deleted. No content is returned.
+     * <p><b>403</b> - Forbidden
+     * <p><b>404</b> - Not Found
+     * <p><b>409</b> - Conflict
+     * @param id ID of the Task. (required)
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public void deleteTask(@jakarta.annotation.Nonnull String id) throws RestClientException {
+        deleteTaskWithHttpInfo(id);
+    }
+
+    /**
+     * Delete a Task
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+     * <p><b>204</b> - Deleted. No content is returned.
+     * <p><b>403</b> - Forbidden
+     * <p><b>404</b> - Not Found
+     * <p><b>409</b> - Conflict
+     * @param id ID of the Task. (required)
+     * @return ResponseEntity&lt;Void&gt;
+     * @throws RestClientException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> deleteTaskWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
+        Object localVarPostBody = null;
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'id' when calling deleteTask");
+        }
+        
+        // create path and map variables
+        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        uriVariables.put("id", id);
+
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final HttpHeaders localVarHeaderParams = new HttpHeaders();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+
+        final String[] localVarAccepts = { 
+            "application/problem+json"
+         };
+        final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String[] localVarContentTypes = {  };
+        final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+        String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
+
+        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<Void>() {};
+        return apiClient.invokeAPI("/tasks/{id}", HttpMethod.DELETE, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+    }
+    /**
      * List Tasks
      * Lists the Tasks the authenticated user or API token can access.
      * <p><b>200</b> - Page of Tasks.

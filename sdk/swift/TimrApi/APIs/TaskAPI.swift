@@ -55,6 +55,51 @@ open class TaskAPI {
     }
 
     /**
+     Delete a Task
+     
+     - parameter id: (path) ID of the Task. 
+     - returns: Void
+     */
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+    open class func deleteTask(id: String) async throws {
+        return try await deleteTaskWithRequestBuilder(id: id).execute().body
+    }
+
+    /**
+     Delete a Task
+     - DELETE /tasks/{id}
+     - Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can't be deleted; the request is answered with 409 and nothing is deleted.
+     - OAuth:
+       - type: oauth2
+       - name: OAuth2
+     - OAuth:
+       - type: oauth2
+       - name: OAuth2
+     - parameter id: (path) ID of the Task. 
+     - returns: RequestBuilder<Void> 
+     */
+    open class func deleteTaskWithRequestBuilder(id: String) -> RequestBuilder<Void> {
+        var localVariablePath = "/tasks/{id}"
+        let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
+        let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
+        let localVariableURLString = TimrAPI.basePath + localVariablePath
+        let localVariableParameters: [String: Any]? = nil
+
+        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
+
+        let localVariableNillableHeaders: [String: Any?] = [
+            :
+        ]
+
+        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
+
+        let localVariableRequestBuilder: RequestBuilder<Void>.Type = TimrAPI.requestBuilderFactory.getNonDecodableBuilder()
+
+        return localVariableRequestBuilder.init(method: "DELETE", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
+    }
+
+    /**
      List Tasks
      
      - parameter parentTaskId: (query) Only return Tasks whose parent is the Task with this ID. (optional)

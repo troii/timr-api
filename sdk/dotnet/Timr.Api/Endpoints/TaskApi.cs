@@ -62,6 +62,29 @@ namespace Timr.Api.Endpoints
         Task<ICreateTaskApiResponse?> CreateTaskOrDefaultAsync(TaskCreate taskCreate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Delete a Task
+        /// </summary>
+        /// <remarks>
+        /// Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">ID of the Task.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskApiResponse"/>&gt;</returns>
+        Task<IDeleteTaskApiResponse> DeleteTaskAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete a Task
+        /// </summary>
+        /// <remarks>
+        /// Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+        /// </remarks>
+        /// <param name="id">ID of the Task.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskApiResponse"/>?&gt;</returns>
+        Task<IDeleteTaskApiResponse?> DeleteTaskOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
         /// List Tasks
         /// </summary>
         /// <remarks>
@@ -225,6 +248,36 @@ namespace Timr.Api.Endpoints
     }
 
     /// <summary>
+    /// The <see cref="IDeleteTaskApiResponse"/>
+    /// </summary>
+    public interface IDeleteTaskApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
+    {
+        /// <summary>
+        /// Returns true if the response is 204 NoContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsNoContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 403 Forbidden
+        /// </summary>
+        /// <returns></returns>
+        bool IsForbidden { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+    }
+
+    /// <summary>
     /// The <see cref="IFetchTasksApiResponse"/>
     /// </summary>
     public interface IFetchTasksApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TasksPage?>, IBadRequest<Timr.Api.Model.Error?>
@@ -349,6 +402,26 @@ namespace Timr.Api.Endpoints
         internal void ExecuteOnErrorCreateTask(Exception exception)
         {
             OnErrorCreateTask?.Invoke(this, new ExceptionEventArgs(exception));
+        }
+
+        /// <summary>
+        /// The event raised after the server response
+        /// </summary>
+        public event EventHandler<ApiResponseEventArgs>? OnDeleteTask;
+
+        /// <summary>
+        /// The event raised after an error querying the server
+        /// </summary>
+        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteTask;
+
+        internal void ExecuteOnDeleteTask(TaskApi.DeleteTaskApiResponse apiResponse)
+        {
+            OnDeleteTask?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+        }
+
+        internal void ExecuteOnErrorDeleteTask(Exception exception)
+        {
+            OnErrorDeleteTask?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
@@ -890,6 +963,382 @@ namespace Timr.Api.Endpoints
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatDeleteTask(ref string id);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private void ValidateDeleteTask(string id)
+        {
+            if (id == null)
+                throw new ArgumentNullException(nameof(id));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="id"></param>
+        private void AfterDeleteTaskDefaultImplementation(IDeleteTaskApiResponse apiResponseLocalVar, string id)
+        {
+            bool suppressDefaultLog = false;
+            AfterDeleteTask(ref suppressDefaultLog, apiResponseLocalVar, id);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="id"></param>
+        partial void AfterDeleteTask(ref bool suppressDefaultLog, IDeleteTaskApiResponse apiResponseLocalVar, string id);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="id"></param>
+        private void OnErrorDeleteTaskDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorDeleteTask(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="id"></param>
+        partial void OnErrorDeleteTask(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+
+        /// <summary>
+        /// Delete a Task Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+        /// </summary>
+        /// <param name="id">ID of the Task.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskApiResponse"/>&gt;</returns>
+        public async Task<IDeleteTaskApiResponse?> DeleteTaskOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await DeleteTaskAsync(id, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Delete a Task Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="id">ID of the Task.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskApiResponse"/>&gt;</returns>
+        public async Task<IDeleteTaskApiResponse> DeleteTaskAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateDeleteTask(id);
+
+                FormatDeleteTask(ref id);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/tasks/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{id}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
+
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    OAuthToken oauthTokenLocalVar2 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar2);
+
+                    oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/problem+json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Delete;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        DeleteTaskApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterDeleteTaskDefaultImplementation(apiResponseLocalVar, id);
+
+                        Events.ExecuteOnDeleteTask(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorDeleteTaskDefaultImplementation(e, "/tasks/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorDeleteTask(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteTaskApiResponse"/>
+        /// </summary>
+        public partial class DeleteTaskApiResponse : Timr.Api.Client.ApiResponse, IDeleteTaskApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<TaskApi> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="DeleteTaskApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteTaskApiResponse(ILogger<TaskApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="DeleteTaskApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteTaskApiResponse(ILogger<TaskApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 204 NoContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNoContent => 204 == (int)StatusCode;
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public bool IsForbidden => 403 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.Error? Forbidden()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnForbidden(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultForbidden();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultForbidden()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsForbidden
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryForbidden([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Forbidden();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.Error? NotFound()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.Error? Conflict()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
                 }
 
                 return result != null;
