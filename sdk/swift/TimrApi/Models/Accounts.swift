@@ -12,7 +12,7 @@ import AnyCodable
 
 public struct Accounts: Codable, JSONEncodable, Hashable {
 
-    /** date of last balance */
+    /** The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself. */
     public var lastBalanceDate: Date?
     public var timeAccount: TimeAccount?
     public var overtimeSurchargeAccounts: [OvertimeSurchargeAccounts]?

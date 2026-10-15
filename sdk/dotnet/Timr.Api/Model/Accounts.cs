@@ -33,7 +33,7 @@ namespace Timr.Api.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="Accounts" /> class.
         /// </summary>
-        /// <param name="lastBalanceDate">date of last balance</param>
+        /// <param name="lastBalanceDate">The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.</param>
         /// <param name="timeAccount">timeAccount</param>
         /// <param name="overtimeSurchargeAccounts">overtimeSurchargeAccounts</param>
         /// <param name="vacationAccount">vacationAccount</param>
@@ -50,9 +50,9 @@ namespace Timr.Api.Model
         partial void OnCreated();
 
         /// <summary>
-        /// date of last balance
+        /// The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.
         /// </summary>
-        /// <value>date of last balance</value>
+        /// <value>The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.</value>
         [JsonPropertyName("last_balance_date")]
         public DateOnly? LastBalanceDate { get; set; }
 

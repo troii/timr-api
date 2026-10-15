@@ -33,17 +33,6 @@ export interface GetUserAccountsRequest {
     date: Date;
 }
 
-export interface GetUserWorkingTimeAccountsRequest {
-    /**
-     * ID of the User.
-     */
-    id: string;
-    /**
-     * Day to return the balances for.
-     */
-    date: Date;
-}
-
 /**
  * 
  */
@@ -99,7 +88,7 @@ export class TimeAccountApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all of the User\'s account balances as of the given day, including overtime and surcharge accounts.
+     * Returns all of the User\'s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User\'s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User\'s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  `last_balance_date` identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
      * Get a User\'s accounts
      */
     async getUserAccountsRaw(requestParameters: GetUserAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>> {
@@ -110,80 +99,11 @@ export class TimeAccountApi extends runtime.BaseAPI {
     }
 
     /**
-     * Returns all of the User\'s account balances as of the given day, including overtime and surcharge accounts.
+     * Returns all of the User\'s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User\'s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User\'s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  `last_balance_date` identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
      * Get a User\'s accounts
      */
     async getUserAccounts(id: string, date: Date, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
         const response = await this.getUserAccountsRaw({ id: id, date: date, }, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * Creates request options for getUserWorkingTimeAccounts without sending the request
-     */
-    async getUserWorkingTimeAccountsRequestOpts(requestParameters: GetUserWorkingTimeAccountsRequest): Promise<runtime.RequestOpts> {
-        if (requestParameters['id'] == null) {
-            throw new runtime.RequiredError(
-                'id',
-                'Required parameter "id" was null or undefined when calling getUserWorkingTimeAccounts().'
-            );
-        }
-
-        if (requestParameters['date'] == null) {
-            throw new runtime.RequiredError(
-                'date',
-                'Required parameter "date" was null or undefined when calling getUserWorkingTimeAccounts().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
-        }
-
-        if (this.configuration && this.configuration.accessToken) {
-            // oauth required
-            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
-        }
-
-
-        let urlPath = `/users/{id}/working-time-accounts/{date}`;
-        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
-        if (requestParameters['date'] instanceof Date) {
-            urlPath = urlPath.replace('{date}', encodeURIComponent(runtime.serializeDate(requestParameters['date'])));
-        } else {
-            urlPath = urlPath.replace('{date}', encodeURIComponent(String(requestParameters['date'])));
-        }
-
-        return {
-            path: urlPath,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        };
-    }
-
-    /**
-     * Returns the User\'s working time account balances as of the given day.
-     * Get a User\'s working time accounts
-     */
-    async getUserWorkingTimeAccountsRaw(requestParameters: GetUserWorkingTimeAccountsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Accounts>> {
-        const requestOptions = await this.getUserWorkingTimeAccountsRequestOpts(requestParameters);
-        const response = await this.request(requestOptions, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => AccountsFromJSON(jsonValue));
-    }
-
-    /**
-     * Returns the User\'s working time account balances as of the given day.
-     * Get a User\'s working time accounts
-     */
-    async getUserWorkingTimeAccounts(id: string, date: Date, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Accounts> {
-        const response = await this.getUserWorkingTimeAccountsRaw({ id: id, date: date, }, initOverrides);
         return await response.value();
     }
 

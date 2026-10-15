@@ -27,7 +27,7 @@ open class TimeAccountAPI {
     /**
      Get a User's accounts
      - GET /users/{id}/accounts/{date}
-     - Returns all of the User's account balances as of the given day, including overtime and surcharge accounts.
+     - Returns all of the User's account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User's **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User's Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  `last_balance_date` identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
      - OAuth:
        - type: oauth2
        - name: OAuth2
@@ -40,56 +40,6 @@ open class TimeAccountAPI {
      */
     open class func getUserAccountsWithRequestBuilder(id: String, date: Date) -> RequestBuilder<Accounts> {
         var localVariablePath = "/users/{id}/accounts/{date}"
-        let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
-        let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)
-        let datePreEscape = "\(APIHelper.mapValueToPathItem(date))"
-        let datePostEscape = datePreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
-        localVariablePath = localVariablePath.replacingOccurrences(of: "{date}", with: datePostEscape, options: .literal, range: nil)
-        let localVariableURLString = TimrAPI.basePath + localVariablePath
-        let localVariableParameters: [String: Any]? = nil
-
-        let localVariableUrlComponents = URLComponents(string: localVariableURLString)
-
-        let localVariableNillableHeaders: [String: Any?] = [
-            :
-        ]
-
-        let localVariableHeaderParameters = APIHelper.rejectNilHeaders(localVariableNillableHeaders)
-
-        let localVariableRequestBuilder: RequestBuilder<Accounts>.Type = TimrAPI.requestBuilderFactory.getBuilder()
-
-        return localVariableRequestBuilder.init(method: "GET", URLString: (localVariableUrlComponents?.string ?? localVariableURLString), parameters: localVariableParameters, headers: localVariableHeaderParameters, requiresAuthentication: true)
-    }
-
-    /**
-     Get a User's working time accounts
-     
-     - parameter id: (path) ID of the User. 
-     - parameter date: (path) Day to return the balances for. 
-     - returns: Accounts
-     */
-    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-    open class func getUserWorkingTimeAccounts(id: String, date: Date) async throws -> Accounts {
-        return try await getUserWorkingTimeAccountsWithRequestBuilder(id: id, date: date).execute().body
-    }
-
-    /**
-     Get a User's working time accounts
-     - GET /users/{id}/working-time-accounts/{date}
-     - Returns the User's working time account balances as of the given day.
-     - OAuth:
-       - type: oauth2
-       - name: OAuth2
-     - OAuth:
-       - type: oauth2
-       - name: OAuth2
-     - parameter id: (path) ID of the User. 
-     - parameter date: (path) Day to return the balances for. 
-     - returns: RequestBuilder<Accounts> 
-     */
-    open class func getUserWorkingTimeAccountsWithRequestBuilder(id: String, date: Date) -> RequestBuilder<Accounts> {
-        var localVariablePath = "/users/{id}/working-time-accounts/{date}"
         let idPreEscape = "\(APIHelper.mapValueToPathItem(id))"
         let idPostEscape = idPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
         localVariablePath = localVariablePath.replacingOccurrences(of: "{id}", with: idPostEscape, options: .literal, range: nil)

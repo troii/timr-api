@@ -31,7 +31,7 @@ class Accounts(BaseModel):
     """
     Accounts
     """ # noqa: E501
-    last_balance_date: Optional[date] = Field(description="date of last balance")
+    last_balance_date: Optional[date] = Field(description="The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.")
     time_account: Optional[TimeAccount] = None
     overtime_surcharge_accounts: Optional[List[OvertimeSurchargeAccounts]] = None
     vacation_account: Optional[VacationAccount] = None
