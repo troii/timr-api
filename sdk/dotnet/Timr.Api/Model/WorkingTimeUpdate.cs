@@ -116,7 +116,7 @@ namespace Timr.Api.Model
         /// For WorkingTimeTypes with &#x60;edit_unit&#x60; &#x60;days&#x60; or &#x60;half_days&#x60;, &#x60;end&#x60; must be midnight (00:00) and on the same day as &#x60;start&#x60;. RFC 3339 date-time (ISO-8601) 
         /// </summary>
         /// <value>For WorkingTimeTypes with &#x60;edit_unit&#x60; &#x60;days&#x60; or &#x60;half_days&#x60;, &#x60;end&#x60; must be midnight (00:00) and on the same day as &#x60;start&#x60;. RFC 3339 date-time (ISO-8601) </value>
-        /* <example>2021-07-16T08:20Z</example> */
+        /* <example>2021-07-16T09:02:00Z</example> */
         [JsonPropertyName("end")]
         public DateTimeOffset? End { get { return this.EndOption.Value; } set { this.EndOption = new(value); } }
 
@@ -248,17 +248,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeUpdate" />
     /// </summary>
-    public class WorkingTimeUpdateJsonConverter : JsonConverter<WorkingTimeUpdate>
+    public partial class WorkingTimeUpdateJsonConverter : JsonConverter<WorkingTimeUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeUpdateJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeUpdate" />
@@ -314,8 +324,7 @@ namespace Timr.Api.Model
                             breakTimes = new Option<List<BreakTimeUpdate>?>(JsonSerializer.Deserialize<List<BreakTimeUpdate>>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "duration_type":
-                            string? durationTypeRawValue = utf8JsonReader.GetString();
-                            durationType = new Option<DurationType?>(durationTypeRawValue == null ? null : DurationTypeValueConverter.FromStringOrDefault(durationTypeRawValue));
+                            durationType = new Option<DurationType?>(JsonSerializer.Deserialize<DurationType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "changed":
                             changed = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -327,9 +336,7 @@ namespace Timr.Api.Model
                             workingTimeTypeId = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<WorkingTimeStatus?>(WorkingTimeStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<WorkingTimeStatus?>(JsonSerializer.Deserialize<WorkingTimeStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "metadata":
                             metadata = new Option<Dictionary<string, Object>?>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -347,19 +354,19 @@ namespace Timr.Api.Model
             }
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class WorkingTimeUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeUpdate: start.");
 
             if (breakTimes.IsSet && breakTimes.Value == null)
-                throw new ArgumentNullException(nameof(breakTimes), "Property is not nullable for class WorkingTimeUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeUpdate: break_times.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class WorkingTimeUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeUpdate: changed.");
 
             if (workingTimeTypeId.IsSet && workingTimeTypeId.Value == null)
-                throw new ArgumentNullException(nameof(workingTimeTypeId), "Property is not nullable for class WorkingTimeUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeUpdate: working_time_type_id.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class WorkingTimeUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeUpdate: status.");
 
             return new WorkingTimeUpdate(start, end, breakTimes, durationType, changed, notes, workingTimeTypeId, status, metadata, startLocation, endLocation);
         }
@@ -370,7 +377,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeUpdate workingTimeUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -385,14 +391,22 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeUpdate workingTimeUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (workingTimeUpdate.StartOption.IsSet && workingTimeUpdate.Start == null)
+                throw new JsonException("Cannot write null property WorkingTimeUpdate.Start to non-nullable JSON property 'start'.");
+
             if (workingTimeUpdate.BreakTimesOption.IsSet && workingTimeUpdate.BreakTimes == null)
-                throw new ArgumentNullException(nameof(workingTimeUpdate.BreakTimes), "Property is required for class WorkingTimeUpdate.");
+                throw new JsonException("Cannot write null property WorkingTimeUpdate.BreakTimes to non-nullable JSON property 'break_times'.");
+
+            if (workingTimeUpdate.ChangedOption.IsSet && workingTimeUpdate.Changed == null)
+                throw new JsonException("Cannot write null property WorkingTimeUpdate.Changed to non-nullable JSON property 'changed'.");
 
             if (workingTimeUpdate.WorkingTimeTypeIdOption.IsSet && workingTimeUpdate.WorkingTimeTypeId == null)
-                throw new ArgumentNullException(nameof(workingTimeUpdate.WorkingTimeTypeId), "Property is required for class WorkingTimeUpdate.");
+                throw new JsonException("Cannot write null property WorkingTimeUpdate.WorkingTimeTypeId to non-nullable JSON property 'working_time_type_id'.");
+
+            if (workingTimeUpdate.StatusOption.IsSet && workingTimeUpdate.Status == null)
+                throw new JsonException("Cannot write null property WorkingTimeUpdate.Status to non-nullable JSON property 'status'.");
 
             if (workingTimeUpdate.StartOption.IsSet)
                 writer.WriteString("start", workingTimeUpdate.StartOption.Value!.Value.ToString(StartFormat));

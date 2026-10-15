@@ -109,17 +109,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="BreakTimeAutomatic" />
     /// </summary>
-    public class BreakTimeAutomaticJsonConverter : JsonConverter<BreakTimeAutomatic>
+    public partial class BreakTimeAutomaticJsonConverter : JsonConverter<BreakTimeAutomatic>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BreakTimeAutomaticJsonConverter" /> class.
+        /// </summary>
+        public BreakTimeAutomaticJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="BreakTimeAutomatic" />
@@ -159,9 +169,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<BreakTimeType?>(BreakTimeTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<BreakTimeType?>(JsonSerializer.Deserialize<BreakTimeType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "duration_minutes":
                             durationMinutes = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
@@ -179,22 +187,22 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeAutomatic.", nameof(type));
+                throw new JsonException("Property is required for class BreakTimeAutomatic: type.");
 
             if (!durationMinutes.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeAutomatic.", nameof(durationMinutes));
+                throw new JsonException("Property is required for class BreakTimeAutomatic: duration_minutes.");
 
             if (!start.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeAutomatic.", nameof(start));
+                throw new JsonException("Property is required for class BreakTimeAutomatic: start.");
 
             if (!end.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeAutomatic.", nameof(end));
+                throw new JsonException("Property is required for class BreakTimeAutomatic: end.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class BreakTimeAutomatic.");
+                throw new JsonException("Property is not nullable for class BreakTimeAutomatic: type.");
 
             if (durationMinutes.IsSet && durationMinutes.Value == null)
-                throw new ArgumentNullException(nameof(durationMinutes), "Property is not nullable for class BreakTimeAutomatic.");
+                throw new JsonException("Property is not nullable for class BreakTimeAutomatic: duration_minutes.");
 
             return new BreakTimeAutomatic(type.Value!.Value!, durationMinutes.Value!.Value!, start.Value!, end.Value!);
         }
@@ -205,7 +213,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeAutomatic"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, BreakTimeAutomatic breakTimeAutomatic, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -220,7 +227,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeAutomatic"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, BreakTimeAutomatic breakTimeAutomatic, JsonSerializerOptions jsonSerializerOptions)
         {
             var typeRawValue = BreakTimeTypeValueConverter.ToJsonValue(breakTimeAutomatic.Type);

@@ -16,4 +16,5 @@ settings.gradle
 
 src/main/AndroidManifest.xml
 src/main/java/com/timr/api/ApiClient.java
+src/main/java/com/timr/api/ExceptionProvider.java
 src/test/**

@@ -31,7 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.DriveLogCategoryApi")
 public class DriveLogCategoryApi extends BaseApi {
 
@@ -56,7 +56,7 @@ public class DriveLogCategoryApi extends BaseApi {
      * @return DriveLogCategoriesPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DriveLogCategoriesPage fetchDriveLogCategories(String pageToken, Integer limit, SortDirection sortDirection, DriveLogCategoriesSortColumn sortBy) throws RestClientException {
+    public DriveLogCategoriesPage fetchDriveLogCategories(@jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DriveLogCategoriesSortColumn sortBy) throws RestClientException {
         return fetchDriveLogCategoriesWithHttpInfo(pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -72,7 +72,7 @@ public class DriveLogCategoryApi extends BaseApi {
      * @return ResponseEntity&lt;DriveLogCategoriesPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLogCategoriesPage> fetchDriveLogCategoriesWithHttpInfo(String pageToken, Integer limit, SortDirection sortDirection, DriveLogCategoriesSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<DriveLogCategoriesPage> fetchDriveLogCategoriesWithHttpInfo(@jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DriveLogCategoriesSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -109,7 +109,7 @@ public class DriveLogCategoryApi extends BaseApi {
      * @return DriveLogCategory
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DriveLogCategory getDriveLogCategory(String id) throws RestClientException {
+    public DriveLogCategory getDriveLogCategory(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getDriveLogCategoryWithHttpInfo(id).getBody();
     }
 
@@ -123,7 +123,7 @@ public class DriveLogCategoryApi extends BaseApi {
      * @return ResponseEntity&lt;DriveLogCategory&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLogCategory> getDriveLogCategoryWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<DriveLogCategory> getDriveLogCategoryWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set

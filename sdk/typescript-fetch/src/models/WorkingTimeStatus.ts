@@ -23,7 +23,7 @@ export const WorkingTimeStatus = {
     Locked: 'locked',
     Approved: 'approved',
     Closed: 'closed',
-    Archived: 'archived'
+    Archived: 'archived',
 } as const;
 export type WorkingTimeStatus = typeof WorkingTimeStatus[keyof typeof WorkingTimeStatus];
 

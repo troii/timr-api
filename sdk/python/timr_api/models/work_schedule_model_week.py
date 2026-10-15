@@ -28,9 +28,9 @@ class WorkScheduleModelWeek(BaseModel):
     """
     WorkScheduleModelWeek
     """ # noqa: E501
-    week_number: Optional[StrictInt] = Field(default=None, description="index of the week in alternating_weeks models (0-based); omitted for fixed_week models")
-    name: Optional[StrictStr] = Field(default=None, description="display name of the week in alternating_weeks models; omitted for fixed_week models")
-    target_duration_weekly_minutes: StrictInt = Field(description="value in minutes")
+    week_number: Optional[StrictInt] = Field(default=None, description="index of the week in alternating_weeks models (0-based); omitted for fixed_week models", json_schema_extra={"examples": [0]})
+    name: Optional[StrictStr] = Field(default=None, description="display name of the week in alternating_weeks models; omitted for fixed_week models", json_schema_extra={"examples": ["Week A"]})
+    target_duration_weekly_minutes: StrictInt = Field(description="value in minutes", json_schema_extra={"examples": [2400]})
     monday: DailyWorkSchedule
     tuesday: DailyWorkSchedule
     wednesday: DailyWorkSchedule

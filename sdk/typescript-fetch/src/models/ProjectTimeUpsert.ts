@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { ProjectTimeStatus } from './ProjectTimeStatus';
 import {
     ProjectTimeStatusFromJSON,
@@ -35,56 +35,38 @@ import {
 export interface ProjectTimeUpsert {
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof ProjectTimeUpsert
      */
     start?: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof ProjectTimeUpsert
      */
     end?: Date | null;
     /**
      * 
-     * @type {Array<BreakTimeUpdate>}
-     * @memberof ProjectTimeUpsert
      */
     breakTimes?: Array<BreakTimeUpdate>;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectTimeUpsert
      */
     changed?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeUpsert
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeUpsert
      */
     taskId?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectTimeUpsert
      */
     billable?: boolean;
     /**
      * 
-     * @type {ProjectTimeStatus}
-     * @memberof ProjectTimeUpsert
      */
     status?: ProjectTimeStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof ProjectTimeUpsert
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -108,15 +90,15 @@ export function ProjectTimeUpsertFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'start': json['start'] == null ? undefined : (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': json['start'] == null ? undefined : (parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'breakTimes': json['break_times'] == null ? undefined : ((json['break_times'] as Array<any>).map(BreakTimeUpdateFromJSON)),
         'changed': json['changed'] == null ? undefined : json['changed'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'taskId': json['task_id'] == null ? undefined : json['task_id'],
         'billable': json['billable'] == null ? undefined : json['billable'],
         'status': json['status'] == null ? undefined : ProjectTimeStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -131,8 +113,8 @@ export function ProjectTimeUpsertToJSONTyped(value?: ProjectTimeUpsert | null, i
 
     return {
         
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'break_times': value['breakTimes'] == null ? undefined : ((value['breakTimes'] as Array<any>).map(BreakTimeUpdateToJSON)),
         'changed': value['changed'],
         'notes': value['notes'],

@@ -43,33 +43,23 @@ import {
 export interface WorkScheduleModel {
     /**
      * 
-     * @type {string}
-     * @memberof WorkScheduleModel
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkScheduleModel
      */
     name: string;
     /**
      * working-time calculation mode (daily_target_hours or normal_working_time); independent from the internal week layout (fixed_week or alternating_weeks)
-     * @type {WorkScheduleModelType}
-     * @memberof WorkScheduleModel
      */
     type: WorkScheduleModelType;
     /**
      * for fixed_week models this array contains exactly one week and week_number/name are omitted;  for alternating_weeks models this array contains all configured weeks and each item includes week_number (0-based) and name
      * 
-     * @type {Array<WorkScheduleModelWeek>}
-     * @memberof WorkScheduleModel
      */
     weeks: Array<WorkScheduleModelWeek>;
     /**
      * 
-     * @type {WorkingTimeRules}
-     * @memberof WorkScheduleModel
      */
     workingTimeRules: WorkingTimeRules | null;
 }
@@ -84,7 +74,7 @@ export function instanceOfWorkScheduleModel(value: object): value is WorkSchedul
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('weeks' in value) || value['weeks'] === undefined) return false;
-    if (!('workingTimeRules' in value) || value['workingTimeRules'] === undefined) return false;
+    if ((!('workingTimeRules' in (value as Record<string, any>)) && !('working_time_rules' in (value as Record<string, any>))) || ((value as Record<string, any>)['workingTimeRules'] === undefined && (value as Record<string, any>)['working_time_rules'] === undefined)) return false;
     return true;
 }
 

@@ -77,8 +77,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeDateSpanPartial" />
     /// </summary>
-    public class WorkingTimeDateSpanPartialJsonConverter : JsonConverter<WorkingTimeDateSpanPartial>
+    public partial class WorkingTimeDateSpanPartialJsonConverter : JsonConverter<WorkingTimeDateSpanPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeDateSpanPartialJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeDateSpanPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeDateSpanPartial" />
         /// </summary>
@@ -123,10 +133,10 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpanPartial.", nameof(id));
+                throw new JsonException("Property is required for class WorkingTimeDateSpanPartial: id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkingTimeDateSpanPartial.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpanPartial: id.");
 
             return new WorkingTimeDateSpanPartial(id.Value!);
         }
@@ -137,7 +147,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeDateSpanPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeDateSpanPartial workingTimeDateSpanPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -152,12 +161,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeDateSpanPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeDateSpanPartial workingTimeDateSpanPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workingTimeDateSpanPartial.Id == null)
-                throw new ArgumentNullException(nameof(workingTimeDateSpanPartial.Id), "Property is required for class WorkingTimeDateSpanPartial.");
-
             writer.WriteString("id", workingTimeDateSpanPartial.Id);
         }
     }

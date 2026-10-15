@@ -87,8 +87,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeRules" />
     /// </summary>
-    public class WorkingTimeRulesJsonConverter : JsonConverter<WorkingTimeRules>
+    public partial class WorkingTimeRulesJsonConverter : JsonConverter<WorkingTimeRules>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeRulesJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeRulesJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeRules" />
         /// </summary>
@@ -137,16 +147,16 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeRules.", nameof(id));
+                throw new JsonException("Property is required for class WorkingTimeRules: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeRules.", nameof(name));
+                throw new JsonException("Property is required for class WorkingTimeRules: name.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkingTimeRules.");
+                throw new JsonException("Property is not nullable for class WorkingTimeRules: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class WorkingTimeRules.");
+                throw new JsonException("Property is not nullable for class WorkingTimeRules: name.");
 
             return new WorkingTimeRules(id.Value!, name.Value!);
         }
@@ -157,7 +167,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeRules"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeRules workingTimeRules, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -172,15 +181,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeRules"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeRules workingTimeRules, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workingTimeRules.Id == null)
-                throw new ArgumentNullException(nameof(workingTimeRules.Id), "Property is required for class WorkingTimeRules.");
-
-            if (workingTimeRules.Name == null)
-                throw new ArgumentNullException(nameof(workingTimeRules.Name), "Property is required for class WorkingTimeRules.");
-
             writer.WriteString("id", workingTimeRules.Id);
 
             writer.WriteString("name", workingTimeRules.Name);

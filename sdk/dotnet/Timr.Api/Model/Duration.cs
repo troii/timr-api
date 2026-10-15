@@ -98,8 +98,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Duration" />
     /// </summary>
-    public class DurationJsonConverter : JsonConverter<Duration>
+    public partial class DurationJsonConverter : JsonConverter<Duration>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DurationJsonConverter" /> class.
+        /// </summary>
+        public DurationJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="Duration" />
         /// </summary>
@@ -137,9 +147,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<DurationType?>(DurationTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<DurationType?>(JsonSerializer.Deserialize<DurationType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "minutes":
                             minutes = new Option<long?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (long?)null : utf8JsonReader.GetInt64());
@@ -154,22 +162,22 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class Duration.", nameof(type));
+                throw new JsonException("Property is required for class Duration: type.");
 
             if (!minutes.IsSet)
-                throw new ArgumentException("Property is required for class Duration.", nameof(minutes));
+                throw new JsonException("Property is required for class Duration: minutes.");
 
             if (!minutesRounded.IsSet)
-                throw new ArgumentException("Property is required for class Duration.", nameof(minutesRounded));
+                throw new JsonException("Property is required for class Duration: minutes_rounded.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class Duration.");
+                throw new JsonException("Property is not nullable for class Duration: type.");
 
             if (minutes.IsSet && minutes.Value == null)
-                throw new ArgumentNullException(nameof(minutes), "Property is not nullable for class Duration.");
+                throw new JsonException("Property is not nullable for class Duration: minutes.");
 
             if (minutesRounded.IsSet && minutesRounded.Value == null)
-                throw new ArgumentNullException(nameof(minutesRounded), "Property is not nullable for class Duration.");
+                throw new JsonException("Property is not nullable for class Duration: minutes_rounded.");
 
             return new Duration(type.Value!.Value!, minutes.Value!.Value!, minutesRounded.Value!.Value!);
         }
@@ -180,7 +188,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="duration"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Duration duration, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -195,7 +202,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="duration"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Duration duration, JsonSerializerOptions jsonSerializerOptions)
         {
             var typeRawValue = DurationTypeValueConverter.ToJsonValue(duration.Type);

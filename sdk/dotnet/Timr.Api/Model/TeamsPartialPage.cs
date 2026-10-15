@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TeamsPartialPage" />
     /// </summary>
-    public class TeamsPartialPageJsonConverter : JsonConverter<TeamsPartialPage>
+    public partial class TeamsPartialPageJsonConverter : JsonConverter<TeamsPartialPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamsPartialPageJsonConverter" /> class.
+        /// </summary>
+        public TeamsPartialPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TeamsPartialPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class TeamsPartialPage.", nameof(data));
+                throw new JsonException("Property is required for class TeamsPartialPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class TeamsPartialPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class TeamsPartialPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class TeamsPartialPage.");
+                throw new JsonException("Property is not nullable for class TeamsPartialPage: data.");
 
             return new TeamsPartialPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamsPartialPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TeamsPartialPage teamsPartialPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamsPartialPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TeamsPartialPage teamsPartialPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (teamsPartialPage.Data == null)
-                throw new ArgumentNullException(nameof(teamsPartialPage.Data), "Property is required for class TeamsPartialPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, teamsPartialPage.Data, jsonSerializerOptions);
             if (teamsPartialPage.NextPageToken != null)

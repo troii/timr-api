@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 /**
  * 
  * @export
@@ -20,50 +20,34 @@ import { mapValues } from '../runtime';
 export interface WorkingTimeDateSpanUpdate {
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     start?: Date;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     startHalfDay?: boolean;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     end?: Date;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     endHalfDay?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     workingTimeTypeId?: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     substituteId?: string | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof WorkingTimeDateSpanUpdate
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -85,14 +69,14 @@ export function WorkingTimeDateSpanUpdateFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'start': json['start'] == null ? undefined : (new Date(json['start'])),
+        'start': json['start'] == null ? undefined : (parseDate(json['start'])),
         'startHalfDay': json['start_half_day'] == null ? undefined : json['start_half_day'],
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'end': json['end'] == null ? undefined : (parseDate(json['end'])),
         'endHalfDay': json['end_half_day'] == null ? undefined : json['end_half_day'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'workingTimeTypeId': json['working_time_type_id'] == null ? undefined : json['working_time_type_id'],
-        'substituteId': json['substitute_id'] == null ? undefined : json['substitute_id'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'substituteId': json['substitute_id'] === undefined ? undefined : json['substitute_id'] === null ? null : json['substitute_id'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -107,9 +91,9 @@ export function WorkingTimeDateSpanUpdateToJSONTyped(value?: WorkingTimeDateSpan
 
     return {
         
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString().substring(0,10),
+        'start': value['start'] == null ? value['start'] : serializeDate(value['start']),
         'start_half_day': value['startHalfDay'],
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString().substring(0,10),
+        'end': value['end'] == null ? value['end'] : serializeDate(value['end']),
         'end_half_day': value['endHalfDay'],
         'notes': value['notes'],
         'working_time_type_id': value['workingTimeTypeId'],

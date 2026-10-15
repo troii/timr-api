@@ -87,12 +87,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="BreakTimeOngoing" />
     /// </summary>
-    public class BreakTimeOngoingJsonConverter : JsonConverter<BreakTimeOngoing>
+    public partial class BreakTimeOngoingJsonConverter : JsonConverter<BreakTimeOngoing>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BreakTimeOngoingJsonConverter" /> class.
+        /// </summary>
+        public BreakTimeOngoingJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="BreakTimeOngoing" />
@@ -130,9 +140,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<BreakTimeType?>(BreakTimeTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<BreakTimeType?>(JsonSerializer.Deserialize<BreakTimeType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "start":
                             start = new Option<DateTimeOffset?>(JsonSerializer.Deserialize<DateTimeOffset>(ref utf8JsonReader, jsonSerializerOptions));
@@ -144,16 +152,16 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeOngoing.", nameof(type));
+                throw new JsonException("Property is required for class BreakTimeOngoing: type.");
 
             if (!start.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeOngoing.", nameof(start));
+                throw new JsonException("Property is required for class BreakTimeOngoing: start.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class BreakTimeOngoing.");
+                throw new JsonException("Property is not nullable for class BreakTimeOngoing: type.");
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class BreakTimeOngoing.");
+                throw new JsonException("Property is not nullable for class BreakTimeOngoing: start.");
 
             return new BreakTimeOngoing(type.Value!.Value!, start.Value!.Value!);
         }
@@ -164,7 +172,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeOngoing"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, BreakTimeOngoing breakTimeOngoing, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -179,7 +186,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeOngoing"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, BreakTimeOngoing breakTimeOngoing, JsonSerializerOptions jsonSerializerOptions)
         {
             var typeRawValue = BreakTimeTypeValueConverter.ToJsonValue(breakTimeOngoing.Type);

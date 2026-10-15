@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { DurationType } from './DurationType';
 import {
     DurationTypeFromJSON,
@@ -50,75 +50,51 @@ export interface WorkingTimeCreate {
     /**
      * For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `start` must be midnight (00:00) and on the same day as `end`. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof WorkingTimeCreate
      */
     start: Date;
     /**
      * For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `end` must be midnight (00:00) and on the same day as `start`. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof WorkingTimeCreate
      */
     end?: Date | null;
     /**
      * 
-     * @type {Array<BreakTimeUpdate>}
-     * @memberof WorkingTimeCreate
      */
     breakTimes?: Array<BreakTimeUpdate>;
     /**
      * Must be specified for WorkingTimeTypes with `edit_unit` `days` or `half_days` only
-     * @type {DurationType}
-     * @memberof WorkingTimeCreate
      */
     durationType?: DurationType | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeCreate
      */
     changed: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeCreate
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeCreate
      */
     workingTimeTypeId: string;
     /**
      * 
-     * @type {WorkingTimeStatus}
-     * @memberof WorkingTimeCreate
      */
     status: WorkingTimeStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof WorkingTimeCreate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeCreate
      */
     userId: string;
     /**
      * 
-     * @type {LocationCreate}
-     * @memberof WorkingTimeCreate
      */
     startLocation?: LocationCreate | null;
     /**
      * 
-     * @type {LocationCreate}
-     * @memberof WorkingTimeCreate
      */
     endLocation?: LocationCreate | null;
 }
@@ -131,9 +107,9 @@ export interface WorkingTimeCreate {
 export function instanceOfWorkingTimeCreate(value: object): value is WorkingTimeCreate {
     if (!('start' in value) || value['start'] === undefined) return false;
     if (!('changed' in value) || value['changed'] === undefined) return false;
-    if (!('workingTimeTypeId' in value) || value['workingTimeTypeId'] === undefined) return false;
+    if ((!('workingTimeTypeId' in (value as Record<string, any>)) && !('working_time_type_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['workingTimeTypeId'] === undefined && (value as Record<string, any>)['working_time_type_id'] === undefined)) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('userId' in (value as Record<string, any>)) && !('user_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['userId'] === undefined && (value as Record<string, any>)['user_id'] === undefined)) return false;
     return true;
 }
 
@@ -147,18 +123,18 @@ export function WorkingTimeCreateFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'start': (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': (json['start'] == null ? json['start'] : parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'breakTimes': json['break_times'] == null ? undefined : ((json['break_times'] as Array<any>).map(BreakTimeUpdateFromJSON)),
-        'durationType': json['duration_type'] == null ? undefined : DurationTypeFromJSON(json['duration_type']),
+        'durationType': json['duration_type'] === undefined ? undefined : json['duration_type'] === null ? null : DurationTypeFromJSON(json['duration_type']),
         'changed': json['changed'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'workingTimeTypeId': json['working_time_type_id'],
         'status': WorkingTimeStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
         'userId': json['user_id'],
-        'startLocation': json['start_location'] == null ? undefined : LocationCreateFromJSON(json['start_location']),
-        'endLocation': json['end_location'] == null ? undefined : LocationCreateFromJSON(json['end_location']),
+        'startLocation': json['start_location'] === undefined ? undefined : json['start_location'] === null ? null : LocationCreateFromJSON(json['start_location']),
+        'endLocation': json['end_location'] === undefined ? undefined : json['end_location'] === null ? null : LocationCreateFromJSON(json['end_location']),
     };
 }
 
@@ -173,8 +149,8 @@ export function WorkingTimeCreateToJSONTyped(value?: WorkingTimeCreate | null, i
 
     return {
         
-        'start': value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'break_times': value['breakTimes'] == null ? undefined : ((value['breakTimes'] as Array<any>).map(BreakTimeUpdateToJSON)),
         'duration_type': DurationTypeToJSON(value['durationType']),
         'changed': value['changed'],

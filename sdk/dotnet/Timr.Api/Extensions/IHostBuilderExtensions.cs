@@ -26,13 +26,13 @@ namespace Timr.Api.Extensions
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="options"></param>
-        public static IHostBuilder ConfigureTimrApiClient(this IHostBuilder builder, Action<HostBuilderContext, IServiceCollection, HostConfiguration> options)
+        public static IHostBuilder ConfigureTimrApiClient(this IHostBuilder builder, Action<HostBuilderContext, HostConfiguration>? options = null)
         {
             builder.ConfigureServices((context, services) => 
             {
                 HostConfiguration config = new HostConfiguration(services);
 
-                options(context, services, config);
+                options?.Invoke(context, config);
 
                 IServiceCollectionExtensions.AddTimrApiClient(services, config);
             });

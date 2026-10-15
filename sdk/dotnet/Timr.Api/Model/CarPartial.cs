@@ -105,8 +105,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="CarPartial" />
     /// </summary>
-    public class CarPartialJsonConverter : JsonConverter<CarPartial>
+    public partial class CarPartialJsonConverter : JsonConverter<CarPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CarPartialJsonConverter" /> class.
+        /// </summary>
+        public CarPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="CarPartial" />
         /// </summary>
@@ -163,25 +173,25 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class CarPartial.", nameof(id));
+                throw new JsonException("Property is required for class CarPartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class CarPartial.", nameof(name));
+                throw new JsonException("Property is required for class CarPartial: name.");
 
             if (!plate.IsSet)
-                throw new ArgumentException("Property is required for class CarPartial.", nameof(plate));
+                throw new JsonException("Property is required for class CarPartial: plate.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class CarPartial.", nameof(externalId));
+                throw new JsonException("Property is required for class CarPartial: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class CarPartial.");
+                throw new JsonException("Property is not nullable for class CarPartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class CarPartial.");
+                throw new JsonException("Property is not nullable for class CarPartial: name.");
 
             if (plate.IsSet && plate.Value == null)
-                throw new ArgumentNullException(nameof(plate), "Property is not nullable for class CarPartial.");
+                throw new JsonException("Property is not nullable for class CarPartial: plate.");
 
             return new CarPartial(id.Value!, name.Value!, plate.Value!, externalId.Value!);
         }
@@ -192,7 +202,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, CarPartial carPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -207,18 +216,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, CarPartial carPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (carPartial.Id == null)
-                throw new ArgumentNullException(nameof(carPartial.Id), "Property is required for class CarPartial.");
-
-            if (carPartial.Name == null)
-                throw new ArgumentNullException(nameof(carPartial.Name), "Property is required for class CarPartial.");
-
-            if (carPartial.Plate == null)
-                throw new ArgumentNullException(nameof(carPartial.Plate), "Property is required for class CarPartial.");
-
             writer.WriteString("id", carPartial.Id);
 
             writer.WriteString("name", carPartial.Name);

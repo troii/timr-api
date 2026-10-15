@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { TaskPartial } from './TaskPartial';
 import {
     TaskPartialFromJSON,
@@ -43,182 +43,122 @@ import {
 export interface Task {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof Task
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof Task
      */
     name: string;
     /**
      * Full path of the entry within its hierarchy, including its own name.
-     * @type {string}
-     * @memberof Task
      */
     breadcrumbs: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof Task
      */
     externalId: string | null;
     /**
      * 
-     * @type {TaskPartial}
-     * @memberof Task
      */
     parentTask: TaskPartial | null;
     /**
      * 
-     * @type {string}
-     * @memberof Task
      */
     description: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof Task
      */
     descriptionExternal: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof Task
      */
     bookable: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof Task
      */
     billable: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof Task
      */
     projectTimeNotesRequired: boolean;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof Task
      */
     startDate: Date | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof Task
      */
     endDate: Date | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof Task
      */
     lockDate?: Date | null;
     /**
      * time of day (ISO-8601)
-     * @type {string}
-     * @memberof Task
      */
     earliestStartTime?: string | null;
     /**
      * time of day (ISO-8601)
-     * @type {string}
-     * @memberof Task
      */
     latestEndTime?: string | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof Task
      */
     activeFrom: Date | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof Task
      */
     activeTo: Date | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof Task
      */
     budgetInherited?: boolean;
     /**
      * 
-     * @type {BudgetPlanningType}
-     * @memberof Task
      */
     budgetPlanningType?: BudgetPlanningType;
     /**
      * 
-     * @type {number}
-     * @memberof Task
      */
     budgetHoursPlanned?: number | null;
     /**
      * 
-     * @type {number}
-     * @memberof Task
      */
     budgetHourlyRate?: number | null;
     /**
      * 
-     * @type {number}
-     * @memberof Task
      */
     budgetPlanned?: number | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof Task
      */
     budgetIncludeNonBillableProjectTimes?: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof Task
      */
     locationInherited?: boolean;
     /**
      * 
-     * @type {TaskLocation}
-     * @memberof Task
      */
     location?: TaskLocation | null;
     /**
      * 
-     * @type {number}
-     * @memberof Task
      */
     locationRestrictionRadiusMeters?: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof Task
      */
     customField1: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof Task
      */
     customField2: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof Task
      */
     customField3: string | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Task
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -232,20 +172,20 @@ export function instanceOfTask(value: object): value is Task {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('breadcrumbs' in value) || value['breadcrumbs'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
-    if (!('parentTask' in value) || value['parentTask'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
+    if ((!('parentTask' in (value as Record<string, any>)) && !('parent_task' in (value as Record<string, any>))) || ((value as Record<string, any>)['parentTask'] === undefined && (value as Record<string, any>)['parent_task'] === undefined)) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('descriptionExternal' in value) || value['descriptionExternal'] === undefined) return false;
+    if ((!('descriptionExternal' in (value as Record<string, any>)) && !('description_external' in (value as Record<string, any>))) || ((value as Record<string, any>)['descriptionExternal'] === undefined && (value as Record<string, any>)['description_external'] === undefined)) return false;
     if (!('bookable' in value) || value['bookable'] === undefined) return false;
     if (!('billable' in value) || value['billable'] === undefined) return false;
-    if (!('projectTimeNotesRequired' in value) || value['projectTimeNotesRequired'] === undefined) return false;
-    if (!('startDate' in value) || value['startDate'] === undefined) return false;
-    if (!('endDate' in value) || value['endDate'] === undefined) return false;
-    if (!('activeFrom' in value) || value['activeFrom'] === undefined) return false;
-    if (!('activeTo' in value) || value['activeTo'] === undefined) return false;
-    if (!('customField1' in value) || value['customField1'] === undefined) return false;
-    if (!('customField2' in value) || value['customField2'] === undefined) return false;
-    if (!('customField3' in value) || value['customField3'] === undefined) return false;
+    if ((!('projectTimeNotesRequired' in (value as Record<string, any>)) && !('project_time_notes_required' in (value as Record<string, any>))) || ((value as Record<string, any>)['projectTimeNotesRequired'] === undefined && (value as Record<string, any>)['project_time_notes_required'] === undefined)) return false;
+    if ((!('startDate' in (value as Record<string, any>)) && !('start_date' in (value as Record<string, any>))) || ((value as Record<string, any>)['startDate'] === undefined && (value as Record<string, any>)['start_date'] === undefined)) return false;
+    if ((!('endDate' in (value as Record<string, any>)) && !('end_date' in (value as Record<string, any>))) || ((value as Record<string, any>)['endDate'] === undefined && (value as Record<string, any>)['end_date'] === undefined)) return false;
+    if ((!('activeFrom' in (value as Record<string, any>)) && !('active_from' in (value as Record<string, any>))) || ((value as Record<string, any>)['activeFrom'] === undefined && (value as Record<string, any>)['active_from'] === undefined)) return false;
+    if ((!('activeTo' in (value as Record<string, any>)) && !('active_to' in (value as Record<string, any>))) || ((value as Record<string, any>)['activeTo'] === undefined && (value as Record<string, any>)['active_to'] === undefined)) return false;
+    if ((!('customField1' in (value as Record<string, any>)) && !('custom_field_1' in (value as Record<string, any>))) || ((value as Record<string, any>)['customField1'] === undefined && (value as Record<string, any>)['custom_field_1'] === undefined)) return false;
+    if ((!('customField2' in (value as Record<string, any>)) && !('custom_field_2' in (value as Record<string, any>))) || ((value as Record<string, any>)['customField2'] === undefined && (value as Record<string, any>)['custom_field_2'] === undefined)) return false;
+    if ((!('customField3' in (value as Record<string, any>)) && !('custom_field_3' in (value as Record<string, any>))) || ((value as Record<string, any>)['customField3'] === undefined && (value as Record<string, any>)['custom_field_3'] === undefined)) return false;
     return true;
 }
 
@@ -269,26 +209,26 @@ export function TaskFromJSONTyped(json: any, ignoreDiscriminator: boolean): Task
         'bookable': json['bookable'],
         'billable': json['billable'],
         'projectTimeNotesRequired': json['project_time_notes_required'],
-        'startDate': (json['start_date'] == null ? null : new Date(json['start_date'])),
-        'endDate': (json['end_date'] == null ? null : new Date(json['end_date'])),
-        'lockDate': json['lock_date'] == null ? undefined : (new Date(json['lock_date'])),
-        'earliestStartTime': json['earliest_start_time'] == null ? undefined : json['earliest_start_time'],
-        'latestEndTime': json['latest_end_time'] == null ? undefined : json['latest_end_time'],
-        'activeFrom': (json['active_from'] == null ? null : new Date(json['active_from'])),
-        'activeTo': (json['active_to'] == null ? null : new Date(json['active_to'])),
+        'startDate': (json['start_date'] == null ? null : parseDate(json['start_date'])),
+        'endDate': (json['end_date'] == null ? null : parseDate(json['end_date'])),
+        'lockDate': json['lock_date'] === undefined ? undefined : json['lock_date'] === null ? null : (parseDate(json['lock_date'])),
+        'earliestStartTime': json['earliest_start_time'] === undefined ? undefined : json['earliest_start_time'] === null ? null : json['earliest_start_time'],
+        'latestEndTime': json['latest_end_time'] === undefined ? undefined : json['latest_end_time'] === null ? null : json['latest_end_time'],
+        'activeFrom': (json['active_from'] == null ? null : parseDate(json['active_from'])),
+        'activeTo': (json['active_to'] == null ? null : parseDate(json['active_to'])),
         'budgetInherited': json['budget_inherited'] == null ? undefined : json['budget_inherited'],
         'budgetPlanningType': json['budget_planning_type'] == null ? undefined : BudgetPlanningTypeFromJSON(json['budget_planning_type']),
-        'budgetHoursPlanned': json['budget_hours_planned'] == null ? undefined : json['budget_hours_planned'],
-        'budgetHourlyRate': json['budget_hourly_rate'] == null ? undefined : json['budget_hourly_rate'],
-        'budgetPlanned': json['budget_planned'] == null ? undefined : json['budget_planned'],
+        'budgetHoursPlanned': json['budget_hours_planned'] === undefined ? undefined : json['budget_hours_planned'] === null ? null : json['budget_hours_planned'],
+        'budgetHourlyRate': json['budget_hourly_rate'] === undefined ? undefined : json['budget_hourly_rate'] === null ? null : json['budget_hourly_rate'],
+        'budgetPlanned': json['budget_planned'] === undefined ? undefined : json['budget_planned'] === null ? null : json['budget_planned'],
         'budgetIncludeNonBillableProjectTimes': json['budget_include_non_billable_project_times'] == null ? undefined : json['budget_include_non_billable_project_times'],
         'locationInherited': json['location_inherited'] == null ? undefined : json['location_inherited'],
-        'location': json['location'] == null ? undefined : TaskLocationFromJSON(json['location']),
-        'locationRestrictionRadiusMeters': json['location_restriction_radius_meters'] == null ? undefined : json['location_restriction_radius_meters'],
+        'location': json['location'] === undefined ? undefined : json['location'] === null ? null : TaskLocationFromJSON(json['location']),
+        'locationRestrictionRadiusMeters': json['location_restriction_radius_meters'] === undefined ? undefined : json['location_restriction_radius_meters'] === null ? null : json['location_restriction_radius_meters'],
         'customField1': json['custom_field_1'],
         'customField2': json['custom_field_2'],
         'customField3': json['custom_field_3'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -313,13 +253,13 @@ export function TaskToJSONTyped(value?: Task | null, ignoreDiscriminator: boolea
         'bookable': value['bookable'],
         'billable': value['billable'],
         'project_time_notes_required': value['projectTimeNotesRequired'],
-        'start_date': value['startDate'] == null ? value['startDate'] : value['startDate'].toISOString().substring(0,10),
-        'end_date': value['endDate'] == null ? value['endDate'] : value['endDate'].toISOString().substring(0,10),
-        'lock_date': value['lockDate'] == null ? value['lockDate'] : value['lockDate'].toISOString().substring(0,10),
+        'start_date': value['startDate'] == null ? value['startDate'] : serializeDate(value['startDate']),
+        'end_date': value['endDate'] == null ? value['endDate'] : serializeDate(value['endDate']),
+        'lock_date': value['lockDate'] == null ? value['lockDate'] : serializeDate(value['lockDate']),
         'earliest_start_time': value['earliestStartTime'],
         'latest_end_time': value['latestEndTime'],
-        'active_from': value['activeFrom'] == null ? value['activeFrom'] : value['activeFrom'].toISOString().substring(0,10),
-        'active_to': value['activeTo'] == null ? value['activeTo'] : value['activeTo'].toISOString().substring(0,10),
+        'active_from': value['activeFrom'] == null ? value['activeFrom'] : serializeDate(value['activeFrom']),
+        'active_to': value['activeTo'] == null ? value['activeTo'] : serializeDate(value['activeTo']),
         'budget_inherited': value['budgetInherited'],
         'budget_planning_type': BudgetPlanningTypeToJSON(value['budgetPlanningType']),
         'budget_hours_planned': value['budgetHoursPlanned'],

@@ -28,14 +28,10 @@ import {
 export interface WorkScheduleModelsPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof WorkScheduleModelsPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<WorkScheduleModel>}
-     * @memberof WorkScheduleModelsPage
      */
     data: Array<WorkScheduleModel>;
 }
@@ -44,7 +40,7 @@ export interface WorkScheduleModelsPage {
  * Check if a given object implements the WorkScheduleModelsPage interface.
  */
 export function instanceOfWorkScheduleModelsPage(value: object): value is WorkScheduleModelsPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

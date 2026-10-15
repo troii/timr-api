@@ -136,6 +136,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override DeletedEntrySortColumn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             DeletedEntrySortColumn? result = rawValue == null
@@ -156,7 +159,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, DeletedEntrySortColumn? deletedEntrySortColumn, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(deletedEntrySortColumn.HasValue ? DeletedEntrySortColumnValueConverter.ToJsonValue(deletedEntrySortColumn.Value).ToString() : "null");
+            if (deletedEntrySortColumn.HasValue)
+                writer.WriteStringValue(DeletedEntrySortColumnValueConverter.ToJsonValue(deletedEntrySortColumn.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

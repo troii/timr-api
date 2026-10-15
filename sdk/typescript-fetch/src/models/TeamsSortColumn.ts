@@ -18,7 +18,7 @@
  */
 export const TeamsSortColumn = {
     Breadcrumbs: 'breadcrumbs',
-    Name: 'name'
+    Name: 'name',
 } as const;
 export type TeamsSortColumn = typeof TeamsSortColumn[keyof typeof TeamsSortColumn];
 

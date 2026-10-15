@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.*;
   BreakTimeAutomatic.JSON_PROPERTY_START,
   BreakTimeAutomatic.JSON_PROPERTY_END
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class BreakTimeAutomatic extends BreakTimeBase implements BreakTime {
   public static final String JSON_PROPERTY_DURATION_MINUTES = "duration_minutes";
   @jakarta.annotation.Nonnull

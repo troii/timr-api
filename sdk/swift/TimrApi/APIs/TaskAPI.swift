@@ -103,7 +103,7 @@ open class TaskAPI {
         let localVariableParameters: [String: Any]? = nil
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
-        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        let localVariableQueryParameters: [String: (wrappedValue: Any?, isExplode: Bool)] = [
             "parent_task_id": (wrappedValue: parentTaskId?.encodeToJSON(), isExplode: true),
             "traverse_task_tree": (wrappedValue: traverseTaskTree?.encodeToJSON(), isExplode: true),
             "name": (wrappedValue: name?.encodeToJSON(), isExplode: true),
@@ -114,7 +114,8 @@ open class TaskAPI {
             "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
             "sort_direction": (wrappedValue: sortDirection?.encodeToJSON(), isExplode: true),
             "sort_by": (wrappedValue: sortBy?.encodeToJSON(), isExplode: true),
-        ])
+        ]
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems(localVariableQueryParameters)
 
         let localVariableNillableHeaders: [String: Any?] = [
             :
@@ -181,7 +182,7 @@ open class TaskAPI {
         let localVariableParameters: [String: Any]? = nil
 
         var localVariableUrlComponents = URLComponents(string: localVariableURLString)
-        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems([
+        let localVariableQueryParameters: [String: (wrappedValue: Any?, isExplode: Bool)] = [
             "parent_task_id": (wrappedValue: parentTaskId?.encodeToJSON(), isExplode: true),
             "traverse_task_tree": (wrappedValue: traverseTaskTree?.encodeToJSON(), isExplode: true),
             "name": (wrappedValue: name?.encodeToJSON(), isExplode: true),
@@ -192,7 +193,8 @@ open class TaskAPI {
             "limit": (wrappedValue: limit?.encodeToJSON(), isExplode: true),
             "sort_direction": (wrappedValue: sortDirection?.encodeToJSON(), isExplode: true),
             "sort_by": (wrappedValue: sortBy?.encodeToJSON(), isExplode: true),
-        ])
+        ]
+        localVariableUrlComponents?.queryItems = APIHelper.mapValuesToQueryItems(localVariableQueryParameters)
 
         let localVariableNillableHeaders: [String: Any?] = [
             :

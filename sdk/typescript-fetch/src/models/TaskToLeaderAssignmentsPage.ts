@@ -28,14 +28,10 @@ import {
 export interface TaskToLeaderAssignmentsPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof TaskToLeaderAssignmentsPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<TaskToLeaderAssignment>}
-     * @memberof TaskToLeaderAssignmentsPage
      */
     data: Array<TaskToLeaderAssignment>;
 }
@@ -44,7 +40,7 @@ export interface TaskToLeaderAssignmentsPage {
  * Check if a given object implements the TaskToLeaderAssignmentsPage interface.
  */
 export function instanceOfTaskToLeaderAssignmentsPage(value: object): value is TaskToLeaderAssignmentsPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

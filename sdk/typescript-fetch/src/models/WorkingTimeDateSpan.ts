@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { WorkingTimeTypePartial } from './WorkingTimeTypePartial';
 import {
     WorkingTimeTypePartialFromJSON,
@@ -36,76 +36,52 @@ import {
 export interface WorkingTimeDateSpan {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkingTimeDateSpan
      */
     id: string;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTimeDateSpan
      */
     start: Date;
     /**
      * Marks the first day of the working time date span as a half day.
-     * @type {boolean}
-     * @memberof WorkingTimeDateSpan
      */
     startHalfDay: boolean;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTimeDateSpan
      */
     end: Date;
     /**
      * Marks the last day of the working time date span as a half day.
-     * @type {boolean}
-     * @memberof WorkingTimeDateSpan
      */
     endHalfDay: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpan
      */
     notes: string | null;
     /**
      * 
-     * @type {UserPartial}
-     * @memberof WorkingTimeDateSpan
      */
     user: UserPartial;
     /**
      * 
-     * @type {WorkingTimeTypePartial}
-     * @memberof WorkingTimeDateSpan
      */
     workingTimeType: WorkingTimeTypePartial;
     /**
      * 
-     * @type {UserPartial}
-     * @memberof WorkingTimeDateSpan
      */
     substitute?: UserPartial | null;
     /**
      * Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof WorkingTimeDateSpan
      */
     lastModified: Date;
     /**
      * Read-only. The User who last modified the entry, or null if the change was not made in a user context.
      * 
-     * @type {UserPartial}
-     * @memberof WorkingTimeDateSpan
      */
     lastModifiedBy: UserPartial | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof WorkingTimeDateSpan
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -116,14 +92,14 @@ export interface WorkingTimeDateSpan {
 export function instanceOfWorkingTimeDateSpan(value: object): value is WorkingTimeDateSpan {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('start' in value) || value['start'] === undefined) return false;
-    if (!('startHalfDay' in value) || value['startHalfDay'] === undefined) return false;
+    if ((!('startHalfDay' in (value as Record<string, any>)) && !('start_half_day' in (value as Record<string, any>))) || ((value as Record<string, any>)['startHalfDay'] === undefined && (value as Record<string, any>)['start_half_day'] === undefined)) return false;
     if (!('end' in value) || value['end'] === undefined) return false;
-    if (!('endHalfDay' in value) || value['endHalfDay'] === undefined) return false;
+    if ((!('endHalfDay' in (value as Record<string, any>)) && !('end_half_day' in (value as Record<string, any>))) || ((value as Record<string, any>)['endHalfDay'] === undefined && (value as Record<string, any>)['end_half_day'] === undefined)) return false;
     if (!('notes' in value) || value['notes'] === undefined) return false;
     if (!('user' in value) || value['user'] === undefined) return false;
-    if (!('workingTimeType' in value) || value['workingTimeType'] === undefined) return false;
-    if (!('lastModified' in value) || value['lastModified'] === undefined) return false;
-    if (!('lastModifiedBy' in value) || value['lastModifiedBy'] === undefined) return false;
+    if ((!('workingTimeType' in (value as Record<string, any>)) && !('working_time_type' in (value as Record<string, any>))) || ((value as Record<string, any>)['workingTimeType'] === undefined && (value as Record<string, any>)['working_time_type'] === undefined)) return false;
+    if ((!('lastModified' in (value as Record<string, any>)) && !('last_modified' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModified'] === undefined && (value as Record<string, any>)['last_modified'] === undefined)) return false;
+    if ((!('lastModifiedBy' in (value as Record<string, any>)) && !('last_modified_by' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModifiedBy'] === undefined && (value as Record<string, any>)['last_modified_by'] === undefined)) return false;
     return true;
 }
 
@@ -138,17 +114,17 @@ export function WorkingTimeDateSpanFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'id': json['id'],
-        'start': (new Date(json['start'])),
+        'start': (json['start'] == null ? json['start'] : parseDate(json['start'])),
         'startHalfDay': json['start_half_day'],
-        'end': (new Date(json['end'])),
+        'end': (json['end'] == null ? json['end'] : parseDate(json['end'])),
         'endHalfDay': json['end_half_day'],
         'notes': json['notes'],
         'user': UserPartialFromJSON(json['user']),
         'workingTimeType': WorkingTimeTypePartialFromJSON(json['working_time_type']),
-        'substitute': json['substitute'] == null ? undefined : UserPartialFromJSON(json['substitute']),
-        'lastModified': (new Date(json['last_modified'])),
+        'substitute': json['substitute'] === undefined ? undefined : json['substitute'] === null ? null : UserPartialFromJSON(json['substitute']),
+        'lastModified': (json['last_modified'] == null ? json['last_modified'] : parseDateTime(json['last_modified'])),
         'lastModifiedBy': UserPartialFromJSON(json['last_modified_by']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -164,15 +140,15 @@ export function WorkingTimeDateSpanToJSONTyped(value?: WorkingTimeDateSpan | nul
     return {
         
         'id': value['id'],
-        'start': value['start'].toISOString().substring(0,10),
+        'start': value['start'] == null ? value['start'] : serializeDate(value['start']),
         'start_half_day': value['startHalfDay'],
-        'end': value['end'].toISOString().substring(0,10),
+        'end': value['end'] == null ? value['end'] : serializeDate(value['end']),
         'end_half_day': value['endHalfDay'],
         'notes': value['notes'],
         'user': UserPartialToJSON(value['user']),
         'working_time_type': WorkingTimeTypePartialToJSON(value['workingTimeType']),
         'substitute': UserPartialToJSON(value['substitute']),
-        'last_modified': value['lastModified'].toISOString(),
+        'last_modified': value['lastModified'] == null ? value['lastModified'] : serializeDateTime(value['lastModified']),
         'last_modified_by': UserPartialToJSON(value['lastModifiedBy']),
         'metadata': value['metadata'],
     };

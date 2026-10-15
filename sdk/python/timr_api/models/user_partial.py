@@ -32,7 +32,7 @@ class UserPartial(BaseModel):
     firstname: Optional[StrictStr]
     lastname: Optional[StrictStr]
     fullname: Optional[StrictStr]
-    email: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(description="Email address must be either valid or null.")
+    email: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(description="Email address must be either valid or null.", json_schema_extra={"examples": ["user@example.com"]})
     employee_number: Optional[StrictStr]
     external_id: Optional[StrictStr] = Field(description="Identifier of the corresponding object in an external system. Set and owned by the client.")
     __properties: ClassVar[List[str]] = ["id", "firstname", "lastname", "fullname", "email", "employee_number", "external_id"]

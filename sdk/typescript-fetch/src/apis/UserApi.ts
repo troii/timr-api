@@ -63,14 +63,32 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateUserRequest {
+    /**
+     * 
+     */
     userCreate: UserCreate;
 }
 
 export interface FetchUserTeamLeadershipsRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: TeamsSortColumn;
 }
 
@@ -80,10 +98,25 @@ export type FetchUserTeamLeadershipsQuery = Pick<
 >;
 
 export interface FetchUserTeamMembershipsRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: TeamsSortColumn;
 }
 
@@ -93,16 +126,49 @@ export type FetchUserTeamMembershipsQuery = Pick<
 >;
 
 export interface FetchUsersRequest {
+    /**
+     * Only return Users whose name contains this text.
+     */
     name?: string;
+    /**
+     * Only return Users whose entry date is on or after this day.
+     */
     entryDateFrom?: Date;
+    /**
+     * Only return Users whose entry date is on or before this day.
+     */
     entryDateTo?: Date;
+    /**
+     * Only return Users whose resignation date is on or after this day.
+     */
     resignDateFrom?: Date;
+    /**
+     * Only return Users whose resignation date is on or before this day.
+     */
     resignDateTo?: Date;
+    /**
+     * Only return Users who have resigned (true) or have not resigned (false).
+     */
     resigned?: boolean;
+    /**
+     * Only return Users with this employee number.
+     */
     employeeNumber?: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: UsersSortColumn;
 }
 
@@ -112,15 +178,27 @@ export type FetchUsersQuery = Pick<
 >;
 
 export interface GetUserRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
 }
 
 export interface GetUserWorkScheduleModelRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
 }
 
 export interface UpdateUserRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
+    /**
+     * 
+     */
     userUpdate: UserUpdate;
 }
 
@@ -345,19 +423,19 @@ export class UserApi extends runtime.BaseAPI {
         }
 
         if (requestParameters['entryDateFrom'] != null) {
-            queryParameters['entry_date_from'] = (requestParameters['entryDateFrom'] as any).toISOString().substring(0,10);
+            queryParameters['entry_date_from'] = runtime.serializeDate(requestParameters['entryDateFrom'] as any);
         }
 
         if (requestParameters['entryDateTo'] != null) {
-            queryParameters['entry_date_to'] = (requestParameters['entryDateTo'] as any).toISOString().substring(0,10);
+            queryParameters['entry_date_to'] = runtime.serializeDate(requestParameters['entryDateTo'] as any);
         }
 
         if (requestParameters['resignDateFrom'] != null) {
-            queryParameters['resign_date_from'] = (requestParameters['resignDateFrom'] as any).toISOString().substring(0,10);
+            queryParameters['resign_date_from'] = runtime.serializeDate(requestParameters['resignDateFrom'] as any);
         }
 
         if (requestParameters['resignDateTo'] != null) {
-            queryParameters['resign_date_to'] = (requestParameters['resignDateTo'] as any).toISOString().substring(0,10);
+            queryParameters['resign_date_to'] = runtime.serializeDate(requestParameters['resignDateTo'] as any);
         }
 
         if (requestParameters['resigned'] != null) {

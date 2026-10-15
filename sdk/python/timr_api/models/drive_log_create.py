@@ -30,8 +30,8 @@ class DriveLogCreate(BaseModel):
     """
     DriveLogCreate
     """ # noqa: E501
-    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)")
+    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     changed: StrictBool
     start_mileage: StrictInt
     end_mileage: Optional[StrictInt] = None

@@ -206,6 +206,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override WorkingTimeTypeCategory? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             WorkingTimeTypeCategory? result = rawValue == null
@@ -226,7 +229,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, WorkingTimeTypeCategory? workingTimeTypeCategory, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(workingTimeTypeCategory.HasValue ? WorkingTimeTypeCategoryValueConverter.ToJsonValue(workingTimeTypeCategory.Value).ToString() : "null");
+            if (workingTimeTypeCategory.HasValue)
+                writer.WriteStringValue(WorkingTimeTypeCategoryValueConverter.ToJsonValue(workingTimeTypeCategory.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

@@ -87,8 +87,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkScheduleModelPartial" />
     /// </summary>
-    public class WorkScheduleModelPartialJsonConverter : JsonConverter<WorkScheduleModelPartial>
+    public partial class WorkScheduleModelPartialJsonConverter : JsonConverter<WorkScheduleModelPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkScheduleModelPartialJsonConverter" /> class.
+        /// </summary>
+        public WorkScheduleModelPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkScheduleModelPartial" />
         /// </summary>
@@ -137,16 +147,16 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelPartial.", nameof(id));
+                throw new JsonException("Property is required for class WorkScheduleModelPartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelPartial.", nameof(name));
+                throw new JsonException("Property is required for class WorkScheduleModelPartial: name.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkScheduleModelPartial.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelPartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class WorkScheduleModelPartial.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelPartial: name.");
 
             return new WorkScheduleModelPartial(id.Value!, name.Value!);
         }
@@ -157,7 +167,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModelPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkScheduleModelPartial workScheduleModelPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -172,15 +181,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModelPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkScheduleModelPartial workScheduleModelPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workScheduleModelPartial.Id == null)
-                throw new ArgumentNullException(nameof(workScheduleModelPartial.Id), "Property is required for class WorkScheduleModelPartial.");
-
-            if (workScheduleModelPartial.Name == null)
-                throw new ArgumentNullException(nameof(workScheduleModelPartial.Name), "Property is required for class WorkScheduleModelPartial.");
-
             writer.WriteString("id", workScheduleModelPartial.Id);
 
             writer.WriteString("name", workScheduleModelPartial.Name);

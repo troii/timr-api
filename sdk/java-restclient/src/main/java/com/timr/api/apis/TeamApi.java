@@ -35,7 +35,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TeamApi {
     private ApiClient apiClient;
 
@@ -84,7 +84,7 @@ public class TeamApi {
         pathParams.put("team_id", teamId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -99,7 +99,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{team_id}/leaders/{user_id}", HttpMethod.PUT, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{team_id}/leaders/{user_id}", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -115,7 +115,7 @@ public class TeamApi {
      * @return UserPartial
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public UserPartial addTeamLeader( String teamId,  String userId) throws RestClientResponseException {
+    public UserPartial addTeamLeader(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return addTeamLeaderRequestCreation(teamId, userId).body(localVarReturnType);
     }
@@ -133,7 +133,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> addTeamLeaderWithHttpInfo( String teamId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<UserPartial> addTeamLeaderWithHttpInfo(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return addTeamLeaderRequestCreation(teamId, userId).toEntity(localVarReturnType);
     }
@@ -184,7 +184,7 @@ public class TeamApi {
         pathParams.put("team_id", teamId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -199,7 +199,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{team_id}/members/{user_id}", HttpMethod.PUT, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{team_id}/members/{user_id}", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -215,7 +215,7 @@ public class TeamApi {
      * @return UserPartial
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public UserPartial addTeamMember( String teamId,  String userId) throws RestClientResponseException {
+    public UserPartial addTeamMember(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return addTeamMemberRequestCreation(teamId, userId).body(localVarReturnType);
     }
@@ -233,7 +233,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> addTeamMemberWithHttpInfo( String teamId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<UserPartial> addTeamMemberWithHttpInfo(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return addTeamMemberRequestCreation(teamId, userId).toEntity(localVarReturnType);
     }
@@ -275,7 +275,7 @@ public class TeamApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -292,7 +292,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -306,7 +306,7 @@ public class TeamApi {
      * @return Team
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Team createTeam( TeamCreate teamCreate) throws RestClientResponseException {
+    public Team createTeam(TeamCreate teamCreate) throws RestClientResponseException {
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTeamRequestCreation(teamCreate).body(localVarReturnType);
     }
@@ -322,7 +322,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;Team&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Team> createTeamWithHttpInfo( TeamCreate teamCreate) throws RestClientResponseException {
+    public ResponseEntity<Team> createTeamWithHttpInfo(TeamCreate teamCreate) throws RestClientResponseException {
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTeamRequestCreation(teamCreate).toEntity(localVarReturnType);
     }
@@ -363,7 +363,7 @@ public class TeamApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -378,7 +378,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -391,7 +391,7 @@ public class TeamApi {
      * @param id ID of the Team.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteTeam( String id) throws RestClientResponseException {
+    public void deleteTeam(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteTeamRequestCreation(id).body(localVarReturnType);
     }
@@ -406,7 +406,7 @@ public class TeamApi {
      * @param id ID of the Team.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTeamWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteTeamWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteTeamRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -450,15 +450,15 @@ public class TeamApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -470,7 +470,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<UsersPartialPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{id}/leaders", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{id}/leaders", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -486,7 +486,7 @@ public class TeamApi {
      * @return UsersPartialPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public UsersPartialPage fetchTeamLeaders( String id,  String pageToken,  Integer limit,  SortDirection sortDirection,  UsersSortColumn sortBy) throws RestClientResponseException {
+    public UsersPartialPage fetchTeamLeaders(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable UsersSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<UsersPartialPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTeamLeadersRequestCreation(id, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -504,7 +504,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;UsersPartialPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UsersPartialPage> fetchTeamLeadersWithHttpInfo( String id,  String pageToken,  Integer limit,  SortDirection sortDirection,  UsersSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<UsersPartialPage> fetchTeamLeadersWithHttpInfo(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable UsersSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<UsersPartialPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTeamLeadersRequestCreation(id, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -550,15 +550,15 @@ public class TeamApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -570,7 +570,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<UsersPartialPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{id}/members", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{id}/members", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -586,7 +586,7 @@ public class TeamApi {
      * @return UsersPartialPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public UsersPartialPage fetchTeamMembers( String id,  String pageToken,  Integer limit,  SortDirection sortDirection,  UsersSortColumn sortBy) throws RestClientResponseException {
+    public UsersPartialPage fetchTeamMembers(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable UsersSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<UsersPartialPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTeamMembersRequestCreation(id, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -604,7 +604,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;UsersPartialPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UsersPartialPage> fetchTeamMembersWithHttpInfo( String id,  String pageToken,  Integer limit,  SortDirection sortDirection,  UsersSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<UsersPartialPage> fetchTeamMembersWithHttpInfo(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable UsersSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<UsersPartialPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTeamMembersRequestCreation(id, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -644,16 +644,16 @@ public class TeamApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -665,7 +665,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TeamsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -681,7 +681,7 @@ public class TeamApi {
      * @return TeamsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TeamsPage fetchTeams( String name,  String pageToken,  Integer limit,  SortDirection sortDirection,  TeamsSortColumn sortBy) throws RestClientResponseException {
+    public TeamsPage fetchTeams(@Nullable String name, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TeamsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TeamsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTeamsRequestCreation(name, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -699,7 +699,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;TeamsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TeamsPage> fetchTeamsWithHttpInfo( String name,  String pageToken,  Integer limit,  SortDirection sortDirection,  TeamsSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<TeamsPage> fetchTeamsWithHttpInfo(@Nullable String name, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TeamsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TeamsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTeamsRequestCreation(name, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -742,7 +742,7 @@ public class TeamApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -757,7 +757,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -770,7 +770,7 @@ public class TeamApi {
      * @return Team
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Team getTeam( String id) throws RestClientResponseException {
+    public Team getTeam(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTeamRequestCreation(id).body(localVarReturnType);
     }
@@ -785,7 +785,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;Team&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Team> getTeamWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Team> getTeamWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTeamRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -831,7 +831,7 @@ public class TeamApi {
         pathParams.put("team_id", teamId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -846,7 +846,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{team_id}/leaders/{user_id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{team_id}/leaders/{user_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -860,7 +860,7 @@ public class TeamApi {
      * @return UserPartial
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public UserPartial getTeamLeader( String teamId,  String userId) throws RestClientResponseException {
+    public UserPartial getTeamLeader(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTeamLeaderRequestCreation(teamId, userId).body(localVarReturnType);
     }
@@ -876,7 +876,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> getTeamLeaderWithHttpInfo( String teamId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<UserPartial> getTeamLeaderWithHttpInfo(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTeamLeaderRequestCreation(teamId, userId).toEntity(localVarReturnType);
     }
@@ -923,7 +923,7 @@ public class TeamApi {
         pathParams.put("team_id", teamId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -938,7 +938,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{team_id}/members/{user_id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{team_id}/members/{user_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -952,7 +952,7 @@ public class TeamApi {
      * @return UserPartial
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public UserPartial getTeamMember( String teamId,  String userId) throws RestClientResponseException {
+    public UserPartial getTeamMember(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTeamMemberRequestCreation(teamId, userId).body(localVarReturnType);
     }
@@ -968,7 +968,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> getTeamMemberWithHttpInfo( String teamId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<UserPartial> getTeamMemberWithHttpInfo(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<UserPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTeamMemberRequestCreation(teamId, userId).toEntity(localVarReturnType);
     }
@@ -1015,7 +1015,7 @@ public class TeamApi {
         pathParams.put("team_id", teamId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -1030,7 +1030,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{team_id}/leaders/{user_id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{team_id}/leaders/{user_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -1044,7 +1044,7 @@ public class TeamApi {
      * @param userId ID of the User.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void removeTeamLeader( String teamId,  String userId) throws RestClientResponseException {
+    public void removeTeamLeader(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         removeTeamLeaderRequestCreation(teamId, userId).body(localVarReturnType);
     }
@@ -1060,7 +1060,7 @@ public class TeamApi {
      * @param userId ID of the User.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> removeTeamLeaderWithHttpInfo( String teamId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<Void> removeTeamLeaderWithHttpInfo(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return removeTeamLeaderRequestCreation(teamId, userId).toEntity(localVarReturnType);
     }
@@ -1108,7 +1108,7 @@ public class TeamApi {
         pathParams.put("team_id", teamId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -1123,7 +1123,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{team_id}/members/{user_id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{team_id}/members/{user_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -1137,7 +1137,7 @@ public class TeamApi {
      * @param userId ID of the User.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void removeTeamMember( String teamId,  String userId) throws RestClientResponseException {
+    public void removeTeamMember(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         removeTeamMemberRequestCreation(teamId, userId).body(localVarReturnType);
     }
@@ -1153,7 +1153,7 @@ public class TeamApi {
      * @param userId ID of the User.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> removeTeamMemberWithHttpInfo( String teamId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<Void> removeTeamMemberWithHttpInfo(String teamId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return removeTeamMemberRequestCreation(teamId, userId).toEntity(localVarReturnType);
     }
@@ -1203,7 +1203,7 @@ public class TeamApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -1220,7 +1220,7 @@ public class TeamApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/teams/{id}", HttpMethod.PATCH, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/teams/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -1237,7 +1237,7 @@ public class TeamApi {
      * @return Team
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Team updateTeam( String id,  TeamUpdate teamUpdate) throws RestClientResponseException {
+    public Team updateTeam(String id, TeamUpdate teamUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateTeamRequestCreation(id, teamUpdate).body(localVarReturnType);
     }
@@ -1256,7 +1256,7 @@ public class TeamApi {
      * @return ResponseEntity&lt;Team&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Team> updateTeamWithHttpInfo( String id,  TeamUpdate teamUpdate) throws RestClientResponseException {
+    public ResponseEntity<Team> updateTeamWithHttpInfo(String id, TeamUpdate teamUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<Team> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateTeamRequestCreation(id, teamUpdate).toEntity(localVarReturnType);
     }

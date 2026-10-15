@@ -247,17 +247,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DriveLogUpsert" />
     /// </summary>
-    public class DriveLogUpsertJsonConverter : JsonConverter<DriveLogUpsert>
+    public partial class DriveLogUpsertJsonConverter : JsonConverter<DriveLogUpsert>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DriveLogUpsertJsonConverter" /> class.
+        /// </summary>
+        public DriveLogUpsertJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DriveLogUpsert" />
@@ -331,9 +341,7 @@ namespace Timr.Api.Model
                             driveLogCategoryId = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<DriveLogStatus?>(DriveLogStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<DriveLogStatus?>(JsonSerializer.Deserialize<DriveLogStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "metadata":
                             metadata = new Option<Dictionary<string, Object>?>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -345,19 +353,19 @@ namespace Timr.Api.Model
             }
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class DriveLogUpsert.");
+                throw new JsonException("Property is not nullable for class DriveLogUpsert: start.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class DriveLogUpsert.");
+                throw new JsonException("Property is not nullable for class DriveLogUpsert: changed.");
 
             if (startMileage.IsSet && startMileage.Value == null)
-                throw new ArgumentNullException(nameof(startMileage), "Property is not nullable for class DriveLogUpsert.");
+                throw new JsonException("Property is not nullable for class DriveLogUpsert: start_mileage.");
 
             if (driveLogCategoryId.IsSet && driveLogCategoryId.Value == null)
-                throw new ArgumentNullException(nameof(driveLogCategoryId), "Property is not nullable for class DriveLogUpsert.");
+                throw new JsonException("Property is not nullable for class DriveLogUpsert: drive_log_category_id.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class DriveLogUpsert.");
+                throw new JsonException("Property is not nullable for class DriveLogUpsert: status.");
 
             return new DriveLogUpsert(start, end, changed, startMileage, endMileage, route, purpose, visited, driveLogCategoryId, status, metadata);
         }
@@ -368,7 +376,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogUpsert"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DriveLogUpsert driveLogUpsert, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -383,11 +390,22 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogUpsert"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogUpsert driveLogUpsert, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (driveLogUpsert.StartOption.IsSet && driveLogUpsert.Start == null)
+                throw new JsonException("Cannot write null property DriveLogUpsert.Start to non-nullable JSON property 'start'.");
+
+            if (driveLogUpsert.ChangedOption.IsSet && driveLogUpsert.Changed == null)
+                throw new JsonException("Cannot write null property DriveLogUpsert.Changed to non-nullable JSON property 'changed'.");
+
+            if (driveLogUpsert.StartMileageOption.IsSet && driveLogUpsert.StartMileage == null)
+                throw new JsonException("Cannot write null property DriveLogUpsert.StartMileage to non-nullable JSON property 'start_mileage'.");
+
             if (driveLogUpsert.DriveLogCategoryIdOption.IsSet && driveLogUpsert.DriveLogCategoryId == null)
-                throw new ArgumentNullException(nameof(driveLogUpsert.DriveLogCategoryId), "Property is required for class DriveLogUpsert.");
+                throw new JsonException("Cannot write null property DriveLogUpsert.DriveLogCategoryId to non-nullable JSON property 'drive_log_category_id'.");
+
+            if (driveLogUpsert.StatusOption.IsSet && driveLogUpsert.Status == null)
+                throw new JsonException("Cannot write null property DriveLogUpsert.Status to non-nullable JSON property 'status'.");
 
             if (driveLogUpsert.StartOption.IsSet)
                 writer.WriteString("start", driveLogUpsert.StartOption.Value!.Value.ToString(StartFormat));

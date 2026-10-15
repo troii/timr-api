@@ -235,17 +235,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="UserUpdate" />
     /// </summary>
-    public class UserUpdateJsonConverter : JsonConverter<UserUpdate>
+    public partial class UserUpdateJsonConverter : JsonConverter<UserUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserUpdateJsonConverter" /> class.
+        /// </summary>
+        public UserUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize EntryDate
         /// </summary>
-        public static string EntryDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EntryDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ResignDate
         /// </summary>
-        public static string ResignDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ResignDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="UserUpdate" />
@@ -323,7 +333,7 @@ namespace Timr.Api.Model
             }
 
             if (login.IsSet && login.Value == null)
-                throw new ArgumentNullException(nameof(login), "Property is not nullable for class UserUpdate.");
+                throw new JsonException("Property is not nullable for class UserUpdate: login.");
 
             return new UserUpdate(login, firstname, lastname, email, entryDate, resignDate, employeeNumber, externalId, metadata);
         }
@@ -334,7 +344,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="userUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, UserUpdate userUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -349,11 +358,10 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="userUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, UserUpdate userUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             if (userUpdate.LoginOption.IsSet && userUpdate.Login == null)
-                throw new ArgumentNullException(nameof(userUpdate.Login), "Property is required for class UserUpdate.");
+                throw new JsonException("Cannot write null property UserUpdate.Login to non-nullable JSON property 'login'.");
 
             if (userUpdate.LoginOption.IsSet)
                 writer.WriteString("login", userUpdate.Login);

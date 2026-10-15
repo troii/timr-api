@@ -20,44 +20,30 @@ import { mapValues } from '../runtime';
 export interface UserPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof UserPartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof UserPartial
      */
     firstname: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserPartial
      */
     lastname: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserPartial
      */
     fullname: string | null;
     /**
      * Email address must be either valid or null.
-     * @type {string}
-     * @memberof UserPartial
      */
     email: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserPartial
      */
     employeeNumber: string | null;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof UserPartial
      */
     externalId: string | null;
 }
@@ -71,8 +57,8 @@ export function instanceOfUserPartial(value: object): value is UserPartial {
     if (!('lastname' in value) || value['lastname'] === undefined) return false;
     if (!('fullname' in value) || value['fullname'] === undefined) return false;
     if (!('email' in value) || value['email'] === undefined) return false;
-    if (!('employeeNumber' in value) || value['employeeNumber'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('employeeNumber' in (value as Record<string, any>)) && !('employee_number' in (value as Record<string, any>))) || ((value as Record<string, any>)['employeeNumber'] === undefined && (value as Record<string, any>)['employee_number'] === undefined)) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     return true;
 }
 

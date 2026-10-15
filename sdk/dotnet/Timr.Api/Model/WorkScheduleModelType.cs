@@ -150,6 +150,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override WorkScheduleModelType? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             WorkScheduleModelType? result = rawValue == null
@@ -170,7 +173,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, WorkScheduleModelType? workScheduleModelType, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(workScheduleModelType.HasValue ? WorkScheduleModelTypeValueConverter.ToJsonValue(workScheduleModelType.Value).ToString() : "null");
+            if (workScheduleModelType.HasValue)
+                writer.WriteStringValue(WorkScheduleModelTypeValueConverter.ToJsonValue(workScheduleModelType.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

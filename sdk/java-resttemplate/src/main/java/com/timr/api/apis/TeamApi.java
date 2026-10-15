@@ -36,7 +36,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TeamApi")
 public class TeamApi extends BaseApi {
 
@@ -62,7 +62,7 @@ public class TeamApi extends BaseApi {
      * @return UserPartial
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UserPartial addTeamLeader(String teamId, String userId) throws RestClientException {
+    public UserPartial addTeamLeader(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return addTeamLeaderWithHttpInfo(teamId, userId).getBody();
     }
 
@@ -79,7 +79,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> addTeamLeaderWithHttpInfo(String teamId, String userId) throws RestClientException {
+    public ResponseEntity<UserPartial> addTeamLeaderWithHttpInfo(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'teamId' is set
@@ -127,7 +127,7 @@ public class TeamApi extends BaseApi {
      * @return UserPartial
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UserPartial addTeamMember(String teamId, String userId) throws RestClientException {
+    public UserPartial addTeamMember(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return addTeamMemberWithHttpInfo(teamId, userId).getBody();
     }
 
@@ -144,7 +144,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> addTeamMemberWithHttpInfo(String teamId, String userId) throws RestClientException {
+    public ResponseEntity<UserPartial> addTeamMemberWithHttpInfo(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'teamId' is set
@@ -190,7 +190,7 @@ public class TeamApi extends BaseApi {
      * @return Team
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Team createTeam(TeamCreate teamCreate) throws RestClientException {
+    public Team createTeam(@jakarta.annotation.Nonnull TeamCreate teamCreate) throws RestClientException {
         return createTeamWithHttpInfo(teamCreate).getBody();
     }
 
@@ -205,7 +205,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;Team&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Team> createTeamWithHttpInfo(TeamCreate teamCreate) throws RestClientException {
+    public ResponseEntity<Team> createTeamWithHttpInfo(@jakarta.annotation.Nonnull TeamCreate teamCreate) throws RestClientException {
         Object localVarPostBody = teamCreate;
         
         // verify the required parameter 'teamCreate' is set
@@ -243,7 +243,7 @@ public class TeamApi extends BaseApi {
      * @param id ID of the Team. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteTeam(String id) throws RestClientException {
+    public void deleteTeam(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteTeamWithHttpInfo(id);
     }
 
@@ -258,7 +258,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTeamWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteTeamWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -300,7 +300,7 @@ public class TeamApi extends BaseApi {
      * @return UsersPartialPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UsersPartialPage fetchTeamLeaders(String id, String pageToken, Integer limit, SortDirection sortDirection, UsersSortColumn sortBy) throws RestClientException {
+    public UsersPartialPage fetchTeamLeaders(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable UsersSortColumn sortBy) throws RestClientException {
         return fetchTeamLeadersWithHttpInfo(id, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -317,7 +317,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;UsersPartialPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UsersPartialPage> fetchTeamLeadersWithHttpInfo(String id, String pageToken, Integer limit, SortDirection sortDirection, UsersSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<UsersPartialPage> fetchTeamLeadersWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable UsersSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -365,7 +365,7 @@ public class TeamApi extends BaseApi {
      * @return UsersPartialPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UsersPartialPage fetchTeamMembers(String id, String pageToken, Integer limit, SortDirection sortDirection, UsersSortColumn sortBy) throws RestClientException {
+    public UsersPartialPage fetchTeamMembers(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable UsersSortColumn sortBy) throws RestClientException {
         return fetchTeamMembersWithHttpInfo(id, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -382,7 +382,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;UsersPartialPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UsersPartialPage> fetchTeamMembersWithHttpInfo(String id, String pageToken, Integer limit, SortDirection sortDirection, UsersSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<UsersPartialPage> fetchTeamMembersWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable UsersSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -430,7 +430,7 @@ public class TeamApi extends BaseApi {
      * @return TeamsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TeamsPage fetchTeams(String name, String pageToken, Integer limit, SortDirection sortDirection, TeamsSortColumn sortBy) throws RestClientException {
+    public TeamsPage fetchTeams(@jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TeamsSortColumn sortBy) throws RestClientException {
         return fetchTeamsWithHttpInfo(name, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -447,7 +447,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;TeamsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TeamsPage> fetchTeamsWithHttpInfo(String name, String pageToken, Integer limit, SortDirection sortDirection, TeamsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TeamsPage> fetchTeamsWithHttpInfo(@jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TeamsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -485,7 +485,7 @@ public class TeamApi extends BaseApi {
      * @return Team
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Team getTeam(String id) throws RestClientException {
+    public Team getTeam(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getTeamWithHttpInfo(id).getBody();
     }
 
@@ -499,7 +499,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;Team&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Team> getTeamWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Team> getTeamWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -539,7 +539,7 @@ public class TeamApi extends BaseApi {
      * @return UserPartial
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UserPartial getTeamLeader(String teamId, String userId) throws RestClientException {
+    public UserPartial getTeamLeader(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return getTeamLeaderWithHttpInfo(teamId, userId).getBody();
     }
 
@@ -554,7 +554,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> getTeamLeaderWithHttpInfo(String teamId, String userId) throws RestClientException {
+    public ResponseEntity<UserPartial> getTeamLeaderWithHttpInfo(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'teamId' is set
@@ -600,7 +600,7 @@ public class TeamApi extends BaseApi {
      * @return UserPartial
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UserPartial getTeamMember(String teamId, String userId) throws RestClientException {
+    public UserPartial getTeamMember(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return getTeamMemberWithHttpInfo(teamId, userId).getBody();
     }
 
@@ -615,7 +615,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;UserPartial&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UserPartial> getTeamMemberWithHttpInfo(String teamId, String userId) throws RestClientException {
+    public ResponseEntity<UserPartial> getTeamMemberWithHttpInfo(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'teamId' is set
@@ -661,7 +661,7 @@ public class TeamApi extends BaseApi {
      * @param userId ID of the User. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void removeTeamLeader(String teamId, String userId) throws RestClientException {
+    public void removeTeamLeader(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         removeTeamLeaderWithHttpInfo(teamId, userId);
     }
 
@@ -677,7 +677,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> removeTeamLeaderWithHttpInfo(String teamId, String userId) throws RestClientException {
+    public ResponseEntity<Void> removeTeamLeaderWithHttpInfo(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'teamId' is set
@@ -723,7 +723,7 @@ public class TeamApi extends BaseApi {
      * @param userId ID of the User. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void removeTeamMember(String teamId, String userId) throws RestClientException {
+    public void removeTeamMember(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         removeTeamMemberWithHttpInfo(teamId, userId);
     }
 
@@ -739,7 +739,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> removeTeamMemberWithHttpInfo(String teamId, String userId) throws RestClientException {
+    public ResponseEntity<Void> removeTeamMemberWithHttpInfo(@jakarta.annotation.Nonnull String teamId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'teamId' is set
@@ -788,7 +788,7 @@ public class TeamApi extends BaseApi {
      * @return Team
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Team updateTeam(String id, TeamUpdate teamUpdate) throws RestClientException {
+    public Team updateTeam(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull TeamUpdate teamUpdate) throws RestClientException {
         return updateTeamWithHttpInfo(id, teamUpdate).getBody();
     }
 
@@ -806,7 +806,7 @@ public class TeamApi extends BaseApi {
      * @return ResponseEntity&lt;Team&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Team> updateTeamWithHttpInfo(String id, TeamUpdate teamUpdate) throws RestClientException {
+    public ResponseEntity<Team> updateTeamWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull TeamUpdate teamUpdate) throws RestClientException {
         Object localVarPostBody = teamUpdate;
         
         // verify the required parameter 'id' is set

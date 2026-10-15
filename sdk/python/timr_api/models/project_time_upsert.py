@@ -30,8 +30,8 @@ class ProjectTimeUpsert(BaseModel):
     """
     ProjectTimeUpsert
     """ # noqa: E501
-    start: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)")
+    start: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     break_times: Optional[List[BreakTimeUpdate]] = None
     changed: Optional[StrictBool] = None
     notes: Optional[StrictStr] = None
@@ -84,8 +84,7 @@ class ProjectTimeUpsert(BaseModel):
         _items = []
         if self.break_times:
             for _item_break_times in self.break_times:
-                if _item_break_times:
-                    _items.append(_item_break_times.to_dict())
+                _items.append(_item_break_times.to_dict() if _item_break_times is not None else None)
             _dict['break_times'] = _items
         # set to None if end (nullable) is None
         # and model_fields_set contains the field

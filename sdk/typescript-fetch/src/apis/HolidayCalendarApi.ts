@@ -48,9 +48,21 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface FetchHolidayCalendarsRequest {
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: HolidayCalendarsSortColumn;
 }
 
@@ -60,10 +72,25 @@ export type FetchHolidayCalendarsQuery = Pick<
 >;
 
 export interface FetchHolidaysRequest {
+    /**
+     * ID of the Holiday Calendar.
+     */
     id: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: HolidaysSortColumn;
 }
 
@@ -73,6 +100,9 @@ export type FetchHolidaysQuery = Pick<
 >;
 
 export interface GetHolidayCalendarRequest {
+    /**
+     * ID of the Holiday Calendar.
+     */
     id: string;
 }
 

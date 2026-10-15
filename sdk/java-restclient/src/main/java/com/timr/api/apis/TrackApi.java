@@ -25,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TrackApi {
     private ApiClient apiClient;
 
@@ -72,7 +72,7 @@ public class TrackApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -89,7 +89,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -104,7 +104,7 @@ public class TrackApi {
      * @return List&lt;Waypoint&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public List<Waypoint> createTrack( String id,  List<Waypoint> waypoint) throws RestClientResponseException {
+    public List<Waypoint> createTrack(String id, List<Waypoint> waypoint) throws RestClientResponseException {
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTrackRequestCreation(id, waypoint).body(localVarReturnType);
     }
@@ -121,7 +121,7 @@ public class TrackApi {
      * @return ResponseEntity&lt;List&lt;Waypoint&gt;&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Waypoint>> createTrackWithHttpInfo( String id,  List<Waypoint> waypoint) throws RestClientResponseException {
+    public ResponseEntity<List<Waypoint>> createTrackWithHttpInfo(String id, List<Waypoint> waypoint) throws RestClientResponseException {
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTrackRequestCreation(id, waypoint).toEntity(localVarReturnType);
     }
@@ -163,7 +163,7 @@ public class TrackApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -178,7 +178,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -191,7 +191,7 @@ public class TrackApi {
      * @param id drive log id
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteTrack( String id) throws RestClientResponseException {
+    public void deleteTrack(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteTrackRequestCreation(id).body(localVarReturnType);
     }
@@ -206,7 +206,7 @@ public class TrackApi {
      * @param id drive log id
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTrackWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteTrackWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteTrackRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -248,7 +248,7 @@ public class TrackApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -263,7 +263,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -277,7 +277,7 @@ public class TrackApi {
      * @return List&lt;Waypoint&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public List<Waypoint> getTrack( String id) throws RestClientResponseException {
+    public List<Waypoint> getTrack(String id) throws RestClientResponseException {
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTrackRequestCreation(id).body(localVarReturnType);
     }
@@ -293,7 +293,7 @@ public class TrackApi {
      * @return ResponseEntity&lt;List&lt;Waypoint&gt;&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Waypoint>> getTrackWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<List<Waypoint>> getTrackWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTrackRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -341,7 +341,7 @@ public class TrackApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -358,7 +358,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.PUT, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -374,7 +374,7 @@ public class TrackApi {
      * @return List&lt;Waypoint&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public List<Waypoint> updateTrack( String id,  List<Waypoint> waypoint) throws RestClientResponseException {
+    public List<Waypoint> updateTrack(String id, List<Waypoint> waypoint) throws RestClientResponseException {
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateTrackRequestCreation(id, waypoint).body(localVarReturnType);
     }
@@ -392,7 +392,7 @@ public class TrackApi {
      * @return ResponseEntity&lt;List&lt;Waypoint&gt;&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Waypoint>> updateTrackWithHttpInfo( String id,  List<Waypoint> waypoint) throws RestClientResponseException {
+    public ResponseEntity<List<Waypoint>> updateTrackWithHttpInfo(String id, List<Waypoint> waypoint) throws RestClientResponseException {
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateTrackRequestCreation(id, waypoint).toEntity(localVarReturnType);
     }

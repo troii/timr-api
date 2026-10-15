@@ -37,7 +37,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class DriveLogApi {
     private ApiClient apiClient;
 
@@ -77,7 +77,7 @@ public class DriveLogApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -94,7 +94,7 @@ public class DriveLogApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -108,7 +108,7 @@ public class DriveLogApi {
      * @return DriveLog
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DriveLog createDriveLog( DriveLogCreate driveLogCreate) throws RestClientResponseException {
+    public DriveLog createDriveLog(DriveLogCreate driveLogCreate) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createDriveLogRequestCreation(driveLogCreate).body(localVarReturnType);
     }
@@ -124,7 +124,7 @@ public class DriveLogApi {
      * @return ResponseEntity&lt;DriveLog&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLog> createDriveLogWithHttpInfo( DriveLogCreate driveLogCreate) throws RestClientResponseException {
+    public ResponseEntity<DriveLog> createDriveLogWithHttpInfo(DriveLogCreate driveLogCreate) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createDriveLogRequestCreation(driveLogCreate).toEntity(localVarReturnType);
     }
@@ -165,7 +165,7 @@ public class DriveLogApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -180,7 +180,7 @@ public class DriveLogApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -193,7 +193,7 @@ public class DriveLogApi {
      * @param id ID of the Drive Log.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteDriveLog( String id) throws RestClientResponseException {
+    public void deleteDriveLog(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteDriveLogRequestCreation(id).body(localVarReturnType);
     }
@@ -208,7 +208,7 @@ public class DriveLogApi {
      * @param id ID of the Drive Log.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteDriveLogWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteDriveLogWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteDriveLogRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -246,16 +246,16 @@ public class DriveLogApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -267,7 +267,7 @@ public class DriveLogApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DeletedEntryPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs:deleted", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs:deleted", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -283,7 +283,7 @@ public class DriveLogApi {
      * @return DeletedEntryPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DeletedEntryPage fetchDeletedDriveLogs( OffsetDateTime lastModifiedAfter,  String pageToken,  Integer limit,  SortDirection sortDirection,  DeletedEntrySortColumn sortBy) throws RestClientResponseException {
+    public DeletedEntryPage fetchDeletedDriveLogs(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DeletedEntryPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDeletedDriveLogsRequestCreation(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -301,7 +301,7 @@ public class DriveLogApi {
      * @return ResponseEntity&lt;DeletedEntryPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DeletedEntryPage> fetchDeletedDriveLogsWithHttpInfo( OffsetDateTime lastModifiedAfter,  String pageToken,  Integer limit,  SortDirection sortDirection,  DeletedEntrySortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<DeletedEntryPage> fetchDeletedDriveLogsWithHttpInfo(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DeletedEntryPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDeletedDriveLogsRequestCreation(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -350,25 +350,25 @@ public class DriveLogApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_from", startFrom));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_to", startTo));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "cars", cars));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "drive_log_categories", driveLogCategories));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "statuses", statuses));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "users", users));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "details", details));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "changed", changed));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "has_track", hasTrack));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_from", startFrom));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_to", startTo));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "cars", cars));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "drive_log_categories", driveLogCategories));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "statuses", statuses));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "users", users));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "details", details));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "changed", changed));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "has_track", hasTrack));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -380,7 +380,7 @@ public class DriveLogApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DriveLogsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -405,7 +405,7 @@ public class DriveLogApi {
      * @return DriveLogsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DriveLogsPage fetchDriveLogs( LocalDate startFrom,  LocalDate startTo,  OffsetDateTime lastModifiedAfter,  List<String> cars,  List<String> driveLogCategories,  List<DriveLogStatus> statuses,  List<String> users,  String details,  Boolean changed,  Boolean hasTrack,  String pageToken,  Integer limit,  SortDirection sortDirection,  DriveLogsSortColumn sortBy) throws RestClientResponseException {
+    public DriveLogsPage fetchDriveLogs(@Nullable LocalDate startFrom, @Nullable LocalDate startTo, @Nullable OffsetDateTime lastModifiedAfter, @Nullable List<String> cars, @Nullable List<String> driveLogCategories, @Nullable List<DriveLogStatus> statuses, @Nullable List<String> users, @Nullable String details, @Nullable Boolean changed, @Nullable Boolean hasTrack, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DriveLogsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLogsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDriveLogsRequestCreation(startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -432,7 +432,7 @@ public class DriveLogApi {
      * @return ResponseEntity&lt;DriveLogsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLogsPage> fetchDriveLogsWithHttpInfo( LocalDate startFrom,  LocalDate startTo,  OffsetDateTime lastModifiedAfter,  List<String> cars,  List<String> driveLogCategories,  List<DriveLogStatus> statuses,  List<String> users,  String details,  Boolean changed,  Boolean hasTrack,  String pageToken,  Integer limit,  SortDirection sortDirection,  DriveLogsSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<DriveLogsPage> fetchDriveLogsWithHttpInfo(@Nullable LocalDate startFrom, @Nullable LocalDate startTo, @Nullable OffsetDateTime lastModifiedAfter, @Nullable List<String> cars, @Nullable List<String> driveLogCategories, @Nullable List<DriveLogStatus> statuses, @Nullable List<String> users, @Nullable String details, @Nullable Boolean changed, @Nullable Boolean hasTrack, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DriveLogsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLogsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDriveLogsRequestCreation(startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -484,7 +484,7 @@ public class DriveLogApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -499,7 +499,7 @@ public class DriveLogApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -512,7 +512,7 @@ public class DriveLogApi {
      * @return DriveLog
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DriveLog getDriveLog( String id) throws RestClientResponseException {
+    public DriveLog getDriveLog(String id) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getDriveLogRequestCreation(id).body(localVarReturnType);
     }
@@ -527,7 +527,7 @@ public class DriveLogApi {
      * @return ResponseEntity&lt;DriveLog&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLog> getDriveLogWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<DriveLog> getDriveLogWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getDriveLogRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -575,7 +575,7 @@ public class DriveLogApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -592,7 +592,7 @@ public class DriveLogApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}", HttpMethod.PATCH, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -609,7 +609,7 @@ public class DriveLogApi {
      * @return DriveLog
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DriveLog updateDriveLog( String id,  DriveLogUpdate driveLogUpdate) throws RestClientResponseException {
+    public DriveLog updateDriveLog(String id, DriveLogUpdate driveLogUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateDriveLogRequestCreation(id, driveLogUpdate).body(localVarReturnType);
     }
@@ -628,7 +628,7 @@ public class DriveLogApi {
      * @return ResponseEntity&lt;DriveLog&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLog> updateDriveLogWithHttpInfo( String id,  DriveLogUpdate driveLogUpdate) throws RestClientResponseException {
+    public ResponseEntity<DriveLog> updateDriveLogWithHttpInfo(String id, DriveLogUpdate driveLogUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLog> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateDriveLogRequestCreation(id, driveLogUpdate).toEntity(localVarReturnType);
     }

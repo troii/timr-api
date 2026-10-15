@@ -11,6 +11,7 @@
  * Do not edit the class manually.
  */
 
+import { parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { VacationAccountDays } from './VacationAccountDays';
 import {
     instanceOfVacationAccountDays,
@@ -61,9 +62,9 @@ export function VacationAccountToJSONTyped(value?: VacationAccount | null, ignor
     }
     switch (value['unit']) {
         case 'days':
-            return Object.assign({}, VacationAccountDaysToJSON(value), { unit: 'days' } as const);
+            return Object.assign({}, VacationAccountDaysToJSON(value), { 'unit': 'days' } as const);
         case 'minutes':
-            return Object.assign({}, VacationAccountMinutesToJSON(value), { unit: 'minutes' } as const);
+            return Object.assign({}, VacationAccountMinutesToJSON(value), { 'unit': 'minutes' } as const);
         default:
             return value;
     }

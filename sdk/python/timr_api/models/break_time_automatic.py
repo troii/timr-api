@@ -30,9 +30,9 @@ class BreakTimeAutomatic(BaseModel):
     BreakTimeAutomatic
     """ # noqa: E501
     type: BreakTimeType
-    duration_minutes: StrictInt = Field(description="Duration of break in minutes")
-    start: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)")
+    duration_minutes: StrictInt = Field(description="Duration of break in minutes", json_schema_extra={"examples": [15]})
+    start: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     __properties: ClassVar[List[str]] = ["type", "duration_minutes", "start", "end"]
 
     model_config = ConfigDict(

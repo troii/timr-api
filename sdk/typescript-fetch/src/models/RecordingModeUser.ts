@@ -19,7 +19,7 @@
 export const RecordingModeUser = {
     NotAllowed: 'not_allowed',
     Allowed: 'allowed',
-    ByRequest: 'by_request'
+    ByRequest: 'by_request',
 } as const;
 export type RecordingModeUser = typeof RecordingModeUser[keyof typeof RecordingModeUser];
 

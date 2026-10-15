@@ -18,7 +18,7 @@
  */
 export const VacationUnit = {
     Days: 'days',
-    Minutes: 'minutes'
+    Minutes: 'minutes',
 } as const;
 export type VacationUnit = typeof VacationUnit[keyof typeof VacationUnit];
 

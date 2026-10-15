@@ -20,26 +20,18 @@ import { mapValues } from '../runtime';
 export interface TaskPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof TaskPartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof TaskPartial
      */
     name: string;
     /**
      * Full path of the entry within its hierarchy, including its own name.
-     * @type {string}
-     * @memberof TaskPartial
      */
     breadcrumbs: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof TaskPartial
      */
     externalId: string | null;
 }
@@ -51,7 +43,7 @@ export function instanceOfTaskPartial(value: object): value is TaskPartial {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('breadcrumbs' in value) || value['breadcrumbs'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     return true;
 }
 

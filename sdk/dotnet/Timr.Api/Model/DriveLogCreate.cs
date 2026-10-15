@@ -262,17 +262,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DriveLogCreate" />
     /// </summary>
-    public class DriveLogCreateJsonConverter : JsonConverter<DriveLogCreate>
+    public partial class DriveLogCreateJsonConverter : JsonConverter<DriveLogCreate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DriveLogCreateJsonConverter" /> class.
+        /// </summary>
+        public DriveLogCreateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DriveLogCreate" />
@@ -335,9 +345,7 @@ namespace Timr.Api.Model
                             driveLogCategoryId = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<DriveLogStatus?>(DriveLogStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<DriveLogStatus?>(JsonSerializer.Deserialize<DriveLogStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "user_id":
                             userId = new Option<string?>(utf8JsonReader.GetString()!);
@@ -376,46 +384,46 @@ namespace Timr.Api.Model
             }
 
             if (!start.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(start));
+                throw new JsonException("Property is required for class DriveLogCreate: start.");
 
             if (!changed.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(changed));
+                throw new JsonException("Property is required for class DriveLogCreate: changed.");
 
             if (!startMileage.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(startMileage));
+                throw new JsonException("Property is required for class DriveLogCreate: start_mileage.");
 
             if (!driveLogCategoryId.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(driveLogCategoryId));
+                throw new JsonException("Property is required for class DriveLogCreate: drive_log_category_id.");
 
             if (!status.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(status));
+                throw new JsonException("Property is required for class DriveLogCreate: status.");
 
             if (!userId.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(userId));
+                throw new JsonException("Property is required for class DriveLogCreate: user_id.");
 
             if (!carId.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCreate.", nameof(carId));
+                throw new JsonException("Property is required for class DriveLogCreate: car_id.");
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: start.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: changed.");
 
             if (startMileage.IsSet && startMileage.Value == null)
-                throw new ArgumentNullException(nameof(startMileage), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: start_mileage.");
 
             if (driveLogCategoryId.IsSet && driveLogCategoryId.Value == null)
-                throw new ArgumentNullException(nameof(driveLogCategoryId), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: drive_log_category_id.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: status.");
 
             if (userId.IsSet && userId.Value == null)
-                throw new ArgumentNullException(nameof(userId), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: user_id.");
 
             if (carId.IsSet && carId.Value == null)
-                throw new ArgumentNullException(nameof(carId), "Property is not nullable for class DriveLogCreate.");
+                throw new JsonException("Property is not nullable for class DriveLogCreate: car_id.");
 
             return new DriveLogCreate(start.Value!.Value!, changed.Value!.Value!, startMileage.Value!.Value!, driveLogCategoryId.Value!, status.Value!.Value!, userId.Value!, carId.Value!, end, endMileage, route, purpose, visited, metadata, startLocation, endLocation);
         }
@@ -426,7 +434,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DriveLogCreate driveLogCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -441,18 +448,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogCreate driveLogCreate, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (driveLogCreate.DriveLogCategoryId == null)
-                throw new ArgumentNullException(nameof(driveLogCreate.DriveLogCategoryId), "Property is required for class DriveLogCreate.");
-
-            if (driveLogCreate.UserId == null)
-                throw new ArgumentNullException(nameof(driveLogCreate.UserId), "Property is required for class DriveLogCreate.");
-
-            if (driveLogCreate.CarId == null)
-                throw new ArgumentNullException(nameof(driveLogCreate.CarId), "Property is required for class DriveLogCreate.");
-
             writer.WriteString("start", driveLogCreate.Start.ToString(StartFormat));
 
             writer.WriteBoolean("changed", driveLogCreate.Changed);

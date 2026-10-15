@@ -28,8 +28,6 @@ import {
 export interface VacationAccountBase {
     /**
      * 
-     * @type {VacationUnit}
-     * @memberof VacationAccountBase
      */
     unit: VacationUnit;
 }

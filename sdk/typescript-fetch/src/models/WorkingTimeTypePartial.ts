@@ -20,20 +20,14 @@ import { mapValues } from '../runtime';
 export interface WorkingTimeTypePartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkingTimeTypePartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeTypePartial
      */
     name: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof WorkingTimeTypePartial
      */
     externalId: string | null;
 }
@@ -44,7 +38,7 @@ export interface WorkingTimeTypePartial {
 export function instanceOfWorkingTimeTypePartial(value: object): value is WorkingTimeTypePartial {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     return true;
 }
 

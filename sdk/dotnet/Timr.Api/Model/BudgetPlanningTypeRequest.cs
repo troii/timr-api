@@ -192,6 +192,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override BudgetPlanningTypeRequest? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             BudgetPlanningTypeRequest? result = rawValue == null
@@ -212,7 +215,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, BudgetPlanningTypeRequest? budgetPlanningTypeRequest, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(budgetPlanningTypeRequest.HasValue ? BudgetPlanningTypeRequestValueConverter.ToJsonValue(budgetPlanningTypeRequest.Value).ToString() : "null");
+            if (budgetPlanningTypeRequest.HasValue)
+                writer.WriteStringValue(BudgetPlanningTypeRequestValueConverter.ToJsonValue(budgetPlanningTypeRequest.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

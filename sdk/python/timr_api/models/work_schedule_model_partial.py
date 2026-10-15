@@ -28,7 +28,7 @@ class WorkScheduleModelPartial(BaseModel):
     WorkScheduleModelPartial
     """ # noqa: E501
     id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
-    name: StrictStr
+    name: StrictStr = Field(json_schema_extra={"examples": ["full-time"]})
     __properties: ClassVar[List[str]] = ["id", "name"]
 
     model_config = ConfigDict(

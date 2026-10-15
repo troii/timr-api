@@ -20,14 +20,10 @@ import { mapValues } from '../runtime';
 export interface WorkingTimeRules {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkingTimeRules
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeRules
      */
     name: string;
 }

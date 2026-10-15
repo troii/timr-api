@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="CarsPage" />
     /// </summary>
-    public class CarsPageJsonConverter : JsonConverter<CarsPage>
+    public partial class CarsPageJsonConverter : JsonConverter<CarsPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CarsPageJsonConverter" /> class.
+        /// </summary>
+        public CarsPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="CarsPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class CarsPage.", nameof(data));
+                throw new JsonException("Property is required for class CarsPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class CarsPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class CarsPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class CarsPage.");
+                throw new JsonException("Property is not nullable for class CarsPage: data.");
 
             return new CarsPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, CarsPage carsPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, CarsPage carsPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (carsPage.Data == null)
-                throw new ArgumentNullException(nameof(carsPage.Data), "Property is required for class CarsPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, carsPage.Data, jsonSerializerOptions);
             if (carsPage.NextPageToken != null)

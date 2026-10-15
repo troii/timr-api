@@ -35,9 +35,9 @@ class ProjectTime(BaseModel):
     """
     One booking on a `task`, from `start` to `end`, optionally `billable`, with `break_times`, notes and locations. 
     """ # noqa: E501
-    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
-    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)")
+    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.", json_schema_extra={"examples": ["074e7048-9097-11eb-a8b3-0242ac130003"]})
+    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     break_time_total_minutes: StrictInt = Field(description="Read-only. Total break time in minutes. Values are calculated as an aggregate of other properties")
     break_times: List[BreakTime]
     duration: Optional[Duration]
@@ -50,7 +50,7 @@ class ProjectTime(BaseModel):
     end_location: Optional[Location]
     start_platform: Optional[Platform]
     end_platform: Optional[Platform]
-    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ")
+    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     last_modified_by: Optional[UserPartial] = Field(description="Read-only. The User who last modified the entry, or null if the change was not made in a user context. ")
     status: ProjectTimeStatus
     metadata: Optional[Dict[str, Any]] = None
@@ -99,8 +99,7 @@ class ProjectTime(BaseModel):
         _items = []
         if self.break_times:
             for _item_break_times in self.break_times:
-                if _item_break_times:
-                    _items.append(_item_break_times.to_dict())
+                _items.append(_item_break_times.to_dict() if _item_break_times is not None else None)
             _dict['break_times'] = _items
         # override the default output from pydantic by calling `to_dict()` of duration
         if self.duration:

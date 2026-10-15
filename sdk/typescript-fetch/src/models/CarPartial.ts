@@ -20,26 +20,18 @@ import { mapValues } from '../runtime';
 export interface CarPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof CarPartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof CarPartial
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof CarPartial
      */
     plate: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof CarPartial
      */
     externalId: string | null;
 }
@@ -51,7 +43,7 @@ export function instanceOfCarPartial(value: object): value is CarPartial {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('plate' in value) || value['plate'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     return true;
 }
 

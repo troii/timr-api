@@ -44,8 +44,8 @@ class Task(BaseModel):
     start_date: Optional[date] = Field(description="RFC 3339 date (ISO-8601)")
     end_date: Optional[date] = Field(description="RFC 3339 date (ISO-8601)")
     lock_date: Optional[date] = Field(default=None, description="RFC 3339 date (ISO-8601)")
-    earliest_start_time: Optional[StrictStr] = Field(default=None, description="time of day (ISO-8601)")
-    latest_end_time: Optional[StrictStr] = Field(default=None, description="time of day (ISO-8601)")
+    earliest_start_time: Optional[StrictStr] = Field(default=None, description="time of day (ISO-8601)", json_schema_extra={"examples": ["920"]})
+    latest_end_time: Optional[StrictStr] = Field(default=None, description="time of day (ISO-8601)", json_schema_extra={"examples": ["920"]})
     active_from: Optional[date] = Field(description="RFC 3339 date (ISO-8601)")
     active_to: Optional[date] = Field(description="RFC 3339 date (ISO-8601)")
     budget_inherited: Optional[StrictBool] = None

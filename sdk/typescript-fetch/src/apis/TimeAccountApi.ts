@@ -23,12 +23,24 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface GetUserAccountsRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
+    /**
+     * Day to return the balances for.
+     */
     date: Date;
 }
 
 export interface GetUserWorkingTimeAccountsRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
+    /**
+     * Day to return the balances for.
+     */
     date: Date;
 }
 
@@ -73,7 +85,7 @@ export class TimeAccountApi extends runtime.BaseAPI {
         let urlPath = `/users/{id}/accounts/{date}`;
         urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
         if (requestParameters['date'] instanceof Date) {
-            urlPath = urlPath.replace('{date}', encodeURIComponent(requestParameters['date'].toISOString().substring(0,10)));
+            urlPath = urlPath.replace('{date}', encodeURIComponent(runtime.serializeDate(requestParameters['date'])));
         } else {
             urlPath = urlPath.replace('{date}', encodeURIComponent(String(requestParameters['date'])));
         }
@@ -142,7 +154,7 @@ export class TimeAccountApi extends runtime.BaseAPI {
         let urlPath = `/users/{id}/working-time-accounts/{date}`;
         urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
         if (requestParameters['date'] instanceof Date) {
-            urlPath = urlPath.replace('{date}', encodeURIComponent(requestParameters['date'].toISOString().substring(0,10)));
+            urlPath = urlPath.replace('{date}', encodeURIComponent(runtime.serializeDate(requestParameters['date'])));
         } else {
             urlPath = urlPath.replace('{date}', encodeURIComponent(String(requestParameters['date'])));
         }

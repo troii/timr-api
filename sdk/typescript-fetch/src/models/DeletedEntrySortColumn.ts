@@ -17,7 +17,7 @@
  * @export
  */
 export const DeletedEntrySortColumn = {
-    LastModified: 'last_modified'
+    LastModified: 'last_modified',
 } as const;
 export type DeletedEntrySortColumn = typeof DeletedEntrySortColumn[keyof typeof DeletedEntrySortColumn];
 

@@ -125,12 +125,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DriveLogCategory" />
     /// </summary>
-    public class DriveLogCategoryJsonConverter : JsonConverter<DriveLogCategory>
+    public partial class DriveLogCategoryJsonConverter : JsonConverter<DriveLogCategory>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DriveLogCategoryJsonConverter" /> class.
+        /// </summary>
+        public DriveLogCategoryJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize LastModified
         /// </summary>
-        public static string LastModifiedFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DriveLogCategory" />
@@ -196,37 +206,37 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategory.", nameof(id));
+                throw new JsonException("Property is required for class DriveLogCategory: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategory.", nameof(name));
+                throw new JsonException("Property is required for class DriveLogCategory: name.");
 
             if (!business.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategory.", nameof(business));
+                throw new JsonException("Property is required for class DriveLogCategory: business.");
 
             if (!color.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategory.", nameof(color));
+                throw new JsonException("Property is required for class DriveLogCategory: color.");
 
             if (!lastModified.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategory.", nameof(lastModified));
+                throw new JsonException("Property is required for class DriveLogCategory: last_modified.");
 
             if (!lastModifiedBy.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategory.", nameof(lastModifiedBy));
+                throw new JsonException("Property is required for class DriveLogCategory: last_modified_by.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class DriveLogCategory.");
+                throw new JsonException("Property is not nullable for class DriveLogCategory: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class DriveLogCategory.");
+                throw new JsonException("Property is not nullable for class DriveLogCategory: name.");
 
             if (business.IsSet && business.Value == null)
-                throw new ArgumentNullException(nameof(business), "Property is not nullable for class DriveLogCategory.");
+                throw new JsonException("Property is not nullable for class DriveLogCategory: business.");
 
             if (color.IsSet && color.Value == null)
-                throw new ArgumentNullException(nameof(color), "Property is not nullable for class DriveLogCategory.");
+                throw new JsonException("Property is not nullable for class DriveLogCategory: color.");
 
             if (lastModified.IsSet && lastModified.Value == null)
-                throw new ArgumentNullException(nameof(lastModified), "Property is not nullable for class DriveLogCategory.");
+                throw new JsonException("Property is not nullable for class DriveLogCategory: last_modified.");
 
             return new DriveLogCategory(id.Value!, name.Value!, business.Value!.Value!, color.Value!, lastModified.Value!.Value!, lastModifiedBy.Value!);
         }
@@ -237,7 +247,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCategory"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DriveLogCategory driveLogCategory, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -252,18 +261,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCategory"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogCategory driveLogCategory, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (driveLogCategory.Id == null)
-                throw new ArgumentNullException(nameof(driveLogCategory.Id), "Property is required for class DriveLogCategory.");
-
-            if (driveLogCategory.Name == null)
-                throw new ArgumentNullException(nameof(driveLogCategory.Name), "Property is required for class DriveLogCategory.");
-
-            if (driveLogCategory.Color == null)
-                throw new ArgumentNullException(nameof(driveLogCategory.Color), "Property is required for class DriveLogCategory.");
-
             writer.WriteString("id", driveLogCategory.Id);
 
             writer.WriteString("name", driveLogCategory.Name);

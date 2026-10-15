@@ -37,7 +37,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.WorkingTimeDateSpanApi")
 public class WorkingTimeDateSpanApi extends BaseApi {
 
@@ -61,7 +61,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return WorkingTimeDateSpan
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpan createWorkingTimeDateSpan(WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientException {
+    public WorkingTimeDateSpan createWorkingTimeDateSpan(@jakarta.annotation.Nonnull WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientException {
         return createWorkingTimeDateSpanWithHttpInfo(workingTimeDateSpanCreate).getBody();
     }
 
@@ -76,7 +76,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpan&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpan> createWorkingTimeDateSpanWithHttpInfo(WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientException {
+    public ResponseEntity<WorkingTimeDateSpan> createWorkingTimeDateSpanWithHttpInfo(@jakarta.annotation.Nonnull WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientException {
         Object localVarPostBody = workingTimeDateSpanCreate;
         
         // verify the required parameter 'workingTimeDateSpanCreate' is set
@@ -114,7 +114,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @param id ID of the Working Time Date Span. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteWorkingTimeDateSpan(String id) throws RestClientException {
+    public void deleteWorkingTimeDateSpan(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteWorkingTimeDateSpanWithHttpInfo(id);
     }
 
@@ -129,7 +129,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteWorkingTimeDateSpanWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteWorkingTimeDateSpanWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -171,7 +171,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return DeletedEntryWithMetadataPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DeletedEntryWithMetadataPage fetchDeletedWorkingTimeDateSpans(OffsetDateTime lastModifiedAfter, String pageToken, Integer limit, SortDirection sortDirection, DeletedEntrySortColumn sortBy) throws RestClientException {
+    public DeletedEntryWithMetadataPage fetchDeletedWorkingTimeDateSpans(@jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DeletedEntrySortColumn sortBy) throws RestClientException {
         return fetchDeletedWorkingTimeDateSpansWithHttpInfo(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -188,7 +188,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return ResponseEntity&lt;DeletedEntryWithMetadataPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedWorkingTimeDateSpansWithHttpInfo(OffsetDateTime lastModifiedAfter, String pageToken, Integer limit, SortDirection sortDirection, DeletedEntrySortColumn sortBy) throws RestClientException {
+    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedWorkingTimeDateSpansWithHttpInfo(@jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DeletedEntrySortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -233,7 +233,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return WorkingTimeDateSpanPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpanPage fetchWorkingTimeDateSpans(LocalDate from, LocalDate to, OffsetDateTime lastModifiedAfter, List<String> workingTimeTypes, List<String> users, String pageToken, Integer limit, SortDirection sortDirection, WorkingTimeDateSpansSortColumn sortBy) throws RestClientException {
+    public WorkingTimeDateSpanPage fetchWorkingTimeDateSpans(@jakarta.annotation.Nullable LocalDate from, @jakarta.annotation.Nullable LocalDate to, @jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable List<String> workingTimeTypes, @jakarta.annotation.Nullable List<String> users, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable WorkingTimeDateSpansSortColumn sortBy) throws RestClientException {
         return fetchWorkingTimeDateSpansWithHttpInfo(from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -254,7 +254,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpanPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpanPage> fetchWorkingTimeDateSpansWithHttpInfo(LocalDate from, LocalDate to, OffsetDateTime lastModifiedAfter, List<String> workingTimeTypes, List<String> users, String pageToken, Integer limit, SortDirection sortDirection, WorkingTimeDateSpansSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<WorkingTimeDateSpanPage> fetchWorkingTimeDateSpansWithHttpInfo(@jakarta.annotation.Nullable LocalDate from, @jakarta.annotation.Nullable LocalDate to, @jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable List<String> workingTimeTypes, @jakarta.annotation.Nullable List<String> users, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable WorkingTimeDateSpansSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -296,7 +296,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return WorkingTimeDateSpan
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpan getWorkingTimeDateSpan(String id) throws RestClientException {
+    public WorkingTimeDateSpan getWorkingTimeDateSpan(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getWorkingTimeDateSpanWithHttpInfo(id).getBody();
     }
 
@@ -310,7 +310,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpan&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpan> getWorkingTimeDateSpanWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<WorkingTimeDateSpan> getWorkingTimeDateSpanWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -354,7 +354,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return WorkingTimeDateSpan
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpan updateWorkingTimeDateSpan(String id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientException {
+    public WorkingTimeDateSpan updateWorkingTimeDateSpan(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientException {
         return updateWorkingTimeDateSpanWithHttpInfo(id, workingTimeDateSpanUpdate).getBody();
     }
 
@@ -373,7 +373,7 @@ public class WorkingTimeDateSpanApi extends BaseApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpan&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpan> updateWorkingTimeDateSpanWithHttpInfo(String id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientException {
+    public ResponseEntity<WorkingTimeDateSpan> updateWorkingTimeDateSpanWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientException {
         Object localVarPostBody = workingTimeDateSpanUpdate;
         
         // verify the required parameter 'id' is set

@@ -28,14 +28,10 @@ import {
 export interface ProjectTimesPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof ProjectTimesPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<ProjectTime>}
-     * @memberof ProjectTimesPage
      */
     data: Array<ProjectTime>;
 }
@@ -44,7 +40,7 @@ export interface ProjectTimesPage {
  * Check if a given object implements the ProjectTimesPage interface.
  */
 export function instanceOfProjectTimesPage(value: object): value is ProjectTimesPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

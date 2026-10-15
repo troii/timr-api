@@ -85,8 +85,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskToLeaderAssignment" />
     /// </summary>
-    public class TaskToLeaderAssignmentJsonConverter : JsonConverter<TaskToLeaderAssignment>
+    public partial class TaskToLeaderAssignmentJsonConverter : JsonConverter<TaskToLeaderAssignment>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskToLeaderAssignmentJsonConverter" /> class.
+        /// </summary>
+        public TaskToLeaderAssignmentJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskToLeaderAssignment" />
         /// </summary>
@@ -135,16 +145,16 @@ namespace Timr.Api.Model
             }
 
             if (!user.IsSet)
-                throw new ArgumentException("Property is required for class TaskToLeaderAssignment.", nameof(user));
+                throw new JsonException("Property is required for class TaskToLeaderAssignment: user.");
 
             if (!automaticallyAssigned.IsSet)
-                throw new ArgumentException("Property is required for class TaskToLeaderAssignment.", nameof(automaticallyAssigned));
+                throw new JsonException("Property is required for class TaskToLeaderAssignment: automatically_assigned.");
 
             if (user.IsSet && user.Value == null)
-                throw new ArgumentNullException(nameof(user), "Property is not nullable for class TaskToLeaderAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToLeaderAssignment: user.");
 
             if (automaticallyAssigned.IsSet && automaticallyAssigned.Value == null)
-                throw new ArgumentNullException(nameof(automaticallyAssigned), "Property is not nullable for class TaskToLeaderAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToLeaderAssignment: automatically_assigned.");
 
             return new TaskToLeaderAssignment(user.Value!, automaticallyAssigned.Value!.Value!);
         }
@@ -155,7 +165,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToLeaderAssignment"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskToLeaderAssignment taskToLeaderAssignment, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -170,12 +179,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToLeaderAssignment"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskToLeaderAssignment taskToLeaderAssignment, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskToLeaderAssignment.User == null)
-                throw new ArgumentNullException(nameof(taskToLeaderAssignment.User), "Property is required for class TaskToLeaderAssignment.");
-
             writer.WritePropertyName("user");
             JsonSerializer.Serialize(writer, taskToLeaderAssignment.User, jsonSerializerOptions);
             writer.WriteBoolean("automatically_assigned", taskToLeaderAssignment.AutomaticallyAssigned);

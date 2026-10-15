@@ -31,7 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TaskToTeamAssignmentApi")
 public class TaskToTeamAssignmentApi extends BaseApi {
 
@@ -57,7 +57,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return TaskToTeamAssignment
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToTeamAssignment createTaskToTeamAssignment(String taskId, String teamId) throws RestClientException {
+    public TaskToTeamAssignment createTaskToTeamAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String teamId) throws RestClientException {
         return createTaskToTeamAssignmentWithHttpInfo(taskId, teamId).getBody();
     }
 
@@ -74,7 +74,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToTeamAssignment&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToTeamAssignment> createTaskToTeamAssignmentWithHttpInfo(String taskId, String teamId) throws RestClientException {
+    public ResponseEntity<TaskToTeamAssignment> createTaskToTeamAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String teamId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -120,7 +120,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @param teamId ID of the Team. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteTaskToTeamAssignment(String taskId, String teamId) throws RestClientException {
+    public void deleteTaskToTeamAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String teamId) throws RestClientException {
         deleteTaskToTeamAssignmentWithHttpInfo(taskId, teamId);
     }
 
@@ -136,7 +136,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTaskToTeamAssignmentWithHttpInfo(String taskId, String teamId) throws RestClientException {
+    public ResponseEntity<Void> deleteTaskToTeamAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String teamId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -185,7 +185,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return TaskToTeamAssignmentsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToTeamAssignmentsPage fetchTaskToTeamAssignments(String taskId, String pageToken, Integer limit, SortDirection sortDirection, TaskToTeamAssignmentsSortColumn sortBy) throws RestClientException {
+    public TaskToTeamAssignmentsPage fetchTaskToTeamAssignments(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToTeamAssignmentsSortColumn sortBy) throws RestClientException {
         return fetchTaskToTeamAssignmentsWithHttpInfo(taskId, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -203,7 +203,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToTeamAssignmentsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToTeamAssignmentsPage> fetchTaskToTeamAssignmentsWithHttpInfo(String taskId, String pageToken, Integer limit, SortDirection sortDirection, TaskToTeamAssignmentsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TaskToTeamAssignmentsPage> fetchTaskToTeamAssignmentsWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToTeamAssignmentsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -249,7 +249,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return TaskToTeamAssignment
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToTeamAssignment getTaskToTeamAssignment(String taskId, String teamId) throws RestClientException {
+    public TaskToTeamAssignment getTaskToTeamAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String teamId) throws RestClientException {
         return getTaskToTeamAssignmentWithHttpInfo(taskId, teamId).getBody();
     }
 
@@ -264,7 +264,7 @@ public class TaskToTeamAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToTeamAssignment&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToTeamAssignment> getTaskToTeamAssignmentWithHttpInfo(String taskId, String teamId) throws RestClientException {
+    public ResponseEntity<TaskToTeamAssignment> getTaskToTeamAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String teamId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set

@@ -95,8 +95,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DailyWorkSchedule" />
     /// </summary>
-    public class DailyWorkScheduleJsonConverter : JsonConverter<DailyWorkSchedule>
+    public partial class DailyWorkScheduleJsonConverter : JsonConverter<DailyWorkSchedule>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DailyWorkScheduleJsonConverter" /> class.
+        /// </summary>
+        public DailyWorkScheduleJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="DailyWorkSchedule" />
         /// </summary>
@@ -145,13 +155,13 @@ namespace Timr.Api.Model
             }
 
             if (!targetDurationMinutes.IsSet)
-                throw new ArgumentException("Property is required for class DailyWorkSchedule.", nameof(targetDurationMinutes));
+                throw new JsonException("Property is required for class DailyWorkSchedule: target_duration_minutes.");
 
             if (targetDurationMinutes.IsSet && targetDurationMinutes.Value == null)
-                throw new ArgumentNullException(nameof(targetDurationMinutes), "Property is not nullable for class DailyWorkSchedule.");
+                throw new JsonException("Property is not nullable for class DailyWorkSchedule: target_duration_minutes.");
 
             if (normalWorkingTimes.IsSet && normalWorkingTimes.Value == null)
-                throw new ArgumentNullException(nameof(normalWorkingTimes), "Property is not nullable for class DailyWorkSchedule.");
+                throw new JsonException("Property is not nullable for class DailyWorkSchedule: normal_working_times.");
 
             return new DailyWorkSchedule(targetDurationMinutes.Value!.Value!, normalWorkingTimes);
         }
@@ -162,7 +172,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="dailyWorkSchedule"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DailyWorkSchedule dailyWorkSchedule, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -177,11 +186,10 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="dailyWorkSchedule"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DailyWorkSchedule dailyWorkSchedule, JsonSerializerOptions jsonSerializerOptions)
         {
             if (dailyWorkSchedule.NormalWorkingTimesOption.IsSet && dailyWorkSchedule.NormalWorkingTimes == null)
-                throw new ArgumentNullException(nameof(dailyWorkSchedule.NormalWorkingTimes), "Property is required for class DailyWorkSchedule.");
+                throw new JsonException("Cannot write null property DailyWorkSchedule.NormalWorkingTimes to non-nullable JSON property 'normal_working_times'.");
 
             writer.WriteNumber("target_duration_minutes", dailyWorkSchedule.TargetDurationMinutes);
 

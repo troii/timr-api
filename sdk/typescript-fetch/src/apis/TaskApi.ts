@@ -53,19 +53,52 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateTaskRequest {
+    /**
+     * 
+     */
     taskCreate: TaskCreate;
 }
 
 export interface FetchTasksRequest {
+    /**
+     * Only return Tasks whose parent is the Task with this ID.
+     */
     parentTaskId?: string;
+    /**
+     * Include Tasks from the whole subtree (true) or only direct children (false).
+     */
     traverseTaskTree?: boolean;
+    /**
+     * Only return Users whose name contains this text.
+     */
     name?: string;
+    /**
+     * Only return entries that are billable (true) or not billable (false).
+     */
     bookable?: boolean;
+    /**
+     * Only return entries that are billable (true) or not billable (false).
+     */
     billable?: boolean;
+    /**
+     * Only return Tasks that are active on this day.
+     */
     activeAt?: Date;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: TasksSortColumn;
 }
 
@@ -75,16 +108,49 @@ export type FetchTasksQuery = Pick<
 >;
 
 export interface FetchUserTasksRequest {
+    /**
+     * ID of the User.
+     */
     id: string;
+    /**
+     * Only return Tasks whose parent is the Task with this ID.
+     */
     parentTaskId?: string;
+    /**
+     * Include Tasks from the whole subtree (true) or only direct children (false).
+     */
     traverseTaskTree?: boolean;
+    /**
+     * Only return Users whose name contains this text.
+     */
     name?: string;
+    /**
+     * Only return entries that are billable (true) or not billable (false).
+     */
     bookable?: boolean;
+    /**
+     * Only return entries that are billable (true) or not billable (false).
+     */
     billable?: boolean;
+    /**
+     * Only return Tasks that are active on this day.
+     */
     activeAt?: Date;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: TasksSortColumn;
 }
 
@@ -94,11 +160,20 @@ export type FetchUserTasksQuery = Pick<
 >;
 
 export interface GetTaskRequest {
+    /**
+     * ID of the Task.
+     */
     id: string;
 }
 
 export interface UpdateTaskRequest {
+    /**
+     * ID of the Task.
+     */
     id: string;
+    /**
+     * 
+     */
     taskUpdate: TaskUpdate;
 }
 

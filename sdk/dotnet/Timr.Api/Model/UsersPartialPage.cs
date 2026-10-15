@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="UsersPartialPage" />
     /// </summary>
-    public class UsersPartialPageJsonConverter : JsonConverter<UsersPartialPage>
+    public partial class UsersPartialPageJsonConverter : JsonConverter<UsersPartialPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersPartialPageJsonConverter" /> class.
+        /// </summary>
+        public UsersPartialPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="UsersPartialPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class UsersPartialPage.", nameof(data));
+                throw new JsonException("Property is required for class UsersPartialPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class UsersPartialPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class UsersPartialPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class UsersPartialPage.");
+                throw new JsonException("Property is not nullable for class UsersPartialPage: data.");
 
             return new UsersPartialPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="usersPartialPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, UsersPartialPage usersPartialPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="usersPartialPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, UsersPartialPage usersPartialPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (usersPartialPage.Data == null)
-                throw new ArgumentNullException(nameof(usersPartialPage.Data), "Property is required for class UsersPartialPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, usersPartialPage.Data, jsonSerializerOptions);
             if (usersPartialPage.NextPageToken != null)

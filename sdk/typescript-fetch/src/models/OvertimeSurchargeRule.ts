@@ -20,20 +20,14 @@ import { mapValues } from '../runtime';
 export interface OvertimeSurchargeRule {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof OvertimeSurchargeRule
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof OvertimeSurchargeRule
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof OvertimeSurchargeRule
      */
     shortName: string;
 }
@@ -44,7 +38,7 @@ export interface OvertimeSurchargeRule {
 export function instanceOfOvertimeSurchargeRule(value: object): value is OvertimeSurchargeRule {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('shortName' in value) || value['shortName'] === undefined) return false;
+    if ((!('shortName' in (value as Record<string, any>)) && !('short_name' in (value as Record<string, any>))) || ((value as Record<string, any>)['shortName'] === undefined && (value as Record<string, any>)['short_name'] === undefined)) return false;
     return true;
 }
 

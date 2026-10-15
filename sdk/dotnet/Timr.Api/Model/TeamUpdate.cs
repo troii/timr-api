@@ -132,8 +132,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TeamUpdate" />
     /// </summary>
-    public class TeamUpdateJsonConverter : JsonConverter<TeamUpdate>
+    public partial class TeamUpdateJsonConverter : JsonConverter<TeamUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamUpdateJsonConverter" /> class.
+        /// </summary>
+        public TeamUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TeamUpdate" />
         /// </summary>
@@ -190,7 +200,7 @@ namespace Timr.Api.Model
             }
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class TeamUpdate.");
+                throw new JsonException("Property is not nullable for class TeamUpdate: name.");
 
             return new TeamUpdate(name, description, parentTeamId, externalId);
         }
@@ -201,7 +211,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TeamUpdate teamUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -216,11 +225,10 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TeamUpdate teamUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             if (teamUpdate.NameOption.IsSet && teamUpdate.Name == null)
-                throw new ArgumentNullException(nameof(teamUpdate.Name), "Property is required for class TeamUpdate.");
+                throw new JsonException("Cannot write null property TeamUpdate.Name to non-nullable JSON property 'name'.");
 
             if (teamUpdate.NameOption.IsSet)
                 writer.WriteString("name", teamUpdate.Name);

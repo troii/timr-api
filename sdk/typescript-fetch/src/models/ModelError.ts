@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { ErrorEntry } from './ErrorEntry';
 import {
     ErrorEntryFromJSON,
@@ -31,50 +31,34 @@ import {
 export interface ModelError {
     /**
      * 
-     * @type {string}
-     * @memberof ModelError
      */
     type: string;
     /**
      * 
-     * @type {string}
-     * @memberof ModelError
      */
     title: string;
     /**
      * 
-     * @type {number}
-     * @memberof ModelError
      */
     status: number;
     /**
      * 
-     * @type {string}
-     * @memberof ModelError
      */
     detail?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ModelError
      */
     instance?: string;
     /**
      * 
-     * @type {Date}
-     * @memberof ModelError
      */
     timestamp: Date;
     /**
      * 
-     * @type {string}
-     * @memberof ModelError
      */
     traceId?: string | null;
     /**
      * 
-     * @type {Array<ErrorEntry>}
-     * @memberof ModelError
      */
     errors?: Array<ErrorEntry> | null;
 }
@@ -105,9 +89,9 @@ export function ModelErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'status': json['status'],
         'detail': json['detail'] == null ? undefined : json['detail'],
         'instance': json['instance'] == null ? undefined : json['instance'],
-        'timestamp': (new Date(json['timestamp'])),
-        'traceId': json['trace_id'] == null ? undefined : json['trace_id'],
-        'errors': json['errors'] == null ? undefined : ((json['errors'] as Array<any>).map(ErrorEntryFromJSON)),
+        'timestamp': (json['timestamp'] == null ? json['timestamp'] : parseDateTime(json['timestamp'])),
+        'traceId': json['trace_id'] === undefined ? undefined : json['trace_id'] === null ? null : json['trace_id'],
+        'errors': json['errors'] === undefined ? undefined : json['errors'] === null ? null : ((json['errors'] as Array<any>).map(ErrorEntryFromJSON)),
     };
 }
 
@@ -127,7 +111,7 @@ export function ModelErrorToJSONTyped(value?: ModelError | null, ignoreDiscrimin
         'status': value['status'],
         'detail': value['detail'],
         'instance': value['instance'],
-        'timestamp': value['timestamp'].toISOString(),
+        'timestamp': value['timestamp'] == null ? value['timestamp'] : serializeDateTime(value['timestamp']),
         'trace_id': value['traceId'],
         'errors': value['errors'] == null ? undefined : ((value['errors'] as Array<any>).map(ErrorEntryToJSON)),
     };

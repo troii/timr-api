@@ -32,7 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TaskToUserAssignmentApi")
 public class TaskToUserAssignmentApi extends BaseApi {
 
@@ -56,7 +56,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @param userId ID of the User. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteTaskToUserAssignment(String taskId, String userId) throws RestClientException {
+    public void deleteTaskToUserAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         deleteTaskToUserAssignmentWithHttpInfo(taskId, userId);
     }
 
@@ -72,7 +72,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTaskToUserAssignmentWithHttpInfo(String taskId, String userId) throws RestClientException {
+    public ResponseEntity<Void> deleteTaskToUserAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -121,7 +121,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return TaskToUserAssignmentsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToUserAssignmentsPage fetchTaskToUserAssignments(String taskId, String pageToken, Integer limit, SortDirection sortDirection, TaskToUserAssignmentsSortColumn sortBy) throws RestClientException {
+    public TaskToUserAssignmentsPage fetchTaskToUserAssignments(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToUserAssignmentsSortColumn sortBy) throws RestClientException {
         return fetchTaskToUserAssignmentsWithHttpInfo(taskId, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -139,7 +139,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToUserAssignmentsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToUserAssignmentsPage> fetchTaskToUserAssignmentsWithHttpInfo(String taskId, String pageToken, Integer limit, SortDirection sortDirection, TaskToUserAssignmentsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TaskToUserAssignmentsPage> fetchTaskToUserAssignmentsWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToUserAssignmentsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -185,7 +185,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return TaskToUserAssignment
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToUserAssignment getTaskToUserAssignment(String taskId, String userId) throws RestClientException {
+    public TaskToUserAssignment getTaskToUserAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return getTaskToUserAssignmentWithHttpInfo(taskId, userId).getBody();
     }
 
@@ -200,7 +200,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToUserAssignment&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToUserAssignment> getTaskToUserAssignmentWithHttpInfo(String taskId, String userId) throws RestClientException {
+    public ResponseEntity<TaskToUserAssignment> getTaskToUserAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -249,7 +249,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return TaskToUserAssignment
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToUserAssignment upsertTaskToUserAssignment(String taskId, String userId, TaskToUserAssignmentUpsert taskToUserAssignmentUpsert) throws RestClientException {
+    public TaskToUserAssignment upsertTaskToUserAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId, @jakarta.annotation.Nonnull TaskToUserAssignmentUpsert taskToUserAssignmentUpsert) throws RestClientException {
         return upsertTaskToUserAssignmentWithHttpInfo(taskId, userId, taskToUserAssignmentUpsert).getBody();
     }
 
@@ -267,7 +267,7 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToUserAssignment&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToUserAssignment> upsertTaskToUserAssignmentWithHttpInfo(String taskId, String userId, TaskToUserAssignmentUpsert taskToUserAssignmentUpsert) throws RestClientException {
+    public ResponseEntity<TaskToUserAssignment> upsertTaskToUserAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId, @jakarta.annotation.Nonnull TaskToUserAssignmentUpsert taskToUserAssignmentUpsert) throws RestClientException {
         Object localVarPostBody = taskToUserAssignmentUpsert;
         
         // verify the required parameter 'taskId' is set

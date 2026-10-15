@@ -31,7 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.WorkScheduleModelApi")
 public class WorkScheduleModelApi extends BaseApi {
 
@@ -54,7 +54,7 @@ public class WorkScheduleModelApi extends BaseApi {
      * @param id ID of the Work Schedule Model. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteWorkScheduleModel(String id) throws RestClientException {
+    public void deleteWorkScheduleModel(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteWorkScheduleModelWithHttpInfo(id);
     }
 
@@ -69,7 +69,7 @@ public class WorkScheduleModelApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteWorkScheduleModelWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteWorkScheduleModelWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -110,7 +110,7 @@ public class WorkScheduleModelApi extends BaseApi {
      * @return WorkScheduleModelsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkScheduleModelsPage fetchWorkScheduleModels(String pageToken, Integer limit, SortDirection sortDirection, WorkScheduleModelSortColumn sortBy) throws RestClientException {
+    public WorkScheduleModelsPage fetchWorkScheduleModels(@jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable WorkScheduleModelSortColumn sortBy) throws RestClientException {
         return fetchWorkScheduleModelsWithHttpInfo(pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -126,7 +126,7 @@ public class WorkScheduleModelApi extends BaseApi {
      * @return ResponseEntity&lt;WorkScheduleModelsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkScheduleModelsPage> fetchWorkScheduleModelsWithHttpInfo(String pageToken, Integer limit, SortDirection sortDirection, WorkScheduleModelSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<WorkScheduleModelsPage> fetchWorkScheduleModelsWithHttpInfo(@jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable WorkScheduleModelSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -163,7 +163,7 @@ public class WorkScheduleModelApi extends BaseApi {
      * @return WorkScheduleModel
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkScheduleModel getWorkScheduleModel(String id) throws RestClientException {
+    public WorkScheduleModel getWorkScheduleModel(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getWorkScheduleModelWithHttpInfo(id).getBody();
     }
 
@@ -177,7 +177,7 @@ public class WorkScheduleModelApi extends BaseApi {
      * @return ResponseEntity&lt;WorkScheduleModel&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkScheduleModel> getWorkScheduleModelWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<WorkScheduleModel> getWorkScheduleModelWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set

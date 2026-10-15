@@ -27,7 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TrackApi")
 public class TrackApi extends BaseApi {
 
@@ -52,7 +52,7 @@ public class TrackApi extends BaseApi {
      * @return List&lt;Waypoint&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public List<Waypoint> createTrack(String id, List<Waypoint> waypoint) throws RestClientException {
+    public List<Waypoint> createTrack(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull List<Waypoint> waypoint) throws RestClientException {
         return createTrackWithHttpInfo(id, waypoint).getBody();
     }
 
@@ -68,7 +68,7 @@ public class TrackApi extends BaseApi {
      * @return ResponseEntity&lt;List&lt;Waypoint&gt;&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Waypoint>> createTrackWithHttpInfo(String id, List<Waypoint> waypoint) throws RestClientException {
+    public ResponseEntity<List<Waypoint>> createTrackWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull List<Waypoint> waypoint) throws RestClientException {
         Object localVarPostBody = waypoint;
         
         // verify the required parameter 'id' is set
@@ -114,7 +114,7 @@ public class TrackApi extends BaseApi {
      * @param id drive log id (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteTrack(String id) throws RestClientException {
+    public void deleteTrack(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteTrackWithHttpInfo(id);
     }
 
@@ -129,7 +129,7 @@ public class TrackApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTrackWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteTrackWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -169,7 +169,7 @@ public class TrackApi extends BaseApi {
      * @return List&lt;Waypoint&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public List<Waypoint> getTrack(String id) throws RestClientException {
+    public List<Waypoint> getTrack(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getTrackWithHttpInfo(id).getBody();
     }
 
@@ -184,7 +184,7 @@ public class TrackApi extends BaseApi {
      * @return ResponseEntity&lt;List&lt;Waypoint&gt;&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Waypoint>> getTrackWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<List<Waypoint>> getTrackWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -226,7 +226,7 @@ public class TrackApi extends BaseApi {
      * @return List&lt;Waypoint&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public List<Waypoint> updateTrack(String id, List<Waypoint> waypoint) throws RestClientException {
+    public List<Waypoint> updateTrack(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull List<Waypoint> waypoint) throws RestClientException {
         return updateTrackWithHttpInfo(id, waypoint).getBody();
     }
 
@@ -243,7 +243,7 @@ public class TrackApi extends BaseApi {
      * @return ResponseEntity&lt;List&lt;Waypoint&gt;&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<Waypoint>> updateTrackWithHttpInfo(String id, List<Waypoint> waypoint) throws RestClientException {
+    public ResponseEntity<List<Waypoint>> updateTrackWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull List<Waypoint> waypoint) throws RestClientException {
         Object localVarPostBody = waypoint;
         
         // verify the required parameter 'id' is set

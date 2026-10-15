@@ -135,7 +135,11 @@ its own where a language needs something the others do not:
 
 The generated sources are committed. They are produced by
 [OpenAPI Generator](https://openapi-generator.tech) and regenerated whenever the specification
-changes. Each package is built from a particular commit, which records the contract it speaks;
+changes. Custom template differences are recorded in
+[sdk/custom-template-changes.md](sdk/custom-template-changes.md); fixes supplied by the generator
+use its upstream templates. The Java clients maintain their own `ApiClient` implementations and
+exclude supporting files that only apply to the upstream client. Each package is built from a
+particular commit, which records the contract it speaks;
 the current source tree can contain changes that have not been published yet.
 
 SDKs are published independently through `<module>/<version>` tags, with approval through the

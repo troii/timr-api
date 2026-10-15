@@ -18,7 +18,7 @@
  */
 export const SortDirection = {
     Asc: 'asc',
-    Dsc: 'dsc'
+    Dsc: 'dsc',
 } as const;
 export type SortDirection = typeof SortDirection[keyof typeof SortDirection];
 

@@ -177,8 +177,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkScheduleModelWeek" />
     /// </summary>
-    public class WorkScheduleModelWeekJsonConverter : JsonConverter<WorkScheduleModelWeek>
+    public partial class WorkScheduleModelWeekJsonConverter : JsonConverter<WorkScheduleModelWeek>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkScheduleModelWeekJsonConverter" /> class.
+        /// </summary>
+        public WorkScheduleModelWeekJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkScheduleModelWeek" />
         /// </summary>
@@ -259,52 +269,52 @@ namespace Timr.Api.Model
             }
 
             if (!targetDurationWeeklyMinutes.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(targetDurationWeeklyMinutes));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: target_duration_weekly_minutes.");
 
             if (!monday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(monday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: monday.");
 
             if (!tuesday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(tuesday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: tuesday.");
 
             if (!wednesday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(wednesday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: wednesday.");
 
             if (!thursday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(thursday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: thursday.");
 
             if (!friday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(friday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: friday.");
 
             if (!saturday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(saturday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: saturday.");
 
             if (!sunday.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelWeek.", nameof(sunday));
+                throw new JsonException("Property is required for class WorkScheduleModelWeek: sunday.");
 
             if (targetDurationWeeklyMinutes.IsSet && targetDurationWeeklyMinutes.Value == null)
-                throw new ArgumentNullException(nameof(targetDurationWeeklyMinutes), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: target_duration_weekly_minutes.");
 
             if (monday.IsSet && monday.Value == null)
-                throw new ArgumentNullException(nameof(monday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: monday.");
 
             if (tuesday.IsSet && tuesday.Value == null)
-                throw new ArgumentNullException(nameof(tuesday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: tuesday.");
 
             if (wednesday.IsSet && wednesday.Value == null)
-                throw new ArgumentNullException(nameof(wednesday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: wednesday.");
 
             if (thursday.IsSet && thursday.Value == null)
-                throw new ArgumentNullException(nameof(thursday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: thursday.");
 
             if (friday.IsSet && friday.Value == null)
-                throw new ArgumentNullException(nameof(friday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: friday.");
 
             if (saturday.IsSet && saturday.Value == null)
-                throw new ArgumentNullException(nameof(saturday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: saturday.");
 
             if (sunday.IsSet && sunday.Value == null)
-                throw new ArgumentNullException(nameof(sunday), "Property is not nullable for class WorkScheduleModelWeek.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelWeek: sunday.");
 
             return new WorkScheduleModelWeek(targetDurationWeeklyMinutes.Value!.Value!, monday.Value!, tuesday.Value!, wednesday.Value!, thursday.Value!, friday.Value!, saturday.Value!, sunday.Value!, weekNumber, name);
         }
@@ -315,7 +325,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModelWeek"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkScheduleModelWeek workScheduleModelWeek, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -330,30 +339,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModelWeek"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkScheduleModelWeek workScheduleModelWeek, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workScheduleModelWeek.Monday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Monday), "Property is required for class WorkScheduleModelWeek.");
-
-            if (workScheduleModelWeek.Tuesday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Tuesday), "Property is required for class WorkScheduleModelWeek.");
-
-            if (workScheduleModelWeek.Wednesday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Wednesday), "Property is required for class WorkScheduleModelWeek.");
-
-            if (workScheduleModelWeek.Thursday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Thursday), "Property is required for class WorkScheduleModelWeek.");
-
-            if (workScheduleModelWeek.Friday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Friday), "Property is required for class WorkScheduleModelWeek.");
-
-            if (workScheduleModelWeek.Saturday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Saturday), "Property is required for class WorkScheduleModelWeek.");
-
-            if (workScheduleModelWeek.Sunday == null)
-                throw new ArgumentNullException(nameof(workScheduleModelWeek.Sunday), "Property is required for class WorkScheduleModelWeek.");
-
             writer.WriteNumber("target_duration_weekly_minutes", workScheduleModelWeek.TargetDurationWeeklyMinutes);
 
             writer.WritePropertyName("monday");

@@ -57,7 +57,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkingTimeCreate.JSON_PROPERTY_START_LOCATION,
   WorkingTimeCreate.JSON_PROPERTY_END_LOCATION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkingTimeCreate {
   public static final String JSON_PROPERTY_START = "start";
   
@@ -167,7 +167,7 @@ public class WorkingTimeCreate {
   }
 
   public WorkingTimeCreate addBreakTimesItem(BreakTimeUpdate breakTimesItem) {
-    if (this.breakTimes == null || !this.breakTimes.isPresent()) {
+    if (this.breakTimes == null || !this.breakTimes.isPresent() || this.breakTimes.get() == null) {
       this.breakTimes = JsonNullable.<List<BreakTimeUpdate>>of(new ArrayList<>());
     }
     try {
@@ -329,7 +329,7 @@ public class WorkingTimeCreate {
   }
 
   public WorkingTimeCreate putMetadataItem(String key, Object metadataItem) {
-    if (this.metadata == null || !this.metadata.isPresent()) {
+    if (this.metadata == null || !this.metadata.isPresent() || this.metadata.get() == null) {
       this.metadata = JsonNullable.<Map<String, Object>>of(new HashMap<>());
     }
     try {

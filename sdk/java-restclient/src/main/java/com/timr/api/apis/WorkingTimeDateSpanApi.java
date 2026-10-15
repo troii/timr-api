@@ -36,7 +36,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkingTimeDateSpanApi {
     private ApiClient apiClient;
 
@@ -76,7 +76,7 @@ public class WorkingTimeDateSpanApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -93,7 +93,7 @@ public class WorkingTimeDateSpanApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-date-spans", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-date-spans", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -107,7 +107,7 @@ public class WorkingTimeDateSpanApi {
      * @return WorkingTimeDateSpan
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpan createWorkingTimeDateSpan( WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientResponseException {
+    public WorkingTimeDateSpan createWorkingTimeDateSpan(WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createWorkingTimeDateSpanRequestCreation(workingTimeDateSpanCreate).body(localVarReturnType);
     }
@@ -123,7 +123,7 @@ public class WorkingTimeDateSpanApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpan&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpan> createWorkingTimeDateSpanWithHttpInfo( WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientResponseException {
+    public ResponseEntity<WorkingTimeDateSpan> createWorkingTimeDateSpanWithHttpInfo(WorkingTimeDateSpanCreate workingTimeDateSpanCreate) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createWorkingTimeDateSpanRequestCreation(workingTimeDateSpanCreate).toEntity(localVarReturnType);
     }
@@ -164,7 +164,7 @@ public class WorkingTimeDateSpanApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -179,7 +179,7 @@ public class WorkingTimeDateSpanApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-date-spans/{id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-date-spans/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -192,7 +192,7 @@ public class WorkingTimeDateSpanApi {
      * @param id ID of the Working Time Date Span.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteWorkingTimeDateSpan( String id) throws RestClientResponseException {
+    public void deleteWorkingTimeDateSpan(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteWorkingTimeDateSpanRequestCreation(id).body(localVarReturnType);
     }
@@ -207,7 +207,7 @@ public class WorkingTimeDateSpanApi {
      * @param id ID of the Working Time Date Span.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteWorkingTimeDateSpanWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteWorkingTimeDateSpanWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteWorkingTimeDateSpanRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -245,16 +245,16 @@ public class WorkingTimeDateSpanApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -266,7 +266,7 @@ public class WorkingTimeDateSpanApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-date-spans:deleted", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-date-spans:deleted", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -282,7 +282,7 @@ public class WorkingTimeDateSpanApi {
      * @return DeletedEntryWithMetadataPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DeletedEntryWithMetadataPage fetchDeletedWorkingTimeDateSpans( OffsetDateTime lastModifiedAfter,  String pageToken,  Integer limit,  SortDirection sortDirection,  DeletedEntrySortColumn sortBy) throws RestClientResponseException {
+    public DeletedEntryWithMetadataPage fetchDeletedWorkingTimeDateSpans(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDeletedWorkingTimeDateSpansRequestCreation(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -300,7 +300,7 @@ public class WorkingTimeDateSpanApi {
      * @return ResponseEntity&lt;DeletedEntryWithMetadataPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedWorkingTimeDateSpansWithHttpInfo( OffsetDateTime lastModifiedAfter,  String pageToken,  Integer limit,  SortDirection sortDirection,  DeletedEntrySortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedWorkingTimeDateSpansWithHttpInfo(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDeletedWorkingTimeDateSpansRequestCreation(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -344,20 +344,20 @@ public class WorkingTimeDateSpanApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "from", from));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "to", to));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "working_time_types", workingTimeTypes));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "users", users));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "from", from));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "to", to));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "working_time_types", workingTimeTypes));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "users", users));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -369,7 +369,7 @@ public class WorkingTimeDateSpanApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeDateSpanPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-date-spans", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-date-spans", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -389,7 +389,7 @@ public class WorkingTimeDateSpanApi {
      * @return WorkingTimeDateSpanPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpanPage fetchWorkingTimeDateSpans( LocalDate from,  LocalDate to,  OffsetDateTime lastModifiedAfter,  List<String> workingTimeTypes,  List<String> users,  String pageToken,  Integer limit,  SortDirection sortDirection,  WorkingTimeDateSpansSortColumn sortBy) throws RestClientResponseException {
+    public WorkingTimeDateSpanPage fetchWorkingTimeDateSpans(@Nullable LocalDate from, @Nullable LocalDate to, @Nullable OffsetDateTime lastModifiedAfter, @Nullable List<String> workingTimeTypes, @Nullable List<String> users, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkingTimeDateSpansSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpanPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchWorkingTimeDateSpansRequestCreation(from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -411,7 +411,7 @@ public class WorkingTimeDateSpanApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpanPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpanPage> fetchWorkingTimeDateSpansWithHttpInfo( LocalDate from,  LocalDate to,  OffsetDateTime lastModifiedAfter,  List<String> workingTimeTypes,  List<String> users,  String pageToken,  Integer limit,  SortDirection sortDirection,  WorkingTimeDateSpansSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<WorkingTimeDateSpanPage> fetchWorkingTimeDateSpansWithHttpInfo(@Nullable LocalDate from, @Nullable LocalDate to, @Nullable OffsetDateTime lastModifiedAfter, @Nullable List<String> workingTimeTypes, @Nullable List<String> users, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkingTimeDateSpansSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpanPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchWorkingTimeDateSpansRequestCreation(from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -458,7 +458,7 @@ public class WorkingTimeDateSpanApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -473,7 +473,7 @@ public class WorkingTimeDateSpanApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-date-spans/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-date-spans/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -486,7 +486,7 @@ public class WorkingTimeDateSpanApi {
      * @return WorkingTimeDateSpan
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpan getWorkingTimeDateSpan( String id) throws RestClientResponseException {
+    public WorkingTimeDateSpan getWorkingTimeDateSpan(String id) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getWorkingTimeDateSpanRequestCreation(id).body(localVarReturnType);
     }
@@ -501,7 +501,7 @@ public class WorkingTimeDateSpanApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpan&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpan> getWorkingTimeDateSpanWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<WorkingTimeDateSpan> getWorkingTimeDateSpanWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getWorkingTimeDateSpanRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -550,7 +550,7 @@ public class WorkingTimeDateSpanApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -567,7 +567,7 @@ public class WorkingTimeDateSpanApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-date-spans/{id}", HttpMethod.PATCH, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-date-spans/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -585,7 +585,7 @@ public class WorkingTimeDateSpanApi {
      * @return WorkingTimeDateSpan
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeDateSpan updateWorkingTimeDateSpan( String id,  WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientResponseException {
+    public WorkingTimeDateSpan updateWorkingTimeDateSpan(String id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateWorkingTimeDateSpanRequestCreation(id, workingTimeDateSpanUpdate).body(localVarReturnType);
     }
@@ -605,7 +605,7 @@ public class WorkingTimeDateSpanApi {
      * @return ResponseEntity&lt;WorkingTimeDateSpan&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeDateSpan> updateWorkingTimeDateSpanWithHttpInfo( String id,  WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientResponseException {
+    public ResponseEntity<WorkingTimeDateSpan> updateWorkingTimeDateSpanWithHttpInfo(String id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeDateSpan> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateWorkingTimeDateSpanRequestCreation(id, workingTimeDateSpanUpdate).toEntity(localVarReturnType);
     }

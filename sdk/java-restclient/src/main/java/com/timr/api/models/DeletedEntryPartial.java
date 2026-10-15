@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.*;
   DeletedEntryPartial.JSON_PROPERTY_LAST_MODIFIED,
   DeletedEntryPartial.JSON_PROPERTY_LAST_MODIFIED_BY
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class DeletedEntryPartial {
   public static final String JSON_PROPERTY_ID = "id";
   

@@ -33,7 +33,7 @@ class TaskLocation(BaseModel):
     city: Optional[StrictStr]
     zip_code: Optional[StrictStr]
     state: Optional[StrictStr]
-    country: Optional[StrictStr] = Field(description="the country's international country code")
+    country: Optional[StrictStr] = Field(description="the country's international country code", json_schema_extra={"examples": ["AT, DE, ES"]})
     __properties: ClassVar[List[str]] = ["lat", "lon", "address", "city", "zip_code", "state", "country"]
 
     model_config = ConfigDict(

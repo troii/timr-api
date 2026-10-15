@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { ProjectTimeStatus } from './ProjectTimeStatus';
 import {
     ProjectTimeStatusFromJSON,
@@ -42,68 +42,46 @@ import {
 export interface ProjectTimeUpdate {
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof ProjectTimeUpdate
      */
     start?: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof ProjectTimeUpdate
      */
     end?: Date | null;
     /**
      * 
-     * @type {Array<BreakTimeUpdate>}
-     * @memberof ProjectTimeUpdate
      */
     breakTimes?: Array<BreakTimeUpdate>;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectTimeUpdate
      */
     changed?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeUpdate
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeUpdate
      */
     taskId?: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectTimeUpdate
      */
     billable?: boolean;
     /**
      * 
-     * @type {ProjectTimeStatus}
-     * @memberof ProjectTimeUpdate
      */
     status?: ProjectTimeStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof ProjectTimeUpdate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {LocationUpdate}
-     * @memberof ProjectTimeUpdate
      */
     startLocation?: LocationUpdate | null;
     /**
      * 
-     * @type {LocationUpdate}
-     * @memberof ProjectTimeUpdate
      */
     endLocation?: LocationUpdate | null;
 }
@@ -127,17 +105,17 @@ export function ProjectTimeUpdateFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'start': json['start'] == null ? undefined : (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': json['start'] == null ? undefined : (parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'breakTimes': json['break_times'] == null ? undefined : ((json['break_times'] as Array<any>).map(BreakTimeUpdateFromJSON)),
         'changed': json['changed'] == null ? undefined : json['changed'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'taskId': json['task_id'] == null ? undefined : json['task_id'],
         'billable': json['billable'] == null ? undefined : json['billable'],
         'status': json['status'] == null ? undefined : ProjectTimeStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'startLocation': json['start_location'] == null ? undefined : LocationUpdateFromJSON(json['start_location']),
-        'endLocation': json['end_location'] == null ? undefined : LocationUpdateFromJSON(json['end_location']),
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
+        'startLocation': json['start_location'] === undefined ? undefined : json['start_location'] === null ? null : LocationUpdateFromJSON(json['start_location']),
+        'endLocation': json['end_location'] === undefined ? undefined : json['end_location'] === null ? null : LocationUpdateFromJSON(json['end_location']),
     };
 }
 
@@ -152,8 +130,8 @@ export function ProjectTimeUpdateToJSONTyped(value?: ProjectTimeUpdate | null, i
 
     return {
         
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'break_times': value['breakTimes'] == null ? undefined : ((value['breakTimes'] as Array<any>).map(BreakTimeUpdateToJSON)),
         'changed': value['changed'],
         'notes': value['notes'],

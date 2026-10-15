@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TeamsPage" />
     /// </summary>
-    public class TeamsPageJsonConverter : JsonConverter<TeamsPage>
+    public partial class TeamsPageJsonConverter : JsonConverter<TeamsPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamsPageJsonConverter" /> class.
+        /// </summary>
+        public TeamsPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TeamsPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class TeamsPage.", nameof(data));
+                throw new JsonException("Property is required for class TeamsPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class TeamsPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class TeamsPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class TeamsPage.");
+                throw new JsonException("Property is not nullable for class TeamsPage: data.");
 
             return new TeamsPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TeamsPage teamsPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TeamsPage teamsPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (teamsPage.Data == null)
-                throw new ArgumentNullException(nameof(teamsPage.Data), "Property is required for class TeamsPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, teamsPage.Data, jsonSerializerOptions);
             if (teamsPage.NextPageToken != null)

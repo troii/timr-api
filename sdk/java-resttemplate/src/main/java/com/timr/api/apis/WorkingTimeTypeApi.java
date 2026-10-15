@@ -35,7 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.WorkingTimeTypeApi")
 public class WorkingTimeTypeApi extends BaseApi {
 
@@ -58,7 +58,7 @@ public class WorkingTimeTypeApi extends BaseApi {
      * @param id ID of the Working Time Type. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteWorkingTimeType(String id) throws RestClientException {
+    public void deleteWorkingTimeType(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteWorkingTimeTypeWithHttpInfo(id);
     }
 
@@ -73,7 +73,7 @@ public class WorkingTimeTypeApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteWorkingTimeTypeWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteWorkingTimeTypeWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -122,7 +122,7 @@ public class WorkingTimeTypeApi extends BaseApi {
      * @return WorkingTimeTypesPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeTypesPage fetchWorkingTimeTypes(String name, String shortName, String description, List<WorkingTimeTypeCategory> categories, List<WorkingTimeTypeSubCategory> subCategories, List<DurationUnit> editUnits, Boolean archived, List<RecordingModeUser> recordingModes, String pageToken, Integer limit, SortDirection sortDirection, WorkingTimeTypesSortColumn sortBy) throws RestClientException {
+    public WorkingTimeTypesPage fetchWorkingTimeTypes(@jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable String shortName, @jakarta.annotation.Nullable String description, @jakarta.annotation.Nullable List<WorkingTimeTypeCategory> categories, @jakarta.annotation.Nullable List<WorkingTimeTypeSubCategory> subCategories, @jakarta.annotation.Nullable List<DurationUnit> editUnits, @jakarta.annotation.Nullable Boolean archived, @jakarta.annotation.Nullable List<RecordingModeUser> recordingModes, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable WorkingTimeTypesSortColumn sortBy) throws RestClientException {
         return fetchWorkingTimeTypesWithHttpInfo(name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -146,7 +146,7 @@ public class WorkingTimeTypeApi extends BaseApi {
      * @return ResponseEntity&lt;WorkingTimeTypesPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeTypesPage> fetchWorkingTimeTypesWithHttpInfo(String name, String shortName, String description, List<WorkingTimeTypeCategory> categories, List<WorkingTimeTypeSubCategory> subCategories, List<DurationUnit> editUnits, Boolean archived, List<RecordingModeUser> recordingModes, String pageToken, Integer limit, SortDirection sortDirection, WorkingTimeTypesSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<WorkingTimeTypesPage> fetchWorkingTimeTypesWithHttpInfo(@jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable String shortName, @jakarta.annotation.Nullable String description, @jakarta.annotation.Nullable List<WorkingTimeTypeCategory> categories, @jakarta.annotation.Nullable List<WorkingTimeTypeSubCategory> subCategories, @jakarta.annotation.Nullable List<DurationUnit> editUnits, @jakarta.annotation.Nullable Boolean archived, @jakarta.annotation.Nullable List<RecordingModeUser> recordingModes, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable WorkingTimeTypesSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -191,7 +191,7 @@ public class WorkingTimeTypeApi extends BaseApi {
      * @return WorkingTimeType
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeType getWorkingTimeType(String id) throws RestClientException {
+    public WorkingTimeType getWorkingTimeType(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getWorkingTimeTypeWithHttpInfo(id).getBody();
     }
 
@@ -205,7 +205,7 @@ public class WorkingTimeTypeApi extends BaseApi {
      * @return ResponseEntity&lt;WorkingTimeType&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeType> getWorkingTimeTypeWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<WorkingTimeType> getWorkingTimeTypeWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set

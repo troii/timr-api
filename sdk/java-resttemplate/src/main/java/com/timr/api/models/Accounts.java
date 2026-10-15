@@ -45,7 +45,7 @@ import com.fasterxml.jackson.annotation.*;
   Accounts.JSON_PROPERTY_OVERTIME_SURCHARGE_ACCOUNTS,
   Accounts.JSON_PROPERTY_VACATION_ACCOUNT
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class Accounts {
   public static final String JSON_PROPERTY_LAST_BALANCE_DATE = "last_balance_date";
   @jakarta.annotation.Nullable
@@ -123,7 +123,7 @@ public class Accounts {
   }
 
   public Accounts addOvertimeSurchargeAccountsItem(OvertimeSurchargeAccounts overtimeSurchargeAccountsItem) {
-    if (this.overtimeSurchargeAccounts == null || !this.overtimeSurchargeAccounts.isPresent()) {
+    if (this.overtimeSurchargeAccounts == null || !this.overtimeSurchargeAccounts.isPresent() || this.overtimeSurchargeAccounts.get() == null) {
       this.overtimeSurchargeAccounts = JsonNullable.<List<OvertimeSurchargeAccounts>>of(new ArrayList<>());
     }
     try {

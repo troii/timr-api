@@ -28,14 +28,10 @@ import {
 export interface HolidaysPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof HolidaysPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<Holiday>}
-     * @memberof HolidaysPage
      */
     data: Array<Holiday>;
 }
@@ -44,7 +40,7 @@ export interface HolidaysPage {
  * Check if a given object implements the HolidaysPage interface.
  */
 export function instanceOfHolidaysPage(value: object): value is HolidaysPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

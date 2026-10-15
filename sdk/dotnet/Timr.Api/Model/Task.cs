@@ -440,32 +440,42 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Task" />
     /// </summary>
-    public class TaskJsonConverter : JsonConverter<Task>
+    public partial class TaskJsonConverter : JsonConverter<Task>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskJsonConverter" /> class.
+        /// </summary>
+        public TaskJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize StartDate
         /// </summary>
-        public static string StartDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string StartDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize EndDate
         /// </summary>
-        public static string EndDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EndDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize LockDate
         /// </summary>
-        public static string LockDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string LockDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ActiveFrom
         /// </summary>
-        public static string ActiveFromFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ActiveFromFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ActiveTo
         /// </summary>
-        public static string ActiveToFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ActiveToFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="Task" />
@@ -585,9 +595,7 @@ namespace Timr.Api.Model
                             budgetInherited = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         case "budget_planning_type":
-                            string? budgetPlanningTypeRawValue = utf8JsonReader.GetString();
-                            if (budgetPlanningTypeRawValue != null)
-                                budgetPlanningType = new Option<BudgetPlanningType?>(BudgetPlanningTypeValueConverter.FromStringOrDefault(budgetPlanningTypeRawValue));
+                            budgetPlanningType = new Option<BudgetPlanningType?>(JsonSerializer.Deserialize<BudgetPlanningType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "budget_hours_planned":
                             budgetHoursPlanned = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
@@ -629,85 +637,85 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(id));
+                throw new JsonException("Property is required for class Task: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(name));
+                throw new JsonException("Property is required for class Task: name.");
 
             if (!breadcrumbs.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(breadcrumbs));
+                throw new JsonException("Property is required for class Task: breadcrumbs.");
 
             if (!bookable.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(bookable));
+                throw new JsonException("Property is required for class Task: bookable.");
 
             if (!billable.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(billable));
+                throw new JsonException("Property is required for class Task: billable.");
 
             if (!projectTimeNotesRequired.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(projectTimeNotesRequired));
+                throw new JsonException("Property is required for class Task: project_time_notes_required.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(externalId));
+                throw new JsonException("Property is required for class Task: external_id.");
 
             if (!parentTask.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(parentTask));
+                throw new JsonException("Property is required for class Task: parent_task.");
 
             if (!description.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(description));
+                throw new JsonException("Property is required for class Task: description.");
 
             if (!descriptionExternal.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(descriptionExternal));
+                throw new JsonException("Property is required for class Task: description_external.");
 
             if (!startDate.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(startDate));
+                throw new JsonException("Property is required for class Task: start_date.");
 
             if (!endDate.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(endDate));
+                throw new JsonException("Property is required for class Task: end_date.");
 
             if (!activeFrom.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(activeFrom));
+                throw new JsonException("Property is required for class Task: active_from.");
 
             if (!activeTo.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(activeTo));
+                throw new JsonException("Property is required for class Task: active_to.");
 
             if (!customField1.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(customField1));
+                throw new JsonException("Property is required for class Task: custom_field_1.");
 
             if (!customField2.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(customField2));
+                throw new JsonException("Property is required for class Task: custom_field_2.");
 
             if (!customField3.IsSet)
-                throw new ArgumentException("Property is required for class Task.", nameof(customField3));
+                throw new JsonException("Property is required for class Task: custom_field_3.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: name.");
 
             if (breadcrumbs.IsSet && breadcrumbs.Value == null)
-                throw new ArgumentNullException(nameof(breadcrumbs), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: breadcrumbs.");
 
             if (bookable.IsSet && bookable.Value == null)
-                throw new ArgumentNullException(nameof(bookable), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: bookable.");
 
             if (billable.IsSet && billable.Value == null)
-                throw new ArgumentNullException(nameof(billable), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: billable.");
 
             if (projectTimeNotesRequired.IsSet && projectTimeNotesRequired.Value == null)
-                throw new ArgumentNullException(nameof(projectTimeNotesRequired), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: project_time_notes_required.");
 
             if (budgetInherited.IsSet && budgetInherited.Value == null)
-                throw new ArgumentNullException(nameof(budgetInherited), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: budget_inherited.");
 
             if (budgetPlanningType.IsSet && budgetPlanningType.Value == null)
-                throw new ArgumentNullException(nameof(budgetPlanningType), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: budget_planning_type.");
 
             if (budgetIncludeNonBillableProjectTimes.IsSet && budgetIncludeNonBillableProjectTimes.Value == null)
-                throw new ArgumentNullException(nameof(budgetIncludeNonBillableProjectTimes), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: budget_include_non_billable_project_times.");
 
             if (locationInherited.IsSet && locationInherited.Value == null)
-                throw new ArgumentNullException(nameof(locationInherited), "Property is not nullable for class Task.");
+                throw new JsonException("Property is not nullable for class Task: location_inherited.");
 
             return new Task(id.Value!, name.Value!, breadcrumbs.Value!, bookable.Value!.Value!, billable.Value!.Value!, projectTimeNotesRequired.Value!.Value!, externalId.Value!, parentTask.Value!, description.Value!, descriptionExternal.Value!, startDate.Value!, endDate.Value!, lockDate, earliestStartTime, latestEndTime, activeFrom.Value!, activeTo.Value!, budgetInherited, budgetPlanningType, budgetHoursPlanned, budgetHourlyRate, budgetPlanned, budgetIncludeNonBillableProjectTimes, locationInherited, location, locationRestrictionRadiusMeters, customField1.Value!, customField2.Value!, customField3.Value!, metadata);
         }
@@ -718,7 +726,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="task"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Task task, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -733,17 +740,19 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="task"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Task task, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (task.Id == null)
-                throw new ArgumentNullException(nameof(task.Id), "Property is required for class Task.");
+            if (task.BudgetInheritedOption.IsSet && task.BudgetInherited == null)
+                throw new JsonException("Cannot write null property Task.BudgetInherited to non-nullable JSON property 'budget_inherited'.");
 
-            if (task.Name == null)
-                throw new ArgumentNullException(nameof(task.Name), "Property is required for class Task.");
+            if (task.BudgetPlanningTypeOption.IsSet && task.BudgetPlanningType == null)
+                throw new JsonException("Cannot write null property Task.BudgetPlanningType to non-nullable JSON property 'budget_planning_type'.");
 
-            if (task.Breadcrumbs == null)
-                throw new ArgumentNullException(nameof(task.Breadcrumbs), "Property is required for class Task.");
+            if (task.BudgetIncludeNonBillableProjectTimesOption.IsSet && task.BudgetIncludeNonBillableProjectTimes == null)
+                throw new JsonException("Cannot write null property Task.BudgetIncludeNonBillableProjectTimes to non-nullable JSON property 'budget_include_non_billable_project_times'.");
+
+            if (task.LocationInheritedOption.IsSet && task.LocationInherited == null)
+                throw new JsonException("Cannot write null property Task.LocationInherited to non-nullable JSON property 'location_inherited'.");
 
             writer.WriteString("id", task.Id);
 

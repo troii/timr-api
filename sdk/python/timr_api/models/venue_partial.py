@@ -34,8 +34,8 @@ class VenuePartial(BaseModel):
     street: StrictStr
     street_number: StrictStr
     country: StrictStr
-    lat: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Latitude in decimal degrees.")
-    lon: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Longitude in decimal degrees.")
+    lat: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Latitude in decimal degrees.", json_schema_extra={"examples": [48.2455964]})
+    lon: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Longitude in decimal degrees.", json_schema_extra={"examples": [13.0543811]})
     __properties: ClassVar[List[str]] = ["id", "name", "city", "zip_code", "street", "street_number", "country", "lat", "lon"]
 
     model_config = ConfigDict(

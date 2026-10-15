@@ -21,6 +21,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Timr.Api.Client;
+using Timr.Api.Logging;
 using Timr.Api.Model;
 using System.Diagnostics.CodeAnalysis;
 
@@ -504,11 +505,6 @@ namespace Timr.Api.Api
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
-        /// The logger factory
-        /// </summary>
-        public ILoggerFactory LoggerFactory { get; }
-
-        /// <summary>
         /// The logger
         /// </summary>
         public ILogger<WorkingTimeDateSpanApi> Logger { get; }
@@ -532,12 +528,11 @@ namespace Timr.Api.Api
         /// Initializes a new instance of the <see cref="WorkingTimeDateSpanApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public WorkingTimeDateSpanApi(ILogger<WorkingTimeDateSpanApi> logger, ILoggerFactory loggerFactory, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, WorkingTimeDateSpanApiEvents workingTimeDateSpanApiEvents,
+        public WorkingTimeDateSpanApi(ILogger<WorkingTimeDateSpanApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, WorkingTimeDateSpanApiEvents workingTimeDateSpanApiEvents,
             TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
-            LoggerFactory = loggerFactory;
-            Logger = LoggerFactory.CreateLogger<WorkingTimeDateSpanApi>();
+            Logger = logger;
             HttpClient = httpClient;
             Events = workingTimeDateSpanApiEvents;
             OauthTokenProvider = oauthTokenProvider;
@@ -566,7 +561,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLog = false;
             AfterCreateWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, workingTimeDateSpanCreate);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -589,7 +584,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLogLocalVar = false;
             OnErrorCreateWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, workingTimeDateSpanCreate);
             if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
 
         /// <summary>
@@ -646,8 +641,8 @@ namespace Timr.Api.Api
                         ? "/working-time-date-spans"
                         : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans");
 
-                    httpRequestMessageLocalVar.Content = (workingTimeDateSpanCreate as object) is System.IO.Stream stream
-                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                    httpRequestMessageLocalVar.Content = (workingTimeDateSpanCreate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
                         : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(workingTimeDateSpanCreate, _jsonSerializerOptions));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -690,13 +685,12 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<CreateWorkingTimeDateSpanApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<CreateWorkingTimeDateSpanApiResponse>();
                         CreateWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
@@ -730,7 +724,7 @@ namespace Timr.Api.Api
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<CreateWorkingTimeDateSpanApiResponse> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
             /// The <see cref="CreateWorkingTimeDateSpanApiResponse"/>
@@ -742,7 +736,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateWorkingTimeDateSpanApiResponse(ILogger<CreateWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public CreateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -758,7 +752,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateWorkingTimeDateSpanApiResponse(ILogger<CreateWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public CreateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -778,11 +772,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.WorkingTimeDateSpan? Created()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.WorkingTimeDateSpan? result = null;
+                OnCreated(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultCreated();
+                return result;
+            }
+
+            private Timr.Api.Model.WorkingTimeDateSpan? DefaultCreated()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsCreated
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpan>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpan? result);
 
             /// <summary>
             /// Returns true if the response is 201 Created and the deserialized response is not null
@@ -816,11 +822,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? BadRequest()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnBadRequest(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultBadRequest();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultBadRequest()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsBadRequest
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 400 BadRequest and the deserialized response is not null
@@ -854,11 +872,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? Conflict()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsConflict
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnConflict(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 409 Conflict and the deserialized response is not null
@@ -892,11 +922,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? UnprocessableContent()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsUnprocessableContent
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
@@ -923,7 +965,7 @@ namespace Timr.Api.Api
                 bool suppressDefaultLog = false;
                 OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
                 if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
             }
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
@@ -952,7 +994,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLog = false;
             AfterDeleteWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -975,7 +1017,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLogLocalVar = false;
             OnErrorDeleteWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
 
         /// <summary>
@@ -1063,13 +1105,12 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<DeleteWorkingTimeDateSpanApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<DeleteWorkingTimeDateSpanApiResponse>();
                         DeleteWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
@@ -1103,7 +1144,7 @@ namespace Timr.Api.Api
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<DeleteWorkingTimeDateSpanApiResponse> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
             /// The <see cref="DeleteWorkingTimeDateSpanApiResponse"/>
@@ -1115,7 +1156,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteWorkingTimeDateSpanApiResponse(ILogger<DeleteWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public DeleteWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1131,7 +1172,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteWorkingTimeDateSpanApiResponse(ILogger<DeleteWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public DeleteWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1157,11 +1198,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? Forbidden()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnForbidden(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultForbidden();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultForbidden()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsForbidden
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 403 Forbidden and the deserialized response is not null
@@ -1195,11 +1248,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? NotFound()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsNotFound
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 404 NotFound and the deserialized response is not null
@@ -1233,11 +1298,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? Conflict()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsConflict
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnConflict(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 409 Conflict and the deserialized response is not null
@@ -1264,7 +1341,7 @@ namespace Timr.Api.Api
                 bool suppressDefaultLog = false;
                 OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
                 if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
             }
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
@@ -1297,7 +1374,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLog = false;
             AfterFetchDeletedWorkingTimeDateSpans(ref suppressDefaultLog, apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -1328,7 +1405,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLogLocalVar = false;
             OnErrorFetchDeletedWorkingTimeDateSpans(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
 
         /// <summary>
@@ -1447,13 +1524,12 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<FetchDeletedWorkingTimeDateSpansApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<FetchDeletedWorkingTimeDateSpansApiResponse>();
                         FetchDeletedWorkingTimeDateSpansApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans:deleted", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans:deleted", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
@@ -1487,7 +1563,7 @@ namespace Timr.Api.Api
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<FetchDeletedWorkingTimeDateSpansApiResponse> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
             /// The <see cref="FetchDeletedWorkingTimeDateSpansApiResponse"/>
@@ -1499,7 +1575,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchDeletedWorkingTimeDateSpansApiResponse(ILogger<FetchDeletedWorkingTimeDateSpansApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchDeletedWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1515,7 +1591,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchDeletedWorkingTimeDateSpansApiResponse(ILogger<FetchDeletedWorkingTimeDateSpansApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchDeletedWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1535,11 +1611,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.DeletedEntryWithMetadataPage? Ok()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.DeletedEntryWithMetadataPage? result = null;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private Timr.Api.Model.DeletedEntryWithMetadataPage? DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.DeletedEntryWithMetadataPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.DeletedEntryWithMetadataPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
@@ -1573,11 +1661,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? BadRequest()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnBadRequest(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultBadRequest();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultBadRequest()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsBadRequest
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 400 BadRequest and the deserialized response is not null
@@ -1604,7 +1704,7 @@ namespace Timr.Api.Api
                 bool suppressDefaultLog = false;
                 OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
                 if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
             }
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
@@ -1649,7 +1749,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLog = false;
             AfterFetchWorkingTimeDateSpans(ref suppressDefaultLog, apiResponseLocalVar, from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -1688,7 +1788,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLogLocalVar = false;
             OnErrorFetchWorkingTimeDateSpans(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
 
         /// <summary>
@@ -1831,13 +1931,12 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<FetchWorkingTimeDateSpansApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<FetchWorkingTimeDateSpansApiResponse>();
                         FetchWorkingTimeDateSpansApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
@@ -1871,7 +1970,7 @@ namespace Timr.Api.Api
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<FetchWorkingTimeDateSpansApiResponse> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
             /// The <see cref="FetchWorkingTimeDateSpansApiResponse"/>
@@ -1883,7 +1982,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchWorkingTimeDateSpansApiResponse(ILogger<FetchWorkingTimeDateSpansApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1899,7 +1998,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchWorkingTimeDateSpansApiResponse(ILogger<FetchWorkingTimeDateSpansApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1919,11 +2018,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.WorkingTimeDateSpanPage? Ok()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.WorkingTimeDateSpanPage? result = null;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private Timr.Api.Model.WorkingTimeDateSpanPage? DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpanPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpanPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
@@ -1957,11 +2068,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? BadRequest()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnBadRequest(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultBadRequest();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultBadRequest()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsBadRequest
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 400 BadRequest and the deserialized response is not null
@@ -1988,7 +2111,7 @@ namespace Timr.Api.Api
                 bool suppressDefaultLog = false;
                 OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
                 if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
             }
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
@@ -2017,7 +2140,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLog = false;
             AfterGetWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -2040,7 +2163,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLogLocalVar = false;
             OnErrorGetWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
 
         /// <summary>
@@ -2129,13 +2252,12 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<GetWorkingTimeDateSpanApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<GetWorkingTimeDateSpanApiResponse>();
                         GetWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
@@ -2169,7 +2291,7 @@ namespace Timr.Api.Api
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<GetWorkingTimeDateSpanApiResponse> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
             /// The <see cref="GetWorkingTimeDateSpanApiResponse"/>
@@ -2181,7 +2303,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetWorkingTimeDateSpanApiResponse(ILogger<GetWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2197,7 +2319,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetWorkingTimeDateSpanApiResponse(ILogger<GetWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2217,11 +2339,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.WorkingTimeDateSpan? Ok()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.WorkingTimeDateSpan? result = null;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private Timr.Api.Model.WorkingTimeDateSpan? DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpan>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpan? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
@@ -2255,11 +2389,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? Forbidden()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnForbidden(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultForbidden();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultForbidden()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsForbidden
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 403 Forbidden and the deserialized response is not null
@@ -2293,11 +2439,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? NotFound()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsNotFound
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 404 NotFound and the deserialized response is not null
@@ -2324,7 +2482,7 @@ namespace Timr.Api.Api
                 bool suppressDefaultLog = false;
                 OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
                 if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
             }
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
@@ -2358,7 +2516,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLog = false;
             AfterUpdateWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, id, workingTimeDateSpanUpdate);
             if (!suppressDefaultLog)
-                Logger.LogInformation("{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
 
         /// <summary>
@@ -2383,7 +2541,7 @@ namespace Timr.Api.Api
             bool suppressDefaultLogLocalVar = false;
             OnErrorUpdateWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, workingTimeDateSpanUpdate);
             if (!suppressDefaultLogLocalVar)
-                Logger.LogError(exceptionLocalVar, "An error occurred while sending the request to the server.");
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
 
         /// <summary>
@@ -2444,8 +2602,8 @@ namespace Timr.Api.Api
                         : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
-                    httpRequestMessageLocalVar.Content = (workingTimeDateSpanUpdate as object) is System.IO.Stream stream
-                        ? httpRequestMessageLocalVar.Content = new StreamContent(stream)
+                    httpRequestMessageLocalVar.Content = (workingTimeDateSpanUpdate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
+                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
                         : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(workingTimeDateSpanUpdate, _jsonSerializerOptions));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -2488,13 +2646,12 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        ILogger<UpdateWorkingTimeDateSpanApiResponse> apiResponseLoggerLocalVar = LoggerFactory.CreateLogger<UpdateWorkingTimeDateSpanApiResponse>();
                         UpdateWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(apiResponseLoggerLocalVar, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
@@ -2528,7 +2685,7 @@ namespace Timr.Api.Api
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<UpdateWorkingTimeDateSpanApiResponse> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
             /// The <see cref="UpdateWorkingTimeDateSpanApiResponse"/>
@@ -2540,7 +2697,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateWorkingTimeDateSpanApiResponse(ILogger<UpdateWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public UpdateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2556,7 +2713,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateWorkingTimeDateSpanApiResponse(ILogger<UpdateWorkingTimeDateSpanApiResponse> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public UpdateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2576,11 +2733,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.WorkingTimeDateSpan? Ok()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.WorkingTimeDateSpan? result = null;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private Timr.Api.Model.WorkingTimeDateSpan? DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpan>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpan? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
@@ -2620,11 +2789,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? BadRequest()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnBadRequest(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultBadRequest();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultBadRequest()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsBadRequest
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 400 BadRequest and the deserialized response is not null
@@ -2658,11 +2839,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? Forbidden()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnForbidden(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultForbidden();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultForbidden()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsForbidden
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 403 Forbidden and the deserialized response is not null
@@ -2696,11 +2889,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? NotFound()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsNotFound
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 404 NotFound and the deserialized response is not null
@@ -2734,11 +2939,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? Conflict()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsConflict
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnConflict(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 409 Conflict and the deserialized response is not null
@@ -2772,11 +2989,23 @@ namespace Timr.Api.Api
             /// <returns></returns>
             public Timr.Api.Model.Error? UnprocessableContent()
             {
-                // This logic may be modified with the AsModel.mustache template
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnUnprocessableContent(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultUnprocessableContent();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultUnprocessableContent()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsUnprocessableContent
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
+
+            partial void OnUnprocessableContent(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
             /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
@@ -2803,7 +3032,7 @@ namespace Timr.Api.Api
                 bool suppressDefaultLog = false;
                 OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
                 if (!suppressDefaultLog)
-                    Logger.LogError(exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
             }
 
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);

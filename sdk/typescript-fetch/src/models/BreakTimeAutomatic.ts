@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { BreakTimeType } from './BreakTimeType';
 import {
     BreakTimeTypeFromJSON,
@@ -28,26 +28,18 @@ import {
 export interface BreakTimeAutomatic {
     /**
      * 
-     * @type {BreakTimeType}
-     * @memberof BreakTimeAutomatic
      */
     type: BreakTimeType;
     /**
      * Duration of break in minutes
-     * @type {number}
-     * @memberof BreakTimeAutomatic
      */
     durationMinutes: number;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof BreakTimeAutomatic
      */
     start: Date | null;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof BreakTimeAutomatic
      */
     end: Date | null;
 }
@@ -59,7 +51,7 @@ export interface BreakTimeAutomatic {
  */
 export function instanceOfBreakTimeAutomatic(value: object): value is BreakTimeAutomatic {
     if (!('type' in value) || value['type'] === undefined) return false;
-    if (!('durationMinutes' in value) || value['durationMinutes'] === undefined) return false;
+    if ((!('durationMinutes' in (value as Record<string, any>)) && !('duration_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['durationMinutes'] === undefined && (value as Record<string, any>)['duration_minutes'] === undefined)) return false;
     if (!('start' in value) || value['start'] === undefined) return false;
     if (!('end' in value) || value['end'] === undefined) return false;
     return true;
@@ -77,8 +69,8 @@ export function BreakTimeAutomaticFromJSONTyped(json: any, ignoreDiscriminator: 
         
         'type': BreakTimeTypeFromJSON(json['type']),
         'durationMinutes': json['duration_minutes'],
-        'start': (json['start'] == null ? null : new Date(json['start'])),
-        'end': (json['end'] == null ? null : new Date(json['end'])),
+        'start': (json['start'] == null ? null : parseDateTime(json['start'])),
+        'end': (json['end'] == null ? null : parseDateTime(json['end'])),
     };
 }
 
@@ -95,8 +87,8 @@ export function BreakTimeAutomaticToJSONTyped(value?: BreakTimeAutomatic | null,
         
         'type': BreakTimeTypeToJSON(value['type']),
         'duration_minutes': value['durationMinutes'],
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
     };
 }
 

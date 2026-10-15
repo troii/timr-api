@@ -21,44 +21,30 @@ import { mapValues } from '../runtime';
 export interface TaskLocation {
     /**
      * Latitude in decimal degrees.
-     * @type {number}
-     * @memberof TaskLocation
      */
     lat: number | null;
     /**
      * Longitude in decimal degrees.
-     * @type {number}
-     * @memberof TaskLocation
      */
     lon: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskLocation
      */
     address: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskLocation
      */
     city: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskLocation
      */
     zipCode: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskLocation
      */
     state: string | null;
     /**
      * the country's international country code
-     * @type {string}
-     * @memberof TaskLocation
      */
     country: string | null;
 }
@@ -71,7 +57,7 @@ export function instanceOfTaskLocation(value: object): value is TaskLocation {
     if (!('lon' in value) || value['lon'] === undefined) return false;
     if (!('address' in value) || value['address'] === undefined) return false;
     if (!('city' in value) || value['city'] === undefined) return false;
-    if (!('zipCode' in value) || value['zipCode'] === undefined) return false;
+    if ((!('zipCode' in (value as Record<string, any>)) && !('zip_code' in (value as Record<string, any>))) || ((value as Record<string, any>)['zipCode'] === undefined && (value as Record<string, any>)['zip_code'] === undefined)) return false;
     if (!('state' in value) || value['state'] === undefined) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     return true;

@@ -220,6 +220,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override WorkingTimeStatus? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             WorkingTimeStatus? result = rawValue == null
@@ -240,7 +243,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, WorkingTimeStatus? workingTimeStatus, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(workingTimeStatus.HasValue ? WorkingTimeStatusValueConverter.ToJsonValue(workingTimeStatus.Value).ToString() : "null");
+            if (workingTimeStatus.HasValue)
+                writer.WriteStringValue(WorkingTimeStatusValueConverter.ToJsonValue(workingTimeStatus.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

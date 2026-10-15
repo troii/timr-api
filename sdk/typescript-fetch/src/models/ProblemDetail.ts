@@ -21,32 +21,22 @@ import { mapValues } from '../runtime';
 export interface ProblemDetail {
     /**
      * 
-     * @type {string}
-     * @memberof ProblemDetail
      */
     type: string;
     /**
      * 
-     * @type {string}
-     * @memberof ProblemDetail
      */
     title: string;
     /**
      * 
-     * @type {number}
-     * @memberof ProblemDetail
      */
     status: number;
     /**
      * 
-     * @type {string}
-     * @memberof ProblemDetail
      */
     detail?: string;
     /**
      * 
-     * @type {string}
-     * @memberof ProblemDetail
      */
     instance?: string;
 }

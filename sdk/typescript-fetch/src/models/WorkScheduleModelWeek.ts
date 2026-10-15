@@ -28,62 +28,42 @@ import {
 export interface WorkScheduleModelWeek {
     /**
      * index of the week in alternating_weeks models (0-based); omitted for fixed_week models
-     * @type {number}
-     * @memberof WorkScheduleModelWeek
      */
     weekNumber?: number | null;
     /**
      * display name of the week in alternating_weeks models; omitted for fixed_week models
-     * @type {string}
-     * @memberof WorkScheduleModelWeek
      */
     name?: string | null;
     /**
      * value in minutes
-     * @type {number}
-     * @memberof WorkScheduleModelWeek
      */
     targetDurationWeeklyMinutes: number;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     monday: DailyWorkSchedule;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     tuesday: DailyWorkSchedule;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     wednesday: DailyWorkSchedule;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     thursday: DailyWorkSchedule;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     friday: DailyWorkSchedule;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     saturday: DailyWorkSchedule;
     /**
      * 
-     * @type {DailyWorkSchedule}
-     * @memberof WorkScheduleModelWeek
      */
     sunday: DailyWorkSchedule;
 }
@@ -92,7 +72,7 @@ export interface WorkScheduleModelWeek {
  * Check if a given object implements the WorkScheduleModelWeek interface.
  */
 export function instanceOfWorkScheduleModelWeek(value: object): value is WorkScheduleModelWeek {
-    if (!('targetDurationWeeklyMinutes' in value) || value['targetDurationWeeklyMinutes'] === undefined) return false;
+    if ((!('targetDurationWeeklyMinutes' in (value as Record<string, any>)) && !('target_duration_weekly_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['targetDurationWeeklyMinutes'] === undefined && (value as Record<string, any>)['target_duration_weekly_minutes'] === undefined)) return false;
     if (!('monday' in value) || value['monday'] === undefined) return false;
     if (!('tuesday' in value) || value['tuesday'] === undefined) return false;
     if (!('wednesday' in value) || value['wednesday'] === undefined) return false;
@@ -113,8 +93,8 @@ export function WorkScheduleModelWeekFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'weekNumber': json['week_number'] == null ? undefined : json['week_number'],
-        'name': json['name'] == null ? undefined : json['name'],
+        'weekNumber': json['week_number'] === undefined ? undefined : json['week_number'] === null ? null : json['week_number'],
+        'name': json['name'] === undefined ? undefined : json['name'] === null ? null : json['name'],
         'targetDurationWeeklyMinutes': json['target_duration_weekly_minutes'],
         'monday': DailyWorkScheduleFromJSON(json['monday']),
         'tuesday': DailyWorkScheduleFromJSON(json['tuesday']),

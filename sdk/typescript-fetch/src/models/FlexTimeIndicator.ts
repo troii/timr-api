@@ -19,7 +19,7 @@
 export const FlexTimeIndicator = {
     Green: 'green',
     Yellow: 'yellow',
-    Red: 'red'
+    Red: 'red',
 } as const;
 export type FlexTimeIndicator = typeof FlexTimeIndicator[keyof typeof FlexTimeIndicator];
 

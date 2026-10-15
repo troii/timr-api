@@ -28,14 +28,10 @@ import {
 export interface DeletedEntryWithMetadataPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof DeletedEntryWithMetadataPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<DeletedEntryWithMetadata>}
-     * @memberof DeletedEntryWithMetadataPage
      */
     data: Array<DeletedEntryWithMetadata>;
 }
@@ -44,7 +40,7 @@ export interface DeletedEntryWithMetadataPage {
  * Check if a given object implements the DeletedEntryWithMetadataPage interface.
  */
 export function instanceOfDeletedEntryWithMetadataPage(value: object): value is DeletedEntryWithMetadataPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

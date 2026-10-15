@@ -124,8 +124,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Team" />
     /// </summary>
-    public class TeamJsonConverter : JsonConverter<Team>
+    public partial class TeamJsonConverter : JsonConverter<Team>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamJsonConverter" /> class.
+        /// </summary>
+        public TeamJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="Team" />
         /// </summary>
@@ -190,31 +200,31 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class Team.", nameof(id));
+                throw new JsonException("Property is required for class Team: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class Team.", nameof(name));
+                throw new JsonException("Property is required for class Team: name.");
 
             if (!breadcrumbs.IsSet)
-                throw new ArgumentException("Property is required for class Team.", nameof(breadcrumbs));
+                throw new JsonException("Property is required for class Team: breadcrumbs.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class Team.", nameof(externalId));
+                throw new JsonException("Property is required for class Team: external_id.");
 
             if (!description.IsSet)
-                throw new ArgumentException("Property is required for class Team.", nameof(description));
+                throw new JsonException("Property is required for class Team: description.");
 
             if (!parentTeam.IsSet)
-                throw new ArgumentException("Property is required for class Team.", nameof(parentTeam));
+                throw new JsonException("Property is required for class Team: parent_team.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class Team.");
+                throw new JsonException("Property is not nullable for class Team: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class Team.");
+                throw new JsonException("Property is not nullable for class Team: name.");
 
             if (breadcrumbs.IsSet && breadcrumbs.Value == null)
-                throw new ArgumentNullException(nameof(breadcrumbs), "Property is not nullable for class Team.");
+                throw new JsonException("Property is not nullable for class Team: breadcrumbs.");
 
             return new Team(id.Value!, name.Value!, breadcrumbs.Value!, externalId.Value!, description.Value!, parentTeam.Value!);
         }
@@ -225,7 +235,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="team"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Team team, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -240,18 +249,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="team"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Team team, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (team.Id == null)
-                throw new ArgumentNullException(nameof(team.Id), "Property is required for class Team.");
-
-            if (team.Name == null)
-                throw new ArgumentNullException(nameof(team.Name), "Property is required for class Team.");
-
-            if (team.Breadcrumbs == null)
-                throw new ArgumentNullException(nameof(team.Breadcrumbs), "Property is required for class Team.");
-
             writer.WriteString("id", team.Id);
 
             writer.WriteString("name", team.Name);

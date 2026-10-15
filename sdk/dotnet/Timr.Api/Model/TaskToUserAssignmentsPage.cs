@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskToUserAssignmentsPage" />
     /// </summary>
-    public class TaskToUserAssignmentsPageJsonConverter : JsonConverter<TaskToUserAssignmentsPage>
+    public partial class TaskToUserAssignmentsPageJsonConverter : JsonConverter<TaskToUserAssignmentsPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskToUserAssignmentsPageJsonConverter" /> class.
+        /// </summary>
+        public TaskToUserAssignmentsPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskToUserAssignmentsPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class TaskToUserAssignmentsPage.", nameof(data));
+                throw new JsonException("Property is required for class TaskToUserAssignmentsPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class TaskToUserAssignmentsPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class TaskToUserAssignmentsPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class TaskToUserAssignmentsPage.");
+                throw new JsonException("Property is not nullable for class TaskToUserAssignmentsPage: data.");
 
             return new TaskToUserAssignmentsPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToUserAssignmentsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskToUserAssignmentsPage taskToUserAssignmentsPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToUserAssignmentsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskToUserAssignmentsPage taskToUserAssignmentsPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskToUserAssignmentsPage.Data == null)
-                throw new ArgumentNullException(nameof(taskToUserAssignmentsPage.Data), "Property is required for class TaskToUserAssignmentsPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, taskToUserAssignmentsPage.Data, jsonSerializerOptions);
             if (taskToUserAssignmentsPage.NextPageToken != null)

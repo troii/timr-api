@@ -21,38 +21,26 @@ import { mapValues } from '../runtime';
 export interface Car {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof Car
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof Car
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof Car
      */
     plate: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof Car
      */
     externalId: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof Car
      */
     usable: boolean;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof Car
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -64,7 +52,7 @@ export function instanceOfCar(value: object): value is Car {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('plate' in value) || value['plate'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     if (!('usable' in value) || value['usable'] === undefined) return false;
     return true;
 }
@@ -84,7 +72,7 @@ export function CarFromJSONTyped(json: any, ignoreDiscriminator: boolean): Car {
         'plate': json['plate'],
         'externalId': json['external_id'],
         'usable': json['usable'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 

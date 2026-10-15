@@ -279,17 +279,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DriveLogUpdate" />
     /// </summary>
-    public class DriveLogUpdateJsonConverter : JsonConverter<DriveLogUpdate>
+    public partial class DriveLogUpdateJsonConverter : JsonConverter<DriveLogUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DriveLogUpdateJsonConverter" /> class.
+        /// </summary>
+        public DriveLogUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DriveLogUpdate" />
@@ -365,9 +375,7 @@ namespace Timr.Api.Model
                             driveLogCategoryId = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<DriveLogStatus?>(DriveLogStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<DriveLogStatus?>(JsonSerializer.Deserialize<DriveLogStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "metadata":
                             metadata = new Option<Dictionary<string, Object>?>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -385,19 +393,19 @@ namespace Timr.Api.Model
             }
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class DriveLogUpdate.");
+                throw new JsonException("Property is not nullable for class DriveLogUpdate: start.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class DriveLogUpdate.");
+                throw new JsonException("Property is not nullable for class DriveLogUpdate: changed.");
 
             if (startMileage.IsSet && startMileage.Value == null)
-                throw new ArgumentNullException(nameof(startMileage), "Property is not nullable for class DriveLogUpdate.");
+                throw new JsonException("Property is not nullable for class DriveLogUpdate: start_mileage.");
 
             if (driveLogCategoryId.IsSet && driveLogCategoryId.Value == null)
-                throw new ArgumentNullException(nameof(driveLogCategoryId), "Property is not nullable for class DriveLogUpdate.");
+                throw new JsonException("Property is not nullable for class DriveLogUpdate: drive_log_category_id.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class DriveLogUpdate.");
+                throw new JsonException("Property is not nullable for class DriveLogUpdate: status.");
 
             return new DriveLogUpdate(start, end, changed, startMileage, endMileage, route, purpose, visited, driveLogCategoryId, status, metadata, startLocation, endLocation);
         }
@@ -408,7 +416,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DriveLogUpdate driveLogUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -423,11 +430,22 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogUpdate driveLogUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (driveLogUpdate.StartOption.IsSet && driveLogUpdate.Start == null)
+                throw new JsonException("Cannot write null property DriveLogUpdate.Start to non-nullable JSON property 'start'.");
+
+            if (driveLogUpdate.ChangedOption.IsSet && driveLogUpdate.Changed == null)
+                throw new JsonException("Cannot write null property DriveLogUpdate.Changed to non-nullable JSON property 'changed'.");
+
+            if (driveLogUpdate.StartMileageOption.IsSet && driveLogUpdate.StartMileage == null)
+                throw new JsonException("Cannot write null property DriveLogUpdate.StartMileage to non-nullable JSON property 'start_mileage'.");
+
             if (driveLogUpdate.DriveLogCategoryIdOption.IsSet && driveLogUpdate.DriveLogCategoryId == null)
-                throw new ArgumentNullException(nameof(driveLogUpdate.DriveLogCategoryId), "Property is required for class DriveLogUpdate.");
+                throw new JsonException("Cannot write null property DriveLogUpdate.DriveLogCategoryId to non-nullable JSON property 'drive_log_category_id'.");
+
+            if (driveLogUpdate.StatusOption.IsSet && driveLogUpdate.Status == null)
+                throw new JsonException("Cannot write null property DriveLogUpdate.Status to non-nullable JSON property 'status'.");
 
             if (driveLogUpdate.StartOption.IsSet)
                 writer.WriteString("start", driveLogUpdate.StartOption.Value!.Value.ToString(StartFormat));

@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="ProjectTimesPage" />
     /// </summary>
-    public class ProjectTimesPageJsonConverter : JsonConverter<ProjectTimesPage>
+    public partial class ProjectTimesPageJsonConverter : JsonConverter<ProjectTimesPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectTimesPageJsonConverter" /> class.
+        /// </summary>
+        public ProjectTimesPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="ProjectTimesPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTimesPage.", nameof(data));
+                throw new JsonException("Property is required for class ProjectTimesPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTimesPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class ProjectTimesPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class ProjectTimesPage.");
+                throw new JsonException("Property is not nullable for class ProjectTimesPage: data.");
 
             return new ProjectTimesPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="projectTimesPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, ProjectTimesPage projectTimesPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="projectTimesPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, ProjectTimesPage projectTimesPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (projectTimesPage.Data == null)
-                throw new ArgumentNullException(nameof(projectTimesPage.Data), "Property is required for class ProjectTimesPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, projectTimesPage.Data, jsonSerializerOptions);
             if (projectTimesPage.NextPageToken != null)

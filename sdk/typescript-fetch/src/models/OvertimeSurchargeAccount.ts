@@ -20,20 +20,14 @@ import { mapValues } from '../runtime';
 export interface OvertimeSurchargeAccount {
     /**
      * 
-     * @type {number}
-     * @memberof OvertimeSurchargeAccount
      */
     balanceLastPeriodMinutes: number | null;
     /**
      * 
-     * @type {number}
-     * @memberof OvertimeSurchargeAccount
      */
     newMinutes: number | null;
     /**
      * 
-     * @type {number}
-     * @memberof OvertimeSurchargeAccount
      */
     balanceTotalMinutes: number | null;
 }
@@ -42,9 +36,9 @@ export interface OvertimeSurchargeAccount {
  * Check if a given object implements the OvertimeSurchargeAccount interface.
  */
 export function instanceOfOvertimeSurchargeAccount(value: object): value is OvertimeSurchargeAccount {
-    if (!('balanceLastPeriodMinutes' in value) || value['balanceLastPeriodMinutes'] === undefined) return false;
-    if (!('newMinutes' in value) || value['newMinutes'] === undefined) return false;
-    if (!('balanceTotalMinutes' in value) || value['balanceTotalMinutes'] === undefined) return false;
+    if ((!('balanceLastPeriodMinutes' in (value as Record<string, any>)) && !('balance_last_period_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['balanceLastPeriodMinutes'] === undefined && (value as Record<string, any>)['balance_last_period_minutes'] === undefined)) return false;
+    if ((!('newMinutes' in (value as Record<string, any>)) && !('new_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['newMinutes'] === undefined && (value as Record<string, any>)['new_minutes'] === undefined)) return false;
+    if ((!('balanceTotalMinutes' in (value as Record<string, any>)) && !('balance_total_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['balanceTotalMinutes'] === undefined && (value as Record<string, any>)['balance_total_minutes'] === undefined)) return false;
     return true;
 }
 

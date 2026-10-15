@@ -28,50 +28,34 @@ import {
 export interface TimeAccount {
     /**
      * 
-     * @type {number}
-     * @memberof TimeAccount
      */
     balanceLastPeriodMinutes: number | null;
     /**
      * sum of durations in current period
-     * @type {number}
-     * @memberof TimeAccount
      */
     durationActualMinutes: number | null;
     /**
      * target duration in current period
-     * @type {number}
-     * @memberof TimeAccount
      */
     durationTargetMinutes: number | null;
     /**
      * difference between target duration and actual duration
-     * @type {number}
-     * @memberof TimeAccount
      */
     balanceCurrentPeriodMinutes: number | null;
     /**
      * total duration until balancing date
-     * @type {number}
-     * @memberof TimeAccount
      */
     balanceTotalMinutes: number | null;
     /**
      * complete days worked from home in current period
-     * @type {number}
-     * @memberof TimeAccount
      */
     workFromHomeDaysFull: number | null;
     /**
      * partial days worked from home in current period
-     * @type {number}
-     * @memberof TimeAccount
      */
     workFromHomeDaysPartial: number | null;
     /**
      * 
-     * @type {FlexTimeIndicator}
-     * @memberof TimeAccount
      */
     flexTimeIndicator?: FlexTimeIndicator | null;
 }
@@ -82,13 +66,13 @@ export interface TimeAccount {
  * Check if a given object implements the TimeAccount interface.
  */
 export function instanceOfTimeAccount(value: object): value is TimeAccount {
-    if (!('balanceLastPeriodMinutes' in value) || value['balanceLastPeriodMinutes'] === undefined) return false;
-    if (!('durationActualMinutes' in value) || value['durationActualMinutes'] === undefined) return false;
-    if (!('durationTargetMinutes' in value) || value['durationTargetMinutes'] === undefined) return false;
-    if (!('balanceCurrentPeriodMinutes' in value) || value['balanceCurrentPeriodMinutes'] === undefined) return false;
-    if (!('balanceTotalMinutes' in value) || value['balanceTotalMinutes'] === undefined) return false;
-    if (!('workFromHomeDaysFull' in value) || value['workFromHomeDaysFull'] === undefined) return false;
-    if (!('workFromHomeDaysPartial' in value) || value['workFromHomeDaysPartial'] === undefined) return false;
+    if ((!('balanceLastPeriodMinutes' in (value as Record<string, any>)) && !('balance_last_period_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['balanceLastPeriodMinutes'] === undefined && (value as Record<string, any>)['balance_last_period_minutes'] === undefined)) return false;
+    if ((!('durationActualMinutes' in (value as Record<string, any>)) && !('duration_actual_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['durationActualMinutes'] === undefined && (value as Record<string, any>)['duration_actual_minutes'] === undefined)) return false;
+    if ((!('durationTargetMinutes' in (value as Record<string, any>)) && !('duration_target_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['durationTargetMinutes'] === undefined && (value as Record<string, any>)['duration_target_minutes'] === undefined)) return false;
+    if ((!('balanceCurrentPeriodMinutes' in (value as Record<string, any>)) && !('balance_current_period_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['balanceCurrentPeriodMinutes'] === undefined && (value as Record<string, any>)['balance_current_period_minutes'] === undefined)) return false;
+    if ((!('balanceTotalMinutes' in (value as Record<string, any>)) && !('balance_total_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['balanceTotalMinutes'] === undefined && (value as Record<string, any>)['balance_total_minutes'] === undefined)) return false;
+    if ((!('workFromHomeDaysFull' in (value as Record<string, any>)) && !('work_from_home_days_full' in (value as Record<string, any>))) || ((value as Record<string, any>)['workFromHomeDaysFull'] === undefined && (value as Record<string, any>)['work_from_home_days_full'] === undefined)) return false;
+    if ((!('workFromHomeDaysPartial' in (value as Record<string, any>)) && !('work_from_home_days_partial' in (value as Record<string, any>))) || ((value as Record<string, any>)['workFromHomeDaysPartial'] === undefined && (value as Record<string, any>)['work_from_home_days_partial'] === undefined)) return false;
     return true;
 }
 
@@ -109,7 +93,7 @@ export function TimeAccountFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'balanceTotalMinutes': json['balance_total_minutes'],
         'workFromHomeDaysFull': json['work_from_home_days_full'],
         'workFromHomeDaysPartial': json['work_from_home_days_partial'],
-        'flexTimeIndicator': json['flex_time_indicator'] == null ? undefined : FlexTimeIndicatorFromJSON(json['flex_time_indicator']),
+        'flexTimeIndicator': json['flex_time_indicator'] === undefined ? undefined : json['flex_time_indicator'] === null ? null : FlexTimeIndicatorFromJSON(json['flex_time_indicator']),
     };
 }
 

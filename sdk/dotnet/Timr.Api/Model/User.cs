@@ -276,17 +276,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="User" />
     /// </summary>
-    public class UserJsonConverter : JsonConverter<User>
+    public partial class UserJsonConverter : JsonConverter<User>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserJsonConverter" /> class.
+        /// </summary>
+        public UserJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize EntryDate
         /// </summary>
-        public static string EntryDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EntryDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ResignDate
         /// </summary>
-        public static string ResignDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ResignDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="User" />
@@ -384,34 +394,34 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(id));
+                throw new JsonException("Property is required for class User: id.");
 
             if (!firstname.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(firstname));
+                throw new JsonException("Property is required for class User: firstname.");
 
             if (!lastname.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(lastname));
+                throw new JsonException("Property is required for class User: lastname.");
 
             if (!fullname.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(fullname));
+                throw new JsonException("Property is required for class User: fullname.");
 
             if (!email.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(email));
+                throw new JsonException("Property is required for class User: email.");
 
             if (!employeeNumber.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(employeeNumber));
+                throw new JsonException("Property is required for class User: employee_number.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class User.", nameof(externalId));
+                throw new JsonException("Property is required for class User: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class User.");
+                throw new JsonException("Property is not nullable for class User: id.");
 
             if (login.IsSet && login.Value == null)
-                throw new ArgumentNullException(nameof(login), "Property is not nullable for class User.");
+                throw new JsonException("Property is not nullable for class User: login.");
 
             if (holidayCalendar.IsSet && holidayCalendar.Value == null)
-                throw new ArgumentNullException(nameof(holidayCalendar), "Property is not nullable for class User.");
+                throw new JsonException("Property is not nullable for class User: holiday_calendar.");
 
             return new User(id.Value!, firstname.Value!, lastname.Value!, fullname.Value!, email.Value!, employeeNumber.Value!, externalId.Value!, login, entryDate, resignDate, workScheduleModel, holidayCalendar, vacationYearStart, metadata);
         }
@@ -422,7 +432,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="user"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, User user, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -437,17 +446,13 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="user"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, User user, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (user.Id == null)
-                throw new ArgumentNullException(nameof(user.Id), "Property is required for class User.");
-
             if (user.LoginOption.IsSet && user.Login == null)
-                throw new ArgumentNullException(nameof(user.Login), "Property is required for class User.");
+                throw new JsonException("Cannot write null property User.Login to non-nullable JSON property 'login'.");
 
             if (user.HolidayCalendarOption.IsSet && user.HolidayCalendar == null)
-                throw new ArgumentNullException(nameof(user.HolidayCalendar), "Property is required for class User.");
+                throw new JsonException("Cannot write null property User.HolidayCalendar to non-nullable JSON property 'holiday_calendar'.");
 
             writer.WriteString("id", user.Id);
 

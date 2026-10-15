@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { WorkingTimeDateSpanPartial } from './WorkingTimeDateSpanPartial';
 import {
     WorkingTimeDateSpanPartialFromJSON,
@@ -78,118 +78,80 @@ import {
 export interface WorkingTime {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkingTime
      */
     id: string;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTime
      */
     start: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTime
      */
     end: Date | null;
     /**
      * Read-only. Total break time in minutes. Values are calculated as an aggregate of other properties
-     * @type {number}
-     * @memberof WorkingTime
      */
     breakTimeTotalMinutes: number;
     /**
      * 
-     * @type {Array<BreakTime>}
-     * @memberof WorkingTime
      */
     breakTimes: Array<BreakTime>;
     /**
      * 
-     * @type {Duration}
-     * @memberof WorkingTime
      */
     duration: Duration | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTime
      */
     changed: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTime
      */
     notes: string | null;
     /**
      * 
-     * @type {UserPartial}
-     * @memberof WorkingTime
      */
     user: UserPartial;
     /**
      * 
-     * @type {WorkingTimeTypePartial}
-     * @memberof WorkingTime
      */
     workingTimeType: WorkingTimeTypePartial;
     /**
      * 
-     * @type {WorkingTimeDateSpanPartial}
-     * @memberof WorkingTime
      */
     workingTimeDateSpan: WorkingTimeDateSpanPartial | null;
     /**
      * 
-     * @type {Location}
-     * @memberof WorkingTime
      */
     startLocation: Location | null;
     /**
      * 
-     * @type {Location}
-     * @memberof WorkingTime
      */
     endLocation: Location | null;
     /**
      * 
-     * @type {Platform}
-     * @memberof WorkingTime
      */
     startPlatform: Platform | null;
     /**
      * 
-     * @type {Platform}
-     * @memberof WorkingTime
      */
     endPlatform: Platform | null;
     /**
      * Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof WorkingTime
      */
     lastModified: Date;
     /**
      * Read-only. The User who last modified the entry, or null if the change was not made in a user context.
      * 
-     * @type {UserPartial}
-     * @memberof WorkingTime
      */
     lastModifiedBy: UserPartial | null;
     /**
      * 
-     * @type {WorkingTimeStatus}
-     * @memberof WorkingTime
      */
     status: WorkingTimeStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof WorkingTime
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -203,20 +165,20 @@ export function instanceOfWorkingTime(value: object): value is WorkingTime {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('start' in value) || value['start'] === undefined) return false;
     if (!('end' in value) || value['end'] === undefined) return false;
-    if (!('breakTimeTotalMinutes' in value) || value['breakTimeTotalMinutes'] === undefined) return false;
-    if (!('breakTimes' in value) || value['breakTimes'] === undefined) return false;
+    if ((!('breakTimeTotalMinutes' in (value as Record<string, any>)) && !('break_time_total_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['breakTimeTotalMinutes'] === undefined && (value as Record<string, any>)['break_time_total_minutes'] === undefined)) return false;
+    if ((!('breakTimes' in (value as Record<string, any>)) && !('break_times' in (value as Record<string, any>))) || ((value as Record<string, any>)['breakTimes'] === undefined && (value as Record<string, any>)['break_times'] === undefined)) return false;
     if (!('duration' in value) || value['duration'] === undefined) return false;
     if (!('changed' in value) || value['changed'] === undefined) return false;
     if (!('notes' in value) || value['notes'] === undefined) return false;
     if (!('user' in value) || value['user'] === undefined) return false;
-    if (!('workingTimeType' in value) || value['workingTimeType'] === undefined) return false;
-    if (!('workingTimeDateSpan' in value) || value['workingTimeDateSpan'] === undefined) return false;
-    if (!('startLocation' in value) || value['startLocation'] === undefined) return false;
-    if (!('endLocation' in value) || value['endLocation'] === undefined) return false;
-    if (!('startPlatform' in value) || value['startPlatform'] === undefined) return false;
-    if (!('endPlatform' in value) || value['endPlatform'] === undefined) return false;
-    if (!('lastModified' in value) || value['lastModified'] === undefined) return false;
-    if (!('lastModifiedBy' in value) || value['lastModifiedBy'] === undefined) return false;
+    if ((!('workingTimeType' in (value as Record<string, any>)) && !('working_time_type' in (value as Record<string, any>))) || ((value as Record<string, any>)['workingTimeType'] === undefined && (value as Record<string, any>)['working_time_type'] === undefined)) return false;
+    if ((!('workingTimeDateSpan' in (value as Record<string, any>)) && !('working_time_date_span' in (value as Record<string, any>))) || ((value as Record<string, any>)['workingTimeDateSpan'] === undefined && (value as Record<string, any>)['working_time_date_span'] === undefined)) return false;
+    if ((!('startLocation' in (value as Record<string, any>)) && !('start_location' in (value as Record<string, any>))) || ((value as Record<string, any>)['startLocation'] === undefined && (value as Record<string, any>)['start_location'] === undefined)) return false;
+    if ((!('endLocation' in (value as Record<string, any>)) && !('end_location' in (value as Record<string, any>))) || ((value as Record<string, any>)['endLocation'] === undefined && (value as Record<string, any>)['end_location'] === undefined)) return false;
+    if ((!('startPlatform' in (value as Record<string, any>)) && !('start_platform' in (value as Record<string, any>))) || ((value as Record<string, any>)['startPlatform'] === undefined && (value as Record<string, any>)['start_platform'] === undefined)) return false;
+    if ((!('endPlatform' in (value as Record<string, any>)) && !('end_platform' in (value as Record<string, any>))) || ((value as Record<string, any>)['endPlatform'] === undefined && (value as Record<string, any>)['end_platform'] === undefined)) return false;
+    if ((!('lastModified' in (value as Record<string, any>)) && !('last_modified' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModified'] === undefined && (value as Record<string, any>)['last_modified'] === undefined)) return false;
+    if ((!('lastModifiedBy' in (value as Record<string, any>)) && !('last_modified_by' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModifiedBy'] === undefined && (value as Record<string, any>)['last_modified_by'] === undefined)) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     return true;
 }
@@ -232,8 +194,8 @@ export function WorkingTimeFromJSONTyped(json: any, ignoreDiscriminator: boolean
     return {
         
         'id': json['id'],
-        'start': (new Date(json['start'])),
-        'end': (json['end'] == null ? null : new Date(json['end'])),
+        'start': (json['start'] == null ? json['start'] : parseDateTime(json['start'])),
+        'end': (json['end'] == null ? null : parseDateTime(json['end'])),
         'breakTimeTotalMinutes': json['break_time_total_minutes'],
         'breakTimes': ((json['break_times'] as Array<any>).map(BreakTimeFromJSON)),
         'duration': DurationFromJSON(json['duration']),
@@ -246,10 +208,10 @@ export function WorkingTimeFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'endLocation': LocationFromJSON(json['end_location']),
         'startPlatform': PlatformFromJSON(json['start_platform']),
         'endPlatform': PlatformFromJSON(json['end_platform']),
-        'lastModified': (new Date(json['last_modified'])),
+        'lastModified': (json['last_modified'] == null ? json['last_modified'] : parseDateTime(json['last_modified'])),
         'lastModifiedBy': UserPartialFromJSON(json['last_modified_by']),
         'status': WorkingTimeStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -265,8 +227,8 @@ export function WorkingTimeToJSONTyped(value?: WorkingTime | null, ignoreDiscrim
     return {
         
         'id': value['id'],
-        'start': value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'break_time_total_minutes': value['breakTimeTotalMinutes'],
         'break_times': ((value['breakTimes'] as Array<any>).map(BreakTimeToJSON)),
         'duration': DurationToJSON(value['duration']),
@@ -279,7 +241,7 @@ export function WorkingTimeToJSONTyped(value?: WorkingTime | null, ignoreDiscrim
         'end_location': LocationToJSON(value['endLocation']),
         'start_platform': PlatformToJSON(value['startPlatform']),
         'end_platform': PlatformToJSON(value['endPlatform']),
-        'last_modified': value['lastModified'].toISOString(),
+        'last_modified': value['lastModified'] == null ? value['lastModified'] : serializeDateTime(value['lastModified']),
         'last_modified_by': UserPartialToJSON(value['lastModifiedBy']),
         'status': WorkingTimeStatusToJSON(value['status']),
         'metadata': value['metadata'],

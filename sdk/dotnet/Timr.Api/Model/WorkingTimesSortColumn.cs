@@ -150,6 +150,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override WorkingTimesSortColumn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             WorkingTimesSortColumn? result = rawValue == null
@@ -170,7 +173,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, WorkingTimesSortColumn? workingTimesSortColumn, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(workingTimesSortColumn.HasValue ? WorkingTimesSortColumnValueConverter.ToJsonValue(workingTimesSortColumn.Value).ToString() : "null");
+            if (workingTimesSortColumn.HasValue)
+                writer.WriteStringValue(WorkingTimesSortColumnValueConverter.ToJsonValue(workingTimesSortColumn.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkScheduleModelsPage" />
     /// </summary>
-    public class WorkScheduleModelsPageJsonConverter : JsonConverter<WorkScheduleModelsPage>
+    public partial class WorkScheduleModelsPageJsonConverter : JsonConverter<WorkScheduleModelsPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkScheduleModelsPageJsonConverter" /> class.
+        /// </summary>
+        public WorkScheduleModelsPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkScheduleModelsPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelsPage.", nameof(data));
+                throw new JsonException("Property is required for class WorkScheduleModelsPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModelsPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class WorkScheduleModelsPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class WorkScheduleModelsPage.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModelsPage: data.");
 
             return new WorkScheduleModelsPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModelsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkScheduleModelsPage workScheduleModelsPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModelsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkScheduleModelsPage workScheduleModelsPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workScheduleModelsPage.Data == null)
-                throw new ArgumentNullException(nameof(workScheduleModelsPage.Data), "Property is required for class WorkScheduleModelsPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, workScheduleModelsPage.Data, jsonSerializerOptions);
             if (workScheduleModelsPage.NextPageToken != null)

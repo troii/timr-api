@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.*;
   DeletedEntryPage.JSON_PROPERTY_NEXT_PAGE_TOKEN,
   DeletedEntryPage.JSON_PROPERTY_DATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class DeletedEntryPage {
   public static final String JSON_PROPERTY_NEXT_PAGE_TOKEN = "next_page_token";
   

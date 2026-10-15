@@ -95,8 +95,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="OvertimeSurchargeRule" />
     /// </summary>
-    public class OvertimeSurchargeRuleJsonConverter : JsonConverter<OvertimeSurchargeRule>
+    public partial class OvertimeSurchargeRuleJsonConverter : JsonConverter<OvertimeSurchargeRule>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OvertimeSurchargeRuleJsonConverter" /> class.
+        /// </summary>
+        public OvertimeSurchargeRuleJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="OvertimeSurchargeRule" />
         /// </summary>
@@ -149,22 +159,22 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeRule.", nameof(id));
+                throw new JsonException("Property is required for class OvertimeSurchargeRule: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeRule.", nameof(name));
+                throw new JsonException("Property is required for class OvertimeSurchargeRule: name.");
 
             if (!shortName.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeRule.", nameof(shortName));
+                throw new JsonException("Property is required for class OvertimeSurchargeRule: short_name.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class OvertimeSurchargeRule.");
+                throw new JsonException("Property is not nullable for class OvertimeSurchargeRule: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class OvertimeSurchargeRule.");
+                throw new JsonException("Property is not nullable for class OvertimeSurchargeRule: name.");
 
             if (shortName.IsSet && shortName.Value == null)
-                throw new ArgumentNullException(nameof(shortName), "Property is not nullable for class OvertimeSurchargeRule.");
+                throw new JsonException("Property is not nullable for class OvertimeSurchargeRule: short_name.");
 
             return new OvertimeSurchargeRule(id.Value!.Value!, name.Value!, shortName.Value!);
         }
@@ -175,7 +185,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="overtimeSurchargeRule"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, OvertimeSurchargeRule overtimeSurchargeRule, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -190,15 +199,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="overtimeSurchargeRule"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, OvertimeSurchargeRule overtimeSurchargeRule, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (overtimeSurchargeRule.Name == null)
-                throw new ArgumentNullException(nameof(overtimeSurchargeRule.Name), "Property is required for class OvertimeSurchargeRule.");
-
-            if (overtimeSurchargeRule.ShortName == null)
-                throw new ArgumentNullException(nameof(overtimeSurchargeRule.ShortName), "Property is required for class OvertimeSurchargeRule.");
-
             writer.WriteString("id", overtimeSurchargeRule.Id);
 
             writer.WriteString("name", overtimeSurchargeRule.Name);

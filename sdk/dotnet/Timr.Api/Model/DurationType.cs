@@ -164,6 +164,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override DurationType? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             DurationType? result = rawValue == null
@@ -184,7 +187,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, DurationType? durationType, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(durationType.HasValue ? DurationTypeValueConverter.ToJsonValue(durationType.Value).ToString() : "null");
+            if (durationType.HasValue)
+                writer.WriteStringValue(DurationTypeValueConverter.ToJsonValue(durationType.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

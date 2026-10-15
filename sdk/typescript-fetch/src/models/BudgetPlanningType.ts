@@ -25,7 +25,7 @@ export const BudgetPlanningType = {
     None: 'none',
     TaskHourlyRate: 'task_hourly_rate',
     UserHourlyRate: 'user_hourly_rate',
-    FixedPrice: 'fixed_price'
+    FixedPrice: 'fixed_price',
 } as const;
 export type BudgetPlanningType = typeof BudgetPlanningType[keyof typeof BudgetPlanningType];
 

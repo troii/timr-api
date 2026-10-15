@@ -20,56 +20,38 @@ import { mapValues } from '../runtime';
 export interface VenuePartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof VenuePartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof VenuePartial
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof VenuePartial
      */
     city: string;
     /**
      * 
-     * @type {string}
-     * @memberof VenuePartial
      */
     zipCode: string;
     /**
      * 
-     * @type {string}
-     * @memberof VenuePartial
      */
     street: string;
     /**
      * 
-     * @type {string}
-     * @memberof VenuePartial
      */
     streetNumber: string;
     /**
      * 
-     * @type {string}
-     * @memberof VenuePartial
      */
     country: string;
     /**
      * Latitude in decimal degrees.
-     * @type {number}
-     * @memberof VenuePartial
      */
     lat?: number;
     /**
      * Longitude in decimal degrees.
-     * @type {number}
-     * @memberof VenuePartial
      */
     lon?: number;
 }
@@ -81,9 +63,9 @@ export function instanceOfVenuePartial(value: object): value is VenuePartial {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('city' in value) || value['city'] === undefined) return false;
-    if (!('zipCode' in value) || value['zipCode'] === undefined) return false;
+    if ((!('zipCode' in (value as Record<string, any>)) && !('zip_code' in (value as Record<string, any>))) || ((value as Record<string, any>)['zipCode'] === undefined && (value as Record<string, any>)['zip_code'] === undefined)) return false;
     if (!('street' in value) || value['street'] === undefined) return false;
-    if (!('streetNumber' in value) || value['streetNumber'] === undefined) return false;
+    if ((!('streetNumber' in (value as Record<string, any>)) && !('street_number' in (value as Record<string, any>))) || ((value as Record<string, any>)['streetNumber'] === undefined && (value as Record<string, any>)['street_number'] === undefined)) return false;
     if (!('country' in value) || value['country'] === undefined) return false;
     return true;
 }

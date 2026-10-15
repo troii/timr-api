@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { BudgetPlanningTypeRequest } from './BudgetPlanningTypeRequest';
 import {
     BudgetPlanningTypeRequestFromJSON,
@@ -35,62 +35,42 @@ import {
 export interface TaskCreate {
     /**
      * 
-     * @type {string}
-     * @memberof TaskCreate
      */
     name: string;
     /**
      * returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.
-     * @type {string}
-     * @memberof TaskCreate
      */
     parentTaskId?: string | null;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof TaskCreate
      */
     externalId?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskCreate
      */
     description?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskCreate
      */
     descriptionExternal?: string | null;
     /**
      * when a task is not bookable, no project times can be booked on it. You need to define child tasks, to book on tasks related to this task.
-     * @type {boolean}
-     * @memberof TaskCreate
      */
     bookable: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskCreate
      */
     billable: boolean;
     /**
      * depending on this property project times booked on this task have to include notes or not
-     * @type {boolean}
-     * @memberof TaskCreate
      */
     projectTimeNotesRequired?: boolean;
     /**
      * the task is only available for selection after start_date, however, it can change if a lock_date is set and this is after the start_date. Furthermore, no booking of a project time with date < start or > end is possible.
-     * @type {Date}
-     * @memberof TaskCreate
      */
     startDate?: Date | null;
     /**
      * the task is only available for selection before end_date, however, it can change if a lock_date is set and this is before the end_date. Furthermore, no booking of a project time with date < start or > end is possible.
-     * @type {Date}
-     * @memberof TaskCreate
      */
     endDate?: Date | null;
     /**
@@ -99,27 +79,19 @@ export interface TaskCreate {
      *   * existing entries cannot be changed or deleted
      *   * no entries can be added later
      * 
-     * @type {Date}
-     * @memberof TaskCreate
      */
     lockDate?: Date | null;
     /**
      * set this property to limit the task so that it cannot be booked before this time
-     * @type {string}
-     * @memberof TaskCreate
      */
     earliestStartTime?: string | null;
     /**
      * set this property to limit the task so that it cannot be booked after this time
-     * @type {string}
-     * @memberof TaskCreate
      */
     latestEndTime?: string | null;
     /**
      * when no budget is planned, either don't set this property (on create) or set it to none. set it to inherited to inherit budget settings from parent task.
      * 
-     * @type {BudgetPlanningTypeRequest}
-     * @memberof TaskCreate
      */
     budgetPlanningType?: BudgetPlanningTypeRequest;
     /**
@@ -129,8 +101,6 @@ export interface TaskCreate {
      *   * user_hourly_rate: out of fixed hours budget (employee budget) and budget_hours_planned
      *   * fixed_price: out of budget_hourly_rate and budget_planned
      * 
-     * @type {number}
-     * @memberof TaskCreate
      */
     budgetHoursPlanned?: number | null;
     /**
@@ -139,8 +109,6 @@ export interface TaskCreate {
      *   * **user_hourly_rate: this property cannot be set**
      *   * fixed_price: you can set this property if you want to make timr calculate budget_hours_planned or budget_planned based on its value
      * 
-     * @type {number}
-     * @memberof TaskCreate
      */
     budgetHourlyRate?: number | null;
     /**
@@ -150,56 +118,38 @@ export interface TaskCreate {
      *   * user_hourly_rate: out of fixed hours budget (employee budget) and budget_planned
      *   * fixed_price: out of budget_hourly_rate and budget_planned
      * 
-     * @type {number}
-     * @memberof TaskCreate
      */
     budgetPlanned?: number | null;
     /**
      * set this property to true, if you want to include not billable hours for all project times booked on this task
-     * @type {boolean}
-     * @memberof TaskCreate
      */
     budgetIncludeNonBillableProjectTimes?: boolean;
     /**
      * set this property to false if you want to set a child task's location explicitly instead of inheriting it from its parent
-     * @type {boolean}
-     * @memberof TaskCreate
      */
     locationInherited?: boolean;
     /**
      * 
-     * @type {TaskLocation}
-     * @memberof TaskCreate
      */
     location?: TaskLocation | null;
     /**
      * set this property to make recording of project times for this task via the app on the smartphone only possible within this defined geofence radius
-     * @type {number}
-     * @memberof TaskCreate
      */
     locationRestrictionRadiusMeters?: number | null;
     /**
      * you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
-     * @type {string}
-     * @memberof TaskCreate
      */
     customField1?: string | null;
     /**
      * you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
-     * @type {string}
-     * @memberof TaskCreate
      */
     customField2?: string | null;
     /**
      * you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
-     * @type {string}
-     * @memberof TaskCreate
      */
     customField3?: string | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof TaskCreate
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -227,30 +177,30 @@ export function TaskCreateFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'name': json['name'],
-        'parentTaskId': json['parent_task_id'] == null ? undefined : json['parent_task_id'],
-        'externalId': json['external_id'] == null ? undefined : json['external_id'],
-        'description': json['description'] == null ? undefined : json['description'],
-        'descriptionExternal': json['description_external'] == null ? undefined : json['description_external'],
+        'parentTaskId': json['parent_task_id'] === undefined ? undefined : json['parent_task_id'] === null ? null : json['parent_task_id'],
+        'externalId': json['external_id'] === undefined ? undefined : json['external_id'] === null ? null : json['external_id'],
+        'description': json['description'] === undefined ? undefined : json['description'] === null ? null : json['description'],
+        'descriptionExternal': json['description_external'] === undefined ? undefined : json['description_external'] === null ? null : json['description_external'],
         'bookable': json['bookable'],
         'billable': json['billable'],
         'projectTimeNotesRequired': json['project_time_notes_required'] == null ? undefined : json['project_time_notes_required'],
-        'startDate': json['start_date'] == null ? undefined : (new Date(json['start_date'])),
-        'endDate': json['end_date'] == null ? undefined : (new Date(json['end_date'])),
-        'lockDate': json['lock_date'] == null ? undefined : (new Date(json['lock_date'])),
-        'earliestStartTime': json['earliest_start_time'] == null ? undefined : json['earliest_start_time'],
-        'latestEndTime': json['latest_end_time'] == null ? undefined : json['latest_end_time'],
+        'startDate': json['start_date'] === undefined ? undefined : json['start_date'] === null ? null : (parseDate(json['start_date'])),
+        'endDate': json['end_date'] === undefined ? undefined : json['end_date'] === null ? null : (parseDate(json['end_date'])),
+        'lockDate': json['lock_date'] === undefined ? undefined : json['lock_date'] === null ? null : (parseDate(json['lock_date'])),
+        'earliestStartTime': json['earliest_start_time'] === undefined ? undefined : json['earliest_start_time'] === null ? null : json['earliest_start_time'],
+        'latestEndTime': json['latest_end_time'] === undefined ? undefined : json['latest_end_time'] === null ? null : json['latest_end_time'],
         'budgetPlanningType': json['budget_planning_type'] == null ? undefined : BudgetPlanningTypeRequestFromJSON(json['budget_planning_type']),
-        'budgetHoursPlanned': json['budget_hours_planned'] == null ? undefined : json['budget_hours_planned'],
-        'budgetHourlyRate': json['budget_hourly_rate'] == null ? undefined : json['budget_hourly_rate'],
-        'budgetPlanned': json['budget_planned'] == null ? undefined : json['budget_planned'],
+        'budgetHoursPlanned': json['budget_hours_planned'] === undefined ? undefined : json['budget_hours_planned'] === null ? null : json['budget_hours_planned'],
+        'budgetHourlyRate': json['budget_hourly_rate'] === undefined ? undefined : json['budget_hourly_rate'] === null ? null : json['budget_hourly_rate'],
+        'budgetPlanned': json['budget_planned'] === undefined ? undefined : json['budget_planned'] === null ? null : json['budget_planned'],
         'budgetIncludeNonBillableProjectTimes': json['budget_include_non_billable_project_times'] == null ? undefined : json['budget_include_non_billable_project_times'],
         'locationInherited': json['location_inherited'] == null ? undefined : json['location_inherited'],
-        'location': json['location'] == null ? undefined : TaskLocationFromJSON(json['location']),
-        'locationRestrictionRadiusMeters': json['location_restriction_radius_meters'] == null ? undefined : json['location_restriction_radius_meters'],
-        'customField1': json['custom_field_1'] == null ? undefined : json['custom_field_1'],
-        'customField2': json['custom_field_2'] == null ? undefined : json['custom_field_2'],
-        'customField3': json['custom_field_3'] == null ? undefined : json['custom_field_3'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'location': json['location'] === undefined ? undefined : json['location'] === null ? null : TaskLocationFromJSON(json['location']),
+        'locationRestrictionRadiusMeters': json['location_restriction_radius_meters'] === undefined ? undefined : json['location_restriction_radius_meters'] === null ? null : json['location_restriction_radius_meters'],
+        'customField1': json['custom_field_1'] === undefined ? undefined : json['custom_field_1'] === null ? null : json['custom_field_1'],
+        'customField2': json['custom_field_2'] === undefined ? undefined : json['custom_field_2'] === null ? null : json['custom_field_2'],
+        'customField3': json['custom_field_3'] === undefined ? undefined : json['custom_field_3'] === null ? null : json['custom_field_3'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -273,9 +223,9 @@ export function TaskCreateToJSONTyped(value?: TaskCreate | null, ignoreDiscrimin
         'bookable': value['bookable'],
         'billable': value['billable'],
         'project_time_notes_required': value['projectTimeNotesRequired'],
-        'start_date': value['startDate'] == null ? value['startDate'] : value['startDate'].toISOString().substring(0,10),
-        'end_date': value['endDate'] == null ? value['endDate'] : value['endDate'].toISOString().substring(0,10),
-        'lock_date': value['lockDate'] == null ? value['lockDate'] : value['lockDate'].toISOString().substring(0,10),
+        'start_date': value['startDate'] == null ? value['startDate'] : serializeDate(value['startDate']),
+        'end_date': value['endDate'] == null ? value['endDate'] : serializeDate(value['endDate']),
+        'lock_date': value['lockDate'] == null ? value['lockDate'] : serializeDate(value['lockDate']),
         'earliest_start_time': value['earliestStartTime'],
         'latest_end_time': value['latestEndTime'],
         'budget_planning_type': BudgetPlanningTypeRequestToJSON(value['budgetPlanningType']),

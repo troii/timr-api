@@ -135,12 +135,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Location" />
     /// </summary>
-    public class LocationJsonConverter : JsonConverter<Location>
+    public partial class LocationJsonConverter : JsonConverter<Location>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocationJsonConverter" /> class.
+        /// </summary>
+        public LocationJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Timestamp
         /// </summary>
-        public static string TimestampFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string TimestampFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="Location" />
@@ -202,13 +212,13 @@ namespace Timr.Api.Model
             }
 
             if (!lat.IsSet)
-                throw new ArgumentException("Property is required for class Location.", nameof(lat));
+                throw new JsonException("Property is required for class Location: lat.");
 
             if (!lon.IsSet)
-                throw new ArgumentException("Property is required for class Location.", nameof(lon));
+                throw new JsonException("Property is required for class Location: lon.");
 
             if (!accuracy.IsSet)
-                throw new ArgumentException("Property is required for class Location.", nameof(accuracy));
+                throw new JsonException("Property is required for class Location: accuracy.");
 
             return new Location(lat.Value!, lon.Value!, timestamp, formattedAddress, accuracy.Value!);
         }
@@ -219,7 +229,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="location"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Location location, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -234,7 +243,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="location"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Location location, JsonSerializerOptions jsonSerializerOptions)
         {
             if (location.Lat != null)

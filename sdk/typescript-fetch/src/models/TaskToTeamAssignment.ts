@@ -28,14 +28,10 @@ import {
 export interface TaskToTeamAssignment {
     /**
      * 
-     * @type {TeamPartial}
-     * @memberof TaskToTeamAssignment
      */
     team: TeamPartial;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskToTeamAssignment
      */
     automaticallyAssigned: boolean;
 }
@@ -45,7 +41,7 @@ export interface TaskToTeamAssignment {
  */
 export function instanceOfTaskToTeamAssignment(value: object): value is TaskToTeamAssignment {
     if (!('team' in value) || value['team'] === undefined) return false;
-    if (!('automaticallyAssigned' in value) || value['automaticallyAssigned'] === undefined) return false;
+    if ((!('automaticallyAssigned' in (value as Record<string, any>)) && !('automatically_assigned' in (value as Record<string, any>))) || ((value as Record<string, any>)['automaticallyAssigned'] === undefined && (value as Record<string, any>)['automatically_assigned'] === undefined)) return false;
     return true;
 }
 

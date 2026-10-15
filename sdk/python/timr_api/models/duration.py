@@ -29,8 +29,8 @@ class Duration(BaseModel):
     Duration
     """ # noqa: E501
     type: DurationType
-    minutes: StrictInt = Field(description="Net minutes of the recording. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User ")
-    minutes_rounded: StrictInt = Field(description="Net minutes rounded to the default setting configured. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User ")
+    minutes: StrictInt = Field(description="Net minutes of the recording. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User ", json_schema_extra={"examples": [42]})
+    minutes_rounded: StrictInt = Field(description="Net minutes rounded to the default setting configured. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User ", json_schema_extra={"examples": [45]})
     __properties: ClassVar[List[str]] = ["type", "minutes", "minutes_rounded"]
 
     model_config = ConfigDict(

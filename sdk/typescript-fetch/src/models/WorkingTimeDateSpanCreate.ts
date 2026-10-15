@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 /**
  * 
  * @export
@@ -20,56 +20,38 @@ import { mapValues } from '../runtime';
 export interface WorkingTimeDateSpanCreate {
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTimeDateSpanCreate
      */
     start: Date;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeDateSpanCreate
      */
     startHalfDay?: boolean;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof WorkingTimeDateSpanCreate
      */
     end: Date;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeDateSpanCreate
      */
     endHalfDay?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanCreate
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanCreate
      */
     workingTimeTypeId: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanCreate
      */
     substituteId?: string | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof WorkingTimeDateSpanCreate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeDateSpanCreate
      */
     userId: string;
 }
@@ -80,8 +62,8 @@ export interface WorkingTimeDateSpanCreate {
 export function instanceOfWorkingTimeDateSpanCreate(value: object): value is WorkingTimeDateSpanCreate {
     if (!('start' in value) || value['start'] === undefined) return false;
     if (!('end' in value) || value['end'] === undefined) return false;
-    if (!('workingTimeTypeId' in value) || value['workingTimeTypeId'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('workingTimeTypeId' in (value as Record<string, any>)) && !('working_time_type_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['workingTimeTypeId'] === undefined && (value as Record<string, any>)['working_time_type_id'] === undefined)) return false;
+    if ((!('userId' in (value as Record<string, any>)) && !('user_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['userId'] === undefined && (value as Record<string, any>)['user_id'] === undefined)) return false;
     return true;
 }
 
@@ -95,14 +77,14 @@ export function WorkingTimeDateSpanCreateFromJSONTyped(json: any, ignoreDiscrimi
     }
     return {
         
-        'start': (new Date(json['start'])),
+        'start': (json['start'] == null ? json['start'] : parseDate(json['start'])),
         'startHalfDay': json['start_half_day'] == null ? undefined : json['start_half_day'],
-        'end': (new Date(json['end'])),
+        'end': (json['end'] == null ? json['end'] : parseDate(json['end'])),
         'endHalfDay': json['end_half_day'] == null ? undefined : json['end_half_day'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'workingTimeTypeId': json['working_time_type_id'],
-        'substituteId': json['substitute_id'] == null ? undefined : json['substitute_id'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'substituteId': json['substitute_id'] === undefined ? undefined : json['substitute_id'] === null ? null : json['substitute_id'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
         'userId': json['user_id'],
     };
 }
@@ -118,9 +100,9 @@ export function WorkingTimeDateSpanCreateToJSONTyped(value?: WorkingTimeDateSpan
 
     return {
         
-        'start': value['start'].toISOString().substring(0,10),
+        'start': value['start'] == null ? value['start'] : serializeDate(value['start']),
         'start_half_day': value['startHalfDay'],
-        'end': value['end'].toISOString().substring(0,10),
+        'end': value['end'] == null ? value['end'] : serializeDate(value['end']),
         'end_half_day': value['endHalfDay'],
         'notes': value['notes'],
         'working_time_type_id': value['workingTimeTypeId'],

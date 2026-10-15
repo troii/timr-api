@@ -17,7 +17,7 @@
  * @export
  */
 export const TaskToTeamAssignmentsSortColumn = {
-    TeamName: 'team_name'
+    TeamName: 'team_name',
 } as const;
 export type TaskToTeamAssignmentsSortColumn = typeof TaskToTeamAssignmentsSortColumn[keyof typeof TaskToTeamAssignmentsSortColumn];
 

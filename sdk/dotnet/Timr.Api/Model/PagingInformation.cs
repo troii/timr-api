@@ -77,8 +77,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="PagingInformation" />
     /// </summary>
-    public class PagingInformationJsonConverter : JsonConverter<PagingInformation>
+    public partial class PagingInformationJsonConverter : JsonConverter<PagingInformation>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PagingInformationJsonConverter" /> class.
+        /// </summary>
+        public PagingInformationJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="PagingInformation" />
         /// </summary>
@@ -123,7 +133,7 @@ namespace Timr.Api.Model
             }
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class PagingInformation.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class PagingInformation: next_page_token.");
 
             return new PagingInformation(nextPageToken.Value!);
         }
@@ -134,7 +144,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="pagingInformation"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, PagingInformation pagingInformation, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -149,7 +158,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="pagingInformation"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, PagingInformation pagingInformation, JsonSerializerOptions jsonSerializerOptions)
         {
             if (pagingInformation.NextPageToken != null)

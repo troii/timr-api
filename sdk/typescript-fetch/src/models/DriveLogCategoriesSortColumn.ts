@@ -17,7 +17,7 @@
  * @export
  */
 export const DriveLogCategoriesSortColumn = {
-    Name: 'name'
+    Name: 'name',
 } as const;
 export type DriveLogCategoriesSortColumn = typeof DriveLogCategoriesSortColumn[keyof typeof DriveLogCategoriesSortColumn];
 

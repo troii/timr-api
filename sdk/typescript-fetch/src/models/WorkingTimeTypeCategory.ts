@@ -22,7 +22,7 @@ export const WorkingTimeTypeCategory = {
     PaidTimeOff: 'paid_time_off',
     UnpaidTimeOff: 'unpaid_time_off',
     Suspension: 'suspension',
-    BreakTime: 'break_time'
+    BreakTime: 'break_time',
 } as const;
 export type WorkingTimeTypeCategory = typeof WorkingTimeTypeCategory[keyof typeof WorkingTimeTypeCategory];
 

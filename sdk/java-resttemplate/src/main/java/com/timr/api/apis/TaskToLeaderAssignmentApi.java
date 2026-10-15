@@ -31,7 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TaskToLeaderAssignmentApi")
 public class TaskToLeaderAssignmentApi extends BaseApi {
 
@@ -57,7 +57,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return TaskToLeaderAssignment
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToLeaderAssignment createTaskToLeaderAssignment(String taskId, String userId) throws RestClientException {
+    public TaskToLeaderAssignment createTaskToLeaderAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return createTaskToLeaderAssignmentWithHttpInfo(taskId, userId).getBody();
     }
 
@@ -74,7 +74,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToLeaderAssignment&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToLeaderAssignment> createTaskToLeaderAssignmentWithHttpInfo(String taskId, String userId) throws RestClientException {
+    public ResponseEntity<TaskToLeaderAssignment> createTaskToLeaderAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -120,7 +120,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @param userId ID of the User. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteTaskToLeaderAssignment(String taskId, String userId) throws RestClientException {
+    public void deleteTaskToLeaderAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         deleteTaskToLeaderAssignmentWithHttpInfo(taskId, userId);
     }
 
@@ -136,7 +136,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTaskToLeaderAssignmentWithHttpInfo(String taskId, String userId) throws RestClientException {
+    public ResponseEntity<Void> deleteTaskToLeaderAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -185,7 +185,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return TaskToLeaderAssignmentsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToLeaderAssignmentsPage fetchTaskToLeaderAssignments(String taskId, String pageToken, Integer limit, SortDirection sortDirection, TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientException {
+    public TaskToLeaderAssignmentsPage fetchTaskToLeaderAssignments(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientException {
         return fetchTaskToLeaderAssignmentsWithHttpInfo(taskId, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -203,7 +203,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToLeaderAssignmentsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToLeaderAssignmentsPage> fetchTaskToLeaderAssignmentsWithHttpInfo(String taskId, String pageToken, Integer limit, SortDirection sortDirection, TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TaskToLeaderAssignmentsPage> fetchTaskToLeaderAssignmentsWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
@@ -249,7 +249,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return TaskToLeaderAssignment
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TaskToLeaderAssignment getTaskToLeaderAssignment(String taskId, String userId) throws RestClientException {
+    public TaskToLeaderAssignment getTaskToLeaderAssignment(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         return getTaskToLeaderAssignmentWithHttpInfo(taskId, userId).getBody();
     }
 
@@ -264,7 +264,7 @@ public class TaskToLeaderAssignmentApi extends BaseApi {
      * @return ResponseEntity&lt;TaskToLeaderAssignment&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToLeaderAssignment> getTaskToLeaderAssignmentWithHttpInfo(String taskId, String userId) throws RestClientException {
+    public ResponseEntity<TaskToLeaderAssignment> getTaskToLeaderAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set

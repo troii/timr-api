@@ -68,18 +68,39 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateWorkingTimeRequest {
+    /**
+     * 
+     */
     workingTimeCreate: WorkingTimeCreate;
 }
 
 export interface DeleteWorkingTimeRequest {
+    /**
+     * ID of the Working Time.
+     */
     id: string;
 }
 
 export interface FetchDeletedWorkingTimesRequest {
+    /**
+     * Only return entries modified after this instant.
+     */
     lastModifiedAfter?: Date;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: DeletedEntrySortColumn;
 }
 
@@ -89,18 +110,57 @@ export type FetchDeletedWorkingTimesQuery = Pick<
 >;
 
 export interface FetchWorkingTimesRequest {
+    /**
+     * Only return entries whose notes contain this text.
+     */
     notes?: string;
+    /**
+     * Only return entries starting on or after this day.
+     */
     startFrom?: Date;
+    /**
+     * Only return entries starting on or before this day.
+     */
     startTo?: Date;
+    /**
+     * Only return entries modified after this instant.
+     */
     lastModifiedAfter?: Date;
+    /**
+     * Only return entries of these Working Time Types.
+     */
     workingTimeTypes?: Array<string>;
+    /**
+     * Only return entries whose Working Time Type is in one of these categories.
+     */
     workingTimeTypeCategories?: Array<WorkingTimeTypeCategory>;
+    /**
+     * Only return entries in one of these statuses.
+     */
     statuses?: Array<WorkingTimeStatus>;
+    /**
+     * Only return entries belonging to these users.
+     */
     users?: Array<string>;
+    /**
+     * Only return entries that were changed by the user (true) or left unchanged (false).
+     */
     changed?: boolean;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: WorkingTimesSortColumn;
 }
 
@@ -110,11 +170,20 @@ export type FetchWorkingTimesQuery = Pick<
 >;
 
 export interface GetWorkingTimeRequest {
+    /**
+     * ID of the Working Time.
+     */
     id: string;
 }
 
 export interface UpdateWorkingTimeRequest {
+    /**
+     * ID of the Working Time.
+     */
     id: string;
+    /**
+     * 
+     */
     workingTimeUpdate: WorkingTimeUpdate;
 }
 
@@ -245,7 +314,7 @@ export class WorkingTimeApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         if (requestParameters['lastModifiedAfter'] != null) {
-            queryParameters['last_modified_after'] = (requestParameters['lastModifiedAfter'] as any).toISOString();
+            queryParameters['last_modified_after'] = runtime.serializeDateTime(requestParameters['lastModifiedAfter'] as any);
         }
 
         if (requestParameters['pageToken'] != null) {
@@ -318,15 +387,15 @@ export class WorkingTimeApi extends runtime.BaseAPI {
         }
 
         if (requestParameters['startFrom'] != null) {
-            queryParameters['start_from'] = (requestParameters['startFrom'] as any).toISOString().substring(0,10);
+            queryParameters['start_from'] = runtime.serializeDate(requestParameters['startFrom'] as any);
         }
 
         if (requestParameters['startTo'] != null) {
-            queryParameters['start_to'] = (requestParameters['startTo'] as any).toISOString().substring(0,10);
+            queryParameters['start_to'] = runtime.serializeDate(requestParameters['startTo'] as any);
         }
 
         if (requestParameters['lastModifiedAfter'] != null) {
-            queryParameters['last_modified_after'] = (requestParameters['lastModifiedAfter'] as any).toISOString();
+            queryParameters['last_modified_after'] = runtime.serializeDateTime(requestParameters['lastModifiedAfter'] as any);
         }
 
         if (requestParameters['workingTimeTypes'] != null) {

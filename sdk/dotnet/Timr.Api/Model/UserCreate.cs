@@ -261,17 +261,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="UserCreate" />
     /// </summary>
-    public class UserCreateJsonConverter : JsonConverter<UserCreate>
+    public partial class UserCreateJsonConverter : JsonConverter<UserCreate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserCreateJsonConverter" /> class.
+        /// </summary>
+        public UserCreateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize EntryDate
         /// </summary>
-        public static string EntryDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EntryDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ResignDate
         /// </summary>
-        public static string ResignDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ResignDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="UserCreate" />
@@ -357,10 +367,10 @@ namespace Timr.Api.Model
             }
 
             if (!login.IsSet)
-                throw new ArgumentException("Property is required for class UserCreate.", nameof(login));
+                throw new JsonException("Property is required for class UserCreate: login.");
 
             if (login.IsSet && login.Value == null)
-                throw new ArgumentNullException(nameof(login), "Property is not nullable for class UserCreate.");
+                throw new JsonException("Property is not nullable for class UserCreate: login.");
 
             return new UserCreate(login.Value!, firstname, lastname, email, entryDate, resignDate, employeeNumber, externalId, metadata, authProvider, authIdentifier);
         }
@@ -371,7 +381,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="userCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, UserCreate userCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -386,12 +395,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="userCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, UserCreate userCreate, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (userCreate.Login == null)
-                throw new ArgumentNullException(nameof(userCreate.Login), "Property is required for class UserCreate.");
-
             writer.WriteString("login", userCreate.Login);
 
             if (userCreate.FirstnameOption.IsSet)

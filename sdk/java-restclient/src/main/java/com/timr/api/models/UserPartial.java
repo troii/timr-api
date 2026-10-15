@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.*;
   UserPartial.JSON_PROPERTY_EMPLOYEE_NUMBER,
   UserPartial.JSON_PROPERTY_EXTERNAL_ID
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class UserPartial {
   public static final String JSON_PROPERTY_ID = "id";
   

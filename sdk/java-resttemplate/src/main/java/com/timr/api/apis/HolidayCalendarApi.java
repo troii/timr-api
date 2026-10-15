@@ -33,7 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.HolidayCalendarApi")
 public class HolidayCalendarApi extends BaseApi {
 
@@ -59,7 +59,7 @@ public class HolidayCalendarApi extends BaseApi {
      * @return HolidayCalendarsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public HolidayCalendarsPage fetchHolidayCalendars(String pageToken, Integer limit, SortDirection sortDirection, HolidayCalendarsSortColumn sortBy) throws RestClientException {
+    public HolidayCalendarsPage fetchHolidayCalendars(@jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable HolidayCalendarsSortColumn sortBy) throws RestClientException {
         return fetchHolidayCalendarsWithHttpInfo(pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -76,7 +76,7 @@ public class HolidayCalendarApi extends BaseApi {
      * @return ResponseEntity&lt;HolidayCalendarsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<HolidayCalendarsPage> fetchHolidayCalendarsWithHttpInfo(String pageToken, Integer limit, SortDirection sortDirection, HolidayCalendarsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<HolidayCalendarsPage> fetchHolidayCalendarsWithHttpInfo(@jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable HolidayCalendarsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -117,7 +117,7 @@ public class HolidayCalendarApi extends BaseApi {
      * @return HolidaysPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public HolidaysPage fetchHolidays(String id, String pageToken, Integer limit, SortDirection sortDirection, HolidaysSortColumn sortBy) throws RestClientException {
+    public HolidaysPage fetchHolidays(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable HolidaysSortColumn sortBy) throws RestClientException {
         return fetchHolidaysWithHttpInfo(id, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -135,7 +135,7 @@ public class HolidayCalendarApi extends BaseApi {
      * @return ResponseEntity&lt;HolidaysPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<HolidaysPage> fetchHolidaysWithHttpInfo(String id, String pageToken, Integer limit, SortDirection sortDirection, HolidaysSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<HolidaysPage> fetchHolidaysWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable HolidaysSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -180,7 +180,7 @@ public class HolidayCalendarApi extends BaseApi {
      * @return HolidayCalendarPartial
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public HolidayCalendarPartial getHolidayCalendar(String id) throws RestClientException {
+    public HolidayCalendarPartial getHolidayCalendar(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getHolidayCalendarWithHttpInfo(id).getBody();
     }
 
@@ -194,7 +194,7 @@ public class HolidayCalendarApi extends BaseApi {
      * @return ResponseEntity&lt;HolidayCalendarPartial&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<HolidayCalendarPartial> getHolidayCalendarWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<HolidayCalendarPartial> getHolidayCalendarWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set

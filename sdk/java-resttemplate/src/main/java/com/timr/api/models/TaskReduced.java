@@ -59,7 +59,7 @@ import com.fasterxml.jackson.annotation.*;
   TaskReduced.JSON_PROPERTY_CUSTOM_FIELD2,
   TaskReduced.JSON_PROPERTY_CUSTOM_FIELD3
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskReduced {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull

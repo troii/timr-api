@@ -104,8 +104,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="ErrorEntry" />
     /// </summary>
-    public class ErrorEntryJsonConverter : JsonConverter<ErrorEntry>
+    public partial class ErrorEntryJsonConverter : JsonConverter<ErrorEntry>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorEntryJsonConverter" /> class.
+        /// </summary>
+        public ErrorEntryJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="ErrorEntry" />
         /// </summary>
@@ -158,16 +168,16 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class ErrorEntry.", nameof(type));
+                throw new JsonException("Property is required for class ErrorEntry: type.");
 
             if (!detail.IsSet)
-                throw new ArgumentException("Property is required for class ErrorEntry.", nameof(detail));
+                throw new JsonException("Property is required for class ErrorEntry: detail.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class ErrorEntry.");
+                throw new JsonException("Property is not nullable for class ErrorEntry: type.");
 
             if (detail.IsSet && detail.Value == null)
-                throw new ArgumentNullException(nameof(detail), "Property is not nullable for class ErrorEntry.");
+                throw new JsonException("Property is not nullable for class ErrorEntry: detail.");
 
             return new ErrorEntry(type.Value!, detail.Value!, field);
         }
@@ -178,7 +188,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="errorEntry"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, ErrorEntry errorEntry, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -193,15 +202,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="errorEntry"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, ErrorEntry errorEntry, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (errorEntry.Type == null)
-                throw new ArgumentNullException(nameof(errorEntry.Type), "Property is required for class ErrorEntry.");
-
-            if (errorEntry.Detail == null)
-                throw new ArgumentNullException(nameof(errorEntry.Detail), "Property is required for class ErrorEntry.");
-
             writer.WriteString("type", errorEntry.Type);
 
             writer.WriteString("detail", errorEntry.Detail);

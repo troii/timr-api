@@ -1,5 +1,5 @@
 [versions]
-openapi-generator = "7.22.0"
+openapi-generator = "7.26.0"
 spring-boot = "4.0.8"
 jackson = "3.1.7"
 httpclient5 = "5.6.5"

@@ -20,14 +20,10 @@ import { mapValues } from '../runtime';
 export interface NormalWorkingTimes {
     /**
      * 
-     * @type {string}
-     * @memberof NormalWorkingTimes
      */
     start?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof NormalWorkingTimes
      */
     end?: string | null;
 }
@@ -49,8 +45,8 @@ export function NormalWorkingTimesFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'start': json['start'] == null ? undefined : json['start'],
-        'end': json['end'] == null ? undefined : json['end'],
+        'start': json['start'] === undefined ? undefined : json['start'] === null ? null : json['start'],
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : json['end'],
     };
 }
 

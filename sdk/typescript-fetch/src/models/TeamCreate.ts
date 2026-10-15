@@ -20,26 +20,18 @@ import { mapValues } from '../runtime';
 export interface TeamCreate {
     /**
      * 
-     * @type {string}
-     * @memberof TeamCreate
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof TeamCreate
      */
     description?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TeamCreate
      */
     parentTeamId?: string | null;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof TeamCreate
      */
     externalId?: string | null;
 }
@@ -63,9 +55,9 @@ export function TeamCreateFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'name': json['name'],
-        'description': json['description'] == null ? undefined : json['description'],
-        'parentTeamId': json['parent_team_id'] == null ? undefined : json['parent_team_id'],
-        'externalId': json['external_id'] == null ? undefined : json['external_id'],
+        'description': json['description'] === undefined ? undefined : json['description'] === null ? null : json['description'],
+        'parentTeamId': json['parent_team_id'] === undefined ? undefined : json['parent_team_id'] === null ? null : json['parent_team_id'],
+        'externalId': json['external_id'] === undefined ? undefined : json['external_id'] === null ? null : json['external_id'],
     };
 }
 

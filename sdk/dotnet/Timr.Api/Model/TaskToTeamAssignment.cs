@@ -85,8 +85,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskToTeamAssignment" />
     /// </summary>
-    public class TaskToTeamAssignmentJsonConverter : JsonConverter<TaskToTeamAssignment>
+    public partial class TaskToTeamAssignmentJsonConverter : JsonConverter<TaskToTeamAssignment>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskToTeamAssignmentJsonConverter" /> class.
+        /// </summary>
+        public TaskToTeamAssignmentJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskToTeamAssignment" />
         /// </summary>
@@ -135,16 +145,16 @@ namespace Timr.Api.Model
             }
 
             if (!team.IsSet)
-                throw new ArgumentException("Property is required for class TaskToTeamAssignment.", nameof(team));
+                throw new JsonException("Property is required for class TaskToTeamAssignment: team.");
 
             if (!automaticallyAssigned.IsSet)
-                throw new ArgumentException("Property is required for class TaskToTeamAssignment.", nameof(automaticallyAssigned));
+                throw new JsonException("Property is required for class TaskToTeamAssignment: automatically_assigned.");
 
             if (team.IsSet && team.Value == null)
-                throw new ArgumentNullException(nameof(team), "Property is not nullable for class TaskToTeamAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToTeamAssignment: team.");
 
             if (automaticallyAssigned.IsSet && automaticallyAssigned.Value == null)
-                throw new ArgumentNullException(nameof(automaticallyAssigned), "Property is not nullable for class TaskToTeamAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToTeamAssignment: automatically_assigned.");
 
             return new TaskToTeamAssignment(team.Value!, automaticallyAssigned.Value!.Value!);
         }
@@ -155,7 +165,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToTeamAssignment"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskToTeamAssignment taskToTeamAssignment, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -170,12 +179,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToTeamAssignment"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskToTeamAssignment taskToTeamAssignment, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskToTeamAssignment.Team == null)
-                throw new ArgumentNullException(nameof(taskToTeamAssignment.Team), "Property is required for class TaskToTeamAssignment.");
-
             writer.WritePropertyName("team");
             JsonSerializer.Serialize(writer, taskToTeamAssignment.Team, jsonSerializerOptions);
             writer.WriteBoolean("automatically_assigned", taskToTeamAssignment.AutomaticallyAssigned);

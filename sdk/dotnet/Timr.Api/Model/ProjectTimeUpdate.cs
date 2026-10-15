@@ -247,17 +247,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="ProjectTimeUpdate" />
     /// </summary>
-    public class ProjectTimeUpdateJsonConverter : JsonConverter<ProjectTimeUpdate>
+    public partial class ProjectTimeUpdateJsonConverter : JsonConverter<ProjectTimeUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectTimeUpdateJsonConverter" /> class.
+        /// </summary>
+        public ProjectTimeUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="ProjectTimeUpdate" />
@@ -325,9 +335,7 @@ namespace Timr.Api.Model
                             billable = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<ProjectTimeStatus?>(ProjectTimeStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<ProjectTimeStatus?>(JsonSerializer.Deserialize<ProjectTimeStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "metadata":
                             metadata = new Option<Dictionary<string, Object>?>(JsonSerializer.Deserialize<Dictionary<string, Object>>(ref utf8JsonReader, jsonSerializerOptions));
@@ -345,22 +353,22 @@ namespace Timr.Api.Model
             }
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class ProjectTimeUpdate.");
+                throw new JsonException("Property is not nullable for class ProjectTimeUpdate: start.");
 
             if (breakTimes.IsSet && breakTimes.Value == null)
-                throw new ArgumentNullException(nameof(breakTimes), "Property is not nullable for class ProjectTimeUpdate.");
+                throw new JsonException("Property is not nullable for class ProjectTimeUpdate: break_times.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class ProjectTimeUpdate.");
+                throw new JsonException("Property is not nullable for class ProjectTimeUpdate: changed.");
 
             if (taskId.IsSet && taskId.Value == null)
-                throw new ArgumentNullException(nameof(taskId), "Property is not nullable for class ProjectTimeUpdate.");
+                throw new JsonException("Property is not nullable for class ProjectTimeUpdate: task_id.");
 
             if (billable.IsSet && billable.Value == null)
-                throw new ArgumentNullException(nameof(billable), "Property is not nullable for class ProjectTimeUpdate.");
+                throw new JsonException("Property is not nullable for class ProjectTimeUpdate: billable.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class ProjectTimeUpdate.");
+                throw new JsonException("Property is not nullable for class ProjectTimeUpdate: status.");
 
             return new ProjectTimeUpdate(start, end, breakTimes, changed, notes, taskId, billable, status, metadata, startLocation, endLocation);
         }
@@ -371,7 +379,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="projectTimeUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, ProjectTimeUpdate projectTimeUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -386,14 +393,25 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="projectTimeUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, ProjectTimeUpdate projectTimeUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (projectTimeUpdate.StartOption.IsSet && projectTimeUpdate.Start == null)
+                throw new JsonException("Cannot write null property ProjectTimeUpdate.Start to non-nullable JSON property 'start'.");
+
             if (projectTimeUpdate.BreakTimesOption.IsSet && projectTimeUpdate.BreakTimes == null)
-                throw new ArgumentNullException(nameof(projectTimeUpdate.BreakTimes), "Property is required for class ProjectTimeUpdate.");
+                throw new JsonException("Cannot write null property ProjectTimeUpdate.BreakTimes to non-nullable JSON property 'break_times'.");
+
+            if (projectTimeUpdate.ChangedOption.IsSet && projectTimeUpdate.Changed == null)
+                throw new JsonException("Cannot write null property ProjectTimeUpdate.Changed to non-nullable JSON property 'changed'.");
 
             if (projectTimeUpdate.TaskIdOption.IsSet && projectTimeUpdate.TaskId == null)
-                throw new ArgumentNullException(nameof(projectTimeUpdate.TaskId), "Property is required for class ProjectTimeUpdate.");
+                throw new JsonException("Cannot write null property ProjectTimeUpdate.TaskId to non-nullable JSON property 'task_id'.");
+
+            if (projectTimeUpdate.BillableOption.IsSet && projectTimeUpdate.Billable == null)
+                throw new JsonException("Cannot write null property ProjectTimeUpdate.Billable to non-nullable JSON property 'billable'.");
+
+            if (projectTimeUpdate.StatusOption.IsSet && projectTimeUpdate.Status == null)
+                throw new JsonException("Cannot write null property ProjectTimeUpdate.Status to non-nullable JSON property 'status'.");
 
             if (projectTimeUpdate.StartOption.IsSet)
                 writer.WriteString("start", projectTimeUpdate.StartOption.Value!.Value.ToString(StartFormat));

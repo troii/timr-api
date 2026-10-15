@@ -167,8 +167,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="VenuePartial" />
     /// </summary>
-    public class VenuePartialJsonConverter : JsonConverter<VenuePartial>
+    public partial class VenuePartialJsonConverter : JsonConverter<VenuePartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VenuePartialJsonConverter" /> class.
+        /// </summary>
+        public VenuePartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="VenuePartial" />
         /// </summary>
@@ -245,52 +255,52 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(id));
+                throw new JsonException("Property is required for class VenuePartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(name));
+                throw new JsonException("Property is required for class VenuePartial: name.");
 
             if (!city.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(city));
+                throw new JsonException("Property is required for class VenuePartial: city.");
 
             if (!zipCode.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(zipCode));
+                throw new JsonException("Property is required for class VenuePartial: zip_code.");
 
             if (!street.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(street));
+                throw new JsonException("Property is required for class VenuePartial: street.");
 
             if (!streetNumber.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(streetNumber));
+                throw new JsonException("Property is required for class VenuePartial: street_number.");
 
             if (!country.IsSet)
-                throw new ArgumentException("Property is required for class VenuePartial.", nameof(country));
+                throw new JsonException("Property is required for class VenuePartial: country.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: name.");
 
             if (city.IsSet && city.Value == null)
-                throw new ArgumentNullException(nameof(city), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: city.");
 
             if (zipCode.IsSet && zipCode.Value == null)
-                throw new ArgumentNullException(nameof(zipCode), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: zip_code.");
 
             if (street.IsSet && street.Value == null)
-                throw new ArgumentNullException(nameof(street), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: street.");
 
             if (streetNumber.IsSet && streetNumber.Value == null)
-                throw new ArgumentNullException(nameof(streetNumber), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: street_number.");
 
             if (country.IsSet && country.Value == null)
-                throw new ArgumentNullException(nameof(country), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: country.");
 
             if (lat.IsSet && lat.Value == null)
-                throw new ArgumentNullException(nameof(lat), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: lat.");
 
             if (lon.IsSet && lon.Value == null)
-                throw new ArgumentNullException(nameof(lon), "Property is not nullable for class VenuePartial.");
+                throw new JsonException("Property is not nullable for class VenuePartial: lon.");
 
             return new VenuePartial(id.Value!, name.Value!, city.Value!, zipCode.Value!, street.Value!, streetNumber.Value!, country.Value!, lat, lon);
         }
@@ -301,7 +311,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="venuePartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, VenuePartial venuePartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -316,29 +325,13 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="venuePartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, VenuePartial venuePartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (venuePartial.Id == null)
-                throw new ArgumentNullException(nameof(venuePartial.Id), "Property is required for class VenuePartial.");
+            if (venuePartial.LatOption.IsSet && venuePartial.Lat == null)
+                throw new JsonException("Cannot write null property VenuePartial.Lat to non-nullable JSON property 'lat'.");
 
-            if (venuePartial.Name == null)
-                throw new ArgumentNullException(nameof(venuePartial.Name), "Property is required for class VenuePartial.");
-
-            if (venuePartial.City == null)
-                throw new ArgumentNullException(nameof(venuePartial.City), "Property is required for class VenuePartial.");
-
-            if (venuePartial.ZipCode == null)
-                throw new ArgumentNullException(nameof(venuePartial.ZipCode), "Property is required for class VenuePartial.");
-
-            if (venuePartial.Street == null)
-                throw new ArgumentNullException(nameof(venuePartial.Street), "Property is required for class VenuePartial.");
-
-            if (venuePartial.StreetNumber == null)
-                throw new ArgumentNullException(nameof(venuePartial.StreetNumber), "Property is required for class VenuePartial.");
-
-            if (venuePartial.Country == null)
-                throw new ArgumentNullException(nameof(venuePartial.Country), "Property is required for class VenuePartial.");
+            if (venuePartial.LonOption.IsSet && venuePartial.Lon == null)
+                throw new JsonException("Cannot write null property VenuePartial.Lon to non-nullable JSON property 'lon'.");
 
             writer.WriteString("id", venuePartial.Id);
 

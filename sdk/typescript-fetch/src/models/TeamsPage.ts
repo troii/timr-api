@@ -28,14 +28,10 @@ import {
 export interface TeamsPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof TeamsPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<Team>}
-     * @memberof TeamsPage
      */
     data: Array<Team>;
 }
@@ -44,7 +40,7 @@ export interface TeamsPage {
  * Check if a given object implements the TeamsPage interface.
  */
 export function instanceOfTeamsPage(value: object): value is TeamsPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

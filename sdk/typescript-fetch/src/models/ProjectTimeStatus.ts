@@ -24,7 +24,7 @@ export const ProjectTimeStatus = {
     Approved: 'approved',
     Cleared: 'cleared',
     Closed: 'closed',
-    Archived: 'archived'
+    Archived: 'archived',
 } as const;
 export type ProjectTimeStatus = typeof ProjectTimeStatus[keyof typeof ProjectTimeStatus];
 

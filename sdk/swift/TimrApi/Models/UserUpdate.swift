@@ -12,7 +12,7 @@ import AnyCodable
 
 public struct UserUpdate: Codable, JSONEncodable, Hashable {
 
-    public static let loginRule = StringRule(minLength: 1, maxLength: nil, pattern: "/^[A-Za-z0-9!#$%&'*+/=@\\.?^_`{|}~-]*$/")
+    public static let loginRule = StringRule(minLength: 1, maxLength: nil, pattern: "^[A-Za-z0-9!#$%&'*+/=@\\.?^_`{|}~-]*$")
     public static let emailRule = StringRule(minLength: 1, maxLength: nil, pattern: nil)
     public var login: String?
     public var firstname: String?

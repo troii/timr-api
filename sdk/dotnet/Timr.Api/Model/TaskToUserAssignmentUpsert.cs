@@ -99,8 +99,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskToUserAssignmentUpsert" />
     /// </summary>
-    public class TaskToUserAssignmentUpsertJsonConverter : JsonConverter<TaskToUserAssignmentUpsert>
+    public partial class TaskToUserAssignmentUpsertJsonConverter : JsonConverter<TaskToUserAssignmentUpsert>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskToUserAssignmentUpsertJsonConverter" /> class.
+        /// </summary>
+        public TaskToUserAssignmentUpsertJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskToUserAssignmentUpsert" />
         /// </summary>
@@ -140,8 +150,7 @@ namespace Timr.Api.Model
                             hoursPlanned = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
                             break;
                         case "recording_lock":
-                            string? recordingLockRawValue = utf8JsonReader.GetString();
-                            recordingLock = new Option<RecordingLockType?>(recordingLockRawValue == null ? null : RecordingLockTypeValueConverter.FromStringOrDefault(recordingLockRawValue));
+                            recordingLock = new Option<RecordingLockType?>(JsonSerializer.Deserialize<RecordingLockType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -158,7 +167,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToUserAssignmentUpsert"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskToUserAssignmentUpsert taskToUserAssignmentUpsert, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -173,7 +181,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToUserAssignmentUpsert"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskToUserAssignmentUpsert taskToUserAssignmentUpsert, JsonSerializerOptions jsonSerializerOptions)
         {
             if (taskToUserAssignmentUpsert.HoursPlannedOption.IsSet)

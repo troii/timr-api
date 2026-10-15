@@ -32,7 +32,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class HolidayCalendarApi {
     private ApiClient apiClient;
 
@@ -70,15 +70,15 @@ public class HolidayCalendarApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -90,7 +90,7 @@ public class HolidayCalendarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<HolidayCalendarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/holiday-calendars", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/holiday-calendars", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -106,7 +106,7 @@ public class HolidayCalendarApi {
      * @return HolidayCalendarsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public HolidayCalendarsPage fetchHolidayCalendars( String pageToken,  Integer limit,  SortDirection sortDirection,  HolidayCalendarsSortColumn sortBy) throws RestClientResponseException {
+    public HolidayCalendarsPage fetchHolidayCalendars(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable HolidayCalendarsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<HolidayCalendarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchHolidayCalendarsRequestCreation(pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -124,7 +124,7 @@ public class HolidayCalendarApi {
      * @return ResponseEntity&lt;HolidayCalendarsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<HolidayCalendarsPage> fetchHolidayCalendarsWithHttpInfo( String pageToken,  Integer limit,  SortDirection sortDirection,  HolidayCalendarsSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<HolidayCalendarsPage> fetchHolidayCalendarsWithHttpInfo(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable HolidayCalendarsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<HolidayCalendarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchHolidayCalendarsRequestCreation(pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -171,15 +171,15 @@ public class HolidayCalendarApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -191,7 +191,7 @@ public class HolidayCalendarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<HolidaysPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/holiday-calendars/{id}/holidays", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/holiday-calendars/{id}/holidays", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -208,7 +208,7 @@ public class HolidayCalendarApi {
      * @return HolidaysPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public HolidaysPage fetchHolidays( String id,  String pageToken,  Integer limit,  SortDirection sortDirection,  HolidaysSortColumn sortBy) throws RestClientResponseException {
+    public HolidaysPage fetchHolidays(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable HolidaysSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<HolidaysPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchHolidaysRequestCreation(id, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -227,7 +227,7 @@ public class HolidayCalendarApi {
      * @return ResponseEntity&lt;HolidaysPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<HolidaysPage> fetchHolidaysWithHttpInfo( String id,  String pageToken,  Integer limit,  SortDirection sortDirection,  HolidaysSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<HolidaysPage> fetchHolidaysWithHttpInfo(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable HolidaysSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<HolidaysPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchHolidaysRequestCreation(id, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -271,7 +271,7 @@ public class HolidayCalendarApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -286,7 +286,7 @@ public class HolidayCalendarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<HolidayCalendarPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/holiday-calendars/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/holiday-calendars/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -299,7 +299,7 @@ public class HolidayCalendarApi {
      * @return HolidayCalendarPartial
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public HolidayCalendarPartial getHolidayCalendar( String id) throws RestClientResponseException {
+    public HolidayCalendarPartial getHolidayCalendar(String id) throws RestClientResponseException {
         ParameterizedTypeReference<HolidayCalendarPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getHolidayCalendarRequestCreation(id).body(localVarReturnType);
     }
@@ -314,7 +314,7 @@ public class HolidayCalendarApi {
      * @return ResponseEntity&lt;HolidayCalendarPartial&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<HolidayCalendarPartial> getHolidayCalendarWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<HolidayCalendarPartial> getHolidayCalendarWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<HolidayCalendarPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getHolidayCalendarRequestCreation(id).toEntity(localVarReturnType);
     }

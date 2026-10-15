@@ -158,8 +158,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="CarCreate" />
     /// </summary>
-    public class CarCreateJsonConverter : JsonConverter<CarCreate>
+    public partial class CarCreateJsonConverter : JsonConverter<CarCreate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CarCreateJsonConverter" /> class.
+        /// </summary>
+        public CarCreateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="CarCreate" />
         /// </summary>
@@ -220,19 +230,19 @@ namespace Timr.Api.Model
             }
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class CarCreate.", nameof(name));
+                throw new JsonException("Property is required for class CarCreate: name.");
 
             if (!plate.IsSet)
-                throw new ArgumentException("Property is required for class CarCreate.", nameof(plate));
+                throw new JsonException("Property is required for class CarCreate: plate.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class CarCreate.");
+                throw new JsonException("Property is not nullable for class CarCreate: name.");
 
             if (plate.IsSet && plate.Value == null)
-                throw new ArgumentNullException(nameof(plate), "Property is not nullable for class CarCreate.");
+                throw new JsonException("Property is not nullable for class CarCreate: plate.");
 
             if (usable.IsSet && usable.Value == null)
-                throw new ArgumentNullException(nameof(usable), "Property is not nullable for class CarCreate.");
+                throw new JsonException("Property is not nullable for class CarCreate: usable.");
 
             return new CarCreate(name.Value!, plate.Value!, externalId, usable, metadata);
         }
@@ -243,7 +253,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, CarCreate carCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -258,14 +267,10 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, CarCreate carCreate, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (carCreate.Name == null)
-                throw new ArgumentNullException(nameof(carCreate.Name), "Property is required for class CarCreate.");
-
-            if (carCreate.Plate == null)
-                throw new ArgumentNullException(nameof(carCreate.Plate), "Property is required for class CarCreate.");
+            if (carCreate.UsableOption.IsSet && carCreate.Usable == null)
+                throw new JsonException("Cannot write null property CarCreate.Usable to non-nullable JSON property 'usable'.");
 
             writer.WriteString("name", carCreate.Name);
 

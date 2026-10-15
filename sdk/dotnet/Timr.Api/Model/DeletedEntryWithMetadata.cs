@@ -114,12 +114,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DeletedEntryWithMetadata" />
     /// </summary>
-    public class DeletedEntryWithMetadataJsonConverter : JsonConverter<DeletedEntryWithMetadata>
+    public partial class DeletedEntryWithMetadataJsonConverter : JsonConverter<DeletedEntryWithMetadata>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeletedEntryWithMetadataJsonConverter" /> class.
+        /// </summary>
+        public DeletedEntryWithMetadataJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize LastModified
         /// </summary>
-        public static string LastModifiedFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DeletedEntryWithMetadata" />
@@ -177,19 +187,19 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class DeletedEntryWithMetadata.", nameof(id));
+                throw new JsonException("Property is required for class DeletedEntryWithMetadata: id.");
 
             if (!lastModified.IsSet)
-                throw new ArgumentException("Property is required for class DeletedEntryWithMetadata.", nameof(lastModified));
+                throw new JsonException("Property is required for class DeletedEntryWithMetadata: last_modified.");
 
             if (!lastModifiedBy.IsSet)
-                throw new ArgumentException("Property is required for class DeletedEntryWithMetadata.", nameof(lastModifiedBy));
+                throw new JsonException("Property is required for class DeletedEntryWithMetadata: last_modified_by.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class DeletedEntryWithMetadata.");
+                throw new JsonException("Property is not nullable for class DeletedEntryWithMetadata: id.");
 
             if (lastModified.IsSet && lastModified.Value == null)
-                throw new ArgumentNullException(nameof(lastModified), "Property is not nullable for class DeletedEntryWithMetadata.");
+                throw new JsonException("Property is not nullable for class DeletedEntryWithMetadata: last_modified.");
 
             return new DeletedEntryWithMetadata(id.Value!, lastModified.Value!.Value!, lastModifiedBy.Value!, metadata);
         }
@@ -200,7 +210,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="deletedEntryWithMetadata"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DeletedEntryWithMetadata deletedEntryWithMetadata, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -215,12 +224,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="deletedEntryWithMetadata"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DeletedEntryWithMetadata deletedEntryWithMetadata, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (deletedEntryWithMetadata.Id == null)
-                throw new ArgumentNullException(nameof(deletedEntryWithMetadata.Id), "Property is required for class DeletedEntryWithMetadata.");
-
             writer.WriteString("id", deletedEntryWithMetadata.Id);
 
             writer.WriteString("last_modified", deletedEntryWithMetadata.LastModified.ToString(LastModifiedFormat));

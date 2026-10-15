@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { ProjectTimeStatus } from './ProjectTimeStatus';
 import {
     ProjectTimeStatusFromJSON,
@@ -42,74 +42,50 @@ import {
 export interface ProjectTimeCreate {
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof ProjectTimeCreate
      */
     start: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof ProjectTimeCreate
      */
     end?: Date | null;
     /**
      * 
-     * @type {Array<BreakTimeUpdate>}
-     * @memberof ProjectTimeCreate
      */
     breakTimes?: Array<BreakTimeUpdate>;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectTimeCreate
      */
     changed: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeCreate
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeCreate
      */
     taskId: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof ProjectTimeCreate
      */
     billable?: boolean;
     /**
      * 
-     * @type {ProjectTimeStatus}
-     * @memberof ProjectTimeCreate
      */
     status: ProjectTimeStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof ProjectTimeCreate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {string}
-     * @memberof ProjectTimeCreate
      */
     userId: string;
     /**
      * 
-     * @type {LocationCreate}
-     * @memberof ProjectTimeCreate
      */
     startLocation?: LocationCreate | null;
     /**
      * 
-     * @type {LocationCreate}
-     * @memberof ProjectTimeCreate
      */
     endLocation?: LocationCreate | null;
 }
@@ -122,9 +98,9 @@ export interface ProjectTimeCreate {
 export function instanceOfProjectTimeCreate(value: object): value is ProjectTimeCreate {
     if (!('start' in value) || value['start'] === undefined) return false;
     if (!('changed' in value) || value['changed'] === undefined) return false;
-    if (!('taskId' in value) || value['taskId'] === undefined) return false;
+    if ((!('taskId' in (value as Record<string, any>)) && !('task_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['taskId'] === undefined && (value as Record<string, any>)['task_id'] === undefined)) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
+    if ((!('userId' in (value as Record<string, any>)) && !('user_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['userId'] === undefined && (value as Record<string, any>)['user_id'] === undefined)) return false;
     return true;
 }
 
@@ -138,18 +114,18 @@ export function ProjectTimeCreateFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'start': (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': (json['start'] == null ? json['start'] : parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'breakTimes': json['break_times'] == null ? undefined : ((json['break_times'] as Array<any>).map(BreakTimeUpdateFromJSON)),
         'changed': json['changed'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'taskId': json['task_id'],
         'billable': json['billable'] == null ? undefined : json['billable'],
         'status': ProjectTimeStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
         'userId': json['user_id'],
-        'startLocation': json['start_location'] == null ? undefined : LocationCreateFromJSON(json['start_location']),
-        'endLocation': json['end_location'] == null ? undefined : LocationCreateFromJSON(json['end_location']),
+        'startLocation': json['start_location'] === undefined ? undefined : json['start_location'] === null ? null : LocationCreateFromJSON(json['start_location']),
+        'endLocation': json['end_location'] === undefined ? undefined : json['end_location'] === null ? null : LocationCreateFromJSON(json['end_location']),
     };
 }
 
@@ -164,8 +140,8 @@ export function ProjectTimeCreateToJSONTyped(value?: ProjectTimeCreate | null, i
 
     return {
         
-        'start': value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'break_times': value['breakTimes'] == null ? undefined : ((value['breakTimes'] as Array<any>).map(BreakTimeUpdateToJSON)),
         'changed': value['changed'],
         'notes': value['notes'],

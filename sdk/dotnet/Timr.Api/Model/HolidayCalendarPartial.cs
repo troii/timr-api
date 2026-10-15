@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="HolidayCalendarPartial" />
     /// </summary>
-    public class HolidayCalendarPartialJsonConverter : JsonConverter<HolidayCalendarPartial>
+    public partial class HolidayCalendarPartialJsonConverter : JsonConverter<HolidayCalendarPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HolidayCalendarPartialJsonConverter" /> class.
+        /// </summary>
+        public HolidayCalendarPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="HolidayCalendarPartial" />
         /// </summary>
@@ -136,16 +146,16 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class HolidayCalendarPartial.", nameof(id));
+                throw new JsonException("Property is required for class HolidayCalendarPartial: id.");
 
             if (!description.IsSet)
-                throw new ArgumentException("Property is required for class HolidayCalendarPartial.", nameof(description));
+                throw new JsonException("Property is required for class HolidayCalendarPartial: description.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class HolidayCalendarPartial.");
+                throw new JsonException("Property is not nullable for class HolidayCalendarPartial: id.");
 
             if (description.IsSet && description.Value == null)
-                throw new ArgumentNullException(nameof(description), "Property is not nullable for class HolidayCalendarPartial.");
+                throw new JsonException("Property is not nullable for class HolidayCalendarPartial: description.");
 
             return new HolidayCalendarPartial(id.Value!, description.Value!);
         }
@@ -156,7 +166,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="holidayCalendarPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, HolidayCalendarPartial holidayCalendarPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -171,15 +180,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="holidayCalendarPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, HolidayCalendarPartial holidayCalendarPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (holidayCalendarPartial.Id == null)
-                throw new ArgumentNullException(nameof(holidayCalendarPartial.Id), "Property is required for class HolidayCalendarPartial.");
-
-            if (holidayCalendarPartial.Description == null)
-                throw new ArgumentNullException(nameof(holidayCalendarPartial.Description), "Property is required for class HolidayCalendarPartial.");
-
             writer.WriteString("id", holidayCalendarPartial.Id);
 
             writer.WriteString("description", holidayCalendarPartial.Description);

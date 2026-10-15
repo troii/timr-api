@@ -34,7 +34,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkingTimeTypeApi {
     private ApiClient apiClient;
 
@@ -75,7 +75,7 @@ public class WorkingTimeTypeApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -90,7 +90,7 @@ public class WorkingTimeTypeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -103,7 +103,7 @@ public class WorkingTimeTypeApi {
      * @param id ID of the Working Time Type.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteWorkingTimeType( String id) throws RestClientResponseException {
+    public void deleteWorkingTimeType(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteWorkingTimeTypeRequestCreation(id).body(localVarReturnType);
     }
@@ -118,7 +118,7 @@ public class WorkingTimeTypeApi {
      * @param id ID of the Working Time Type.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteWorkingTimeTypeWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteWorkingTimeTypeWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteWorkingTimeTypeRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -163,23 +163,23 @@ public class WorkingTimeTypeApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "short_name", shortName));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "description", description));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "categories", categories));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "sub_categories", subCategories));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "edit_units", editUnits));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "archived", archived));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "recording_modes", recordingModes));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "short_name", shortName));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "description", description));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "categories", categories));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "sub_categories", subCategories));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "edit_units", editUnits));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "archived", archived));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "recording_modes", recordingModes));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -191,7 +191,7 @@ public class WorkingTimeTypeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeTypesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-types", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-types", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -214,7 +214,7 @@ public class WorkingTimeTypeApi {
      * @return WorkingTimeTypesPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeTypesPage fetchWorkingTimeTypes( String name,  String shortName,  String description,  List<WorkingTimeTypeCategory> categories,  List<WorkingTimeTypeSubCategory> subCategories,  List<DurationUnit> editUnits,  Boolean archived,  List<RecordingModeUser> recordingModes,  String pageToken,  Integer limit,  SortDirection sortDirection,  WorkingTimeTypesSortColumn sortBy) throws RestClientResponseException {
+    public WorkingTimeTypesPage fetchWorkingTimeTypes(@Nullable String name, @Nullable String shortName, @Nullable String description, @Nullable List<WorkingTimeTypeCategory> categories, @Nullable List<WorkingTimeTypeSubCategory> subCategories, @Nullable List<DurationUnit> editUnits, @Nullable Boolean archived, @Nullable List<RecordingModeUser> recordingModes, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkingTimeTypesSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeTypesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchWorkingTimeTypesRequestCreation(name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -239,7 +239,7 @@ public class WorkingTimeTypeApi {
      * @return ResponseEntity&lt;WorkingTimeTypesPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeTypesPage> fetchWorkingTimeTypesWithHttpInfo( String name,  String shortName,  String description,  List<WorkingTimeTypeCategory> categories,  List<WorkingTimeTypeSubCategory> subCategories,  List<DurationUnit> editUnits,  Boolean archived,  List<RecordingModeUser> recordingModes,  String pageToken,  Integer limit,  SortDirection sortDirection,  WorkingTimeTypesSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<WorkingTimeTypesPage> fetchWorkingTimeTypesWithHttpInfo(@Nullable String name, @Nullable String shortName, @Nullable String description, @Nullable List<WorkingTimeTypeCategory> categories, @Nullable List<WorkingTimeTypeSubCategory> subCategories, @Nullable List<DurationUnit> editUnits, @Nullable Boolean archived, @Nullable List<RecordingModeUser> recordingModes, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkingTimeTypesSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeTypesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchWorkingTimeTypesRequestCreation(name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -289,7 +289,7 @@ public class WorkingTimeTypeApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -304,7 +304,7 @@ public class WorkingTimeTypeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeType> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -317,7 +317,7 @@ public class WorkingTimeTypeApi {
      * @return WorkingTimeType
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkingTimeType getWorkingTimeType( String id) throws RestClientResponseException {
+    public WorkingTimeType getWorkingTimeType(String id) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeType> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getWorkingTimeTypeRequestCreation(id).body(localVarReturnType);
     }
@@ -332,7 +332,7 @@ public class WorkingTimeTypeApi {
      * @return ResponseEntity&lt;WorkingTimeType&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkingTimeType> getWorkingTimeTypeWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<WorkingTimeType> getWorkingTimeTypeWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<WorkingTimeType> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getWorkingTimeTypeRequestCreation(id).toEntity(localVarReturnType);
     }

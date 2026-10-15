@@ -103,8 +103,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="OvertimeSurchargeAccounts" />
     /// </summary>
-    public class OvertimeSurchargeAccountsJsonConverter : JsonConverter<OvertimeSurchargeAccounts>
+    public partial class OvertimeSurchargeAccountsJsonConverter : JsonConverter<OvertimeSurchargeAccounts>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OvertimeSurchargeAccountsJsonConverter" /> class.
+        /// </summary>
+        public OvertimeSurchargeAccountsJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="OvertimeSurchargeAccounts" />
         /// </summary>
@@ -161,25 +171,25 @@ namespace Timr.Api.Model
             }
 
             if (!rule.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccounts.", nameof(rule));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccounts: rule.");
 
             if (!overtime.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccounts.", nameof(overtime));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccounts: overtime.");
 
             if (!surcharge.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccounts.", nameof(surcharge));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccounts: surcharge.");
 
             if (!percentage.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccounts.", nameof(percentage));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccounts: percentage.");
 
             if (rule.IsSet && rule.Value == null)
-                throw new ArgumentNullException(nameof(rule), "Property is not nullable for class OvertimeSurchargeAccounts.");
+                throw new JsonException("Property is not nullable for class OvertimeSurchargeAccounts: rule.");
 
             if (overtime.IsSet && overtime.Value == null)
-                throw new ArgumentNullException(nameof(overtime), "Property is not nullable for class OvertimeSurchargeAccounts.");
+                throw new JsonException("Property is not nullable for class OvertimeSurchargeAccounts: overtime.");
 
             if (surcharge.IsSet && surcharge.Value == null)
-                throw new ArgumentNullException(nameof(surcharge), "Property is not nullable for class OvertimeSurchargeAccounts.");
+                throw new JsonException("Property is not nullable for class OvertimeSurchargeAccounts: surcharge.");
 
             return new OvertimeSurchargeAccounts(rule.Value!, overtime.Value!, surcharge.Value!, percentage.Value!);
         }
@@ -190,7 +200,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="overtimeSurchargeAccounts"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, OvertimeSurchargeAccounts overtimeSurchargeAccounts, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -205,18 +214,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="overtimeSurchargeAccounts"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, OvertimeSurchargeAccounts overtimeSurchargeAccounts, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (overtimeSurchargeAccounts.Rule == null)
-                throw new ArgumentNullException(nameof(overtimeSurchargeAccounts.Rule), "Property is required for class OvertimeSurchargeAccounts.");
-
-            if (overtimeSurchargeAccounts.Overtime == null)
-                throw new ArgumentNullException(nameof(overtimeSurchargeAccounts.Overtime), "Property is required for class OvertimeSurchargeAccounts.");
-
-            if (overtimeSurchargeAccounts.Surcharge == null)
-                throw new ArgumentNullException(nameof(overtimeSurchargeAccounts.Surcharge), "Property is required for class OvertimeSurchargeAccounts.");
-
             writer.WritePropertyName("rule");
             JsonSerializer.Serialize(writer, overtimeSurchargeAccounts.Rule, jsonSerializerOptions);
             writer.WritePropertyName("overtime");

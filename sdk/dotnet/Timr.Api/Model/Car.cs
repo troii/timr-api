@@ -130,8 +130,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Car" />
     /// </summary>
-    public class CarJsonConverter : JsonConverter<Car>
+    public partial class CarJsonConverter : JsonConverter<Car>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CarJsonConverter" /> class.
+        /// </summary>
+        public CarJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="Car" />
         /// </summary>
@@ -196,31 +206,31 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class Car.", nameof(id));
+                throw new JsonException("Property is required for class Car: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class Car.", nameof(name));
+                throw new JsonException("Property is required for class Car: name.");
 
             if (!plate.IsSet)
-                throw new ArgumentException("Property is required for class Car.", nameof(plate));
+                throw new JsonException("Property is required for class Car: plate.");
 
             if (!usable.IsSet)
-                throw new ArgumentException("Property is required for class Car.", nameof(usable));
+                throw new JsonException("Property is required for class Car: usable.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class Car.", nameof(externalId));
+                throw new JsonException("Property is required for class Car: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class Car.");
+                throw new JsonException("Property is not nullable for class Car: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class Car.");
+                throw new JsonException("Property is not nullable for class Car: name.");
 
             if (plate.IsSet && plate.Value == null)
-                throw new ArgumentNullException(nameof(plate), "Property is not nullable for class Car.");
+                throw new JsonException("Property is not nullable for class Car: plate.");
 
             if (usable.IsSet && usable.Value == null)
-                throw new ArgumentNullException(nameof(usable), "Property is not nullable for class Car.");
+                throw new JsonException("Property is not nullable for class Car: usable.");
 
             return new Car(id.Value!, name.Value!, plate.Value!, usable.Value!.Value!, externalId.Value!, metadata);
         }
@@ -231,7 +241,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="car"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Car car, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -246,18 +255,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="car"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Car car, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (car.Id == null)
-                throw new ArgumentNullException(nameof(car.Id), "Property is required for class Car.");
-
-            if (car.Name == null)
-                throw new ArgumentNullException(nameof(car.Name), "Property is required for class Car.");
-
-            if (car.Plate == null)
-                throw new ArgumentNullException(nameof(car.Plate), "Property is required for class Car.");
-
             writer.WriteString("id", car.Id);
 
             writer.WriteString("name", car.Name);

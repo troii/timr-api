@@ -85,8 +85,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Waypoint" />
     /// </summary>
-    public class WaypointJsonConverter : JsonConverter<Waypoint>
+    public partial class WaypointJsonConverter : JsonConverter<Waypoint>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WaypointJsonConverter" /> class.
+        /// </summary>
+        public WaypointJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="Waypoint" />
         /// </summary>
@@ -135,16 +145,16 @@ namespace Timr.Api.Model
             }
 
             if (!lat.IsSet)
-                throw new ArgumentException("Property is required for class Waypoint.", nameof(lat));
+                throw new JsonException("Property is required for class Waypoint: lat.");
 
             if (!lon.IsSet)
-                throw new ArgumentException("Property is required for class Waypoint.", nameof(lon));
+                throw new JsonException("Property is required for class Waypoint: lon.");
 
             if (lat.IsSet && lat.Value == null)
-                throw new ArgumentNullException(nameof(lat), "Property is not nullable for class Waypoint.");
+                throw new JsonException("Property is not nullable for class Waypoint: lat.");
 
             if (lon.IsSet && lon.Value == null)
-                throw new ArgumentNullException(nameof(lon), "Property is not nullable for class Waypoint.");
+                throw new JsonException("Property is not nullable for class Waypoint: lon.");
 
             return new Waypoint(lat.Value!.Value!, lon.Value!.Value!);
         }
@@ -155,7 +165,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="waypoint"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Waypoint waypoint, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -170,7 +179,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="waypoint"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Waypoint waypoint, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteNumber("lat", waypoint.Lat);

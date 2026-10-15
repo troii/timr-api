@@ -99,8 +99,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="NormalWorkingTimes" />
     /// </summary>
-    public class NormalWorkingTimesJsonConverter : JsonConverter<NormalWorkingTimes>
+    public partial class NormalWorkingTimesJsonConverter : JsonConverter<NormalWorkingTimes>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NormalWorkingTimesJsonConverter" /> class.
+        /// </summary>
+        public NormalWorkingTimesJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="NormalWorkingTimes" />
         /// </summary>
@@ -157,7 +167,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="normalWorkingTimes"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, NormalWorkingTimes normalWorkingTimes, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -172,7 +181,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="normalWorkingTimes"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, NormalWorkingTimes normalWorkingTimes, JsonSerializerOptions jsonSerializerOptions)
         {
             if (normalWorkingTimes.StartOption.IsSet)

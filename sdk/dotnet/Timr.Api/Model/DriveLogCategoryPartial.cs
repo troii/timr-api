@@ -104,8 +104,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DriveLogCategoryPartial" />
     /// </summary>
-    public class DriveLogCategoryPartialJsonConverter : JsonConverter<DriveLogCategoryPartial>
+    public partial class DriveLogCategoryPartialJsonConverter : JsonConverter<DriveLogCategoryPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DriveLogCategoryPartialJsonConverter" /> class.
+        /// </summary>
+        public DriveLogCategoryPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="DriveLogCategoryPartial" />
         /// </summary>
@@ -162,28 +172,28 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategoryPartial.", nameof(id));
+                throw new JsonException("Property is required for class DriveLogCategoryPartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategoryPartial.", nameof(name));
+                throw new JsonException("Property is required for class DriveLogCategoryPartial: name.");
 
             if (!business.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategoryPartial.", nameof(business));
+                throw new JsonException("Property is required for class DriveLogCategoryPartial: business.");
 
             if (!color.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategoryPartial.", nameof(color));
+                throw new JsonException("Property is required for class DriveLogCategoryPartial: color.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class DriveLogCategoryPartial.");
+                throw new JsonException("Property is not nullable for class DriveLogCategoryPartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class DriveLogCategoryPartial.");
+                throw new JsonException("Property is not nullable for class DriveLogCategoryPartial: name.");
 
             if (business.IsSet && business.Value == null)
-                throw new ArgumentNullException(nameof(business), "Property is not nullable for class DriveLogCategoryPartial.");
+                throw new JsonException("Property is not nullable for class DriveLogCategoryPartial: business.");
 
             if (color.IsSet && color.Value == null)
-                throw new ArgumentNullException(nameof(color), "Property is not nullable for class DriveLogCategoryPartial.");
+                throw new JsonException("Property is not nullable for class DriveLogCategoryPartial: color.");
 
             return new DriveLogCategoryPartial(id.Value!, name.Value!, business.Value!.Value!, color.Value!);
         }
@@ -194,7 +204,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCategoryPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DriveLogCategoryPartial driveLogCategoryPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -209,18 +218,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCategoryPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogCategoryPartial driveLogCategoryPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (driveLogCategoryPartial.Id == null)
-                throw new ArgumentNullException(nameof(driveLogCategoryPartial.Id), "Property is required for class DriveLogCategoryPartial.");
-
-            if (driveLogCategoryPartial.Name == null)
-                throw new ArgumentNullException(nameof(driveLogCategoryPartial.Name), "Property is required for class DriveLogCategoryPartial.");
-
-            if (driveLogCategoryPartial.Color == null)
-                throw new ArgumentNullException(nameof(driveLogCategoryPartial.Color), "Property is required for class DriveLogCategoryPartial.");
-
             writer.WriteString("id", driveLogCategoryPartial.Id);
 
             writer.WriteString("name", driveLogCategoryPartial.Name);

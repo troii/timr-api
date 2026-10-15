@@ -106,8 +106,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TeamPartial" />
     /// </summary>
-    public class TeamPartialJsonConverter : JsonConverter<TeamPartial>
+    public partial class TeamPartialJsonConverter : JsonConverter<TeamPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamPartialJsonConverter" /> class.
+        /// </summary>
+        public TeamPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TeamPartial" />
         /// </summary>
@@ -164,25 +174,25 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class TeamPartial.", nameof(id));
+                throw new JsonException("Property is required for class TeamPartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class TeamPartial.", nameof(name));
+                throw new JsonException("Property is required for class TeamPartial: name.");
 
             if (!breadcrumbs.IsSet)
-                throw new ArgumentException("Property is required for class TeamPartial.", nameof(breadcrumbs));
+                throw new JsonException("Property is required for class TeamPartial: breadcrumbs.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class TeamPartial.", nameof(externalId));
+                throw new JsonException("Property is required for class TeamPartial: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class TeamPartial.");
+                throw new JsonException("Property is not nullable for class TeamPartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class TeamPartial.");
+                throw new JsonException("Property is not nullable for class TeamPartial: name.");
 
             if (breadcrumbs.IsSet && breadcrumbs.Value == null)
-                throw new ArgumentNullException(nameof(breadcrumbs), "Property is not nullable for class TeamPartial.");
+                throw new JsonException("Property is not nullable for class TeamPartial: breadcrumbs.");
 
             return new TeamPartial(id.Value!, name.Value!, breadcrumbs.Value!, externalId.Value!);
         }
@@ -193,7 +203,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TeamPartial teamPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -208,18 +217,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TeamPartial teamPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (teamPartial.Id == null)
-                throw new ArgumentNullException(nameof(teamPartial.Id), "Property is required for class TeamPartial.");
-
-            if (teamPartial.Name == null)
-                throw new ArgumentNullException(nameof(teamPartial.Name), "Property is required for class TeamPartial.");
-
-            if (teamPartial.Breadcrumbs == null)
-                throw new ArgumentNullException(nameof(teamPartial.Breadcrumbs), "Property is required for class TeamPartial.");
-
             writer.WriteString("id", teamPartial.Id);
 
             writer.WriteString("name", teamPartial.Name);

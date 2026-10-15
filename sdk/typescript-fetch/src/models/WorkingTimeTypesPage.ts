@@ -28,14 +28,10 @@ import {
 export interface WorkingTimeTypesPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof WorkingTimeTypesPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<WorkingTimeType>}
-     * @memberof WorkingTimeTypesPage
      */
     data: Array<WorkingTimeType>;
 }
@@ -44,7 +40,7 @@ export interface WorkingTimeTypesPage {
  * Check if a given object implements the WorkingTimeTypesPage interface.
  */
 export function instanceOfWorkingTimeTypesPage(value: object): value is WorkingTimeTypesPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

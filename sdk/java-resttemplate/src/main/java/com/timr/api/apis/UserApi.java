@@ -37,7 +37,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.UserApi")
 public class UserApi extends BaseApi {
 
@@ -61,7 +61,7 @@ public class UserApi extends BaseApi {
      * @return User
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public User createUser(UserCreate userCreate) throws RestClientException {
+    public User createUser(@jakarta.annotation.Nonnull UserCreate userCreate) throws RestClientException {
         return createUserWithHttpInfo(userCreate).getBody();
     }
 
@@ -76,7 +76,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;User&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<User> createUserWithHttpInfo(UserCreate userCreate) throws RestClientException {
+    public ResponseEntity<User> createUserWithHttpInfo(@jakarta.annotation.Nonnull UserCreate userCreate) throws RestClientException {
         Object localVarPostBody = userCreate;
         
         // verify the required parameter 'userCreate' is set
@@ -117,7 +117,7 @@ public class UserApi extends BaseApi {
      * @return TeamsPartialPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TeamsPartialPage fetchUserTeamLeaderships(String id, String pageToken, Integer limit, SortDirection sortDirection, TeamsSortColumn sortBy) throws RestClientException {
+    public TeamsPartialPage fetchUserTeamLeaderships(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TeamsSortColumn sortBy) throws RestClientException {
         return fetchUserTeamLeadershipsWithHttpInfo(id, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -134,7 +134,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;TeamsPartialPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TeamsPartialPage> fetchUserTeamLeadershipsWithHttpInfo(String id, String pageToken, Integer limit, SortDirection sortDirection, TeamsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TeamsPartialPage> fetchUserTeamLeadershipsWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TeamsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -182,7 +182,7 @@ public class UserApi extends BaseApi {
      * @return TeamsPartialPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TeamsPartialPage fetchUserTeamMemberships(String id, String pageToken, Integer limit, SortDirection sortDirection, TeamsSortColumn sortBy) throws RestClientException {
+    public TeamsPartialPage fetchUserTeamMemberships(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TeamsSortColumn sortBy) throws RestClientException {
         return fetchUserTeamMembershipsWithHttpInfo(id, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -199,7 +199,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;TeamsPartialPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TeamsPartialPage> fetchUserTeamMembershipsWithHttpInfo(String id, String pageToken, Integer limit, SortDirection sortDirection, TeamsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TeamsPartialPage> fetchUserTeamMembershipsWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TeamsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -253,7 +253,7 @@ public class UserApi extends BaseApi {
      * @return UsersPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public UsersPage fetchUsers(String name, LocalDate entryDateFrom, LocalDate entryDateTo, LocalDate resignDateFrom, LocalDate resignDateTo, Boolean resigned, String employeeNumber, String pageToken, Integer limit, SortDirection sortDirection, UsersSortColumn sortBy) throws RestClientException {
+    public UsersPage fetchUsers(@jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable LocalDate entryDateFrom, @jakarta.annotation.Nullable LocalDate entryDateTo, @jakarta.annotation.Nullable LocalDate resignDateFrom, @jakarta.annotation.Nullable LocalDate resignDateTo, @jakarta.annotation.Nullable Boolean resigned, @jakarta.annotation.Nullable String employeeNumber, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable UsersSortColumn sortBy) throws RestClientException {
         return fetchUsersWithHttpInfo(name, entryDateFrom, entryDateTo, resignDateFrom, resignDateTo, resigned, employeeNumber, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -276,7 +276,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;UsersPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<UsersPage> fetchUsersWithHttpInfo(String name, LocalDate entryDateFrom, LocalDate entryDateTo, LocalDate resignDateFrom, LocalDate resignDateTo, Boolean resigned, String employeeNumber, String pageToken, Integer limit, SortDirection sortDirection, UsersSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<UsersPage> fetchUsersWithHttpInfo(@jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable LocalDate entryDateFrom, @jakarta.annotation.Nullable LocalDate entryDateTo, @jakarta.annotation.Nullable LocalDate resignDateFrom, @jakarta.annotation.Nullable LocalDate resignDateTo, @jakarta.annotation.Nullable Boolean resigned, @jakarta.annotation.Nullable String employeeNumber, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable UsersSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -320,7 +320,7 @@ public class UserApi extends BaseApi {
      * @return User
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public User getUser(String id) throws RestClientException {
+    public User getUser(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getUserWithHttpInfo(id).getBody();
     }
 
@@ -334,7 +334,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;User&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<User> getUserWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<User> getUserWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -373,7 +373,7 @@ public class UserApi extends BaseApi {
      * @return WorkScheduleModel
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public WorkScheduleModel getUserWorkScheduleModel(String id) throws RestClientException {
+    public WorkScheduleModel getUserWorkScheduleModel(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getUserWorkScheduleModelWithHttpInfo(id).getBody();
     }
 
@@ -387,7 +387,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;WorkScheduleModel&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkScheduleModel> getUserWorkScheduleModelWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<WorkScheduleModel> getUserWorkScheduleModelWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -430,7 +430,7 @@ public class UserApi extends BaseApi {
      * @return User
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public User updateUser(String id, UserUpdate userUpdate) throws RestClientException {
+    public User updateUser(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull UserUpdate userUpdate) throws RestClientException {
         return updateUserWithHttpInfo(id, userUpdate).getBody();
     }
 
@@ -448,7 +448,7 @@ public class UserApi extends BaseApi {
      * @return ResponseEntity&lt;User&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<User> updateUserWithHttpInfo(String id, UserUpdate userUpdate) throws RestClientException {
+    public ResponseEntity<User> updateUserWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull UserUpdate userUpdate) throws RestClientException {
         Object localVarPostBody = userUpdate;
         
         // verify the required parameter 'id' is set

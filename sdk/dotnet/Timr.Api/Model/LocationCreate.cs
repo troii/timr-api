@@ -142,12 +142,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="LocationCreate" />
     /// </summary>
-    public class LocationCreateJsonConverter : JsonConverter<LocationCreate>
+    public partial class LocationCreateJsonConverter : JsonConverter<LocationCreate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocationCreateJsonConverter" /> class.
+        /// </summary>
+        public LocationCreateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Timestamp
         /// </summary>
-        public static string TimestampFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string TimestampFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="LocationCreate" />
@@ -209,16 +219,16 @@ namespace Timr.Api.Model
             }
 
             if (!lat.IsSet)
-                throw new ArgumentException("Property is required for class LocationCreate.", nameof(lat));
+                throw new JsonException("Property is required for class LocationCreate: lat.");
 
             if (!lon.IsSet)
-                throw new ArgumentException("Property is required for class LocationCreate.", nameof(lon));
+                throw new JsonException("Property is required for class LocationCreate: lon.");
 
             if (lat.IsSet && lat.Value == null)
-                throw new ArgumentNullException(nameof(lat), "Property is not nullable for class LocationCreate.");
+                throw new JsonException("Property is not nullable for class LocationCreate: lat.");
 
             if (lon.IsSet && lon.Value == null)
-                throw new ArgumentNullException(nameof(lon), "Property is not nullable for class LocationCreate.");
+                throw new JsonException("Property is not nullable for class LocationCreate: lon.");
 
             return new LocationCreate(lat.Value!.Value!, lon.Value!.Value!, timestamp, formattedAddress, accuracy);
         }
@@ -229,7 +239,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="locationCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, LocationCreate locationCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -244,7 +253,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="locationCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, LocationCreate locationCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteNumber("lat", locationCreate.Lat);

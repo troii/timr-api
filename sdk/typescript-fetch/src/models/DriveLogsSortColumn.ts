@@ -18,7 +18,7 @@
  */
 export const DriveLogsSortColumn = {
     Start: 'start',
-    LastModified: 'last_modified'
+    LastModified: 'last_modified',
 } as const;
 export type DriveLogsSortColumn = typeof DriveLogsSortColumn[keyof typeof DriveLogsSortColumn];
 

@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { UserPartial } from './UserPartial';
 import {
     UserPartialFromJSON,
@@ -28,22 +28,16 @@ import {
 export interface DeletedEntryPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof DeletedEntryPartial
      */
     id: string;
     /**
      * Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof DeletedEntryPartial
      */
     lastModified: Date;
     /**
      * Read-only. The User who last modified the entry, or null if the change was not made in a user context.
      * 
-     * @type {UserPartial}
-     * @memberof DeletedEntryPartial
      */
     lastModifiedBy: UserPartial | null;
 }
@@ -53,8 +47,8 @@ export interface DeletedEntryPartial {
  */
 export function instanceOfDeletedEntryPartial(value: object): value is DeletedEntryPartial {
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('lastModified' in value) || value['lastModified'] === undefined) return false;
-    if (!('lastModifiedBy' in value) || value['lastModifiedBy'] === undefined) return false;
+    if ((!('lastModified' in (value as Record<string, any>)) && !('last_modified' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModified'] === undefined && (value as Record<string, any>)['last_modified'] === undefined)) return false;
+    if ((!('lastModifiedBy' in (value as Record<string, any>)) && !('last_modified_by' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModifiedBy'] === undefined && (value as Record<string, any>)['last_modified_by'] === undefined)) return false;
     return true;
 }
 
@@ -69,7 +63,7 @@ export function DeletedEntryPartialFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'id': json['id'],
-        'lastModified': (new Date(json['last_modified'])),
+        'lastModified': (json['last_modified'] == null ? json['last_modified'] : parseDateTime(json['last_modified'])),
         'lastModifiedBy': UserPartialFromJSON(json['last_modified_by']),
     };
 }
@@ -86,7 +80,7 @@ export function DeletedEntryPartialToJSONTyped(value?: DeletedEntryPartial | nul
     return {
         
         'id': value['id'],
-        'last_modified': value['lastModified'].toISOString(),
+        'last_modified': value['lastModified'] == null ? value['lastModified'] : serializeDateTime(value['lastModified']),
         'last_modified_by': UserPartialToJSON(value['lastModifiedBy']),
     };
 }

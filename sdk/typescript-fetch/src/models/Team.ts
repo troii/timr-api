@@ -29,38 +29,26 @@ import {
 export interface Team {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof Team
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof Team
      */
     name: string;
     /**
      * Full path of the entry within its hierarchy, including its own name.
-     * @type {string}
-     * @memberof Team
      */
     breadcrumbs: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof Team
      */
     externalId: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof Team
      */
     description: string | null;
     /**
      * 
-     * @type {TeamPartial}
-     * @memberof Team
      */
     parentTeam: TeamPartial | null;
 }
@@ -72,9 +60,9 @@ export function instanceOfTeam(value: object): value is Team {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('breadcrumbs' in value) || value['breadcrumbs'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('parentTeam' in value) || value['parentTeam'] === undefined) return false;
+    if ((!('parentTeam' in (value as Record<string, any>)) && !('parent_team' in (value as Record<string, any>))) || ((value as Record<string, any>)['parentTeam'] === undefined && (value as Record<string, any>)['parent_team'] === undefined)) return false;
     return true;
 }
 

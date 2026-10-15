@@ -18,7 +18,7 @@
  */
 export const WorkingTimesSortColumn = {
     Start: 'start',
-    LastModified: 'last_modified'
+    LastModified: 'last_modified',
 } as const;
 export type WorkingTimesSortColumn = typeof WorkingTimesSortColumn[keyof typeof WorkingTimesSortColumn];
 

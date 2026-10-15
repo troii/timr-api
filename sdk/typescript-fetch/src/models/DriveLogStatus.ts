@@ -23,7 +23,7 @@ export const DriveLogStatus = {
     Cleared: 'cleared',
     Closed: 'closed',
     Archived: 'archived',
-    Running: 'running'
+    Running: 'running',
 } as const;
 export type DriveLogStatus = typeof DriveLogStatus[keyof typeof DriveLogStatus];
 

@@ -17,7 +17,7 @@
  * @export
  */
 export const UsersSortColumn = {
-    Name: 'name'
+    Name: 'name',
 } as const;
 export type UsersSortColumn = typeof UsersSortColumn[keyof typeof UsersSortColumn];
 

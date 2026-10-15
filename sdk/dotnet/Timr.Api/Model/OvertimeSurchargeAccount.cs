@@ -94,8 +94,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="OvertimeSurchargeAccount" />
     /// </summary>
-    public class OvertimeSurchargeAccountJsonConverter : JsonConverter<OvertimeSurchargeAccount>
+    public partial class OvertimeSurchargeAccountJsonConverter : JsonConverter<OvertimeSurchargeAccount>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OvertimeSurchargeAccountJsonConverter" /> class.
+        /// </summary>
+        public OvertimeSurchargeAccountJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="OvertimeSurchargeAccount" />
         /// </summary>
@@ -148,13 +158,13 @@ namespace Timr.Api.Model
             }
 
             if (!balanceLastPeriodMinutes.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccount.", nameof(balanceLastPeriodMinutes));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccount: balance_last_period_minutes.");
 
             if (!newMinutes.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccount.", nameof(newMinutes));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccount: new_minutes.");
 
             if (!balanceTotalMinutes.IsSet)
-                throw new ArgumentException("Property is required for class OvertimeSurchargeAccount.", nameof(balanceTotalMinutes));
+                throw new JsonException("Property is required for class OvertimeSurchargeAccount: balance_total_minutes.");
 
             return new OvertimeSurchargeAccount(balanceLastPeriodMinutes.Value!, newMinutes.Value!, balanceTotalMinutes.Value!);
         }
@@ -165,7 +175,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="overtimeSurchargeAccount"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, OvertimeSurchargeAccount overtimeSurchargeAccount, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -180,7 +189,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="overtimeSurchargeAccount"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, OvertimeSurchargeAccount overtimeSurchargeAccount, JsonSerializerOptions jsonSerializerOptions)
         {
             if (overtimeSurchargeAccount.BalanceLastPeriodMinutes != null)

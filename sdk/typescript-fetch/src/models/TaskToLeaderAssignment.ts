@@ -28,14 +28,10 @@ import {
 export interface TaskToLeaderAssignment {
     /**
      * 
-     * @type {UserPartial}
-     * @memberof TaskToLeaderAssignment
      */
     user: UserPartial;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskToLeaderAssignment
      */
     automaticallyAssigned: boolean;
 }
@@ -45,7 +41,7 @@ export interface TaskToLeaderAssignment {
  */
 export function instanceOfTaskToLeaderAssignment(value: object): value is TaskToLeaderAssignment {
     if (!('user' in value) || value['user'] === undefined) return false;
-    if (!('automaticallyAssigned' in value) || value['automaticallyAssigned'] === undefined) return false;
+    if ((!('automaticallyAssigned' in (value as Record<string, any>)) && !('automatically_assigned' in (value as Record<string, any>))) || ((value as Record<string, any>)['automaticallyAssigned'] === undefined && (value as Record<string, any>)['automatically_assigned'] === undefined)) return false;
     return true;
 }
 

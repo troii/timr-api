@@ -30,7 +30,7 @@ class BreakTimeOngoing(BaseModel):
     BreakTimeOngoing
     """ # noqa: E501
     type: BreakTimeType
-    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)")
+    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     __properties: ClassVar[List[str]] = ["type", "start"]
 
     model_config = ConfigDict(

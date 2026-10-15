@@ -21,14 +21,10 @@ import { mapValues } from '../runtime';
 export interface HolidayCalendarPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof HolidayCalendarPartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof HolidayCalendarPartial
      */
     description: string;
 }

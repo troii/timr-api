@@ -34,7 +34,7 @@ namespace Timr.Api.Model
         /// Initializes a new instance of the <see cref="VacationAccount" /> class.
         /// </summary>
         /// <param name="vacationAccountDays"></param>
-        public VacationAccount(VacationAccountDays vacationAccountDays)
+        internal VacationAccount(VacationAccountDays vacationAccountDays)
         {
             VacationAccountDays = vacationAccountDays;
             OnCreated();
@@ -44,7 +44,7 @@ namespace Timr.Api.Model
         /// Initializes a new instance of the <see cref="VacationAccount" /> class.
         /// </summary>
         /// <param name="vacationAccountMinutes"></param>
-        public VacationAccount(VacationAccountMinutes vacationAccountMinutes)
+        internal VacationAccount(VacationAccountMinutes vacationAccountMinutes)
         {
             VacationAccountMinutes = vacationAccountMinutes;
             OnCreated();
@@ -98,8 +98,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="VacationAccount" />
     /// </summary>
-    public class VacationAccountJsonConverter : JsonConverter<VacationAccount>
+    public partial class VacationAccountJsonConverter : JsonConverter<VacationAccount>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VacationAccountJsonConverter" /> class.
+        /// </summary>
+        public VacationAccountJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="VacationAccount" />
         /// </summary>
@@ -168,9 +178,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "unit":
-                            string? unitRawValue = utf8JsonReader.GetString();
-                            if (unitRawValue != null)
-                                unit = new Option<VacationUnit?>(VacationUnitValueConverter.FromStringOrDefault(unitRawValue));
+                            unit = new Option<VacationUnit?>(JsonSerializer.Deserialize<VacationUnit?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -179,10 +187,10 @@ namespace Timr.Api.Model
             }
 
             if (!unit.IsSet)
-                throw new ArgumentException("Property is required for class VacationAccount.", nameof(unit));
+                throw new JsonException("Property is required for class VacationAccount: unit.");
 
             if (unit.IsSet && unit.Value == null)
-                throw new ArgumentNullException(nameof(unit), "Property is not nullable for class VacationAccount.");
+                throw new JsonException("Property is not nullable for class VacationAccount: unit.");
 
             if (vacationAccountDays != null)
                 return new VacationAccount(vacationAccountDays);
@@ -199,7 +207,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="vacationAccount"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, VacationAccount vacationAccount, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -226,7 +233,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="vacationAccount"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, VacationAccount vacationAccount, JsonSerializerOptions jsonSerializerOptions)
         {
 

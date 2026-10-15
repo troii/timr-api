@@ -20,32 +20,22 @@ import { mapValues } from '../runtime';
 export interface CarCreate {
     /**
      * 
-     * @type {string}
-     * @memberof CarCreate
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof CarCreate
      */
     plate: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof CarCreate
      */
     externalId?: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof CarCreate
      */
     usable?: boolean;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof CarCreate
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -71,9 +61,9 @@ export function CarCreateFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         
         'name': json['name'],
         'plate': json['plate'],
-        'externalId': json['external_id'] == null ? undefined : json['external_id'],
+        'externalId': json['external_id'] === undefined ? undefined : json['external_id'] === null ? null : json['external_id'],
         'usable': json['usable'] == null ? undefined : json['usable'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 

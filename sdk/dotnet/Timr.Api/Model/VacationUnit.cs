@@ -150,6 +150,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override VacationUnit? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             VacationUnit? result = rawValue == null
@@ -170,7 +173,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, VacationUnit? vacationUnit, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(vacationUnit.HasValue ? VacationUnitValueConverter.ToJsonValue(vacationUnit.Value).ToString() : "null");
+            if (vacationUnit.HasValue)
+                writer.WriteStringValue(VacationUnitValueConverter.ToJsonValue(vacationUnit.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

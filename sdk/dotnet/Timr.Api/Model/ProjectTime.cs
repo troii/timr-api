@@ -255,22 +255,32 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="ProjectTime" />
     /// </summary>
-    public class ProjectTimeJsonConverter : JsonConverter<ProjectTime>
+    public partial class ProjectTimeJsonConverter : JsonConverter<ProjectTime>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectTimeJsonConverter" /> class.
+        /// </summary>
+        public ProjectTimeJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize LastModified
         /// </summary>
-        public static string LastModifiedFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="ProjectTime" />
@@ -352,9 +362,7 @@ namespace Timr.Api.Model
                             lastModified = new Option<DateTimeOffset?>(JsonSerializer.Deserialize<DateTimeOffset>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<ProjectTimeStatus?>(ProjectTimeStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<ProjectTimeStatus?>(JsonSerializer.Deserialize<ProjectTimeStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "end":
                             end = new Option<DateTimeOffset?>(JsonSerializer.Deserialize<DateTimeOffset?>(ref utf8JsonReader, jsonSerializerOptions));
@@ -372,12 +380,10 @@ namespace Timr.Api.Model
                             endLocation = new Option<Location?>(JsonSerializer.Deserialize<Location>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "start_platform":
-                            string? startPlatformRawValue = utf8JsonReader.GetString();
-                            startPlatform = new Option<Platform?>(startPlatformRawValue == null ? null : PlatformValueConverter.FromStringOrDefault(startPlatformRawValue));
+                            startPlatform = new Option<Platform?>(JsonSerializer.Deserialize<Platform?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "end_platform":
-                            string? endPlatformRawValue = utf8JsonReader.GetString();
-                            endPlatform = new Option<Platform?>(endPlatformRawValue == null ? null : PlatformValueConverter.FromStringOrDefault(endPlatformRawValue));
+                            endPlatform = new Option<Platform?>(JsonSerializer.Deserialize<Platform?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "last_modified_by":
                             lastModifiedBy = new Option<UserPartial?>(JsonSerializer.Deserialize<UserPartial>(ref utf8JsonReader, jsonSerializerOptions));
@@ -392,88 +398,88 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(id));
+                throw new JsonException("Property is required for class ProjectTime: id.");
 
             if (!start.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(start));
+                throw new JsonException("Property is required for class ProjectTime: start.");
 
             if (!breakTimeTotalMinutes.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(breakTimeTotalMinutes));
+                throw new JsonException("Property is required for class ProjectTime: break_time_total_minutes.");
 
             if (!breakTimes.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(breakTimes));
+                throw new JsonException("Property is required for class ProjectTime: break_times.");
 
             if (!changed.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(changed));
+                throw new JsonException("Property is required for class ProjectTime: changed.");
 
             if (!user.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(user));
+                throw new JsonException("Property is required for class ProjectTime: user.");
 
             if (!task.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(task));
+                throw new JsonException("Property is required for class ProjectTime: task.");
 
             if (!billable.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(billable));
+                throw new JsonException("Property is required for class ProjectTime: billable.");
 
             if (!lastModified.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(lastModified));
+                throw new JsonException("Property is required for class ProjectTime: last_modified.");
 
             if (!status.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(status));
+                throw new JsonException("Property is required for class ProjectTime: status.");
 
             if (!end.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(end));
+                throw new JsonException("Property is required for class ProjectTime: end.");
 
             if (!duration.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(duration));
+                throw new JsonException("Property is required for class ProjectTime: duration.");
 
             if (!notes.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(notes));
+                throw new JsonException("Property is required for class ProjectTime: notes.");
 
             if (!startLocation.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(startLocation));
+                throw new JsonException("Property is required for class ProjectTime: start_location.");
 
             if (!endLocation.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(endLocation));
+                throw new JsonException("Property is required for class ProjectTime: end_location.");
 
             if (!startPlatform.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(startPlatform));
+                throw new JsonException("Property is required for class ProjectTime: start_platform.");
 
             if (!endPlatform.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(endPlatform));
+                throw new JsonException("Property is required for class ProjectTime: end_platform.");
 
             if (!lastModifiedBy.IsSet)
-                throw new ArgumentException("Property is required for class ProjectTime.", nameof(lastModifiedBy));
+                throw new JsonException("Property is required for class ProjectTime: last_modified_by.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: id.");
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: start.");
 
             if (breakTimeTotalMinutes.IsSet && breakTimeTotalMinutes.Value == null)
-                throw new ArgumentNullException(nameof(breakTimeTotalMinutes), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: break_time_total_minutes.");
 
             if (breakTimes.IsSet && breakTimes.Value == null)
-                throw new ArgumentNullException(nameof(breakTimes), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: break_times.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: changed.");
 
             if (user.IsSet && user.Value == null)
-                throw new ArgumentNullException(nameof(user), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: user.");
 
             if (task.IsSet && task.Value == null)
-                throw new ArgumentNullException(nameof(task), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: task.");
 
             if (billable.IsSet && billable.Value == null)
-                throw new ArgumentNullException(nameof(billable), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: billable.");
 
             if (lastModified.IsSet && lastModified.Value == null)
-                throw new ArgumentNullException(nameof(lastModified), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: last_modified.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class ProjectTime.");
+                throw new JsonException("Property is not nullable for class ProjectTime: status.");
 
             return new ProjectTime(id.Value!, start.Value!.Value!, breakTimeTotalMinutes.Value!.Value!, breakTimes.Value!, changed.Value!.Value!, user.Value!, task.Value!, billable.Value!.Value!, lastModified.Value!.Value!, status.Value!.Value!, end.Value!, duration.Value!, notes.Value!, startLocation.Value!, endLocation.Value!, startPlatform.Value!, endPlatform.Value!, lastModifiedBy.Value!, metadata);
         }
@@ -484,7 +490,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="projectTime"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, ProjectTime projectTime, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -499,21 +504,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="projectTime"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, ProjectTime projectTime, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (projectTime.Id == null)
-                throw new ArgumentNullException(nameof(projectTime.Id), "Property is required for class ProjectTime.");
-
-            if (projectTime.BreakTimes == null)
-                throw new ArgumentNullException(nameof(projectTime.BreakTimes), "Property is required for class ProjectTime.");
-
-            if (projectTime.User == null)
-                throw new ArgumentNullException(nameof(projectTime.User), "Property is required for class ProjectTime.");
-
-            if (projectTime.Task == null)
-                throw new ArgumentNullException(nameof(projectTime.Task), "Property is required for class ProjectTime.");
-
             writer.WriteString("id", projectTime.Id);
 
             writer.WriteString("start", projectTime.Start.ToString(StartFormat));

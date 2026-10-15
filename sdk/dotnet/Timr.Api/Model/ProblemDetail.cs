@@ -131,8 +131,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="ProblemDetail" />
     /// </summary>
-    public class ProblemDetailJsonConverter : JsonConverter<ProblemDetail>
+    public partial class ProblemDetailJsonConverter : JsonConverter<ProblemDetail>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProblemDetailJsonConverter" /> class.
+        /// </summary>
+        public ProblemDetailJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="ProblemDetail" />
         /// </summary>
@@ -193,28 +203,28 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class ProblemDetail.", nameof(type));
+                throw new JsonException("Property is required for class ProblemDetail: type.");
 
             if (!title.IsSet)
-                throw new ArgumentException("Property is required for class ProblemDetail.", nameof(title));
+                throw new JsonException("Property is required for class ProblemDetail: title.");
 
             if (!status.IsSet)
-                throw new ArgumentException("Property is required for class ProblemDetail.", nameof(status));
+                throw new JsonException("Property is required for class ProblemDetail: status.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class ProblemDetail.");
+                throw new JsonException("Property is not nullable for class ProblemDetail: type.");
 
             if (title.IsSet && title.Value == null)
-                throw new ArgumentNullException(nameof(title), "Property is not nullable for class ProblemDetail.");
+                throw new JsonException("Property is not nullable for class ProblemDetail: title.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class ProblemDetail.");
+                throw new JsonException("Property is not nullable for class ProblemDetail: status.");
 
             if (detail.IsSet && detail.Value == null)
-                throw new ArgumentNullException(nameof(detail), "Property is not nullable for class ProblemDetail.");
+                throw new JsonException("Property is not nullable for class ProblemDetail: detail.");
 
             if (instance.IsSet && instance.Value == null)
-                throw new ArgumentNullException(nameof(instance), "Property is not nullable for class ProblemDetail.");
+                throw new JsonException("Property is not nullable for class ProblemDetail: instance.");
 
             return new ProblemDetail(type.Value!, title.Value!, status.Value!.Value!, detail, instance);
         }
@@ -225,7 +235,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="problemDetail"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, ProblemDetail problemDetail, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -240,20 +249,13 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="problemDetail"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, ProblemDetail problemDetail, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (problemDetail.Type == null)
-                throw new ArgumentNullException(nameof(problemDetail.Type), "Property is required for class ProblemDetail.");
-
-            if (problemDetail.Title == null)
-                throw new ArgumentNullException(nameof(problemDetail.Title), "Property is required for class ProblemDetail.");
-
             if (problemDetail.DetailOption.IsSet && problemDetail.Detail == null)
-                throw new ArgumentNullException(nameof(problemDetail.Detail), "Property is required for class ProblemDetail.");
+                throw new JsonException("Cannot write null property ProblemDetail.Detail to non-nullable JSON property 'detail'.");
 
             if (problemDetail.InstanceOption.IsSet && problemDetail.Instance == null)
-                throw new ArgumentNullException(nameof(problemDetail.Instance), "Property is required for class ProblemDetail.");
+                throw new JsonException("Cannot write null property ProblemDetail.Instance to non-nullable JSON property 'instance'.");
 
             writer.WriteString("type", problemDetail.Type);
 

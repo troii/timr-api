@@ -178,6 +178,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override RecordingLockType? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             RecordingLockType? result = rawValue == null
@@ -198,7 +201,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, RecordingLockType? recordingLockType, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(recordingLockType.HasValue ? RecordingLockTypeValueConverter.ToJsonValue(recordingLockType.Value).ToString() : "null");
+            if (recordingLockType.HasValue)
+                writer.WriteStringValue(RecordingLockTypeValueConverter.ToJsonValue(recordingLockType.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

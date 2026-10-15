@@ -19,7 +19,7 @@
 export const DurationUnit = {
     Minutes: 'minutes',
     HalfDays: 'half_days',
-    Days: 'days'
+    Days: 'days',
 } as const;
 export type DurationUnit = typeof DurationUnit[keyof typeof DurationUnit];
 

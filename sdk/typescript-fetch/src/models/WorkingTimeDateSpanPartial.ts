@@ -21,8 +21,6 @@ import { mapValues } from '../runtime';
 export interface WorkingTimeDateSpanPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkingTimeDateSpanPartial
      */
     id: string;
 }

@@ -36,11 +36,11 @@ class WorkingTime(BaseModel):
     """
     One continuous stretch from `start` to `end`, classified by its `working_time_type`. Attendance entries carry `break_times`, locations and the platform they were recorded on; an entry derived from a multi-day absence links back to its `working_time_date_span`. 
     """ # noqa: E501
-    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
-    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)")
+    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.", json_schema_extra={"examples": ["074e7048-9097-11eb-a8b3-0242ac130003"]})
+    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     break_time_total_minutes: StrictInt = Field(description="Read-only. Total break time in minutes. Values are calculated as an aggregate of other properties")
-    break_times: List[BreakTime]
+    break_times: List[BreakTime] = Field(json_schema_extra={"examples": ["[\n    {\n      \"type\": \"manual\",\n      \"duration_minutes\": 20,\n      \"start\": null,\n      \"end\": null\n    },\n    {\n        \"type\": \"automatic\",\n        \"duration_minutes\": 30,\n        \"start\": \"2021-07-16T13:15:00+02:00\",\n        \"end\": \"2021-07-16T13:45:00+02:00\"\n    }\n]\n"]})
     duration: Optional[Duration]
     changed: StrictBool
     notes: Optional[StrictStr]
@@ -51,7 +51,7 @@ class WorkingTime(BaseModel):
     end_location: Optional[Location]
     start_platform: Optional[Platform]
     end_platform: Optional[Platform]
-    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ")
+    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     last_modified_by: Optional[UserPartial] = Field(description="Read-only. The User who last modified the entry, or null if the change was not made in a user context. ")
     status: WorkingTimeStatus
     metadata: Optional[Dict[str, Any]] = None
@@ -100,8 +100,7 @@ class WorkingTime(BaseModel):
         _items = []
         if self.break_times:
             for _item_break_times in self.break_times:
-                if _item_break_times:
-                    _items.append(_item_break_times.to_dict())
+                _items.append(_item_break_times.to_dict() if _item_break_times is not None else None)
             _dict['break_times'] = _items
         # override the default output from pydantic by calling `to_dict()` of duration
         if self.duration:

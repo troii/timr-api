@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.*;
   OvertimeSurchargeAccount.JSON_PROPERTY_NEW_MINUTES,
   OvertimeSurchargeAccount.JSON_PROPERTY_BALANCE_TOTAL_MINUTES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class OvertimeSurchargeAccount {
   public static final String JSON_PROPERTY_BALANCE_LAST_PERIOD_MINUTES = "balance_last_period_minutes";
   @jakarta.annotation.Nullable

@@ -20,7 +20,7 @@ export const RecordingLockType = {
     Recordable: 'recordable',
     LockedAutomatically: 'locked_automatically',
     LockedManually: 'locked_manually',
-    UnlockedManually: 'unlocked_manually'
+    UnlockedManually: 'unlocked_manually',
 } as const;
 export type RecordingLockType = typeof RecordingLockType[keyof typeof RecordingLockType];
 

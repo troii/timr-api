@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TasksPage" />
     /// </summary>
-    public class TasksPageJsonConverter : JsonConverter<TasksPage>
+    public partial class TasksPageJsonConverter : JsonConverter<TasksPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TasksPageJsonConverter" /> class.
+        /// </summary>
+        public TasksPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TasksPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class TasksPage.", nameof(data));
+                throw new JsonException("Property is required for class TasksPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class TasksPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class TasksPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class TasksPage.");
+                throw new JsonException("Property is not nullable for class TasksPage: data.");
 
             return new TasksPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="tasksPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TasksPage tasksPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="tasksPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TasksPage tasksPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (tasksPage.Data == null)
-                throw new ArgumentNullException(nameof(tasksPage.Data), "Property is required for class TasksPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, tasksPage.Data, jsonSerializerOptions);
             if (tasksPage.NextPageToken != null)

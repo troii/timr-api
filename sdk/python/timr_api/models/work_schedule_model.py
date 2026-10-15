@@ -31,7 +31,7 @@ class WorkScheduleModel(BaseModel):
     The weekday targets a user is measured against: `weeks` holds the layout, `type` selects the calculation mode, and `working_time_rules` the recording constraints. 
     """ # noqa: E501
     id: StrictStr
-    name: StrictStr
+    name: StrictStr = Field(json_schema_extra={"examples": ["full-time"]})
     type: WorkScheduleModelType = Field(description="working-time calculation mode (daily_target_hours or normal_working_time); independent from the internal week layout (fixed_week or alternating_weeks)")
     weeks: List[WorkScheduleModelWeek] = Field(description="for fixed_week models this array contains exactly one week and week_number/name are omitted;  for alternating_weeks models this array contains all configured weeks and each item includes week_number (0-based) and name ")
     working_time_rules: Optional[WorkingTimeRules]
@@ -80,8 +80,7 @@ class WorkScheduleModel(BaseModel):
         _items = []
         if self.weeks:
             for _item_weeks in self.weeks:
-                if _item_weeks:
-                    _items.append(_item_weeks.to_dict())
+                _items.append(_item_weeks.to_dict() if _item_weeks is not None else None)
             _dict['weeks'] = _items
         # override the default output from pydantic by calling `to_dict()` of working_time_rules
         if self.working_time_rules:

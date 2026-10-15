@@ -315,22 +315,32 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskReduced" />
     /// </summary>
-    public class TaskReducedJsonConverter : JsonConverter<TaskReduced>
+    public partial class TaskReducedJsonConverter : JsonConverter<TaskReduced>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskReducedJsonConverter" /> class.
+        /// </summary>
+        public TaskReducedJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize LockDate
         /// </summary>
-        public static string LockDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string LockDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ActiveFrom
         /// </summary>
-        public static string ActiveFromFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ActiveFromFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize ActiveTo
         /// </summary>
-        public static string ActiveToFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string ActiveToFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="TaskReduced" />
@@ -429,9 +439,7 @@ namespace Timr.Api.Model
                             activeTo = new Option<DateOnly?>(JsonSerializer.Deserialize<DateOnly?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "budget_planning_type":
-                            string? budgetPlanningTypeRawValue = utf8JsonReader.GetString();
-                            if (budgetPlanningTypeRawValue != null)
-                                budgetPlanningType = new Option<BudgetPlanningType?>(BudgetPlanningTypeValueConverter.FromStringOrDefault(budgetPlanningTypeRawValue));
+                            budgetPlanningType = new Option<BudgetPlanningType?>(JsonSerializer.Deserialize<BudgetPlanningType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "location_inherited":
                             locationInherited = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -458,70 +466,70 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(id));
+                throw new JsonException("Property is required for class TaskReduced: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(name));
+                throw new JsonException("Property is required for class TaskReduced: name.");
 
             if (!breadcrumbs.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(breadcrumbs));
+                throw new JsonException("Property is required for class TaskReduced: breadcrumbs.");
 
             if (!bookable.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(bookable));
+                throw new JsonException("Property is required for class TaskReduced: bookable.");
 
             if (!billable.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(billable));
+                throw new JsonException("Property is required for class TaskReduced: billable.");
 
             if (!projectTimeNotesRequired.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(projectTimeNotesRequired));
+                throw new JsonException("Property is required for class TaskReduced: project_time_notes_required.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(externalId));
+                throw new JsonException("Property is required for class TaskReduced: external_id.");
 
             if (!parentTask.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(parentTask));
+                throw new JsonException("Property is required for class TaskReduced: parent_task.");
 
             if (!description.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(description));
+                throw new JsonException("Property is required for class TaskReduced: description.");
 
             if (!activeFrom.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(activeFrom));
+                throw new JsonException("Property is required for class TaskReduced: active_from.");
 
             if (!activeTo.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(activeTo));
+                throw new JsonException("Property is required for class TaskReduced: active_to.");
 
             if (!customField1.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(customField1));
+                throw new JsonException("Property is required for class TaskReduced: custom_field_1.");
 
             if (!customField2.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(customField2));
+                throw new JsonException("Property is required for class TaskReduced: custom_field_2.");
 
             if (!customField3.IsSet)
-                throw new ArgumentException("Property is required for class TaskReduced.", nameof(customField3));
+                throw new JsonException("Property is required for class TaskReduced: custom_field_3.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: name.");
 
             if (breadcrumbs.IsSet && breadcrumbs.Value == null)
-                throw new ArgumentNullException(nameof(breadcrumbs), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: breadcrumbs.");
 
             if (bookable.IsSet && bookable.Value == null)
-                throw new ArgumentNullException(nameof(bookable), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: bookable.");
 
             if (billable.IsSet && billable.Value == null)
-                throw new ArgumentNullException(nameof(billable), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: billable.");
 
             if (projectTimeNotesRequired.IsSet && projectTimeNotesRequired.Value == null)
-                throw new ArgumentNullException(nameof(projectTimeNotesRequired), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: project_time_notes_required.");
 
             if (budgetPlanningType.IsSet && budgetPlanningType.Value == null)
-                throw new ArgumentNullException(nameof(budgetPlanningType), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: budget_planning_type.");
 
             if (locationInherited.IsSet && locationInherited.Value == null)
-                throw new ArgumentNullException(nameof(locationInherited), "Property is not nullable for class TaskReduced.");
+                throw new JsonException("Property is not nullable for class TaskReduced: location_inherited.");
 
             return new TaskReduced(id.Value!, name.Value!, breadcrumbs.Value!, bookable.Value!.Value!, billable.Value!.Value!, projectTimeNotesRequired.Value!.Value!, externalId.Value!, parentTask.Value!, description.Value!, lockDate, earliestStartTime, latestEndTime, activeFrom.Value!, activeTo.Value!, budgetPlanningType, locationInherited, location, locationRestrictionRadiusMeters, customField1.Value!, customField2.Value!, customField3.Value!);
         }
@@ -532,7 +540,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskReduced"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskReduced taskReduced, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -547,17 +554,13 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskReduced"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskReduced taskReduced, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskReduced.Id == null)
-                throw new ArgumentNullException(nameof(taskReduced.Id), "Property is required for class TaskReduced.");
+            if (taskReduced.BudgetPlanningTypeOption.IsSet && taskReduced.BudgetPlanningType == null)
+                throw new JsonException("Cannot write null property TaskReduced.BudgetPlanningType to non-nullable JSON property 'budget_planning_type'.");
 
-            if (taskReduced.Name == null)
-                throw new ArgumentNullException(nameof(taskReduced.Name), "Property is required for class TaskReduced.");
-
-            if (taskReduced.Breadcrumbs == null)
-                throw new ArgumentNullException(nameof(taskReduced.Breadcrumbs), "Property is required for class TaskReduced.");
+            if (taskReduced.LocationInheritedOption.IsSet && taskReduced.LocationInherited == null)
+                throw new JsonException("Cannot write null property TaskReduced.LocationInherited to non-nullable JSON property 'location_inherited'.");
 
             writer.WriteString("id", taskReduced.Id);
 

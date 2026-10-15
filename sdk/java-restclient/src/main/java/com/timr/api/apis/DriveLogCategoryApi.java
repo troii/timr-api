@@ -30,7 +30,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class DriveLogCategoryApi {
     private ApiClient apiClient;
 
@@ -67,15 +67,15 @@ public class DriveLogCategoryApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -87,7 +87,7 @@ public class DriveLogCategoryApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DriveLogCategoriesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-log-categories", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-log-categories", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -102,7 +102,7 @@ public class DriveLogCategoryApi {
      * @return DriveLogCategoriesPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DriveLogCategoriesPage fetchDriveLogCategories( String pageToken,  Integer limit,  SortDirection sortDirection,  DriveLogCategoriesSortColumn sortBy) throws RestClientResponseException {
+    public DriveLogCategoriesPage fetchDriveLogCategories(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DriveLogCategoriesSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLogCategoriesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDriveLogCategoriesRequestCreation(pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -119,7 +119,7 @@ public class DriveLogCategoryApi {
      * @return ResponseEntity&lt;DriveLogCategoriesPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLogCategoriesPage> fetchDriveLogCategoriesWithHttpInfo( String pageToken,  Integer limit,  SortDirection sortDirection,  DriveLogCategoriesSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<DriveLogCategoriesPage> fetchDriveLogCategoriesWithHttpInfo(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DriveLogCategoriesSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLogCategoriesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDriveLogCategoriesRequestCreation(pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -161,7 +161,7 @@ public class DriveLogCategoryApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -176,7 +176,7 @@ public class DriveLogCategoryApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DriveLogCategory> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-log-categories/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-log-categories/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -189,7 +189,7 @@ public class DriveLogCategoryApi {
      * @return DriveLogCategory
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DriveLogCategory getDriveLogCategory( String id) throws RestClientResponseException {
+    public DriveLogCategory getDriveLogCategory(String id) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLogCategory> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getDriveLogCategoryRequestCreation(id).body(localVarReturnType);
     }
@@ -204,7 +204,7 @@ public class DriveLogCategoryApi {
      * @return ResponseEntity&lt;DriveLogCategory&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLogCategory> getDriveLogCategoryWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<DriveLogCategory> getDriveLogCategoryWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<DriveLogCategory> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getDriveLogCategoryRequestCreation(id).toEntity(localVarReturnType);
     }

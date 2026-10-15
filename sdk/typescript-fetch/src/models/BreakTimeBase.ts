@@ -28,8 +28,6 @@ import {
 export interface BreakTimeBase {
     /**
      * 
-     * @type {BreakTimeType}
-     * @memberof BreakTimeBase
      */
     type: BreakTimeType;
 }

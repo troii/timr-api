@@ -197,22 +197,32 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeDateSpan" />
     /// </summary>
-    public class WorkingTimeDateSpanJsonConverter : JsonConverter<WorkingTimeDateSpan>
+    public partial class WorkingTimeDateSpanJsonConverter : JsonConverter<WorkingTimeDateSpan>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeDateSpanJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeDateSpanJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize LastModified
         /// </summary>
-        public static string LastModifiedFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeDateSpan" />
@@ -302,58 +312,58 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(id));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: id.");
 
             if (!start.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(start));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: start.");
 
             if (!startHalfDay.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(startHalfDay));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: start_half_day.");
 
             if (!end.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(end));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: end.");
 
             if (!endHalfDay.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(endHalfDay));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: end_half_day.");
 
             if (!user.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(user));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: user.");
 
             if (!workingTimeType.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(workingTimeType));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: working_time_type.");
 
             if (!lastModified.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(lastModified));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: last_modified.");
 
             if (!notes.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(notes));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: notes.");
 
             if (!lastModifiedBy.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeDateSpan.", nameof(lastModifiedBy));
+                throw new JsonException("Property is required for class WorkingTimeDateSpan: last_modified_by.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: id.");
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: start.");
 
             if (startHalfDay.IsSet && startHalfDay.Value == null)
-                throw new ArgumentNullException(nameof(startHalfDay), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: start_half_day.");
 
             if (end.IsSet && end.Value == null)
-                throw new ArgumentNullException(nameof(end), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: end.");
 
             if (endHalfDay.IsSet && endHalfDay.Value == null)
-                throw new ArgumentNullException(nameof(endHalfDay), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: end_half_day.");
 
             if (user.IsSet && user.Value == null)
-                throw new ArgumentNullException(nameof(user), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: user.");
 
             if (workingTimeType.IsSet && workingTimeType.Value == null)
-                throw new ArgumentNullException(nameof(workingTimeType), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: working_time_type.");
 
             if (lastModified.IsSet && lastModified.Value == null)
-                throw new ArgumentNullException(nameof(lastModified), "Property is not nullable for class WorkingTimeDateSpan.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpan: last_modified.");
 
             return new WorkingTimeDateSpan(id.Value!, start.Value!.Value!, startHalfDay.Value!.Value!, end.Value!.Value!, endHalfDay.Value!.Value!, user.Value!, workingTimeType.Value!, lastModified.Value!.Value!, notes.Value!, substitute, lastModifiedBy.Value!, metadata);
         }
@@ -364,7 +374,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeDateSpan"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeDateSpan workingTimeDateSpan, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -379,18 +388,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeDateSpan"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeDateSpan workingTimeDateSpan, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workingTimeDateSpan.Id == null)
-                throw new ArgumentNullException(nameof(workingTimeDateSpan.Id), "Property is required for class WorkingTimeDateSpan.");
-
-            if (workingTimeDateSpan.User == null)
-                throw new ArgumentNullException(nameof(workingTimeDateSpan.User), "Property is required for class WorkingTimeDateSpan.");
-
-            if (workingTimeDateSpan.WorkingTimeType == null)
-                throw new ArgumentNullException(nameof(workingTimeDateSpan.WorkingTimeType), "Property is required for class WorkingTimeDateSpan.");
-
             writer.WriteString("id", workingTimeDateSpan.Id);
 
             writer.WriteString("start", workingTimeDateSpan.Start.ToString(StartFormat));

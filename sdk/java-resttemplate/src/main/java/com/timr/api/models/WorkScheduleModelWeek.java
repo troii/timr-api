@@ -45,7 +45,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkScheduleModelWeek.JSON_PROPERTY_SATURDAY,
   WorkScheduleModelWeek.JSON_PROPERTY_SUNDAY
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkScheduleModelWeek {
   public static final String JSON_PROPERTY_WEEK_NUMBER = "week_number";
   @jakarta.annotation.Nullable

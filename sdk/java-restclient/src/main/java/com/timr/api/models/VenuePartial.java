@@ -40,7 +40,7 @@ import com.fasterxml.jackson.annotation.*;
   VenuePartial.JSON_PROPERTY_LAT,
   VenuePartial.JSON_PROPERTY_LON
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class VenuePartial {
   public static final String JSON_PROPERTY_ID = "id";
   

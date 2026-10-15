@@ -35,26 +35,18 @@ import {
 export interface OvertimeSurchargeAccounts {
     /**
      * 
-     * @type {OvertimeSurchargeRule}
-     * @memberof OvertimeSurchargeAccounts
      */
     rule: OvertimeSurchargeRule;
     /**
      * 
-     * @type {number}
-     * @memberof OvertimeSurchargeAccounts
      */
     percentage: number | null;
     /**
      * 
-     * @type {OvertimeSurchargeAccount}
-     * @memberof OvertimeSurchargeAccounts
      */
     overtime: OvertimeSurchargeAccount;
     /**
      * 
-     * @type {OvertimeSurchargeAccount}
-     * @memberof OvertimeSurchargeAccounts
      */
     surcharge: OvertimeSurchargeAccount;
 }

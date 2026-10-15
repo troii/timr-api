@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.*;
   ProblemDetail.JSON_PROPERTY_DETAIL,
   ProblemDetail.JSON_PROPERTY_INSTANCE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class ProblemDetail {
   public static final String JSON_PROPERTY_TYPE = "type";
   

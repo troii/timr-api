@@ -172,8 +172,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="CarUpdate" />
     /// </summary>
-    public class CarUpdateJsonConverter : JsonConverter<CarUpdate>
+    public partial class CarUpdateJsonConverter : JsonConverter<CarUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CarUpdateJsonConverter" /> class.
+        /// </summary>
+        public CarUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="CarUpdate" />
         /// </summary>
@@ -234,13 +244,13 @@ namespace Timr.Api.Model
             }
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class CarUpdate.");
+                throw new JsonException("Property is not nullable for class CarUpdate: name.");
 
             if (plate.IsSet && plate.Value == null)
-                throw new ArgumentNullException(nameof(plate), "Property is not nullable for class CarUpdate.");
+                throw new JsonException("Property is not nullable for class CarUpdate: plate.");
 
             if (usable.IsSet && usable.Value == null)
-                throw new ArgumentNullException(nameof(usable), "Property is not nullable for class CarUpdate.");
+                throw new JsonException("Property is not nullable for class CarUpdate: usable.");
 
             return new CarUpdate(name, plate, externalId, usable, metadata);
         }
@@ -251,7 +261,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, CarUpdate carUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -266,14 +275,16 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="carUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, CarUpdate carUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             if (carUpdate.NameOption.IsSet && carUpdate.Name == null)
-                throw new ArgumentNullException(nameof(carUpdate.Name), "Property is required for class CarUpdate.");
+                throw new JsonException("Cannot write null property CarUpdate.Name to non-nullable JSON property 'name'.");
 
             if (carUpdate.PlateOption.IsSet && carUpdate.Plate == null)
-                throw new ArgumentNullException(nameof(carUpdate.Plate), "Property is required for class CarUpdate.");
+                throw new JsonException("Cannot write null property CarUpdate.Plate to non-nullable JSON property 'plate'.");
+
+            if (carUpdate.UsableOption.IsSet && carUpdate.Usable == null)
+                throw new JsonException("Cannot write null property CarUpdate.Usable to non-nullable JSON property 'usable'.");
 
             if (carUpdate.NameOption.IsSet)
                 writer.WriteString("name", carUpdate.Name);

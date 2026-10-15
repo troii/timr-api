@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.*;
   CarUpdate.JSON_PROPERTY_USABLE,
   CarUpdate.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class CarUpdate {
   public static final String JSON_PROPERTY_NAME = "name";
   
@@ -170,7 +170,7 @@ public class CarUpdate {
   }
 
   public CarUpdate putMetadataItem(String key, Object metadataItem) {
-    if (this.metadata == null || !this.metadata.isPresent()) {
+    if (this.metadata == null || !this.metadata.isPresent() || this.metadata.get() == null) {
       this.metadata = JsonNullable.<Map<String, Object>>of(new HashMap<>());
     }
     try {

@@ -136,6 +136,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override CarsSortColumn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             CarsSortColumn? result = rawValue == null
@@ -156,7 +159,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, CarsSortColumn? carsSortColumn, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(carsSortColumn.HasValue ? CarsSortColumnValueConverter.ToJsonValue(carsSortColumn.Value).ToString() : "null");
+            if (carsSortColumn.HasValue)
+                writer.WriteStringValue(CarsSortColumnValueConverter.ToJsonValue(carsSortColumn.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

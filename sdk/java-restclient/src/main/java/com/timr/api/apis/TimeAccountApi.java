@@ -26,7 +26,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TimeAccountApi {
     private ApiClient apiClient;
 
@@ -73,7 +73,7 @@ public class TimeAccountApi {
         pathParams.put("id", id);
         pathParams.put("date", date);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -88,7 +88,7 @@ public class TimeAccountApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Accounts> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/users/{id}/accounts/{date}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/users/{id}/accounts/{date}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -102,7 +102,7 @@ public class TimeAccountApi {
      * @return Accounts
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Accounts getUserAccounts( String id,  LocalDate date) throws RestClientResponseException {
+    public Accounts getUserAccounts(String id, LocalDate date) throws RestClientResponseException {
         ParameterizedTypeReference<Accounts> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getUserAccountsRequestCreation(id, date).body(localVarReturnType);
     }
@@ -118,7 +118,7 @@ public class TimeAccountApi {
      * @return ResponseEntity&lt;Accounts&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Accounts> getUserAccountsWithHttpInfo( String id,  LocalDate date) throws RestClientResponseException {
+    public ResponseEntity<Accounts> getUserAccountsWithHttpInfo(String id, LocalDate date) throws RestClientResponseException {
         ParameterizedTypeReference<Accounts> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getUserAccountsRequestCreation(id, date).toEntity(localVarReturnType);
     }
@@ -165,7 +165,7 @@ public class TimeAccountApi {
         pathParams.put("id", id);
         pathParams.put("date", date);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -180,7 +180,7 @@ public class TimeAccountApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Accounts> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/users/{id}/working-time-accounts/{date}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/users/{id}/working-time-accounts/{date}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -194,7 +194,7 @@ public class TimeAccountApi {
      * @return Accounts
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Accounts getUserWorkingTimeAccounts( String id,  LocalDate date) throws RestClientResponseException {
+    public Accounts getUserWorkingTimeAccounts(String id, LocalDate date) throws RestClientResponseException {
         ParameterizedTypeReference<Accounts> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getUserWorkingTimeAccountsRequestCreation(id, date).body(localVarReturnType);
     }
@@ -210,7 +210,7 @@ public class TimeAccountApi {
      * @return ResponseEntity&lt;Accounts&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Accounts> getUserWorkingTimeAccountsWithHttpInfo( String id,  LocalDate date) throws RestClientResponseException {
+    public ResponseEntity<Accounts> getUserWorkingTimeAccountsWithHttpInfo(String id, LocalDate date) throws RestClientResponseException {
         ParameterizedTypeReference<Accounts> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getUserWorkingTimeAccountsRequestCreation(id, date).toEntity(localVarReturnType);
     }

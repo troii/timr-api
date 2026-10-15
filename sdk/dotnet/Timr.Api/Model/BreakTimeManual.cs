@@ -74,7 +74,7 @@ namespace Timr.Api.Model
         /// start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.
         /// </summary>
         /// <value>start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.</value>
-        /* <example>2021-07-16T08:20Z</example> */
+        /* <example>2021-07-16T08:30:00Z</example> */
         [JsonPropertyName("start")]
         public DateTimeOffset? Start { get { return this.StartOption.Value; } set { this.StartOption = new(value); } }
 
@@ -89,7 +89,7 @@ namespace Timr.Api.Model
         /// start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.
         /// </summary>
         /// <value>start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.</value>
-        /* <example>2021-07-16T08:20Z</example> */
+        /* <example>2021-07-16T08:40:00Z</example> */
         [JsonPropertyName("end")]
         public DateTimeOffset? End { get { return this.EndOption.Value; } set { this.EndOption = new(value); } }
 
@@ -123,17 +123,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="BreakTimeManual" />
     /// </summary>
-    public class BreakTimeManualJsonConverter : JsonConverter<BreakTimeManual>
+    public partial class BreakTimeManualJsonConverter : JsonConverter<BreakTimeManual>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BreakTimeManualJsonConverter" /> class.
+        /// </summary>
+        public BreakTimeManualJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="BreakTimeManual" />
@@ -173,9 +183,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<BreakTimeType?>(BreakTimeTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<BreakTimeType?>(JsonSerializer.Deserialize<BreakTimeType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "duration_minutes":
                             durationMinutes = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
@@ -193,16 +201,16 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeManual.", nameof(type));
+                throw new JsonException("Property is required for class BreakTimeManual: type.");
 
             if (!durationMinutes.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeManual.", nameof(durationMinutes));
+                throw new JsonException("Property is required for class BreakTimeManual: duration_minutes.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class BreakTimeManual.");
+                throw new JsonException("Property is not nullable for class BreakTimeManual: type.");
 
             if (durationMinutes.IsSet && durationMinutes.Value == null)
-                throw new ArgumentNullException(nameof(durationMinutes), "Property is not nullable for class BreakTimeManual.");
+                throw new JsonException("Property is not nullable for class BreakTimeManual: duration_minutes.");
 
             return new BreakTimeManual(type.Value!.Value!, durationMinutes.Value!.Value!, start, end);
         }
@@ -213,7 +221,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeManual"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, BreakTimeManual breakTimeManual, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -228,7 +235,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeManual"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, BreakTimeManual breakTimeManual, JsonSerializerOptions jsonSerializerOptions)
         {
             var typeRawValue = BreakTimeTypeValueConverter.ToJsonValue(breakTimeManual.Type);

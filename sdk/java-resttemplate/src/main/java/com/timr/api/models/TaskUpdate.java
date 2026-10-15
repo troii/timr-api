@@ -66,7 +66,7 @@ import com.fasterxml.jackson.annotation.*;
   TaskUpdate.JSON_PROPERTY_METADATA,
   TaskUpdate.JSON_PROPERTY_BUDGET_UPDATE_PROJECT_TIMES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskUpdate {
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable
@@ -758,7 +758,7 @@ public class TaskUpdate {
   }
 
   public TaskUpdate putMetadataItem(String key, Object metadataItem) {
-    if (this.metadata == null || !this.metadata.isPresent()) {
+    if (this.metadata == null || !this.metadata.isPresent() || this.metadata.get() == null) {
       this.metadata = JsonNullable.<Map<String, Object>>of(new HashMap<>());
     }
     try {

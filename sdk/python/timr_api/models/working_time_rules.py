@@ -27,7 +27,7 @@ class WorkingTimeRules(BaseModel):
     """
     WorkingTimeRules
     """ # noqa: E501
-    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
+    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.", json_schema_extra={"examples": ["074e7048-9097-11eb-a8b3-0242ac130003"]})
     name: StrictStr
     __properties: ClassVar[List[str]] = ["id", "name"]
 

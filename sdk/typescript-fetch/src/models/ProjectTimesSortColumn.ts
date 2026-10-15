@@ -18,7 +18,7 @@
  */
 export const ProjectTimesSortColumn = {
     Start: 'start',
-    LastModified: 'last_modified'
+    LastModified: 'last_modified',
 } as const;
 export type ProjectTimesSortColumn = typeof ProjectTimesSortColumn[keyof typeof ProjectTimesSortColumn];
 

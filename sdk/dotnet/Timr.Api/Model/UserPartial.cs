@@ -140,8 +140,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="UserPartial" />
     /// </summary>
-    public class UserPartialJsonConverter : JsonConverter<UserPartial>
+    public partial class UserPartialJsonConverter : JsonConverter<UserPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserPartialJsonConverter" /> class.
+        /// </summary>
+        public UserPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="UserPartial" />
         /// </summary>
@@ -210,28 +220,28 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(id));
+                throw new JsonException("Property is required for class UserPartial: id.");
 
             if (!firstname.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(firstname));
+                throw new JsonException("Property is required for class UserPartial: firstname.");
 
             if (!lastname.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(lastname));
+                throw new JsonException("Property is required for class UserPartial: lastname.");
 
             if (!fullname.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(fullname));
+                throw new JsonException("Property is required for class UserPartial: fullname.");
 
             if (!email.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(email));
+                throw new JsonException("Property is required for class UserPartial: email.");
 
             if (!employeeNumber.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(employeeNumber));
+                throw new JsonException("Property is required for class UserPartial: employee_number.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class UserPartial.", nameof(externalId));
+                throw new JsonException("Property is required for class UserPartial: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class UserPartial.");
+                throw new JsonException("Property is not nullable for class UserPartial: id.");
 
             return new UserPartial(id.Value!, firstname.Value!, lastname.Value!, fullname.Value!, email.Value!, employeeNumber.Value!, externalId.Value!);
         }
@@ -242,7 +252,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="userPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, UserPartial userPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -257,12 +266,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="userPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, UserPartial userPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (userPartial.Id == null)
-                throw new ArgumentNullException(nameof(userPartial.Id), "Property is required for class UserPartial.");
-
             writer.WriteString("id", userPartial.Id);
 
             if (userPartial.Firstname != null)

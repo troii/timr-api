@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 /**
  * 
  * @export
@@ -20,20 +20,14 @@ import { mapValues } from '../runtime';
 export interface Holiday {
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof Holiday
      */
     date: Date;
     /**
      * 
-     * @type {string}
-     * @memberof Holiday
      */
     description: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof Holiday
      */
     halfDay: boolean;
 }
@@ -44,7 +38,7 @@ export interface Holiday {
 export function instanceOfHoliday(value: object): value is Holiday {
     if (!('date' in value) || value['date'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('halfDay' in value) || value['halfDay'] === undefined) return false;
+    if ((!('halfDay' in (value as Record<string, any>)) && !('half_day' in (value as Record<string, any>))) || ((value as Record<string, any>)['halfDay'] === undefined && (value as Record<string, any>)['half_day'] === undefined)) return false;
     return true;
 }
 
@@ -58,7 +52,7 @@ export function HolidayFromJSONTyped(json: any, ignoreDiscriminator: boolean): H
     }
     return {
         
-        'date': (new Date(json['date'])),
+        'date': (json['date'] == null ? json['date'] : parseDate(json['date'])),
         'description': json['description'],
         'halfDay': json['half_day'],
     };
@@ -75,7 +69,7 @@ export function HolidayToJSONTyped(value?: Holiday | null, ignoreDiscriminator: 
 
     return {
         
-        'date': value['date'].toISOString().substring(0,10),
+        'date': value['date'] == null ? value['date'] : serializeDate(value['date']),
         'description': value['description'],
         'half_day': value['halfDay'],
     };

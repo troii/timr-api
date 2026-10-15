@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.*;
   TeamsPage.JSON_PROPERTY_NEXT_PAGE_TOKEN,
   TeamsPage.JSON_PROPERTY_DATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TeamsPage {
   public static final String JSON_PROPERTY_NEXT_PAGE_TOKEN = "next_page_token";
   @jakarta.annotation.Nullable

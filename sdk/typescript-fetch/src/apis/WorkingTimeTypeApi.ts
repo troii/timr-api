@@ -58,21 +58,60 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface DeleteWorkingTimeTypeRequest {
+    /**
+     * ID of the Working Time Type.
+     */
     id: string;
 }
 
 export interface FetchWorkingTimeTypesRequest {
+    /**
+     * Only return entries whose name contains this text.
+     */
     name?: string;
+    /**
+     * filter by short name
+     */
     shortName?: string;
+    /**
+     * filter by description
+     */
     description?: string;
+    /**
+     * filter by WorkingTimeTypeCategory
+     */
     categories?: Array<WorkingTimeTypeCategory>;
+    /**
+     * filter by WorkingTimeTypeSubCategory
+     */
     subCategories?: Array<WorkingTimeTypeSubCategory>;
+    /**
+     * filter by WorkingTimeType's DurationUnit
+     */
     editUnits?: Array<DurationUnit>;
+    /**
+     * Only return entries that are archived (true) or not archived (false).
+     */
     archived?: boolean;
+    /**
+     * filter entries bAWS on their RecordingMode
+     */
     recordingModes?: Array<RecordingModeUser>;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: WorkingTimeTypesSortColumn;
 }
 
@@ -82,6 +121,9 @@ export type FetchWorkingTimeTypesQuery = Pick<
 >;
 
 export interface GetWorkingTimeTypeRequest {
+    /**
+     * ID of the Working Time Type.
+     */
     id: string;
 }
 

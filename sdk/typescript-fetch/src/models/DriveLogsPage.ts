@@ -28,14 +28,10 @@ import {
 export interface DriveLogsPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof DriveLogsPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<DriveLog>}
-     * @memberof DriveLogsPage
      */
     data: Array<DriveLog>;
 }
@@ -44,7 +40,7 @@ export interface DriveLogsPage {
  * Check if a given object implements the DriveLogsPage interface.
  */
 export function instanceOfDriveLogsPage(value: object): value is DriveLogsPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

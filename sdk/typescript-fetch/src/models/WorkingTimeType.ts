@@ -50,69 +50,47 @@ import {
 export interface WorkingTimeType {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkingTimeType
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeType
      */
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeType
      */
     shortName: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeType
      */
     description: string | null;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof WorkingTimeType
      */
     externalId: string | null;
     /**
      * 
-     * @type {DurationUnit}
-     * @memberof WorkingTimeType
      */
     editUnit: DurationUnit;
     /**
      * 
-     * @type {WorkingTimeTypeCategory}
-     * @memberof WorkingTimeType
      */
     category: WorkingTimeTypeCategory;
     /**
      * 
-     * @type {WorkingTimeTypeSubCategory}
-     * @memberof WorkingTimeType
      */
     subCategory: WorkingTimeTypeSubCategory | null;
     /**
      * Specifies how the user can record this working time type.
      * 
-     * @type {RecordingModeUser}
-     * @memberof WorkingTimeType
      */
     recordingModeUser: RecordingModeUser;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeType
      */
     archived: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeType
      */
     requiresSubstitute?: boolean;
 }
@@ -125,13 +103,13 @@ export interface WorkingTimeType {
 export function instanceOfWorkingTimeType(value: object): value is WorkingTimeType {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('shortName' in value) || value['shortName'] === undefined) return false;
+    if ((!('shortName' in (value as Record<string, any>)) && !('short_name' in (value as Record<string, any>))) || ((value as Record<string, any>)['shortName'] === undefined && (value as Record<string, any>)['short_name'] === undefined)) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
-    if (!('editUnit' in value) || value['editUnit'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
+    if ((!('editUnit' in (value as Record<string, any>)) && !('edit_unit' in (value as Record<string, any>))) || ((value as Record<string, any>)['editUnit'] === undefined && (value as Record<string, any>)['edit_unit'] === undefined)) return false;
     if (!('category' in value) || value['category'] === undefined) return false;
-    if (!('subCategory' in value) || value['subCategory'] === undefined) return false;
-    if (!('recordingModeUser' in value) || value['recordingModeUser'] === undefined) return false;
+    if ((!('subCategory' in (value as Record<string, any>)) && !('sub_category' in (value as Record<string, any>))) || ((value as Record<string, any>)['subCategory'] === undefined && (value as Record<string, any>)['sub_category'] === undefined)) return false;
+    if ((!('recordingModeUser' in (value as Record<string, any>)) && !('recording_mode_user' in (value as Record<string, any>))) || ((value as Record<string, any>)['recordingModeUser'] === undefined && (value as Record<string, any>)['recording_mode_user'] === undefined)) return false;
     if (!('archived' in value) || value['archived'] === undefined) return false;
     return true;
 }

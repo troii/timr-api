@@ -21,7 +21,7 @@ export const WorkingTimeTypeSubCategory = {
     WorkFromHome: 'work_from_home',
     Away: 'away',
     ActiveDrivingTime: 'active_driving_time',
-    PassiveTravellingTime: 'passive_travelling_time'
+    PassiveTravellingTime: 'passive_travelling_time',
 } as const;
 export type WorkingTimeTypeSubCategory = typeof WorkingTimeTypeSubCategory[keyof typeof WorkingTimeTypeSubCategory];
 

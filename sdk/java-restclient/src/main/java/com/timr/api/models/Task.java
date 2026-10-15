@@ -72,7 +72,7 @@ import com.fasterxml.jackson.annotation.*;
   Task.JSON_PROPERTY_CUSTOM_FIELD3,
   Task.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class Task {
   public static final String JSON_PROPERTY_ID = "id";
   
@@ -934,7 +934,7 @@ public class Task {
   }
 
   public Task putMetadataItem(String key, Object metadataItem) {
-    if (this.metadata == null || !this.metadata.isPresent()) {
+    if (this.metadata == null || !this.metadata.isPresent() || this.metadata.get() == null) {
       this.metadata = JsonNullable.<Map<String, Object>>of(new HashMap<>());
     }
     try {

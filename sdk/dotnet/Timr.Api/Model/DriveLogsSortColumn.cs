@@ -150,6 +150,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override DriveLogsSortColumn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             DriveLogsSortColumn? result = rawValue == null
@@ -170,7 +173,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, DriveLogsSortColumn? driveLogsSortColumn, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(driveLogsSortColumn.HasValue ? DriveLogsSortColumnValueConverter.ToJsonValue(driveLogsSortColumn.Value).ToString() : "null");
+            if (driveLogsSortColumn.HasValue)
+                writer.WriteStringValue(DriveLogsSortColumnValueConverter.ToJsonValue(driveLogsSortColumn.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

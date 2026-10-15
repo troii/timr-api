@@ -234,6 +234,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override ProjectTimeStatus? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             ProjectTimeStatus? result = rawValue == null
@@ -254,7 +257,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, ProjectTimeStatus? projectTimeStatus, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(projectTimeStatus.HasValue ? ProjectTimeStatusValueConverter.ToJsonValue(projectTimeStatus.Value).ToString() : "null");
+            if (projectTimeStatus.HasValue)
+                writer.WriteStringValue(ProjectTimeStatusValueConverter.ToJsonValue(projectTimeStatus.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

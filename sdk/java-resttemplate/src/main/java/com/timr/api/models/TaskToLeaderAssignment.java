@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.*;
   TaskToLeaderAssignment.JSON_PROPERTY_USER,
   TaskToLeaderAssignment.JSON_PROPERTY_AUTOMATICALLY_ASSIGNED
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskToLeaderAssignment {
   public static final String JSON_PROPERTY_USER = "user";
   @jakarta.annotation.Nonnull

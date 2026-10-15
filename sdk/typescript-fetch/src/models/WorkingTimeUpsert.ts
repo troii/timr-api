@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { DurationType } from './DurationType';
 import {
     DurationTypeFromJSON,
@@ -43,57 +43,39 @@ export interface WorkingTimeUpsert {
     /**
      * For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `start` must be midnight (00:00) and on the same day as `end`. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof WorkingTimeUpsert
      */
     start?: Date;
     /**
      * For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `end` must be midnight (00:00) and on the same day as `start`. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof WorkingTimeUpsert
      */
     end?: Date | null;
     /**
      * 
-     * @type {Array<BreakTimeUpdate>}
-     * @memberof WorkingTimeUpsert
      */
     breakTimes?: Array<BreakTimeUpdate>;
     /**
      * Must be specified for WorkingTimeTypes with `edit_unit` `days` or `half_days` only
-     * @type {DurationType}
-     * @memberof WorkingTimeUpsert
      */
     durationType?: DurationType | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof WorkingTimeUpsert
      */
     changed?: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeUpsert
      */
     notes?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof WorkingTimeUpsert
      */
     workingTimeTypeId?: string;
     /**
      * 
-     * @type {WorkingTimeStatus}
-     * @memberof WorkingTimeUpsert
      */
     status?: WorkingTimeStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof WorkingTimeUpsert
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -117,15 +99,15 @@ export function WorkingTimeUpsertFromJSONTyped(json: any, ignoreDiscriminator: b
     }
     return {
         
-        'start': json['start'] == null ? undefined : (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': json['start'] == null ? undefined : (parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'breakTimes': json['break_times'] == null ? undefined : ((json['break_times'] as Array<any>).map(BreakTimeUpdateFromJSON)),
-        'durationType': json['duration_type'] == null ? undefined : DurationTypeFromJSON(json['duration_type']),
+        'durationType': json['duration_type'] === undefined ? undefined : json['duration_type'] === null ? null : DurationTypeFromJSON(json['duration_type']),
         'changed': json['changed'] == null ? undefined : json['changed'],
-        'notes': json['notes'] == null ? undefined : json['notes'],
+        'notes': json['notes'] === undefined ? undefined : json['notes'] === null ? null : json['notes'],
         'workingTimeTypeId': json['working_time_type_id'] == null ? undefined : json['working_time_type_id'],
         'status': json['status'] == null ? undefined : WorkingTimeStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -140,8 +122,8 @@ export function WorkingTimeUpsertToJSONTyped(value?: WorkingTimeUpsert | null, i
 
     return {
         
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'break_times': value['breakTimes'] == null ? undefined : ((value['breakTimes'] as Array<any>).map(BreakTimeUpdateToJSON)),
         'duration_type': DurationTypeToJSON(value['durationType']),
         'changed': value['changed'],

@@ -63,28 +63,61 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface AddTeamLeaderRequest {
+    /**
+     * ID of the Team.
+     */
     teamId: string;
+    /**
+     * ID of the User.
+     */
     userId: string;
 }
 
 export interface AddTeamMemberRequest {
+    /**
+     * ID of the Team.
+     */
     teamId: string;
+    /**
+     * ID of the User.
+     */
     userId: string;
 }
 
 export interface CreateTeamRequest {
+    /**
+     * 
+     */
     teamCreate: TeamCreate;
 }
 
 export interface DeleteTeamRequest {
+    /**
+     * ID of the Team.
+     */
     id: string;
 }
 
 export interface FetchTeamLeadersRequest {
+    /**
+     * ID of the Team.
+     */
     id: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: UsersSortColumn;
 }
 
@@ -94,10 +127,25 @@ export type FetchTeamLeadersQuery = Pick<
 >;
 
 export interface FetchTeamMembersRequest {
+    /**
+     * ID of the Team.
+     */
     id: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: UsersSortColumn;
 }
 
@@ -107,10 +155,25 @@ export type FetchTeamMembersQuery = Pick<
 >;
 
 export interface FetchTeamsRequest {
+    /**
+     * Only return Teams whose name matches this value in any segment of the breadcrumbs path.
+     */
     name?: string;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: TeamsSortColumn;
 }
 
@@ -120,31 +183,64 @@ export type FetchTeamsQuery = Pick<
 >;
 
 export interface GetTeamRequest {
+    /**
+     * ID of the Team.
+     */
     id: string;
 }
 
 export interface GetTeamLeaderRequest {
+    /**
+     * ID of the Team.
+     */
     teamId: string;
+    /**
+     * ID of the User.
+     */
     userId: string;
 }
 
 export interface GetTeamMemberRequest {
+    /**
+     * ID of the Team.
+     */
     teamId: string;
+    /**
+     * ID of the User.
+     */
     userId: string;
 }
 
 export interface RemoveTeamLeaderRequest {
+    /**
+     * ID of the Team.
+     */
     teamId: string;
+    /**
+     * ID of the User.
+     */
     userId: string;
 }
 
 export interface RemoveTeamMemberRequest {
+    /**
+     * ID of the Team.
+     */
     teamId: string;
+    /**
+     * ID of the User.
+     */
     userId: string;
 }
 
 export interface UpdateTeamRequest {
+    /**
+     * ID of the Team.
+     */
     id: string;
+    /**
+     * 
+     */
     teamUpdate: TeamUpdate;
 }
 

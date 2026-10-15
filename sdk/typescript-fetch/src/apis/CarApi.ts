@@ -48,15 +48,36 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateCarRequest {
+    /**
+     * 
+     */
     carCreate: CarCreate;
 }
 
 export interface FetchCarsRequest {
+    /**
+     * Only return Cars whose name or plate contains this text.
+     */
     nameOrPlate?: string;
+    /**
+     * Only return Cars that are usable (true) or not usable (false).
+     */
     usable?: boolean;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: CarsSortColumn;
 }
 
@@ -66,11 +87,20 @@ export type FetchCarsQuery = Pick<
 >;
 
 export interface GetCarRequest {
+    /**
+     * ID of the Car.
+     */
     id: string;
 }
 
 export interface UpdateCarRequest {
+    /**
+     * ID of the Car.
+     */
     id: string;
+    /**
+     * 
+     */
     carUpdate: CarUpdate;
 }
 

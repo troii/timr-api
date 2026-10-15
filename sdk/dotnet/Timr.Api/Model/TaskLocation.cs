@@ -134,8 +134,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskLocation" />
     /// </summary>
-    public class TaskLocationJsonConverter : JsonConverter<TaskLocation>
+    public partial class TaskLocationJsonConverter : JsonConverter<TaskLocation>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskLocationJsonConverter" /> class.
+        /// </summary>
+        public TaskLocationJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskLocation" />
         /// </summary>
@@ -204,25 +214,25 @@ namespace Timr.Api.Model
             }
 
             if (!lat.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(lat));
+                throw new JsonException("Property is required for class TaskLocation: lat.");
 
             if (!lon.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(lon));
+                throw new JsonException("Property is required for class TaskLocation: lon.");
 
             if (!address.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(address));
+                throw new JsonException("Property is required for class TaskLocation: address.");
 
             if (!city.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(city));
+                throw new JsonException("Property is required for class TaskLocation: city.");
 
             if (!zipCode.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(zipCode));
+                throw new JsonException("Property is required for class TaskLocation: zip_code.");
 
             if (!state.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(state));
+                throw new JsonException("Property is required for class TaskLocation: state.");
 
             if (!country.IsSet)
-                throw new ArgumentException("Property is required for class TaskLocation.", nameof(country));
+                throw new JsonException("Property is required for class TaskLocation: country.");
 
             return new TaskLocation(lat.Value!, lon.Value!, address.Value!, city.Value!, zipCode.Value!, state.Value!, country.Value!);
         }
@@ -233,7 +243,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskLocation"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskLocation taskLocation, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -248,7 +257,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskLocation"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskLocation taskLocation, JsonSerializerOptions jsonSerializerOptions)
         {
             if (taskLocation.Lat != null)

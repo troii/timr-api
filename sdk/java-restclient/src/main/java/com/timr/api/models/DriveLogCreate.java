@@ -55,7 +55,7 @@ import com.fasterxml.jackson.annotation.*;
   DriveLogCreate.JSON_PROPERTY_START_LOCATION,
   DriveLogCreate.JSON_PROPERTY_END_LOCATION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class DriveLogCreate {
   public static final String JSON_PROPERTY_START = "start";
   
@@ -377,7 +377,7 @@ public class DriveLogCreate {
   }
 
   public DriveLogCreate putMetadataItem(String key, Object metadataItem) {
-    if (this.metadata == null || !this.metadata.isPresent()) {
+    if (this.metadata == null || !this.metadata.isPresent() || this.metadata.get() == null) {
       this.metadata = JsonNullable.<Map<String, Object>>of(new HashMap<>());
     }
     try {

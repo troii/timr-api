@@ -28,22 +28,16 @@ import {
 export interface Duration {
     /**
      * 
-     * @type {DurationType}
-     * @memberof Duration
      */
     type: DurationType;
     /**
      * Net minutes of the recording. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User
      * 
-     * @type {number}
-     * @memberof Duration
      */
     minutes: number;
     /**
      * Net minutes rounded to the default setting configured. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User
      * 
-     * @type {number}
-     * @memberof Duration
      */
     minutesRounded: number;
 }
@@ -56,7 +50,7 @@ export interface Duration {
 export function instanceOfDuration(value: object): value is Duration {
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('minutes' in value) || value['minutes'] === undefined) return false;
-    if (!('minutesRounded' in value) || value['minutesRounded'] === undefined) return false;
+    if ((!('minutesRounded' in (value as Record<string, any>)) && !('minutes_rounded' in (value as Record<string, any>))) || ((value as Record<string, any>)['minutesRounded'] === undefined && (value as Record<string, any>)['minutes_rounded'] === undefined)) return false;
     return true;
 }
 

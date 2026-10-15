@@ -17,7 +17,7 @@
  * @export
  */
 export const WorkingTimeDateSpansSortColumn = {
-    Start: 'start'
+    Start: 'start',
 } as const;
 export type WorkingTimeDateSpansSortColumn = typeof WorkingTimeDateSpansSortColumn[keyof typeof WorkingTimeDateSpansSortColumn];
 

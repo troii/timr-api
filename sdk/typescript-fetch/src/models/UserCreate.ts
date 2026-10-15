@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 /**
  * 
  * @export
@@ -20,68 +20,46 @@ import { mapValues } from '../runtime';
 export interface UserCreate {
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     login: string;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     firstname?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     lastname?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     email?: string | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof UserCreate
      */
     entryDate?: Date | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof UserCreate
      */
     resignDate?: Date | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     employeeNumber?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     externalId?: string | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof UserCreate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     authProvider?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof UserCreate
      */
     authIdentifier?: string | null;
 }
@@ -105,16 +83,16 @@ export function UserCreateFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'login': json['login'],
-        'firstname': json['firstname'] == null ? undefined : json['firstname'],
-        'lastname': json['lastname'] == null ? undefined : json['lastname'],
-        'email': json['email'] == null ? undefined : json['email'],
-        'entryDate': json['entry_date'] == null ? undefined : (new Date(json['entry_date'])),
-        'resignDate': json['resign_date'] == null ? undefined : (new Date(json['resign_date'])),
-        'employeeNumber': json['employee_number'] == null ? undefined : json['employee_number'],
-        'externalId': json['external_id'] == null ? undefined : json['external_id'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'authProvider': json['auth_provider'] == null ? undefined : json['auth_provider'],
-        'authIdentifier': json['auth_identifier'] == null ? undefined : json['auth_identifier'],
+        'firstname': json['firstname'] === undefined ? undefined : json['firstname'] === null ? null : json['firstname'],
+        'lastname': json['lastname'] === undefined ? undefined : json['lastname'] === null ? null : json['lastname'],
+        'email': json['email'] === undefined ? undefined : json['email'] === null ? null : json['email'],
+        'entryDate': json['entry_date'] === undefined ? undefined : json['entry_date'] === null ? null : (parseDate(json['entry_date'])),
+        'resignDate': json['resign_date'] === undefined ? undefined : json['resign_date'] === null ? null : (parseDate(json['resign_date'])),
+        'employeeNumber': json['employee_number'] === undefined ? undefined : json['employee_number'] === null ? null : json['employee_number'],
+        'externalId': json['external_id'] === undefined ? undefined : json['external_id'] === null ? null : json['external_id'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
+        'authProvider': json['auth_provider'] === undefined ? undefined : json['auth_provider'] === null ? null : json['auth_provider'],
+        'authIdentifier': json['auth_identifier'] === undefined ? undefined : json['auth_identifier'] === null ? null : json['auth_identifier'],
     };
 }
 
@@ -133,8 +111,8 @@ export function UserCreateToJSONTyped(value?: UserCreate | null, ignoreDiscrimin
         'firstname': value['firstname'],
         'lastname': value['lastname'],
         'email': value['email'],
-        'entry_date': value['entryDate'] == null ? value['entryDate'] : value['entryDate'].toISOString().substring(0,10),
-        'resign_date': value['resignDate'] == null ? value['resignDate'] : value['resignDate'].toISOString().substring(0,10),
+        'entry_date': value['entryDate'] == null ? value['entryDate'] : serializeDate(value['entryDate']),
+        'resign_date': value['resignDate'] == null ? value['resignDate'] : serializeDate(value['resignDate']),
         'employee_number': value['employeeNumber'],
         'external_id': value['externalId'],
         'metadata': value['metadata'],

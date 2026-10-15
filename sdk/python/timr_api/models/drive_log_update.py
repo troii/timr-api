@@ -30,8 +30,8 @@ class DriveLogUpdate(BaseModel):
     """
     DriveLogUpdate
     """ # noqa: E501
-    start: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)")
+    start: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     changed: Optional[StrictBool] = None
     start_mileage: Optional[StrictInt] = None
     end_mileage: Optional[StrictInt] = None

@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { DriveLogStatus } from './DriveLogStatus';
 import {
     DriveLogStatusFromJSON,
@@ -28,68 +28,46 @@ import {
 export interface DriveLogUpsert {
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLogUpsert
      */
     start?: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLogUpsert
      */
     end?: Date | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLogUpsert
      */
     changed?: boolean;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLogUpsert
      */
     startMileage?: number;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLogUpsert
      */
     endMileage?: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpsert
      */
     route?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpsert
      */
     purpose?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpsert
      */
     visited?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpsert
      */
     driveLogCategoryId?: string;
     /**
      * 
-     * @type {DriveLogStatus}
-     * @memberof DriveLogUpsert
      */
     status?: DriveLogStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof DriveLogUpsert
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -113,17 +91,17 @@ export function DriveLogUpsertFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'start': json['start'] == null ? undefined : (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': json['start'] == null ? undefined : (parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'changed': json['changed'] == null ? undefined : json['changed'],
         'startMileage': json['start_mileage'] == null ? undefined : json['start_mileage'],
-        'endMileage': json['end_mileage'] == null ? undefined : json['end_mileage'],
-        'route': json['route'] == null ? undefined : json['route'],
-        'purpose': json['purpose'] == null ? undefined : json['purpose'],
-        'visited': json['visited'] == null ? undefined : json['visited'],
+        'endMileage': json['end_mileage'] === undefined ? undefined : json['end_mileage'] === null ? null : json['end_mileage'],
+        'route': json['route'] === undefined ? undefined : json['route'] === null ? null : json['route'],
+        'purpose': json['purpose'] === undefined ? undefined : json['purpose'] === null ? null : json['purpose'],
+        'visited': json['visited'] === undefined ? undefined : json['visited'] === null ? null : json['visited'],
         'driveLogCategoryId': json['drive_log_category_id'] == null ? undefined : json['drive_log_category_id'],
         'status': json['status'] == null ? undefined : DriveLogStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -138,8 +116,8 @@ export function DriveLogUpsertToJSONTyped(value?: DriveLogUpsert | null, ignoreD
 
     return {
         
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'changed': value['changed'],
         'start_mileage': value['startMileage'],
         'end_mileage': value['endMileage'],

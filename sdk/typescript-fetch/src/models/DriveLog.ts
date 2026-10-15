@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { Platform } from './Platform';
 import {
     PlatformFromJSON,
@@ -78,154 +78,104 @@ import {
 export interface DriveLog {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof DriveLog
      */
     id: string;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLog
      */
     start: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLog
      */
     end: Date | null;
     /**
      * 
-     * @type {Duration}
-     * @memberof DriveLog
      */
     duration: Duration | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLog
      */
     changed: boolean;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLog
      */
     startMileage: number;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLog
      */
     endMileage: number | null;
     /**
      * Driven distance in kilometers
-     * @type {number}
-     * @memberof DriveLog
      */
     distance: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLog
      */
     route: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLog
      */
     purpose: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLog
      */
     visited: string | null;
     /**
      * 
-     * @type {UserPartial}
-     * @memberof DriveLog
      */
     user: UserPartial;
     /**
      * 
-     * @type {CarPartial}
-     * @memberof DriveLog
      */
     car: CarPartial;
     /**
      * 
-     * @type {DriveLogCategoryPartial}
-     * @memberof DriveLog
      */
     driveLogCategory: DriveLogCategoryPartial;
     /**
      * 
-     * @type {VenuePartial}
-     * @memberof DriveLog
      */
     startVenue: VenuePartial | null;
     /**
      * 
-     * @type {VenuePartial}
-     * @memberof DriveLog
      */
     endVenue: VenuePartial | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLog
      */
     hasTrack: boolean;
     /**
      * 
-     * @type {Location}
-     * @memberof DriveLog
      */
     startLocation: Location | null;
     /**
      * 
-     * @type {Location}
-     * @memberof DriveLog
      */
     endLocation: Location | null;
     /**
      * 
-     * @type {Platform}
-     * @memberof DriveLog
      */
     startPlatform: Platform | null;
     /**
      * 
-     * @type {Platform}
-     * @memberof DriveLog
      */
     endPlatform: Platform | null;
     /**
      * Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof DriveLog
      */
     lastModified: Date;
     /**
      * Read-only. The User who last modified the entry, or null if the change was not made in a user context.
      * 
-     * @type {UserPartial}
-     * @memberof DriveLog
      */
     lastModifiedBy: UserPartial | null;
     /**
      * 
-     * @type {DriveLogStatus}
-     * @memberof DriveLog
      */
     status: DriveLogStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof DriveLog
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -241,24 +191,24 @@ export function instanceOfDriveLog(value: object): value is DriveLog {
     if (!('end' in value) || value['end'] === undefined) return false;
     if (!('duration' in value) || value['duration'] === undefined) return false;
     if (!('changed' in value) || value['changed'] === undefined) return false;
-    if (!('startMileage' in value) || value['startMileage'] === undefined) return false;
-    if (!('endMileage' in value) || value['endMileage'] === undefined) return false;
+    if ((!('startMileage' in (value as Record<string, any>)) && !('start_mileage' in (value as Record<string, any>))) || ((value as Record<string, any>)['startMileage'] === undefined && (value as Record<string, any>)['start_mileage'] === undefined)) return false;
+    if ((!('endMileage' in (value as Record<string, any>)) && !('end_mileage' in (value as Record<string, any>))) || ((value as Record<string, any>)['endMileage'] === undefined && (value as Record<string, any>)['end_mileage'] === undefined)) return false;
     if (!('distance' in value) || value['distance'] === undefined) return false;
     if (!('route' in value) || value['route'] === undefined) return false;
     if (!('purpose' in value) || value['purpose'] === undefined) return false;
     if (!('visited' in value) || value['visited'] === undefined) return false;
     if (!('user' in value) || value['user'] === undefined) return false;
     if (!('car' in value) || value['car'] === undefined) return false;
-    if (!('driveLogCategory' in value) || value['driveLogCategory'] === undefined) return false;
-    if (!('startVenue' in value) || value['startVenue'] === undefined) return false;
-    if (!('endVenue' in value) || value['endVenue'] === undefined) return false;
-    if (!('hasTrack' in value) || value['hasTrack'] === undefined) return false;
-    if (!('startLocation' in value) || value['startLocation'] === undefined) return false;
-    if (!('endLocation' in value) || value['endLocation'] === undefined) return false;
-    if (!('startPlatform' in value) || value['startPlatform'] === undefined) return false;
-    if (!('endPlatform' in value) || value['endPlatform'] === undefined) return false;
-    if (!('lastModified' in value) || value['lastModified'] === undefined) return false;
-    if (!('lastModifiedBy' in value) || value['lastModifiedBy'] === undefined) return false;
+    if ((!('driveLogCategory' in (value as Record<string, any>)) && !('drive_log_category' in (value as Record<string, any>))) || ((value as Record<string, any>)['driveLogCategory'] === undefined && (value as Record<string, any>)['drive_log_category'] === undefined)) return false;
+    if ((!('startVenue' in (value as Record<string, any>)) && !('start_venue' in (value as Record<string, any>))) || ((value as Record<string, any>)['startVenue'] === undefined && (value as Record<string, any>)['start_venue'] === undefined)) return false;
+    if ((!('endVenue' in (value as Record<string, any>)) && !('end_venue' in (value as Record<string, any>))) || ((value as Record<string, any>)['endVenue'] === undefined && (value as Record<string, any>)['end_venue'] === undefined)) return false;
+    if ((!('hasTrack' in (value as Record<string, any>)) && !('has_track' in (value as Record<string, any>))) || ((value as Record<string, any>)['hasTrack'] === undefined && (value as Record<string, any>)['has_track'] === undefined)) return false;
+    if ((!('startLocation' in (value as Record<string, any>)) && !('start_location' in (value as Record<string, any>))) || ((value as Record<string, any>)['startLocation'] === undefined && (value as Record<string, any>)['start_location'] === undefined)) return false;
+    if ((!('endLocation' in (value as Record<string, any>)) && !('end_location' in (value as Record<string, any>))) || ((value as Record<string, any>)['endLocation'] === undefined && (value as Record<string, any>)['end_location'] === undefined)) return false;
+    if ((!('startPlatform' in (value as Record<string, any>)) && !('start_platform' in (value as Record<string, any>))) || ((value as Record<string, any>)['startPlatform'] === undefined && (value as Record<string, any>)['start_platform'] === undefined)) return false;
+    if ((!('endPlatform' in (value as Record<string, any>)) && !('end_platform' in (value as Record<string, any>))) || ((value as Record<string, any>)['endPlatform'] === undefined && (value as Record<string, any>)['end_platform'] === undefined)) return false;
+    if ((!('lastModified' in (value as Record<string, any>)) && !('last_modified' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModified'] === undefined && (value as Record<string, any>)['last_modified'] === undefined)) return false;
+    if ((!('lastModifiedBy' in (value as Record<string, any>)) && !('last_modified_by' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModifiedBy'] === undefined && (value as Record<string, any>)['last_modified_by'] === undefined)) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     return true;
 }
@@ -274,8 +224,8 @@ export function DriveLogFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     return {
         
         'id': json['id'],
-        'start': (new Date(json['start'])),
-        'end': (json['end'] == null ? null : new Date(json['end'])),
+        'start': (json['start'] == null ? json['start'] : parseDateTime(json['start'])),
+        'end': (json['end'] == null ? null : parseDateTime(json['end'])),
         'duration': DurationFromJSON(json['duration']),
         'changed': json['changed'],
         'startMileage': json['start_mileage'],
@@ -294,10 +244,10 @@ export function DriveLogFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'endLocation': LocationFromJSON(json['end_location']),
         'startPlatform': PlatformFromJSON(json['start_platform']),
         'endPlatform': PlatformFromJSON(json['end_platform']),
-        'lastModified': (new Date(json['last_modified'])),
+        'lastModified': (json['last_modified'] == null ? json['last_modified'] : parseDateTime(json['last_modified'])),
         'lastModifiedBy': UserPartialFromJSON(json['last_modified_by']),
         'status': DriveLogStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -313,8 +263,8 @@ export function DriveLogToJSONTyped(value?: DriveLog | null, ignoreDiscriminator
     return {
         
         'id': value['id'],
-        'start': value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'duration': DurationToJSON(value['duration']),
         'changed': value['changed'],
         'start_mileage': value['startMileage'],
@@ -333,7 +283,7 @@ export function DriveLogToJSONTyped(value?: DriveLog | null, ignoreDiscriminator
         'end_location': LocationToJSON(value['endLocation']),
         'start_platform': PlatformToJSON(value['startPlatform']),
         'end_platform': PlatformToJSON(value['endPlatform']),
-        'last_modified': value['lastModified'].toISOString(),
+        'last_modified': value['lastModified'] == null ? value['lastModified'] : serializeDateTime(value['lastModified']),
         'last_modified_by': UserPartialToJSON(value['lastModifiedBy']),
         'status': DriveLogStatusToJSON(value['status']),
         'metadata': value['metadata'],

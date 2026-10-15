@@ -110,8 +110,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskToUserAssignment" />
     /// </summary>
-    public class TaskToUserAssignmentJsonConverter : JsonConverter<TaskToUserAssignment>
+    public partial class TaskToUserAssignmentJsonConverter : JsonConverter<TaskToUserAssignment>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskToUserAssignmentJsonConverter" /> class.
+        /// </summary>
+        public TaskToUserAssignmentJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskToUserAssignment" />
         /// </summary>
@@ -153,9 +163,7 @@ namespace Timr.Api.Model
                             user = new Option<UserPartial?>(JsonSerializer.Deserialize<UserPartial>(ref utf8JsonReader, jsonSerializerOptions)!);
                             break;
                         case "recording_lock":
-                            string? recordingLockRawValue = utf8JsonReader.GetString();
-                            if (recordingLockRawValue != null)
-                                recordingLock = new Option<RecordingLockType?>(RecordingLockTypeValueConverter.FromStringOrDefault(recordingLockRawValue));
+                            recordingLock = new Option<RecordingLockType?>(JsonSerializer.Deserialize<RecordingLockType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "automatically_assigned":
                             automaticallyAssigned = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -170,22 +178,22 @@ namespace Timr.Api.Model
             }
 
             if (!user.IsSet)
-                throw new ArgumentException("Property is required for class TaskToUserAssignment.", nameof(user));
+                throw new JsonException("Property is required for class TaskToUserAssignment: user.");
 
             if (!recordingLock.IsSet)
-                throw new ArgumentException("Property is required for class TaskToUserAssignment.", nameof(recordingLock));
+                throw new JsonException("Property is required for class TaskToUserAssignment: recording_lock.");
 
             if (!automaticallyAssigned.IsSet)
-                throw new ArgumentException("Property is required for class TaskToUserAssignment.", nameof(automaticallyAssigned));
+                throw new JsonException("Property is required for class TaskToUserAssignment: automatically_assigned.");
 
             if (user.IsSet && user.Value == null)
-                throw new ArgumentNullException(nameof(user), "Property is not nullable for class TaskToUserAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToUserAssignment: user.");
 
             if (recordingLock.IsSet && recordingLock.Value == null)
-                throw new ArgumentNullException(nameof(recordingLock), "Property is not nullable for class TaskToUserAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToUserAssignment: recording_lock.");
 
             if (automaticallyAssigned.IsSet && automaticallyAssigned.Value == null)
-                throw new ArgumentNullException(nameof(automaticallyAssigned), "Property is not nullable for class TaskToUserAssignment.");
+                throw new JsonException("Property is not nullable for class TaskToUserAssignment: automatically_assigned.");
 
             return new TaskToUserAssignment(user.Value!, recordingLock.Value!.Value!, automaticallyAssigned.Value!.Value!, hoursPlanned);
         }
@@ -196,7 +204,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToUserAssignment"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskToUserAssignment taskToUserAssignment, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -211,12 +218,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskToUserAssignment"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskToUserAssignment taskToUserAssignment, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskToUserAssignment.User == null)
-                throw new ArgumentNullException(nameof(taskToUserAssignment.User), "Property is required for class TaskToUserAssignment.");
-
             writer.WritePropertyName("user");
             JsonSerializer.Serialize(writer, taskToUserAssignment.User, jsonSerializerOptions);
             var recordingLockRawValue = RecordingLockTypeValueConverter.ToJsonValue(taskToUserAssignment.RecordingLock);

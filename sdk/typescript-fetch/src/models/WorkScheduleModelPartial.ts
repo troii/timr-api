@@ -20,14 +20,10 @@ import { mapValues } from '../runtime';
 export interface WorkScheduleModelPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof WorkScheduleModelPartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof WorkScheduleModelPartial
      */
     name: string;
 }

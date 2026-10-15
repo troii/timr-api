@@ -270,22 +270,32 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTime" />
     /// </summary>
-    public class WorkingTimeJsonConverter : JsonConverter<WorkingTime>
+    public partial class WorkingTimeJsonConverter : JsonConverter<WorkingTime>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize LastModified
         /// </summary>
-        public static string LastModifiedFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTime" />
@@ -364,9 +374,7 @@ namespace Timr.Api.Model
                             lastModified = new Option<DateTimeOffset?>(JsonSerializer.Deserialize<DateTimeOffset>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "status":
-                            string? statusRawValue = utf8JsonReader.GetString();
-                            if (statusRawValue != null)
-                                status = new Option<WorkingTimeStatus?>(WorkingTimeStatusValueConverter.FromStringOrDefault(statusRawValue));
+                            status = new Option<WorkingTimeStatus?>(JsonSerializer.Deserialize<WorkingTimeStatus?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "end":
                             end = new Option<DateTimeOffset?>(JsonSerializer.Deserialize<DateTimeOffset?>(ref utf8JsonReader, jsonSerializerOptions));
@@ -387,12 +395,10 @@ namespace Timr.Api.Model
                             endLocation = new Option<Location?>(JsonSerializer.Deserialize<Location>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "start_platform":
-                            string? startPlatformRawValue = utf8JsonReader.GetString();
-                            startPlatform = new Option<Platform?>(startPlatformRawValue == null ? null : PlatformValueConverter.FromStringOrDefault(startPlatformRawValue));
+                            startPlatform = new Option<Platform?>(JsonSerializer.Deserialize<Platform?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "end_platform":
-                            string? endPlatformRawValue = utf8JsonReader.GetString();
-                            endPlatform = new Option<Platform?>(endPlatformRawValue == null ? null : PlatformValueConverter.FromStringOrDefault(endPlatformRawValue));
+                            endPlatform = new Option<Platform?>(JsonSerializer.Deserialize<Platform?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "last_modified_by":
                             lastModifiedBy = new Option<UserPartial?>(JsonSerializer.Deserialize<UserPartial>(ref utf8JsonReader, jsonSerializerOptions));
@@ -407,85 +413,85 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(id));
+                throw new JsonException("Property is required for class WorkingTime: id.");
 
             if (!start.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(start));
+                throw new JsonException("Property is required for class WorkingTime: start.");
 
             if (!breakTimeTotalMinutes.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(breakTimeTotalMinutes));
+                throw new JsonException("Property is required for class WorkingTime: break_time_total_minutes.");
 
             if (!breakTimes.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(breakTimes));
+                throw new JsonException("Property is required for class WorkingTime: break_times.");
 
             if (!changed.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(changed));
+                throw new JsonException("Property is required for class WorkingTime: changed.");
 
             if (!user.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(user));
+                throw new JsonException("Property is required for class WorkingTime: user.");
 
             if (!workingTimeType.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(workingTimeType));
+                throw new JsonException("Property is required for class WorkingTime: working_time_type.");
 
             if (!lastModified.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(lastModified));
+                throw new JsonException("Property is required for class WorkingTime: last_modified.");
 
             if (!status.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(status));
+                throw new JsonException("Property is required for class WorkingTime: status.");
 
             if (!end.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(end));
+                throw new JsonException("Property is required for class WorkingTime: end.");
 
             if (!duration.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(duration));
+                throw new JsonException("Property is required for class WorkingTime: duration.");
 
             if (!notes.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(notes));
+                throw new JsonException("Property is required for class WorkingTime: notes.");
 
             if (!workingTimeDateSpan.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(workingTimeDateSpan));
+                throw new JsonException("Property is required for class WorkingTime: working_time_date_span.");
 
             if (!startLocation.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(startLocation));
+                throw new JsonException("Property is required for class WorkingTime: start_location.");
 
             if (!endLocation.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(endLocation));
+                throw new JsonException("Property is required for class WorkingTime: end_location.");
 
             if (!startPlatform.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(startPlatform));
+                throw new JsonException("Property is required for class WorkingTime: start_platform.");
 
             if (!endPlatform.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(endPlatform));
+                throw new JsonException("Property is required for class WorkingTime: end_platform.");
 
             if (!lastModifiedBy.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTime.", nameof(lastModifiedBy));
+                throw new JsonException("Property is required for class WorkingTime: last_modified_by.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: id.");
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: start.");
 
             if (breakTimeTotalMinutes.IsSet && breakTimeTotalMinutes.Value == null)
-                throw new ArgumentNullException(nameof(breakTimeTotalMinutes), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: break_time_total_minutes.");
 
             if (breakTimes.IsSet && breakTimes.Value == null)
-                throw new ArgumentNullException(nameof(breakTimes), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: break_times.");
 
             if (changed.IsSet && changed.Value == null)
-                throw new ArgumentNullException(nameof(changed), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: changed.");
 
             if (user.IsSet && user.Value == null)
-                throw new ArgumentNullException(nameof(user), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: user.");
 
             if (workingTimeType.IsSet && workingTimeType.Value == null)
-                throw new ArgumentNullException(nameof(workingTimeType), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: working_time_type.");
 
             if (lastModified.IsSet && lastModified.Value == null)
-                throw new ArgumentNullException(nameof(lastModified), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: last_modified.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class WorkingTime.");
+                throw new JsonException("Property is not nullable for class WorkingTime: status.");
 
             return new WorkingTime(id.Value!, start.Value!.Value!, breakTimeTotalMinutes.Value!.Value!, breakTimes.Value!, changed.Value!.Value!, user.Value!, workingTimeType.Value!, lastModified.Value!.Value!, status.Value!.Value!, end.Value!, duration.Value!, notes.Value!, workingTimeDateSpan.Value!, startLocation.Value!, endLocation.Value!, startPlatform.Value!, endPlatform.Value!, lastModifiedBy.Value!, metadata);
         }
@@ -496,7 +502,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTime"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTime workingTime, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -511,21 +516,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTime"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTime workingTime, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workingTime.Id == null)
-                throw new ArgumentNullException(nameof(workingTime.Id), "Property is required for class WorkingTime.");
-
-            if (workingTime.BreakTimes == null)
-                throw new ArgumentNullException(nameof(workingTime.BreakTimes), "Property is required for class WorkingTime.");
-
-            if (workingTime.User == null)
-                throw new ArgumentNullException(nameof(workingTime.User), "Property is required for class WorkingTime.");
-
-            if (workingTime.WorkingTimeType == null)
-                throw new ArgumentNullException(nameof(workingTime.WorkingTimeType), "Property is required for class WorkingTime.");
-
             writer.WriteString("id", workingTime.Id);
 
             writer.WriteString("start", workingTime.Start.ToString(StartFormat));

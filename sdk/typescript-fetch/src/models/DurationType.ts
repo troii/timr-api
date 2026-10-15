@@ -19,7 +19,7 @@
 export const DurationType = {
     Minutes: 'minutes',
     FullDay: 'full_day',
-    HalfDay: 'half_day'
+    HalfDay: 'half_day',
 } as const;
 export type DurationType = typeof DurationType[keyof typeof DurationType];
 

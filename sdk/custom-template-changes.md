@@ -1,10 +1,10 @@
 # Custom OpenAPI Generator templates
 
-The Java, TypeScript, Swift and Python SDK modules override some of the generator's Mustache templates. This
+The Java, .NET, TypeScript, Swift and Python SDK modules override some of the generator's Mustache templates. This
 file records only what **differs** from upstream, so a version bump can be reconciled by diffing our
 copy against the matching upstream file and checking each difference below still applies.
 
-Generator version: **7.22.0** (`libs.plugins.openapi`).
+Generator version: **7.26.0** (`libs.plugins.openapi`).
 
 ## All modules — the specification version leaves the header
 
@@ -21,6 +21,8 @@ information in it. There is no setting for this: `hideGenerationTimestamp` cover
 
 The hand-maintained files under `.openapi-generator-ignore` (`ApiClient.java`, the RFC3339 helpers)
 carry a copy of the header that generation no longer touches; the line was removed from them by hand.
+The RestClient module also ignores `ExceptionProvider.java`, which only applies to the upstream
+`ApiClient`; the hand-maintained client does not use that extension point.
 
 ## Java
 
@@ -47,7 +49,7 @@ position via `nullableDatatypeWithEnum`.
 Extract both from the generator jar rather than GitHub, so the templates match the version we run:
 
 ```bash
-unzip -o ~/.gradle/caches/modules-2/files-2.1/org.openapitools/openapi-generator/7.22.0/*/openapi-generator-7.22.0.jar 'Java/*' -d /tmp/upstream
+unzip -o ~/.gradle/caches/modules-2/files-2.1/org.openapitools/openapi-generator/7.26.0/*/openapi-generator-7.26.0.jar 'Java/*' -d /tmp/upstream
 ```
 
 ### Our changes
@@ -126,6 +128,18 @@ generated package uncompilable.
 Upstream baseline: `python/*.mustache`.
 
 Packaging is defined by the hand-maintained `pyproject.toml`. It and both requirements files are excluded from generation, as is `setup.py`. Gradle stamps the manifest version from `sdk/versions.properties` when packaging, including snapshots.
+
+## .NET
+
+Upstream baseline: `csharp/libraries/generichost/*.mustache`.
+
+- **`HostConfiguration.mustache`** — register typed HTTP clients without an explicit name, so the
+  SDK's client configuration uses the same names as consumer `AddHttpClient<Interface, Client>()`
+  registrations.
+- **``TokenProvider`1.mustache``** — place `TokenProvider<TTokenBase>` in the client namespace and make
+  `GetAsync` public, preserving the SDK's public token-provider API.
+- **``RateLimitProvider`1.mustache``** — keep `GetAsync` public to match the base class, and keep the
+  implementation's `AvailableTokens` collection internal.
 
 ## TypeScript
 

@@ -28,14 +28,10 @@ import {
 export interface TaskToUserAssignmentUpsert {
     /**
      * 
-     * @type {number}
-     * @memberof TaskToUserAssignmentUpsert
      */
     hoursPlanned?: number | null;
     /**
      * 
-     * @type {RecordingLockType}
-     * @memberof TaskToUserAssignmentUpsert
      */
     recordingLock?: RecordingLockType | null;
 }
@@ -59,8 +55,8 @@ export function TaskToUserAssignmentUpsertFromJSONTyped(json: any, ignoreDiscrim
     }
     return {
         
-        'hoursPlanned': json['hours_planned'] == null ? undefined : json['hours_planned'],
-        'recordingLock': json['recording_lock'] == null ? undefined : RecordingLockTypeFromJSON(json['recording_lock']),
+        'hoursPlanned': json['hours_planned'] === undefined ? undefined : json['hours_planned'] === null ? null : json['hours_planned'],
+        'recordingLock': json['recording_lock'] === undefined ? undefined : json['recording_lock'] === null ? null : RecordingLockTypeFromJSON(json['recording_lock']),
     };
 }
 

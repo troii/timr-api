@@ -96,8 +96,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeTypePartial" />
     /// </summary>
-    public class WorkingTimeTypePartialJsonConverter : JsonConverter<WorkingTimeTypePartial>
+    public partial class WorkingTimeTypePartialJsonConverter : JsonConverter<WorkingTimeTypePartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeTypePartialJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeTypePartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeTypePartial" />
         /// </summary>
@@ -150,19 +160,19 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeTypePartial.", nameof(id));
+                throw new JsonException("Property is required for class WorkingTimeTypePartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeTypePartial.", nameof(name));
+                throw new JsonException("Property is required for class WorkingTimeTypePartial: name.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeTypePartial.", nameof(externalId));
+                throw new JsonException("Property is required for class WorkingTimeTypePartial: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkingTimeTypePartial.");
+                throw new JsonException("Property is not nullable for class WorkingTimeTypePartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class WorkingTimeTypePartial.");
+                throw new JsonException("Property is not nullable for class WorkingTimeTypePartial: name.");
 
             return new WorkingTimeTypePartial(id.Value!, name.Value!, externalId.Value!);
         }
@@ -173,7 +183,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeTypePartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeTypePartial workingTimeTypePartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -188,15 +197,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeTypePartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeTypePartial workingTimeTypePartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workingTimeTypePartial.Id == null)
-                throw new ArgumentNullException(nameof(workingTimeTypePartial.Id), "Property is required for class WorkingTimeTypePartial.");
-
-            if (workingTimeTypePartial.Name == null)
-                throw new ArgumentNullException(nameof(workingTimeTypePartial.Name), "Property is required for class WorkingTimeTypePartial.");
-
             writer.WriteString("id", workingTimeTypePartial.Id);
 
             writer.WriteString("name", workingTimeTypePartial.Name);

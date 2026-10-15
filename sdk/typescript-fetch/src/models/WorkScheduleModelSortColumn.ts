@@ -17,7 +17,7 @@
  * @export
  */
 export const WorkScheduleModelSortColumn = {
-    Name: 'name'
+    Name: 'name',
 } as const;
 export type WorkScheduleModelSortColumn = typeof WorkScheduleModelSortColumn[keyof typeof WorkScheduleModelSortColumn];
 

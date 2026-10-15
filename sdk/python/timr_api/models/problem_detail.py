@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,11 +27,11 @@ class ProblemDetail(BaseModel):
     """
     RFC 9457 Problem Details base members (`type`, `title`, `status`, `detail`, `instance`) — the common shape of all error response bodies. 
     """ # noqa: E501
-    type: StrictStr
-    title: StrictStr
-    status: StrictInt
-    detail: Optional[StrictStr] = None
-    instance: Optional[StrictStr] = None
+    type: StrictStr = Field(json_schema_extra={"examples": ["https://errors.timr.com/validation/end-time-required"]})
+    title: StrictStr = Field(json_schema_extra={"examples": ["Bad Request"]})
+    status: StrictInt = Field(json_schema_extra={"examples": [400]})
+    detail: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Concrete error message"]})
+    instance: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["/working-times/12345"]})
     __properties: ClassVar[List[str]] = ["type", "title", "status", "detail", "instance"]
 
     model_config = ConfigDict(

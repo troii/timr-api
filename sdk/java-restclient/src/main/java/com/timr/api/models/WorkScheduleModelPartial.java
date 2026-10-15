@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkScheduleModelPartial.JSON_PROPERTY_ID,
   WorkScheduleModelPartial.JSON_PROPERTY_NAME
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkScheduleModelPartial {
   public static final String JSON_PROPERTY_ID = "id";
   

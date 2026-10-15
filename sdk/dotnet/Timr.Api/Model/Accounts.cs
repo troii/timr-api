@@ -125,12 +125,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Accounts" />
     /// </summary>
-    public class AccountsJsonConverter : JsonConverter<Accounts>
+    public partial class AccountsJsonConverter : JsonConverter<Accounts>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountsJsonConverter" /> class.
+        /// </summary>
+        public AccountsJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize LastBalanceDate
         /// </summary>
-        public static string LastBalanceDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string LastBalanceDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="Accounts" />
@@ -188,7 +198,7 @@ namespace Timr.Api.Model
             }
 
             if (!lastBalanceDate.IsSet)
-                throw new ArgumentException("Property is required for class Accounts.", nameof(lastBalanceDate));
+                throw new JsonException("Property is required for class Accounts: last_balance_date.");
 
             return new Accounts(lastBalanceDate.Value!, timeAccount, overtimeSurchargeAccounts, vacationAccount);
         }
@@ -199,7 +209,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="accounts"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Accounts accounts, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -214,7 +223,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="accounts"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Accounts accounts, JsonSerializerOptions jsonSerializerOptions)
         {
             if (accounts.LastBalanceDate != null)

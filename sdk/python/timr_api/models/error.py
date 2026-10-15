@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from timr_api.models.error_entry import ErrorEntry
 from typing import Optional, Set
@@ -29,13 +29,13 @@ class Error(BaseModel):
     """
     TIMR error response body, extending the Problem Details base with `timestamp`, `trace_id` and per-field `errors[]` for validation, binding, constraint, request-body deserialization, and reference-not-found errors. The semantic identifier is encoded in the `type` URI (e.g. `https://errors.timr.com/conflict/resource-outdated`).  Slugs in the `type` URI are lowercase kebab-case: a top-level category (`validation`, `reference-not-found`, `conflict`, `forbidden`, `internal`) optionally followed by a specific sub-slug (`conflict/resource-outdated`, `validation/end-time-required`, `reference-not-found/user`). 
     """ # noqa: E501
-    type: StrictStr
-    title: StrictStr
-    status: StrictInt
-    detail: Optional[StrictStr] = None
-    instance: Optional[StrictStr] = None
-    timestamp: datetime
-    trace_id: Optional[StrictStr] = None
+    type: StrictStr = Field(json_schema_extra={"examples": ["https://errors.timr.com/validation/end-time-required"]})
+    title: StrictStr = Field(json_schema_extra={"examples": ["Bad Request"]})
+    status: StrictInt = Field(json_schema_extra={"examples": [400]})
+    detail: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Concrete error message"]})
+    instance: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["/working-times/12345"]})
+    timestamp: datetime = Field(json_schema_extra={"examples": ["2026-05-25T09:42:11Z"]})
+    trace_id: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["4bf92f3577b34da6a3ce929d0e0e4736"]})
     errors: Optional[List[ErrorEntry]] = None
     __properties: ClassVar[List[str]] = ["type", "title", "status", "detail", "instance", "timestamp", "trace_id", "errors"]
 
@@ -82,8 +82,7 @@ class Error(BaseModel):
         _items = []
         if self.errors:
             for _item_errors in self.errors:
-                if _item_errors:
-                    _items.append(_item_errors.to_dict())
+                _items.append(_item_errors.to_dict() if _item_errors is not None else None)
             _dict['errors'] = _items
         # set to None if trace_id (nullable) is None
         # and model_fields_set contains the field

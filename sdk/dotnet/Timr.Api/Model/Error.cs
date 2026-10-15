@@ -174,12 +174,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Error" />
     /// </summary>
-    public class ErrorJsonConverter : JsonConverter<Error>
+    public partial class ErrorJsonConverter : JsonConverter<Error>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ErrorJsonConverter" /> class.
+        /// </summary>
+        public ErrorJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Timestamp
         /// </summary>
-        public static string TimestampFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string TimestampFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="Error" />
@@ -253,34 +263,34 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class Error.", nameof(type));
+                throw new JsonException("Property is required for class Error: type.");
 
             if (!title.IsSet)
-                throw new ArgumentException("Property is required for class Error.", nameof(title));
+                throw new JsonException("Property is required for class Error: title.");
 
             if (!status.IsSet)
-                throw new ArgumentException("Property is required for class Error.", nameof(status));
+                throw new JsonException("Property is required for class Error: status.");
 
             if (!timestamp.IsSet)
-                throw new ArgumentException("Property is required for class Error.", nameof(timestamp));
+                throw new JsonException("Property is required for class Error: timestamp.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class Error.");
+                throw new JsonException("Property is not nullable for class Error: type.");
 
             if (title.IsSet && title.Value == null)
-                throw new ArgumentNullException(nameof(title), "Property is not nullable for class Error.");
+                throw new JsonException("Property is not nullable for class Error: title.");
 
             if (status.IsSet && status.Value == null)
-                throw new ArgumentNullException(nameof(status), "Property is not nullable for class Error.");
+                throw new JsonException("Property is not nullable for class Error: status.");
 
             if (timestamp.IsSet && timestamp.Value == null)
-                throw new ArgumentNullException(nameof(timestamp), "Property is not nullable for class Error.");
+                throw new JsonException("Property is not nullable for class Error: timestamp.");
 
             if (detail.IsSet && detail.Value == null)
-                throw new ArgumentNullException(nameof(detail), "Property is not nullable for class Error.");
+                throw new JsonException("Property is not nullable for class Error: detail.");
 
             if (instance.IsSet && instance.Value == null)
-                throw new ArgumentNullException(nameof(instance), "Property is not nullable for class Error.");
+                throw new JsonException("Property is not nullable for class Error: instance.");
 
             return new Error(type.Value!, title.Value!, status.Value!.Value!, timestamp.Value!.Value!, detail, instance, traceId, errors);
         }
@@ -291,7 +301,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="error"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Error error, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -306,20 +315,13 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="error"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Error error, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (error.Type == null)
-                throw new ArgumentNullException(nameof(error.Type), "Property is required for class Error.");
-
-            if (error.Title == null)
-                throw new ArgumentNullException(nameof(error.Title), "Property is required for class Error.");
-
             if (error.DetailOption.IsSet && error.Detail == null)
-                throw new ArgumentNullException(nameof(error.Detail), "Property is required for class Error.");
+                throw new JsonException("Cannot write null property Error.Detail to non-nullable JSON property 'detail'.");
 
             if (error.InstanceOption.IsSet && error.Instance == null)
-                throw new ArgumentNullException(nameof(error.Instance), "Property is required for class Error.");
+                throw new JsonException("Cannot write null property Error.Instance to non-nullable JSON property 'instance'.");
 
             writer.WriteString("type", error.Type);
 

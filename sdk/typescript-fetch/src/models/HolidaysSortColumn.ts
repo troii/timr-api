@@ -17,7 +17,7 @@
  * @export
  */
 export const HolidaysSortColumn = {
-    Date: 'date'
+    Date: 'date',
 } as const;
 export type HolidaysSortColumn = typeof HolidaysSortColumn[keyof typeof HolidaysSortColumn];
 

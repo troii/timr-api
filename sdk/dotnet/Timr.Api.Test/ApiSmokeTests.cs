@@ -23,7 +23,6 @@ public sealed class ApiSmokeTests
         using var httpClient = new HttpClient(handler) { BaseAddress = new Uri("https://example.test/v1/") };
         var api = new UserApi(
             NullLogger<UserApi>.Instance,
-            NullLoggerFactory.Instance,
             httpClient,
             new JsonSerializerOptionsProvider(serializers.Options),
             new UserApiEvents(),

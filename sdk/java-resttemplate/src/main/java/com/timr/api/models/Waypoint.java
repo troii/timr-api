@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.*;
   Waypoint.JSON_PROPERTY_LAT,
   Waypoint.JSON_PROPERTY_LON
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class Waypoint {
   public static final String JSON_PROPERTY_LAT = "lat";
   @jakarta.annotation.Nonnull

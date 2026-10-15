@@ -164,6 +164,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override RecordingModeUser? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             RecordingModeUser? result = rawValue == null
@@ -184,7 +187,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, RecordingModeUser? recordingModeUser, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(recordingModeUser.HasValue ? RecordingModeUserValueConverter.ToJsonValue(recordingModeUser.Value).ToString() : "null");
+            if (recordingModeUser.HasValue)
+                writer.WriteStringValue(RecordingModeUserValueConverter.ToJsonValue(recordingModeUser.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

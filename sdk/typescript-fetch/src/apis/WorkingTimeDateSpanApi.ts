@@ -58,18 +58,39 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateWorkingTimeDateSpanRequest {
+    /**
+     * 
+     */
     workingTimeDateSpanCreate: WorkingTimeDateSpanCreate;
 }
 
 export interface DeleteWorkingTimeDateSpanRequest {
+    /**
+     * ID of the Working Time Date Span.
+     */
     id: string;
 }
 
 export interface FetchDeletedWorkingTimeDateSpansRequest {
+    /**
+     * Only return entries modified after this instant.
+     */
     lastModifiedAfter?: Date;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: DeletedEntrySortColumn;
 }
 
@@ -79,14 +100,41 @@ export type FetchDeletedWorkingTimeDateSpansQuery = Pick<
 >;
 
 export interface FetchWorkingTimeDateSpansRequest {
+    /**
+     * Only return Working Time Date Spans that end on or after this day.
+     */
     from?: Date;
+    /**
+     * Only return entries starting on or before this day.
+     */
     to?: Date;
+    /**
+     * Only return entries modified after this instant.
+     */
     lastModifiedAfter?: Date;
+    /**
+     * Only return entries of these Working Time Types.
+     */
     workingTimeTypes?: Array<string>;
+    /**
+     * Only return entries belonging to these users.
+     */
     users?: Array<string>;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: WorkingTimeDateSpansSortColumn;
 }
 
@@ -96,11 +144,20 @@ export type FetchWorkingTimeDateSpansQuery = Pick<
 >;
 
 export interface GetWorkingTimeDateSpanRequest {
+    /**
+     * ID of the Working Time Date Span.
+     */
     id: string;
 }
 
 export interface UpdateWorkingTimeDateSpanRequest {
+    /**
+     * ID of the Working Time Date Span.
+     */
     id: string;
+    /**
+     * 
+     */
     workingTimeDateSpanUpdate: WorkingTimeDateSpanUpdate;
 }
 
@@ -231,7 +288,7 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         if (requestParameters['lastModifiedAfter'] != null) {
-            queryParameters['last_modified_after'] = (requestParameters['lastModifiedAfter'] as any).toISOString();
+            queryParameters['last_modified_after'] = runtime.serializeDateTime(requestParameters['lastModifiedAfter'] as any);
         }
 
         if (requestParameters['pageToken'] != null) {
@@ -300,15 +357,15 @@ export class WorkingTimeDateSpanApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         if (requestParameters['from'] != null) {
-            queryParameters['from'] = (requestParameters['from'] as any).toISOString().substring(0,10);
+            queryParameters['from'] = runtime.serializeDate(requestParameters['from'] as any);
         }
 
         if (requestParameters['to'] != null) {
-            queryParameters['to'] = (requestParameters['to'] as any).toISOString().substring(0,10);
+            queryParameters['to'] = runtime.serializeDate(requestParameters['to'] as any);
         }
 
         if (requestParameters['lastModifiedAfter'] != null) {
-            queryParameters['last_modified_after'] = (requestParameters['lastModifiedAfter'] as any).toISOString();
+            queryParameters['last_modified_after'] = runtime.serializeDateTime(requestParameters['lastModifiedAfter'] as any);
         }
 
         if (requestParameters['workingTimeTypes'] != null) {

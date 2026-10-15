@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 /**
  * 
  * @export
@@ -20,32 +20,22 @@ import { mapValues } from '../runtime';
 export interface LocationUpdate {
     /**
      * Latitude in decimal degrees.
-     * @type {number}
-     * @memberof LocationUpdate
      */
     lat?: number;
     /**
      * Longitude in decimal degrees.
-     * @type {number}
-     * @memberof LocationUpdate
      */
     lon?: number;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof LocationUpdate
      */
     timestamp?: Date | null;
     /**
      * 
-     * @type {string}
-     * @memberof LocationUpdate
      */
     formattedAddress?: string | null;
     /**
      * Horizontal GPS accuracy in meters.
-     * @type {number}
-     * @memberof LocationUpdate
      */
     accuracy?: number | null;
 }
@@ -69,9 +59,9 @@ export function LocationUpdateFromJSONTyped(json: any, ignoreDiscriminator: bool
         
         'lat': json['lat'] == null ? undefined : json['lat'],
         'lon': json['lon'] == null ? undefined : json['lon'],
-        'timestamp': json['timestamp'] == null ? undefined : (new Date(json['timestamp'])),
-        'formattedAddress': json['formatted_address'] == null ? undefined : json['formatted_address'],
-        'accuracy': json['accuracy'] == null ? undefined : json['accuracy'],
+        'timestamp': json['timestamp'] === undefined ? undefined : json['timestamp'] === null ? null : (parseDateTime(json['timestamp'])),
+        'formattedAddress': json['formatted_address'] === undefined ? undefined : json['formatted_address'] === null ? null : json['formatted_address'],
+        'accuracy': json['accuracy'] === undefined ? undefined : json['accuracy'] === null ? null : json['accuracy'],
     };
 }
 
@@ -88,7 +78,7 @@ export function LocationUpdateToJSONTyped(value?: LocationUpdate | null, ignoreD
         
         'lat': value['lat'],
         'lon': value['lon'],
-        'timestamp': value['timestamp'] == null ? value['timestamp'] : value['timestamp'].toISOString(),
+        'timestamp': value['timestamp'] == null ? value['timestamp'] : serializeDateTime(value['timestamp']),
         'formatted_address': value['formattedAddress'],
         'accuracy': value['accuracy'],
     };

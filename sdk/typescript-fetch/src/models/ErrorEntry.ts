@@ -21,20 +21,14 @@ import { mapValues } from '../runtime';
 export interface ErrorEntry {
     /**
      * 
-     * @type {string}
-     * @memberof ErrorEntry
      */
     type: string;
     /**
      * 
-     * @type {string}
-     * @memberof ErrorEntry
      */
     field?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof ErrorEntry
      */
     detail: string;
 }
@@ -59,7 +53,7 @@ export function ErrorEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'type': json['type'],
-        'field': json['field'] == null ? undefined : json['field'],
+        'field': json['field'] === undefined ? undefined : json['field'] === null ? null : json['field'],
         'detail': json['detail'],
     };
 }

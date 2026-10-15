@@ -39,7 +39,7 @@ import com.fasterxml.jackson.annotation.*;
   TaskToUserAssignmentUpsert.JSON_PROPERTY_HOURS_PLANNED,
   TaskToUserAssignmentUpsert.JSON_PROPERTY_RECORDING_LOCK
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskToUserAssignmentUpsert {
   public static final String JSON_PROPERTY_HOURS_PLANNED = "hours_planned";
   

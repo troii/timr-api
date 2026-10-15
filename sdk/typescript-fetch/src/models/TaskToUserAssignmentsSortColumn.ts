@@ -17,7 +17,7 @@
  * @export
  */
 export const TaskToUserAssignmentsSortColumn = {
-    UserName: 'user_name'
+    UserName: 'user_name',
 } as const;
 export type TaskToUserAssignmentsSortColumn = typeof TaskToUserAssignmentsSortColumn[keyof typeof TaskToUserAssignmentsSortColumn];
 

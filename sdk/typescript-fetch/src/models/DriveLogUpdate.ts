@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { DriveLogStatus } from './DriveLogStatus';
 import {
     DriveLogStatusFromJSON,
@@ -35,80 +35,54 @@ import {
 export interface DriveLogUpdate {
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLogUpdate
      */
     start?: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLogUpdate
      */
     end?: Date | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLogUpdate
      */
     changed?: boolean;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLogUpdate
      */
     startMileage?: number;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLogUpdate
      */
     endMileage?: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpdate
      */
     route?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpdate
      */
     purpose?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpdate
      */
     visited?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogUpdate
      */
     driveLogCategoryId?: string;
     /**
      * 
-     * @type {DriveLogStatus}
-     * @memberof DriveLogUpdate
      */
     status?: DriveLogStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof DriveLogUpdate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {LocationUpdate}
-     * @memberof DriveLogUpdate
      */
     startLocation?: LocationUpdate | null;
     /**
      * 
-     * @type {LocationUpdate}
-     * @memberof DriveLogUpdate
      */
     endLocation?: LocationUpdate | null;
 }
@@ -132,19 +106,19 @@ export function DriveLogUpdateFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'start': json['start'] == null ? undefined : (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': json['start'] == null ? undefined : (parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'changed': json['changed'] == null ? undefined : json['changed'],
         'startMileage': json['start_mileage'] == null ? undefined : json['start_mileage'],
-        'endMileage': json['end_mileage'] == null ? undefined : json['end_mileage'],
-        'route': json['route'] == null ? undefined : json['route'],
-        'purpose': json['purpose'] == null ? undefined : json['purpose'],
-        'visited': json['visited'] == null ? undefined : json['visited'],
+        'endMileage': json['end_mileage'] === undefined ? undefined : json['end_mileage'] === null ? null : json['end_mileage'],
+        'route': json['route'] === undefined ? undefined : json['route'] === null ? null : json['route'],
+        'purpose': json['purpose'] === undefined ? undefined : json['purpose'] === null ? null : json['purpose'],
+        'visited': json['visited'] === undefined ? undefined : json['visited'] === null ? null : json['visited'],
         'driveLogCategoryId': json['drive_log_category_id'] == null ? undefined : json['drive_log_category_id'],
         'status': json['status'] == null ? undefined : DriveLogStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
-        'startLocation': json['start_location'] == null ? undefined : LocationUpdateFromJSON(json['start_location']),
-        'endLocation': json['end_location'] == null ? undefined : LocationUpdateFromJSON(json['end_location']),
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
+        'startLocation': json['start_location'] === undefined ? undefined : json['start_location'] === null ? null : LocationUpdateFromJSON(json['start_location']),
+        'endLocation': json['end_location'] === undefined ? undefined : json['end_location'] === null ? null : LocationUpdateFromJSON(json['end_location']),
     };
 }
 
@@ -159,8 +133,8 @@ export function DriveLogUpdateToJSONTyped(value?: DriveLogUpdate | null, ignoreD
 
     return {
         
-        'start': value['start'] == null ? value['start'] : value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'changed': value['changed'],
         'start_mileage': value['startMileage'],
         'end_mileage': value['endMileage'],

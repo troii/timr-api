@@ -18,7 +18,7 @@
  */
 export const TasksSortColumn = {
     Breadcrumbs: 'breadcrumbs',
-    Name: 'name'
+    Name: 'name',
 } as const;
 export type TasksSortColumn = typeof TasksSortColumn[keyof typeof TasksSortColumn];
 

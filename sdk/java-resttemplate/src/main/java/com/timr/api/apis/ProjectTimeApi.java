@@ -38,7 +38,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.ProjectTimeApi")
 public class ProjectTimeApi extends BaseApi {
 
@@ -62,7 +62,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ProjectTime
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ProjectTime createProjectTime(ProjectTimeCreate projectTimeCreate) throws RestClientException {
+    public ProjectTime createProjectTime(@jakarta.annotation.Nonnull ProjectTimeCreate projectTimeCreate) throws RestClientException {
         return createProjectTimeWithHttpInfo(projectTimeCreate).getBody();
     }
 
@@ -77,7 +77,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ResponseEntity&lt;ProjectTime&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTime> createProjectTimeWithHttpInfo(ProjectTimeCreate projectTimeCreate) throws RestClientException {
+    public ResponseEntity<ProjectTime> createProjectTimeWithHttpInfo(@jakarta.annotation.Nonnull ProjectTimeCreate projectTimeCreate) throws RestClientException {
         Object localVarPostBody = projectTimeCreate;
         
         // verify the required parameter 'projectTimeCreate' is set
@@ -115,7 +115,7 @@ public class ProjectTimeApi extends BaseApi {
      * @param id ID of the Project Time. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteProjectTime(String id) throws RestClientException {
+    public void deleteProjectTime(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteProjectTimeWithHttpInfo(id);
     }
 
@@ -130,7 +130,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteProjectTimeWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteProjectTimeWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -172,7 +172,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return DeletedEntryWithMetadataPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DeletedEntryWithMetadataPage fetchDeletedProjectTimes(OffsetDateTime lastModifiedAfter, String pageToken, Integer limit, SortDirection sortDirection, DeletedEntrySortColumn sortBy) throws RestClientException {
+    public DeletedEntryWithMetadataPage fetchDeletedProjectTimes(@jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DeletedEntrySortColumn sortBy) throws RestClientException {
         return fetchDeletedProjectTimesWithHttpInfo(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -189,7 +189,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ResponseEntity&lt;DeletedEntryWithMetadataPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedProjectTimesWithHttpInfo(OffsetDateTime lastModifiedAfter, String pageToken, Integer limit, SortDirection sortDirection, DeletedEntrySortColumn sortBy) throws RestClientException {
+    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedProjectTimesWithHttpInfo(@jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DeletedEntrySortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -239,7 +239,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ProjectTimesPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ProjectTimesPage fetchProjectTimes(String notes, LocalDate startFrom, LocalDate startTo, OffsetDateTime lastModifiedAfter, String task, Boolean traverseTaskTree, Boolean billable, List<ProjectTimeStatus> statuses, List<String> users, Boolean changed, String pageToken, Integer limit, SortDirection sortDirection, ProjectTimesSortColumn sortBy) throws RestClientException {
+    public ProjectTimesPage fetchProjectTimes(@jakarta.annotation.Nullable String notes, @jakarta.annotation.Nullable LocalDate startFrom, @jakarta.annotation.Nullable LocalDate startTo, @jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String task, @jakarta.annotation.Nullable Boolean traverseTaskTree, @jakarta.annotation.Nullable Boolean billable, @jakarta.annotation.Nullable List<ProjectTimeStatus> statuses, @jakarta.annotation.Nullable List<String> users, @jakarta.annotation.Nullable Boolean changed, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable ProjectTimesSortColumn sortBy) throws RestClientException {
         return fetchProjectTimesWithHttpInfo(notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -265,7 +265,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ResponseEntity&lt;ProjectTimesPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTimesPage> fetchProjectTimesWithHttpInfo(String notes, LocalDate startFrom, LocalDate startTo, OffsetDateTime lastModifiedAfter, String task, Boolean traverseTaskTree, Boolean billable, List<ProjectTimeStatus> statuses, List<String> users, Boolean changed, String pageToken, Integer limit, SortDirection sortDirection, ProjectTimesSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<ProjectTimesPage> fetchProjectTimesWithHttpInfo(@jakarta.annotation.Nullable String notes, @jakarta.annotation.Nullable LocalDate startFrom, @jakarta.annotation.Nullable LocalDate startTo, @jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String task, @jakarta.annotation.Nullable Boolean traverseTaskTree, @jakarta.annotation.Nullable Boolean billable, @jakarta.annotation.Nullable List<ProjectTimeStatus> statuses, @jakarta.annotation.Nullable List<String> users, @jakarta.annotation.Nullable Boolean changed, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable ProjectTimesSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -312,7 +312,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ProjectTime
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ProjectTime getProjectTime(String id) throws RestClientException {
+    public ProjectTime getProjectTime(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getProjectTimeWithHttpInfo(id).getBody();
     }
 
@@ -326,7 +326,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ResponseEntity&lt;ProjectTime&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTime> getProjectTimeWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<ProjectTime> getProjectTimeWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -369,7 +369,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ProjectTime
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ProjectTime updateProjectTime(String id, ProjectTimeUpdate projectTimeUpdate) throws RestClientException {
+    public ProjectTime updateProjectTime(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull ProjectTimeUpdate projectTimeUpdate) throws RestClientException {
         return updateProjectTimeWithHttpInfo(id, projectTimeUpdate).getBody();
     }
 
@@ -387,7 +387,7 @@ public class ProjectTimeApi extends BaseApi {
      * @return ResponseEntity&lt;ProjectTime&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTime> updateProjectTimeWithHttpInfo(String id, ProjectTimeUpdate projectTimeUpdate) throws RestClientException {
+    public ResponseEntity<ProjectTime> updateProjectTimeWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull ProjectTimeUpdate projectTimeUpdate) throws RestClientException {
         Object localVarPostBody = projectTimeUpdate;
         
         // verify the required parameter 'id' is set

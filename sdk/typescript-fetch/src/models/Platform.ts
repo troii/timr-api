@@ -22,7 +22,7 @@ export const Platform = {
     TourMobile: 'tour_mobile',
     TimrTerminal: 'timr_terminal',
     SyncApi: 'sync_api',
-    TimrApi: 'timr_api'
+    TimrApi: 'timr_api',
 } as const;
 export type Platform = typeof Platform[keyof typeof Platform];
 

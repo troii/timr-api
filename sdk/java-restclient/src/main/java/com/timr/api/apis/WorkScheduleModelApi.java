@@ -30,7 +30,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkScheduleModelApi {
     private ApiClient apiClient;
 
@@ -71,7 +71,7 @@ public class WorkScheduleModelApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -86,7 +86,7 @@ public class WorkScheduleModelApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/work-schedule-models/{id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/work-schedule-models/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -99,7 +99,7 @@ public class WorkScheduleModelApi {
      * @param id ID of the Work Schedule Model.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteWorkScheduleModel( String id) throws RestClientResponseException {
+    public void deleteWorkScheduleModel(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteWorkScheduleModelRequestCreation(id).body(localVarReturnType);
     }
@@ -114,7 +114,7 @@ public class WorkScheduleModelApi {
      * @param id ID of the Work Schedule Model.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteWorkScheduleModelWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteWorkScheduleModelWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteWorkScheduleModelRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -151,15 +151,15 @@ public class WorkScheduleModelApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -171,7 +171,7 @@ public class WorkScheduleModelApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkScheduleModelsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/work-schedule-models", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/work-schedule-models", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -186,7 +186,7 @@ public class WorkScheduleModelApi {
      * @return WorkScheduleModelsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkScheduleModelsPage fetchWorkScheduleModels( String pageToken,  Integer limit,  SortDirection sortDirection,  WorkScheduleModelSortColumn sortBy) throws RestClientResponseException {
+    public WorkScheduleModelsPage fetchWorkScheduleModels(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkScheduleModelSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<WorkScheduleModelsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchWorkScheduleModelsRequestCreation(pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -203,7 +203,7 @@ public class WorkScheduleModelApi {
      * @return ResponseEntity&lt;WorkScheduleModelsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkScheduleModelsPage> fetchWorkScheduleModelsWithHttpInfo( String pageToken,  Integer limit,  SortDirection sortDirection,  WorkScheduleModelSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<WorkScheduleModelsPage> fetchWorkScheduleModelsWithHttpInfo(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkScheduleModelSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<WorkScheduleModelsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchWorkScheduleModelsRequestCreation(pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -245,7 +245,7 @@ public class WorkScheduleModelApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -260,7 +260,7 @@ public class WorkScheduleModelApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkScheduleModel> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/work-schedule-models/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/work-schedule-models/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -273,7 +273,7 @@ public class WorkScheduleModelApi {
      * @return WorkScheduleModel
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public WorkScheduleModel getWorkScheduleModel( String id) throws RestClientResponseException {
+    public WorkScheduleModel getWorkScheduleModel(String id) throws RestClientResponseException {
         ParameterizedTypeReference<WorkScheduleModel> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getWorkScheduleModelRequestCreation(id).body(localVarReturnType);
     }
@@ -288,7 +288,7 @@ public class WorkScheduleModelApi {
      * @return ResponseEntity&lt;WorkScheduleModel&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<WorkScheduleModel> getWorkScheduleModelWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<WorkScheduleModel> getWorkScheduleModelWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<WorkScheduleModel> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getWorkScheduleModelRequestCreation(id).toEntity(localVarReturnType);
     }

@@ -28,32 +28,22 @@ import {
 export interface VacationAccountMinutes {
     /**
      * 
-     * @type {VacationUnit}
-     * @memberof VacationAccountMinutes
      */
     unit: VacationUnit;
     /**
      * vacation balance carried over from the previous vacation period, in minutes
-     * @type {number}
-     * @memberof VacationAccountMinutes
      */
     balanceLastPeriodMinutes?: number | null;
     /**
      * vacation consumed in the current vacation period, in minutes
-     * @type {number}
-     * @memberof VacationAccountMinutes
      */
     consumedMinutes?: number | null;
     /**
      * vacation newly granted in the current vacation period, in minutes
-     * @type {number}
-     * @memberof VacationAccountMinutes
      */
     newMinutes?: number | null;
     /**
      * total vacation balance for the current vacation period, in minutes
-     * @type {number}
-     * @memberof VacationAccountMinutes
      */
     balanceTotalMinutes?: number | null;
 }
@@ -79,10 +69,10 @@ export function VacationAccountMinutesFromJSONTyped(json: any, ignoreDiscriminat
     return {
         
         'unit': VacationUnitFromJSON(json['unit']),
-        'balanceLastPeriodMinutes': json['balance_last_period_minutes'] == null ? undefined : json['balance_last_period_minutes'],
-        'consumedMinutes': json['consumed_minutes'] == null ? undefined : json['consumed_minutes'],
-        'newMinutes': json['new_minutes'] == null ? undefined : json['new_minutes'],
-        'balanceTotalMinutes': json['balance_total_minutes'] == null ? undefined : json['balance_total_minutes'],
+        'balanceLastPeriodMinutes': json['balance_last_period_minutes'] === undefined ? undefined : json['balance_last_period_minutes'] === null ? null : json['balance_last_period_minutes'],
+        'consumedMinutes': json['consumed_minutes'] === undefined ? undefined : json['consumed_minutes'] === null ? null : json['consumed_minutes'],
+        'newMinutes': json['new_minutes'] === undefined ? undefined : json['new_minutes'] === null ? null : json['new_minutes'],
+        'balanceTotalMinutes': json['balance_total_minutes'] === undefined ? undefined : json['balance_total_minutes'] === null ? null : json['balance_total_minutes'],
     };
 }
 

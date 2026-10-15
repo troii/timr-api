@@ -30,7 +30,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskToTeamAssignmentApi {
     private ApiClient apiClient;
 
@@ -79,7 +79,7 @@ public class TaskToTeamAssignmentApi {
         pathParams.put("task_id", taskId);
         pathParams.put("team_id", teamId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -94,7 +94,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.PUT, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -110,7 +110,7 @@ public class TaskToTeamAssignmentApi {
      * @return TaskToTeamAssignment
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TaskToTeamAssignment createTaskToTeamAssignment( String taskId,  String teamId) throws RestClientResponseException {
+    public TaskToTeamAssignment createTaskToTeamAssignment(String taskId, String teamId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTaskToTeamAssignmentRequestCreation(taskId, teamId).body(localVarReturnType);
     }
@@ -128,7 +128,7 @@ public class TaskToTeamAssignmentApi {
      * @return ResponseEntity&lt;TaskToTeamAssignment&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToTeamAssignment> createTaskToTeamAssignmentWithHttpInfo( String taskId,  String teamId) throws RestClientResponseException {
+    public ResponseEntity<TaskToTeamAssignment> createTaskToTeamAssignmentWithHttpInfo(String taskId, String teamId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTaskToTeamAssignmentRequestCreation(taskId, teamId).toEntity(localVarReturnType);
     }
@@ -177,7 +177,7 @@ public class TaskToTeamAssignmentApi {
         pathParams.put("task_id", taskId);
         pathParams.put("team_id", teamId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -192,7 +192,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -206,7 +206,7 @@ public class TaskToTeamAssignmentApi {
      * @param teamId ID of the Team.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteTaskToTeamAssignment( String taskId,  String teamId) throws RestClientResponseException {
+    public void deleteTaskToTeamAssignment(String taskId, String teamId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteTaskToTeamAssignmentRequestCreation(taskId, teamId).body(localVarReturnType);
     }
@@ -222,7 +222,7 @@ public class TaskToTeamAssignmentApi {
      * @param teamId ID of the Team.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTaskToTeamAssignmentWithHttpInfo( String taskId,  String teamId) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteTaskToTeamAssignmentWithHttpInfo(String taskId, String teamId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteTaskToTeamAssignmentRequestCreation(taskId, teamId).toEntity(localVarReturnType);
     }
@@ -268,15 +268,15 @@ public class TaskToTeamAssignmentApi {
 
         pathParams.put("task_id", taskId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -288,7 +288,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToTeamAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -305,7 +305,7 @@ public class TaskToTeamAssignmentApi {
      * @return TaskToTeamAssignmentsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TaskToTeamAssignmentsPage fetchTaskToTeamAssignments( String taskId,  String pageToken,  Integer limit,  SortDirection sortDirection,  TaskToTeamAssignmentsSortColumn sortBy) throws RestClientResponseException {
+    public TaskToTeamAssignmentsPage fetchTaskToTeamAssignments(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TaskToTeamAssignmentsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToTeamAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTaskToTeamAssignmentsRequestCreation(taskId, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -324,7 +324,7 @@ public class TaskToTeamAssignmentApi {
      * @return ResponseEntity&lt;TaskToTeamAssignmentsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToTeamAssignmentsPage> fetchTaskToTeamAssignmentsWithHttpInfo( String taskId,  String pageToken,  Integer limit,  SortDirection sortDirection,  TaskToTeamAssignmentsSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<TaskToTeamAssignmentsPage> fetchTaskToTeamAssignmentsWithHttpInfo(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TaskToTeamAssignmentsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToTeamAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTaskToTeamAssignmentsRequestCreation(taskId, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -374,7 +374,7 @@ public class TaskToTeamAssignmentApi {
         pathParams.put("task_id", taskId);
         pathParams.put("team_id", teamId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -389,7 +389,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -403,7 +403,7 @@ public class TaskToTeamAssignmentApi {
      * @return TaskToTeamAssignment
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TaskToTeamAssignment getTaskToTeamAssignment( String taskId,  String teamId) throws RestClientResponseException {
+    public TaskToTeamAssignment getTaskToTeamAssignment(String taskId, String teamId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTaskToTeamAssignmentRequestCreation(taskId, teamId).body(localVarReturnType);
     }
@@ -419,7 +419,7 @@ public class TaskToTeamAssignmentApi {
      * @return ResponseEntity&lt;TaskToTeamAssignment&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToTeamAssignment> getTaskToTeamAssignmentWithHttpInfo( String taskId,  String teamId) throws RestClientResponseException {
+    public ResponseEntity<TaskToTeamAssignment> getTaskToTeamAssignmentWithHttpInfo(String taskId, String teamId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTaskToTeamAssignmentRequestCreation(taskId, teamId).toEntity(localVarReturnType);
     }

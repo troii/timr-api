@@ -41,7 +41,7 @@ import com.fasterxml.jackson.annotation.*;
   VacationAccountDays.JSON_PROPERTY_NEW_DAYS,
   VacationAccountDays.JSON_PROPERTY_BALANCE_TOTAL_DAYS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class VacationAccountDays extends VacationAccountBase implements VacationAccount {
   public static final String JSON_PROPERTY_BALANCE_LAST_PERIOD_DAYS = "balance_last_period_days";
   @jakarta.annotation.Nullable

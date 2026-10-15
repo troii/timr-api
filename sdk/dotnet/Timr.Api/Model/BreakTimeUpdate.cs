@@ -98,8 +98,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="BreakTimeUpdate" />
     /// </summary>
-    public class BreakTimeUpdateJsonConverter : JsonConverter<BreakTimeUpdate>
+    public partial class BreakTimeUpdateJsonConverter : JsonConverter<BreakTimeUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BreakTimeUpdateJsonConverter" /> class.
+        /// </summary>
+        public BreakTimeUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="BreakTimeUpdate" />
         /// </summary>
@@ -168,9 +178,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<BreakTimeType?>(BreakTimeTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<BreakTimeType?>(JsonSerializer.Deserialize<BreakTimeType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -179,10 +187,10 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class BreakTimeUpdate.", nameof(type));
+                throw new JsonException("Property is required for class BreakTimeUpdate: type.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class BreakTimeUpdate.");
+                throw new JsonException("Property is not nullable for class BreakTimeUpdate: type.");
 
             if (breakTimeManual != null)
                 return new BreakTimeUpdate(breakTimeManual);
@@ -199,7 +207,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, BreakTimeUpdate breakTimeUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -226,7 +233,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTimeUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, BreakTimeUpdate breakTimeUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
 

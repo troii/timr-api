@@ -28,7 +28,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TimeAccountApi")
 public class TimeAccountApi extends BaseApi {
 
@@ -52,7 +52,7 @@ public class TimeAccountApi extends BaseApi {
      * @return Accounts
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Accounts getUserAccounts(String id, LocalDate date) throws RestClientException {
+    public Accounts getUserAccounts(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull LocalDate date) throws RestClientException {
         return getUserAccountsWithHttpInfo(id, date).getBody();
     }
 
@@ -67,7 +67,7 @@ public class TimeAccountApi extends BaseApi {
      * @return ResponseEntity&lt;Accounts&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Accounts> getUserAccountsWithHttpInfo(String id, LocalDate date) throws RestClientException {
+    public ResponseEntity<Accounts> getUserAccountsWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull LocalDate date) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -113,7 +113,7 @@ public class TimeAccountApi extends BaseApi {
      * @return Accounts
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Accounts getUserWorkingTimeAccounts(String id, LocalDate date) throws RestClientException {
+    public Accounts getUserWorkingTimeAccounts(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull LocalDate date) throws RestClientException {
         return getUserWorkingTimeAccountsWithHttpInfo(id, date).getBody();
     }
 
@@ -128,7 +128,7 @@ public class TimeAccountApi extends BaseApi {
      * @return ResponseEntity&lt;Accounts&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Accounts> getUserWorkingTimeAccountsWithHttpInfo(String id, LocalDate date) throws RestClientException {
+    public ResponseEntity<Accounts> getUserWorkingTimeAccountsWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull LocalDate date) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set

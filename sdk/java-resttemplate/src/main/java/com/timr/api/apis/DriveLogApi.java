@@ -38,7 +38,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.DriveLogApi")
 public class DriveLogApi extends BaseApi {
 
@@ -62,7 +62,7 @@ public class DriveLogApi extends BaseApi {
      * @return DriveLog
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DriveLog createDriveLog(DriveLogCreate driveLogCreate) throws RestClientException {
+    public DriveLog createDriveLog(@jakarta.annotation.Nonnull DriveLogCreate driveLogCreate) throws RestClientException {
         return createDriveLogWithHttpInfo(driveLogCreate).getBody();
     }
 
@@ -77,7 +77,7 @@ public class DriveLogApi extends BaseApi {
      * @return ResponseEntity&lt;DriveLog&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLog> createDriveLogWithHttpInfo(DriveLogCreate driveLogCreate) throws RestClientException {
+    public ResponseEntity<DriveLog> createDriveLogWithHttpInfo(@jakarta.annotation.Nonnull DriveLogCreate driveLogCreate) throws RestClientException {
         Object localVarPostBody = driveLogCreate;
         
         // verify the required parameter 'driveLogCreate' is set
@@ -115,7 +115,7 @@ public class DriveLogApi extends BaseApi {
      * @param id ID of the Drive Log. (required)
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteDriveLog(String id) throws RestClientException {
+    public void deleteDriveLog(@jakarta.annotation.Nonnull String id) throws RestClientException {
         deleteDriveLogWithHttpInfo(id);
     }
 
@@ -130,7 +130,7 @@ public class DriveLogApi extends BaseApi {
      * @return ResponseEntity&lt;Void&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteDriveLogWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Void> deleteDriveLogWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -172,7 +172,7 @@ public class DriveLogApi extends BaseApi {
      * @return DeletedEntryPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DeletedEntryPage fetchDeletedDriveLogs(OffsetDateTime lastModifiedAfter, String pageToken, Integer limit, SortDirection sortDirection, DeletedEntrySortColumn sortBy) throws RestClientException {
+    public DeletedEntryPage fetchDeletedDriveLogs(@jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DeletedEntrySortColumn sortBy) throws RestClientException {
         return fetchDeletedDriveLogsWithHttpInfo(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -189,7 +189,7 @@ public class DriveLogApi extends BaseApi {
      * @return ResponseEntity&lt;DeletedEntryPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DeletedEntryPage> fetchDeletedDriveLogsWithHttpInfo(OffsetDateTime lastModifiedAfter, String pageToken, Integer limit, SortDirection sortDirection, DeletedEntrySortColumn sortBy) throws RestClientException {
+    public ResponseEntity<DeletedEntryPage> fetchDeletedDriveLogsWithHttpInfo(@jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DeletedEntrySortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -239,7 +239,7 @@ public class DriveLogApi extends BaseApi {
      * @return DriveLogsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DriveLogsPage fetchDriveLogs(LocalDate startFrom, LocalDate startTo, OffsetDateTime lastModifiedAfter, List<String> cars, List<String> driveLogCategories, List<DriveLogStatus> statuses, List<String> users, String details, Boolean changed, Boolean hasTrack, String pageToken, Integer limit, SortDirection sortDirection, DriveLogsSortColumn sortBy) throws RestClientException {
+    public DriveLogsPage fetchDriveLogs(@jakarta.annotation.Nullable LocalDate startFrom, @jakarta.annotation.Nullable LocalDate startTo, @jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable List<String> cars, @jakarta.annotation.Nullable List<String> driveLogCategories, @jakarta.annotation.Nullable List<DriveLogStatus> statuses, @jakarta.annotation.Nullable List<String> users, @jakarta.annotation.Nullable String details, @jakarta.annotation.Nullable Boolean changed, @jakarta.annotation.Nullable Boolean hasTrack, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DriveLogsSortColumn sortBy) throws RestClientException {
         return fetchDriveLogsWithHttpInfo(startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -265,7 +265,7 @@ public class DriveLogApi extends BaseApi {
      * @return ResponseEntity&lt;DriveLogsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLogsPage> fetchDriveLogsWithHttpInfo(LocalDate startFrom, LocalDate startTo, OffsetDateTime lastModifiedAfter, List<String> cars, List<String> driveLogCategories, List<DriveLogStatus> statuses, List<String> users, String details, Boolean changed, Boolean hasTrack, String pageToken, Integer limit, SortDirection sortDirection, DriveLogsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<DriveLogsPage> fetchDriveLogsWithHttpInfo(@jakarta.annotation.Nullable LocalDate startFrom, @jakarta.annotation.Nullable LocalDate startTo, @jakarta.annotation.Nullable OffsetDateTime lastModifiedAfter, @jakarta.annotation.Nullable List<String> cars, @jakarta.annotation.Nullable List<String> driveLogCategories, @jakarta.annotation.Nullable List<DriveLogStatus> statuses, @jakarta.annotation.Nullable List<String> users, @jakarta.annotation.Nullable String details, @jakarta.annotation.Nullable Boolean changed, @jakarta.annotation.Nullable Boolean hasTrack, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable DriveLogsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -312,7 +312,7 @@ public class DriveLogApi extends BaseApi {
      * @return DriveLog
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DriveLog getDriveLog(String id) throws RestClientException {
+    public DriveLog getDriveLog(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getDriveLogWithHttpInfo(id).getBody();
     }
 
@@ -326,7 +326,7 @@ public class DriveLogApi extends BaseApi {
      * @return ResponseEntity&lt;DriveLog&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLog> getDriveLogWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<DriveLog> getDriveLogWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -369,7 +369,7 @@ public class DriveLogApi extends BaseApi {
      * @return DriveLog
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public DriveLog updateDriveLog(String id, DriveLogUpdate driveLogUpdate) throws RestClientException {
+    public DriveLog updateDriveLog(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull DriveLogUpdate driveLogUpdate) throws RestClientException {
         return updateDriveLogWithHttpInfo(id, driveLogUpdate).getBody();
     }
 
@@ -387,7 +387,7 @@ public class DriveLogApi extends BaseApi {
      * @return ResponseEntity&lt;DriveLog&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DriveLog> updateDriveLogWithHttpInfo(String id, DriveLogUpdate driveLogUpdate) throws RestClientException {
+    public ResponseEntity<DriveLog> updateDriveLogWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull DriveLogUpdate driveLogUpdate) throws RestClientException {
         Object localVarPostBody = driveLogUpdate;
         
         // verify the required parameter 'id' is set

@@ -98,12 +98,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DeletedEntryPartial" />
     /// </summary>
-    public class DeletedEntryPartialJsonConverter : JsonConverter<DeletedEntryPartial>
+    public partial class DeletedEntryPartialJsonConverter : JsonConverter<DeletedEntryPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DeletedEntryPartialJsonConverter" /> class.
+        /// </summary>
+        public DeletedEntryPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize LastModified
         /// </summary>
-        public static string LastModifiedFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DeletedEntryPartial" />
@@ -157,19 +167,19 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class DeletedEntryPartial.", nameof(id));
+                throw new JsonException("Property is required for class DeletedEntryPartial: id.");
 
             if (!lastModified.IsSet)
-                throw new ArgumentException("Property is required for class DeletedEntryPartial.", nameof(lastModified));
+                throw new JsonException("Property is required for class DeletedEntryPartial: last_modified.");
 
             if (!lastModifiedBy.IsSet)
-                throw new ArgumentException("Property is required for class DeletedEntryPartial.", nameof(lastModifiedBy));
+                throw new JsonException("Property is required for class DeletedEntryPartial: last_modified_by.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class DeletedEntryPartial.");
+                throw new JsonException("Property is not nullable for class DeletedEntryPartial: id.");
 
             if (lastModified.IsSet && lastModified.Value == null)
-                throw new ArgumentNullException(nameof(lastModified), "Property is not nullable for class DeletedEntryPartial.");
+                throw new JsonException("Property is not nullable for class DeletedEntryPartial: last_modified.");
 
             return new DeletedEntryPartial(id.Value!, lastModified.Value!.Value!, lastModifiedBy.Value!);
         }
@@ -180,7 +190,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="deletedEntryPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DeletedEntryPartial deletedEntryPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -195,12 +204,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="deletedEntryPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DeletedEntryPartial deletedEntryPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (deletedEntryPartial.Id == null)
-                throw new ArgumentNullException(nameof(deletedEntryPartial.Id), "Property is required for class DeletedEntryPartial.");
-
             writer.WriteString("id", deletedEntryPartial.Id);
 
             writer.WriteString("last_modified", deletedEntryPartial.LastModified.ToString(LastModifiedFormat));

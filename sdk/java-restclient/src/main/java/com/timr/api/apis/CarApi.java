@@ -32,7 +32,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class CarApi {
     private ApiClient apiClient;
 
@@ -73,7 +73,7 @@ public class CarApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -90,7 +90,7 @@ public class CarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/cars", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/cars", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -105,7 +105,7 @@ public class CarApi {
      * @return Car
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Car createCar( CarCreate carCreate) throws RestClientResponseException {
+    public Car createCar(CarCreate carCreate) throws RestClientResponseException {
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createCarRequestCreation(carCreate).body(localVarReturnType);
     }
@@ -122,7 +122,7 @@ public class CarApi {
      * @return ResponseEntity&lt;Car&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Car> createCarWithHttpInfo( CarCreate carCreate) throws RestClientResponseException {
+    public ResponseEntity<Car> createCarWithHttpInfo(CarCreate carCreate) throws RestClientResponseException {
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createCarRequestCreation(carCreate).toEntity(localVarReturnType);
     }
@@ -162,17 +162,17 @@ public class CarApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "name_or_plate", nameOrPlate));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "usable", usable));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "name_or_plate", nameOrPlate));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "usable", usable));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -184,7 +184,7 @@ public class CarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<CarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/cars", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/cars", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -201,7 +201,7 @@ public class CarApi {
      * @return CarsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public CarsPage fetchCars( String nameOrPlate,  Boolean usable,  String pageToken,  Integer limit,  SortDirection sortDirection,  CarsSortColumn sortBy) throws RestClientResponseException {
+    public CarsPage fetchCars(@Nullable String nameOrPlate, @Nullable Boolean usable, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable CarsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<CarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchCarsRequestCreation(nameOrPlate, usable, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -220,7 +220,7 @@ public class CarApi {
      * @return ResponseEntity&lt;CarsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<CarsPage> fetchCarsWithHttpInfo( String nameOrPlate,  Boolean usable,  String pageToken,  Integer limit,  SortDirection sortDirection,  CarsSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<CarsPage> fetchCarsWithHttpInfo(@Nullable String nameOrPlate, @Nullable Boolean usable, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable CarsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<CarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchCarsRequestCreation(nameOrPlate, usable, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -264,7 +264,7 @@ public class CarApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -279,7 +279,7 @@ public class CarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/cars/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/cars/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -292,7 +292,7 @@ public class CarApi {
      * @return Car
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Car getCar( String id) throws RestClientResponseException {
+    public Car getCar(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getCarRequestCreation(id).body(localVarReturnType);
     }
@@ -307,7 +307,7 @@ public class CarApi {
      * @return ResponseEntity&lt;Car&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Car> getCarWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Car> getCarWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getCarRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -355,7 +355,7 @@ public class CarApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -372,7 +372,7 @@ public class CarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/cars/{id}", HttpMethod.PATCH, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/cars/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -389,7 +389,7 @@ public class CarApi {
      * @return Car
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Car updateCar( String id,  CarUpdate carUpdate) throws RestClientResponseException {
+    public Car updateCar(String id, CarUpdate carUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateCarRequestCreation(id, carUpdate).body(localVarReturnType);
     }
@@ -408,7 +408,7 @@ public class CarApi {
      * @return ResponseEntity&lt;Car&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Car> updateCarWithHttpInfo( String id,  CarUpdate carUpdate) throws RestClientResponseException {
+    public ResponseEntity<Car> updateCarWithHttpInfo(String id, CarUpdate carUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<Car> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateCarRequestCreation(id, carUpdate).toEntity(localVarReturnType);
     }

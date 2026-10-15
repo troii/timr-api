@@ -35,7 +35,7 @@ class User(BaseModel):
     firstname: Optional[StrictStr]
     lastname: Optional[StrictStr]
     fullname: Optional[StrictStr]
-    email: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(description="Email address must be either valid or null.")
+    email: Optional[Annotated[str, Field(min_length=1, strict=True)]] = Field(description="Email address must be either valid or null.", json_schema_extra={"examples": ["user@example.com"]})
     employee_number: Optional[StrictStr]
     external_id: Optional[StrictStr] = Field(description="Identifier of the corresponding object in an external system. Set and owned by the client.")
     login: Optional[Annotated[str, Field(strict=True)]] = None
@@ -43,33 +43,27 @@ class User(BaseModel):
     resign_date: Optional[date] = Field(default=None, description="RFC 3339 date (ISO-8601)")
     work_schedule_model: Optional[WorkScheduleModelPartial] = None
     holiday_calendar: Optional[HolidayCalendarPartial] = None
-    vacation_year_start: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="recurring month and day on which the user's vacation year starts")
+    vacation_year_start: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="recurring month and day on which the user's vacation year starts", json_schema_extra={"examples": ["--05-20"]})
     metadata: Optional[Dict[str, Any]] = None
     __properties: ClassVar[List[str]] = ["id", "firstname", "lastname", "fullname", "email", "employee_number", "external_id", "login", "entry_date", "resign_date", "work_schedule_model", "holiday_calendar", "vacation_year_start", "metadata"]
 
-    @field_validator('login')
+    @field_validator('login', mode="before")
     def login_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not isinstance(value, str):
-            value = str(value)
-
-        if not re.match(r"^[A-Za-z0-9!#$%&\'*+\/=@\.?^_`{|}~-]*$", value):
+        if isinstance(value, str) and not re.match(r"^[A-Za-z0-9!#$%&\'*+\/=@\.?^_`{|}~-]*$", value):
             raise ValueError(r"must validate the regular expression /^[A-Za-z0-9!#$%&'*+\/=@\.?^_`{|}~-]*$/")
         return value
 
-    @field_validator('vacation_year_start')
+    @field_validator('vacation_year_start', mode="before")
     def vacation_year_start_validate_regular_expression(cls, value):
         """Validates the regular expression"""
         if value is None:
             return value
 
-        if not isinstance(value, str):
-            value = str(value)
-
-        if not re.match(r"^--(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$", value):
+        if isinstance(value, str) and not re.match(r"^--(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$", value):
             raise ValueError(r"must validate the regular expression /^--(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/")
         return value
 

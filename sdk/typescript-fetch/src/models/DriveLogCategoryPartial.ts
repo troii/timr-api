@@ -20,26 +20,18 @@ import { mapValues } from '../runtime';
 export interface DriveLogCategoryPartial {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof DriveLogCategoryPartial
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCategoryPartial
      */
     name: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLogCategoryPartial
      */
     business: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCategoryPartial
      */
     color: string;
 }

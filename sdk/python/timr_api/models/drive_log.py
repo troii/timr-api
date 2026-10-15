@@ -36,14 +36,14 @@ class DriveLog(BaseModel):
     """
     One trip in a `car`: `start` and `end`, `start_mileage` and `end_mileage` with the resulting `distance`, the `purpose`, the places `visited`, and its `drive_log_category`. May include a recorded GPS `route`. 
     """ # noqa: E501
-    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
-    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)")
-    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)")
+    id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.", json_schema_extra={"examples": ["074e7048-9097-11eb-a8b3-0242ac130003"]})
+    start: datetime = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     duration: Optional[Duration]
     changed: StrictBool
-    start_mileage: StrictInt
-    end_mileage: Optional[StrictInt]
-    distance: Optional[StrictInt] = Field(description="Driven distance in kilometers")
+    start_mileage: StrictInt = Field(json_schema_extra={"examples": [42]})
+    end_mileage: Optional[StrictInt] = Field(json_schema_extra={"examples": [42]})
+    distance: Optional[StrictInt] = Field(description="Driven distance in kilometers", json_schema_extra={"examples": [42]})
     route: Optional[StrictStr]
     purpose: Optional[StrictStr]
     visited: Optional[StrictStr]
@@ -57,7 +57,7 @@ class DriveLog(BaseModel):
     end_location: Optional[Location]
     start_platform: Optional[Platform]
     end_platform: Optional[Platform]
-    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ")
+    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     last_modified_by: Optional[UserPartial] = Field(description="Read-only. The User who last modified the entry, or null if the change was not made in a user context. ")
     status: DriveLogStatus
     metadata: Optional[Dict[str, Any]] = None

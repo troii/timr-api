@@ -27,7 +27,7 @@ export const BudgetPlanningTypeRequest = {
     TaskHourlyRate: 'task_hourly_rate',
     UserHourlyRate: 'user_hourly_rate',
     FixedPrice: 'fixed_price',
-    Inherited: 'inherited'
+    Inherited: 'inherited',
 } as const;
 export type BudgetPlanningTypeRequest = typeof BudgetPlanningTypeRequest[keyof typeof BudgetPlanningTypeRequest];
 

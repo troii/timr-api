@@ -23,20 +23,38 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateTrackRequest {
+    /**
+     * drive log id
+     */
     id: string;
+    /**
+     * 
+     */
     waypoint: Array<Waypoint>;
 }
 
 export interface DeleteTrackRequest {
+    /**
+     * drive log id
+     */
     id: string;
 }
 
 export interface GetTrackRequest {
+    /**
+     * drive log id
+     */
     id: string;
 }
 
 export interface UpdateTrackRequest {
+    /**
+     * drive log id
+     */
     id: string;
+    /**
+     * 
+     */
     waypoint: Array<Waypoint>;
 }
 

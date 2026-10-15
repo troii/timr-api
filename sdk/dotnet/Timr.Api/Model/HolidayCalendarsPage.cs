@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="HolidayCalendarsPage" />
     /// </summary>
-    public class HolidayCalendarsPageJsonConverter : JsonConverter<HolidayCalendarsPage>
+    public partial class HolidayCalendarsPageJsonConverter : JsonConverter<HolidayCalendarsPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HolidayCalendarsPageJsonConverter" /> class.
+        /// </summary>
+        public HolidayCalendarsPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="HolidayCalendarsPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class HolidayCalendarsPage.", nameof(data));
+                throw new JsonException("Property is required for class HolidayCalendarsPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class HolidayCalendarsPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class HolidayCalendarsPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class HolidayCalendarsPage.");
+                throw new JsonException("Property is not nullable for class HolidayCalendarsPage: data.");
 
             return new HolidayCalendarsPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="holidayCalendarsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, HolidayCalendarsPage holidayCalendarsPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="holidayCalendarsPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, HolidayCalendarsPage holidayCalendarsPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (holidayCalendarsPage.Data == null)
-                throw new ArgumentNullException(nameof(holidayCalendarsPage.Data), "Property is required for class HolidayCalendarsPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, holidayCalendarsPage.Data, jsonSerializerOptions);
             if (holidayCalendarsPage.NextPageToken != null)

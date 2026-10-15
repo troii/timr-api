@@ -20,14 +20,10 @@ import { mapValues } from '../runtime';
 export interface Waypoint {
     /**
      * 
-     * @type {number}
-     * @memberof Waypoint
      */
     lat: number;
     /**
      * 
-     * @type {number}
-     * @memberof Waypoint
      */
     lon: number;
 }

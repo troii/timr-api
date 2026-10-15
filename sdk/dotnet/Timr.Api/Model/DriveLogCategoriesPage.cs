@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="DriveLogCategoriesPage" />
     /// </summary>
-    public class DriveLogCategoriesPageJsonConverter : JsonConverter<DriveLogCategoriesPage>
+    public partial class DriveLogCategoriesPageJsonConverter : JsonConverter<DriveLogCategoriesPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DriveLogCategoriesPageJsonConverter" /> class.
+        /// </summary>
+        public DriveLogCategoriesPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="DriveLogCategoriesPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategoriesPage.", nameof(data));
+                throw new JsonException("Property is required for class DriveLogCategoriesPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class DriveLogCategoriesPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class DriveLogCategoriesPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class DriveLogCategoriesPage.");
+                throw new JsonException("Property is not nullable for class DriveLogCategoriesPage: data.");
 
             return new DriveLogCategoriesPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCategoriesPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, DriveLogCategoriesPage driveLogCategoriesPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="driveLogCategoriesPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogCategoriesPage driveLogCategoriesPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (driveLogCategoriesPage.Data == null)
-                throw new ArgumentNullException(nameof(driveLogCategoriesPage.Data), "Property is required for class DriveLogCategoriesPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, driveLogCategoriesPage.Data, jsonSerializerOptions);
             if (driveLogCategoriesPage.NextPageToken != null)

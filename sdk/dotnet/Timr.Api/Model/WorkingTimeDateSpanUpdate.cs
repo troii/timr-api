@@ -197,17 +197,27 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeDateSpanUpdate" />
     /// </summary>
-    public class WorkingTimeDateSpanUpdateJsonConverter : JsonConverter<WorkingTimeDateSpanUpdate>
+    public partial class WorkingTimeDateSpanUpdateJsonConverter : JsonConverter<WorkingTimeDateSpanUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeDateSpanUpdateJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeDateSpanUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Start
         /// </summary>
-        public static string StartFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize End
         /// </summary>
-        public static string EndFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeDateSpanUpdate" />
@@ -281,19 +291,19 @@ namespace Timr.Api.Model
             }
 
             if (start.IsSet && start.Value == null)
-                throw new ArgumentNullException(nameof(start), "Property is not nullable for class WorkingTimeDateSpanUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpanUpdate: start.");
 
             if (startHalfDay.IsSet && startHalfDay.Value == null)
-                throw new ArgumentNullException(nameof(startHalfDay), "Property is not nullable for class WorkingTimeDateSpanUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpanUpdate: start_half_day.");
 
             if (end.IsSet && end.Value == null)
-                throw new ArgumentNullException(nameof(end), "Property is not nullable for class WorkingTimeDateSpanUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpanUpdate: end.");
 
             if (endHalfDay.IsSet && endHalfDay.Value == null)
-                throw new ArgumentNullException(nameof(endHalfDay), "Property is not nullable for class WorkingTimeDateSpanUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpanUpdate: end_half_day.");
 
             if (workingTimeTypeId.IsSet && workingTimeTypeId.Value == null)
-                throw new ArgumentNullException(nameof(workingTimeTypeId), "Property is not nullable for class WorkingTimeDateSpanUpdate.");
+                throw new JsonException("Property is not nullable for class WorkingTimeDateSpanUpdate: working_time_type_id.");
 
             return new WorkingTimeDateSpanUpdate(start, startHalfDay, end, endHalfDay, notes, workingTimeTypeId, substituteId, metadata);
         }
@@ -304,7 +314,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeDateSpanUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -319,11 +328,22 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeDateSpanUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (workingTimeDateSpanUpdate.StartOption.IsSet && workingTimeDateSpanUpdate.Start == null)
+                throw new JsonException("Cannot write null property WorkingTimeDateSpanUpdate.Start to non-nullable JSON property 'start'.");
+
+            if (workingTimeDateSpanUpdate.StartHalfDayOption.IsSet && workingTimeDateSpanUpdate.StartHalfDay == null)
+                throw new JsonException("Cannot write null property WorkingTimeDateSpanUpdate.StartHalfDay to non-nullable JSON property 'start_half_day'.");
+
+            if (workingTimeDateSpanUpdate.EndOption.IsSet && workingTimeDateSpanUpdate.End == null)
+                throw new JsonException("Cannot write null property WorkingTimeDateSpanUpdate.End to non-nullable JSON property 'end'.");
+
+            if (workingTimeDateSpanUpdate.EndHalfDayOption.IsSet && workingTimeDateSpanUpdate.EndHalfDay == null)
+                throw new JsonException("Cannot write null property WorkingTimeDateSpanUpdate.EndHalfDay to non-nullable JSON property 'end_half_day'.");
+
             if (workingTimeDateSpanUpdate.WorkingTimeTypeIdOption.IsSet && workingTimeDateSpanUpdate.WorkingTimeTypeId == null)
-                throw new ArgumentNullException(nameof(workingTimeDateSpanUpdate.WorkingTimeTypeId), "Property is required for class WorkingTimeDateSpanUpdate.");
+                throw new JsonException("Cannot write null property WorkingTimeDateSpanUpdate.WorkingTimeTypeId to non-nullable JSON property 'working_time_type_id'.");
 
             if (workingTimeDateSpanUpdate.StartOption.IsSet)
                 writer.WriteString("start", workingTimeDateSpanUpdate.StartOption.Value!.Value.ToString(StartFormat));

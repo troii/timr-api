@@ -34,7 +34,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskApi {
     private ApiClient apiClient;
 
@@ -74,7 +74,7 @@ public class TaskApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -91,7 +91,7 @@ public class TaskApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -105,7 +105,7 @@ public class TaskApi {
      * @return Task
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Task createTask( TaskCreate taskCreate) throws RestClientResponseException {
+    public Task createTask(TaskCreate taskCreate) throws RestClientResponseException {
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTaskRequestCreation(taskCreate).body(localVarReturnType);
     }
@@ -121,7 +121,7 @@ public class TaskApi {
      * @return ResponseEntity&lt;Task&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Task> createTaskWithHttpInfo( TaskCreate taskCreate) throws RestClientResponseException {
+    public ResponseEntity<Task> createTaskWithHttpInfo(TaskCreate taskCreate) throws RestClientResponseException {
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTaskRequestCreation(taskCreate).toEntity(localVarReturnType);
     }
@@ -164,21 +164,21 @@ public class TaskApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "parent_task_id", parentTaskId));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "traverse_task_tree", traverseTaskTree));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "bookable", bookable));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "billable", billable));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "active_at", activeAt));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "parent_task_id", parentTaskId));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "traverse_task_tree", traverseTaskTree));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "bookable", bookable));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "billable", billable));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "active_at", activeAt));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -190,7 +190,7 @@ public class TaskApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TasksPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -211,7 +211,7 @@ public class TaskApi {
      * @return TasksPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TasksPage fetchTasks( String parentTaskId,  Boolean traverseTaskTree,  String name,  Boolean bookable,  Boolean billable,  LocalDate activeAt,  String pageToken,  Integer limit,  SortDirection sortDirection,  TasksSortColumn sortBy) throws RestClientResponseException {
+    public TasksPage fetchTasks(@Nullable String parentTaskId, @Nullable Boolean traverseTaskTree, @Nullable String name, @Nullable Boolean bookable, @Nullable Boolean billable, @Nullable LocalDate activeAt, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TasksSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TasksPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTasksRequestCreation(parentTaskId, traverseTaskTree, name, bookable, billable, activeAt, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -234,7 +234,7 @@ public class TaskApi {
      * @return ResponseEntity&lt;TasksPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TasksPage> fetchTasksWithHttpInfo( String parentTaskId,  Boolean traverseTaskTree,  String name,  Boolean bookable,  Boolean billable,  LocalDate activeAt,  String pageToken,  Integer limit,  SortDirection sortDirection,  TasksSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<TasksPage> fetchTasksWithHttpInfo(@Nullable String parentTaskId, @Nullable Boolean traverseTaskTree, @Nullable String name, @Nullable Boolean bookable, @Nullable Boolean billable, @Nullable LocalDate activeAt, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TasksSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TasksPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTasksRequestCreation(parentTaskId, traverseTaskTree, name, bookable, billable, activeAt, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -291,21 +291,21 @@ public class TaskApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "parent_task_id", parentTaskId));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "traverse_task_tree", traverseTaskTree));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "bookable", bookable));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "billable", billable));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "active_at", activeAt));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "parent_task_id", parentTaskId));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "traverse_task_tree", traverseTaskTree));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "bookable", bookable));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "billable", billable));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "active_at", activeAt));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -317,7 +317,7 @@ public class TaskApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TasksReducedPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/users/{id}/tasks", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/users/{id}/tasks", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -339,7 +339,7 @@ public class TaskApi {
      * @return TasksReducedPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TasksReducedPage fetchUserTasks( String id,  String parentTaskId,  Boolean traverseTaskTree,  String name,  Boolean bookable,  Boolean billable,  LocalDate activeAt,  String pageToken,  Integer limit,  SortDirection sortDirection,  TasksSortColumn sortBy) throws RestClientResponseException {
+    public TasksReducedPage fetchUserTasks(String id, @Nullable String parentTaskId, @Nullable Boolean traverseTaskTree, @Nullable String name, @Nullable Boolean bookable, @Nullable Boolean billable, @Nullable LocalDate activeAt, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TasksSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TasksReducedPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchUserTasksRequestCreation(id, parentTaskId, traverseTaskTree, name, bookable, billable, activeAt, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -363,7 +363,7 @@ public class TaskApi {
      * @return ResponseEntity&lt;TasksReducedPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TasksReducedPage> fetchUserTasksWithHttpInfo( String id,  String parentTaskId,  Boolean traverseTaskTree,  String name,  Boolean bookable,  Boolean billable,  LocalDate activeAt,  String pageToken,  Integer limit,  SortDirection sortDirection,  TasksSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<TasksReducedPage> fetchUserTasksWithHttpInfo(String id, @Nullable String parentTaskId, @Nullable Boolean traverseTaskTree, @Nullable String name, @Nullable Boolean bookable, @Nullable Boolean billable, @Nullable LocalDate activeAt, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TasksSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TasksReducedPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchUserTasksRequestCreation(id, parentTaskId, traverseTaskTree, name, bookable, billable, activeAt, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -412,7 +412,7 @@ public class TaskApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -427,7 +427,7 @@ public class TaskApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -440,7 +440,7 @@ public class TaskApi {
      * @return Task
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Task getTask( String id) throws RestClientResponseException {
+    public Task getTask(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTaskRequestCreation(id).body(localVarReturnType);
     }
@@ -455,7 +455,7 @@ public class TaskApi {
      * @return ResponseEntity&lt;Task&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Task> getTaskWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Task> getTaskWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTaskRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -503,7 +503,7 @@ public class TaskApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -520,7 +520,7 @@ public class TaskApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{id}", HttpMethod.PATCH, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -537,7 +537,7 @@ public class TaskApi {
      * @return Task
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public Task updateTask( String id,  TaskUpdate taskUpdate) throws RestClientResponseException {
+    public Task updateTask(String id, TaskUpdate taskUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateTaskRequestCreation(id, taskUpdate).body(localVarReturnType);
     }
@@ -556,7 +556,7 @@ public class TaskApi {
      * @return ResponseEntity&lt;Task&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Task> updateTaskWithHttpInfo( String id,  TaskUpdate taskUpdate) throws RestClientResponseException {
+    public ResponseEntity<Task> updateTaskWithHttpInfo(String id, TaskUpdate taskUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<Task> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateTaskRequestCreation(id, taskUpdate).toEntity(localVarReturnType);
     }

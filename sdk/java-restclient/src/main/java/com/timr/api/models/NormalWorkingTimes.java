@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.*;
   NormalWorkingTimes.JSON_PROPERTY_START,
   NormalWorkingTimes.JSON_PROPERTY_END
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class NormalWorkingTimes {
   public static final String JSON_PROPERTY_START = "start";
   

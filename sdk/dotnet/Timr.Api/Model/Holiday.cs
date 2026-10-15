@@ -95,12 +95,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="Holiday" />
     /// </summary>
-    public class HolidayJsonConverter : JsonConverter<Holiday>
+    public partial class HolidayJsonConverter : JsonConverter<Holiday>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HolidayJsonConverter" /> class.
+        /// </summary>
+        public HolidayJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Date
         /// </summary>
-        public static string DateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string DateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="Holiday" />
@@ -154,22 +164,22 @@ namespace Timr.Api.Model
             }
 
             if (!date.IsSet)
-                throw new ArgumentException("Property is required for class Holiday.", nameof(date));
+                throw new JsonException("Property is required for class Holiday: date.");
 
             if (!description.IsSet)
-                throw new ArgumentException("Property is required for class Holiday.", nameof(description));
+                throw new JsonException("Property is required for class Holiday: description.");
 
             if (!halfDay.IsSet)
-                throw new ArgumentException("Property is required for class Holiday.", nameof(halfDay));
+                throw new JsonException("Property is required for class Holiday: half_day.");
 
             if (date.IsSet && date.Value == null)
-                throw new ArgumentNullException(nameof(date), "Property is not nullable for class Holiday.");
+                throw new JsonException("Property is not nullable for class Holiday: date.");
 
             if (description.IsSet && description.Value == null)
-                throw new ArgumentNullException(nameof(description), "Property is not nullable for class Holiday.");
+                throw new JsonException("Property is not nullable for class Holiday: description.");
 
             if (halfDay.IsSet && halfDay.Value == null)
-                throw new ArgumentNullException(nameof(halfDay), "Property is not nullable for class Holiday.");
+                throw new JsonException("Property is not nullable for class Holiday: half_day.");
 
             return new Holiday(date.Value!.Value!, description.Value!, halfDay.Value!.Value!);
         }
@@ -180,7 +190,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="holiday"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, Holiday holiday, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -195,12 +204,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="holiday"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, Holiday holiday, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (holiday.Description == null)
-                throw new ArgumentNullException(nameof(holiday.Description), "Property is required for class Holiday.");
-
             writer.WriteString("date", holiday.Date.ToString(DateFormat));
 
             writer.WriteString("description", holiday.Description);

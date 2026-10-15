@@ -63,18 +63,39 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface CreateProjectTimeRequest {
+    /**
+     * 
+     */
     projectTimeCreate: ProjectTimeCreate;
 }
 
 export interface DeleteProjectTimeRequest {
+    /**
+     * ID of the Project Time.
+     */
     id: string;
 }
 
 export interface FetchDeletedProjectTimesRequest {
+    /**
+     * Only return entries modified after this instant.
+     */
     lastModifiedAfter?: Date;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: DeletedEntrySortColumn;
 }
 
@@ -84,19 +105,61 @@ export type FetchDeletedProjectTimesQuery = Pick<
 >;
 
 export interface FetchProjectTimesRequest {
+    /**
+     * Only return entries whose notes contain this text.
+     */
     notes?: string;
+    /**
+     * Only return entries starting on or after this day.
+     */
     startFrom?: Date;
+    /**
+     * Only return entries starting on or before this day.
+     */
     startTo?: Date;
+    /**
+     * Only return entries modified after this instant.
+     */
     lastModifiedAfter?: Date;
+    /**
+     * Only return entries recorded on the Task with this ID.
+     */
     task?: string;
+    /**
+     * Include entries recorded on the whole subtree of the given Task (true) or only on the Task itself (false).
+     */
     traverseTaskTree?: boolean;
+    /**
+     * Only return entries that are billable (true) or not billable (false).
+     */
     billable?: boolean;
+    /**
+     * Only return entries in one of these statuses.
+     */
     statuses?: Array<ProjectTimeStatus>;
+    /**
+     * Only return entries belonging to these users.
+     */
     users?: Array<string>;
+    /**
+     * Only return entries that were changed by the user (true) or left unchanged (false).
+     */
     changed?: boolean;
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: ProjectTimesSortColumn;
 }
 
@@ -106,11 +169,20 @@ export type FetchProjectTimesQuery = Pick<
 >;
 
 export interface GetProjectTimeRequest {
+    /**
+     * ID of the Project Time.
+     */
     id: string;
 }
 
 export interface UpdateProjectTimeRequest {
+    /**
+     * ID of the Project Time.
+     */
     id: string;
+    /**
+     * 
+     */
     projectTimeUpdate: ProjectTimeUpdate;
 }
 
@@ -241,7 +313,7 @@ export class ProjectTimeApi extends runtime.BaseAPI {
         const queryParameters: any = {};
 
         if (requestParameters['lastModifiedAfter'] != null) {
-            queryParameters['last_modified_after'] = (requestParameters['lastModifiedAfter'] as any).toISOString();
+            queryParameters['last_modified_after'] = runtime.serializeDateTime(requestParameters['lastModifiedAfter'] as any);
         }
 
         if (requestParameters['pageToken'] != null) {
@@ -314,15 +386,15 @@ export class ProjectTimeApi extends runtime.BaseAPI {
         }
 
         if (requestParameters['startFrom'] != null) {
-            queryParameters['start_from'] = (requestParameters['startFrom'] as any).toISOString().substring(0,10);
+            queryParameters['start_from'] = runtime.serializeDate(requestParameters['startFrom'] as any);
         }
 
         if (requestParameters['startTo'] != null) {
-            queryParameters['start_to'] = (requestParameters['startTo'] as any).toISOString().substring(0,10);
+            queryParameters['start_to'] = runtime.serializeDate(requestParameters['startTo'] as any);
         }
 
         if (requestParameters['lastModifiedAfter'] != null) {
-            queryParameters['last_modified_after'] = (requestParameters['lastModifiedAfter'] as any).toISOString();
+            queryParameters['last_modified_after'] = runtime.serializeDateTime(requestParameters['lastModifiedAfter'] as any);
         }
 
         if (requestParameters['task'] != null) {

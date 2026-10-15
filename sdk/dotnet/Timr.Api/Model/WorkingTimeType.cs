@@ -176,8 +176,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkingTimeType" />
     /// </summary>
-    public class WorkingTimeTypeJsonConverter : JsonConverter<WorkingTimeType>
+    public partial class WorkingTimeTypeJsonConverter : JsonConverter<WorkingTimeType>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkingTimeTypeJsonConverter" /> class.
+        /// </summary>
+        public WorkingTimeTypeJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeType" />
         /// </summary>
@@ -229,19 +239,13 @@ namespace Timr.Api.Model
                             name = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "edit_unit":
-                            string? editUnitRawValue = utf8JsonReader.GetString();
-                            if (editUnitRawValue != null)
-                                editUnit = new Option<DurationUnit?>(DurationUnitValueConverter.FromStringOrDefault(editUnitRawValue));
+                            editUnit = new Option<DurationUnit?>(JsonSerializer.Deserialize<DurationUnit?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "category":
-                            string? categoryRawValue = utf8JsonReader.GetString();
-                            if (categoryRawValue != null)
-                                category = new Option<WorkingTimeTypeCategory?>(WorkingTimeTypeCategoryValueConverter.FromStringOrDefault(categoryRawValue));
+                            category = new Option<WorkingTimeTypeCategory?>(JsonSerializer.Deserialize<WorkingTimeTypeCategory?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "recording_mode_user":
-                            string? recordingModeUserRawValue = utf8JsonReader.GetString();
-                            if (recordingModeUserRawValue != null)
-                                recordingModeUser = new Option<RecordingModeUser?>(RecordingModeUserValueConverter.FromStringOrDefault(recordingModeUserRawValue));
+                            recordingModeUser = new Option<RecordingModeUser?>(JsonSerializer.Deserialize<RecordingModeUser?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "archived":
                             archived = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -256,8 +260,7 @@ namespace Timr.Api.Model
                             externalId = new Option<string?>(utf8JsonReader.GetString());
                             break;
                         case "sub_category":
-                            string? subCategoryRawValue = utf8JsonReader.GetString();
-                            subCategory = new Option<WorkingTimeTypeSubCategory?>(subCategoryRawValue == null ? null : WorkingTimeTypeSubCategoryValueConverter.FromStringOrDefault(subCategoryRawValue));
+                            subCategory = new Option<WorkingTimeTypeSubCategory?>(JsonSerializer.Deserialize<WorkingTimeTypeSubCategory?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "requires_substitute":
                             requiresSubstitute = new Option<bool?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (bool?)null : utf8JsonReader.GetBoolean());
@@ -269,55 +272,55 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(id));
+                throw new JsonException("Property is required for class WorkingTimeType: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(name));
+                throw new JsonException("Property is required for class WorkingTimeType: name.");
 
             if (!editUnit.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(editUnit));
+                throw new JsonException("Property is required for class WorkingTimeType: edit_unit.");
 
             if (!category.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(category));
+                throw new JsonException("Property is required for class WorkingTimeType: category.");
 
             if (!recordingModeUser.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(recordingModeUser));
+                throw new JsonException("Property is required for class WorkingTimeType: recording_mode_user.");
 
             if (!archived.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(archived));
+                throw new JsonException("Property is required for class WorkingTimeType: archived.");
 
             if (!shortName.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(shortName));
+                throw new JsonException("Property is required for class WorkingTimeType: short_name.");
 
             if (!description.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(description));
+                throw new JsonException("Property is required for class WorkingTimeType: description.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(externalId));
+                throw new JsonException("Property is required for class WorkingTimeType: external_id.");
 
             if (!subCategory.IsSet)
-                throw new ArgumentException("Property is required for class WorkingTimeType.", nameof(subCategory));
+                throw new JsonException("Property is required for class WorkingTimeType: sub_category.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: name.");
 
             if (editUnit.IsSet && editUnit.Value == null)
-                throw new ArgumentNullException(nameof(editUnit), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: edit_unit.");
 
             if (category.IsSet && category.Value == null)
-                throw new ArgumentNullException(nameof(category), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: category.");
 
             if (recordingModeUser.IsSet && recordingModeUser.Value == null)
-                throw new ArgumentNullException(nameof(recordingModeUser), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: recording_mode_user.");
 
             if (archived.IsSet && archived.Value == null)
-                throw new ArgumentNullException(nameof(archived), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: archived.");
 
             if (requiresSubstitute.IsSet && requiresSubstitute.Value == null)
-                throw new ArgumentNullException(nameof(requiresSubstitute), "Property is not nullable for class WorkingTimeType.");
+                throw new JsonException("Property is not nullable for class WorkingTimeType: requires_substitute.");
 
             return new WorkingTimeType(id.Value!, name.Value!, editUnit.Value!.Value!, category.Value!.Value!, recordingModeUser.Value!.Value!, archived.Value!.Value!, shortName.Value!, description.Value!, externalId.Value!, subCategory.Value!, requiresSubstitute);
         }
@@ -328,7 +331,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeType"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkingTimeType workingTimeType, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -343,14 +345,10 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workingTimeType"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkingTimeType workingTimeType, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workingTimeType.Id == null)
-                throw new ArgumentNullException(nameof(workingTimeType.Id), "Property is required for class WorkingTimeType.");
-
-            if (workingTimeType.Name == null)
-                throw new ArgumentNullException(nameof(workingTimeType.Name), "Property is required for class WorkingTimeType.");
+            if (workingTimeType.RequiresSubstituteOption.IsSet && workingTimeType.RequiresSubstitute == null)
+                throw new JsonException("Cannot write null property WorkingTimeType.RequiresSubstitute to non-nullable JSON property 'requires_substitute'.");
 
             writer.WriteString("id", workingTimeType.Id);
 

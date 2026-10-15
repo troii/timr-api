@@ -152,8 +152,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TimeAccount" />
     /// </summary>
-    public class TimeAccountJsonConverter : JsonConverter<TimeAccount>
+    public partial class TimeAccountJsonConverter : JsonConverter<TimeAccount>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimeAccountJsonConverter" /> class.
+        /// </summary>
+        public TimeAccountJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TimeAccount" />
         /// </summary>
@@ -217,8 +227,7 @@ namespace Timr.Api.Model
                             workFromHomeDaysPartial = new Option<int?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (int?)null : utf8JsonReader.GetInt32());
                             break;
                         case "flex_time_indicator":
-                            string? flexTimeIndicatorRawValue = utf8JsonReader.GetString();
-                            flexTimeIndicator = new Option<FlexTimeIndicator?>(flexTimeIndicatorRawValue == null ? null : FlexTimeIndicatorValueConverter.FromStringOrDefault(flexTimeIndicatorRawValue));
+                            flexTimeIndicator = new Option<FlexTimeIndicator?>(JsonSerializer.Deserialize<FlexTimeIndicator?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -227,25 +236,25 @@ namespace Timr.Api.Model
             }
 
             if (!balanceLastPeriodMinutes.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(balanceLastPeriodMinutes));
+                throw new JsonException("Property is required for class TimeAccount: balance_last_period_minutes.");
 
             if (!durationActualMinutes.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(durationActualMinutes));
+                throw new JsonException("Property is required for class TimeAccount: duration_actual_minutes.");
 
             if (!durationTargetMinutes.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(durationTargetMinutes));
+                throw new JsonException("Property is required for class TimeAccount: duration_target_minutes.");
 
             if (!balanceCurrentPeriodMinutes.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(balanceCurrentPeriodMinutes));
+                throw new JsonException("Property is required for class TimeAccount: balance_current_period_minutes.");
 
             if (!balanceTotalMinutes.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(balanceTotalMinutes));
+                throw new JsonException("Property is required for class TimeAccount: balance_total_minutes.");
 
             if (!workFromHomeDaysFull.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(workFromHomeDaysFull));
+                throw new JsonException("Property is required for class TimeAccount: work_from_home_days_full.");
 
             if (!workFromHomeDaysPartial.IsSet)
-                throw new ArgumentException("Property is required for class TimeAccount.", nameof(workFromHomeDaysPartial));
+                throw new JsonException("Property is required for class TimeAccount: work_from_home_days_partial.");
 
             return new TimeAccount(balanceLastPeriodMinutes.Value!, durationActualMinutes.Value!, durationTargetMinutes.Value!, balanceCurrentPeriodMinutes.Value!, balanceTotalMinutes.Value!, workFromHomeDaysFull.Value!, workFromHomeDaysPartial.Value!, flexTimeIndicator);
         }
@@ -256,7 +265,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="timeAccount"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TimeAccount timeAccount, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -271,7 +279,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="timeAccount"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TimeAccount timeAccount, JsonSerializerOptions jsonSerializerOptions)
         {
             if (timeAccount.BalanceLastPeriodMinutes != null)

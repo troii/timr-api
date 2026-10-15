@@ -30,9 +30,9 @@ class BreakTimeManual(BaseModel):
     BreakTimeManual
     """ # noqa: E501
     type: BreakTimeType
-    duration_minutes: StrictInt = Field(description="Duration of break in minutes. Please make sure it matches the duration between 'start' and 'end' if the properties are also given.")
-    start: Optional[datetime] = Field(default=None, description="start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.")
-    end: Optional[datetime] = Field(default=None, description="start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.")
+    duration_minutes: StrictInt = Field(description="Duration of break in minutes. Please make sure it matches the duration between 'start' and 'end' if the properties are also given.", json_schema_extra={"examples": [20]})
+    start: Optional[datetime] = Field(default=None, description="start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    end: Optional[datetime] = Field(default=None, description="start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     __properties: ClassVar[List[str]] = ["type", "duration_minutes", "start", "end"]
 
     model_config = ConfigDict(

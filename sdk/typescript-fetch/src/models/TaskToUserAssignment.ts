@@ -35,26 +35,18 @@ import {
 export interface TaskToUserAssignment {
     /**
      * 
-     * @type {UserPartial}
-     * @memberof TaskToUserAssignment
      */
     user: UserPartial;
     /**
      * 
-     * @type {number}
-     * @memberof TaskToUserAssignment
      */
     hoursPlanned?: number | null;
     /**
      * 
-     * @type {RecordingLockType}
-     * @memberof TaskToUserAssignment
      */
     recordingLock: RecordingLockType;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskToUserAssignment
      */
     automaticallyAssigned: boolean;
 }
@@ -66,8 +58,8 @@ export interface TaskToUserAssignment {
  */
 export function instanceOfTaskToUserAssignment(value: object): value is TaskToUserAssignment {
     if (!('user' in value) || value['user'] === undefined) return false;
-    if (!('recordingLock' in value) || value['recordingLock'] === undefined) return false;
-    if (!('automaticallyAssigned' in value) || value['automaticallyAssigned'] === undefined) return false;
+    if ((!('recordingLock' in (value as Record<string, any>)) && !('recording_lock' in (value as Record<string, any>))) || ((value as Record<string, any>)['recordingLock'] === undefined && (value as Record<string, any>)['recording_lock'] === undefined)) return false;
+    if ((!('automaticallyAssigned' in (value as Record<string, any>)) && !('automatically_assigned' in (value as Record<string, any>))) || ((value as Record<string, any>)['automaticallyAssigned'] === undefined && (value as Record<string, any>)['automatically_assigned'] === undefined)) return false;
     return true;
 }
 
@@ -82,7 +74,7 @@ export function TaskToUserAssignmentFromJSONTyped(json: any, ignoreDiscriminator
     return {
         
         'user': UserPartialFromJSON(json['user']),
-        'hoursPlanned': json['hours_planned'] == null ? undefined : json['hours_planned'],
+        'hoursPlanned': json['hours_planned'] === undefined ? undefined : json['hours_planned'] === null ? null : json['hours_planned'],
         'recordingLock': RecordingLockTypeFromJSON(json['recording_lock']),
         'automaticallyAssigned': json['automatically_assigned'],
     };

@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 /**
  * 
  * @export
@@ -20,32 +20,22 @@ import { mapValues } from '../runtime';
 export interface Location {
     /**
      * Latitude in decimal degrees.
-     * @type {number}
-     * @memberof Location
      */
     lat: number | null;
     /**
      * Longitude in decimal degrees.
-     * @type {number}
-     * @memberof Location
      */
     lon: number | null;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof Location
      */
     timestamp?: Date | null;
     /**
      * 
-     * @type {string}
-     * @memberof Location
      */
     formattedAddress?: string | null;
     /**
      * Horizontal GPS accuracy in meters.
-     * @type {number}
-     * @memberof Location
      */
     accuracy: number | null;
 }
@@ -72,8 +62,8 @@ export function LocationFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         
         'lat': json['lat'],
         'lon': json['lon'],
-        'timestamp': json['timestamp'] == null ? undefined : (new Date(json['timestamp'])),
-        'formattedAddress': json['formatted_address'] == null ? undefined : json['formatted_address'],
+        'timestamp': json['timestamp'] === undefined ? undefined : json['timestamp'] === null ? null : (parseDateTime(json['timestamp'])),
+        'formattedAddress': json['formatted_address'] === undefined ? undefined : json['formatted_address'] === null ? null : json['formatted_address'],
         'accuracy': json['accuracy'],
     };
 }
@@ -91,7 +81,7 @@ export function LocationToJSONTyped(value?: Location | null, ignoreDiscriminator
         
         'lat': value['lat'],
         'lon': value['lon'],
-        'timestamp': value['timestamp'] == null ? value['timestamp'] : value['timestamp'].toISOString(),
+        'timestamp': value['timestamp'] == null ? value['timestamp'] : serializeDateTime(value['timestamp']),
         'formatted_address': value['formattedAddress'],
         'accuracy': value['accuracy'],
     };

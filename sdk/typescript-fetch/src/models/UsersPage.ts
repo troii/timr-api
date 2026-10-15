@@ -28,14 +28,10 @@ import {
 export interface UsersPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof UsersPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<User>}
-     * @memberof UsersPage
      */
     data: Array<User>;
 }
@@ -44,7 +40,7 @@ export interface UsersPage {
  * Check if a given object implements the UsersPage interface.
  */
 export function instanceOfUsersPage(value: object): value is UsersPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

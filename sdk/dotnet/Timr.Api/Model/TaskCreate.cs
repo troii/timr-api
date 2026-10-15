@@ -467,22 +467,32 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskCreate" />
     /// </summary>
-    public class TaskCreateJsonConverter : JsonConverter<TaskCreate>
+    public partial class TaskCreateJsonConverter : JsonConverter<TaskCreate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskCreateJsonConverter" /> class.
+        /// </summary>
+        public TaskCreateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize StartDate
         /// </summary>
-        public static string StartDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string StartDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize EndDate
         /// </summary>
-        public static string EndDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string EndDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// The format to use to serialize LockDate
         /// </summary>
-        public static string LockDateFormat { get; set; } = "yyyy'-'MM'-'dd";
+        public string LockDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="TaskCreate" />
@@ -582,9 +592,7 @@ namespace Timr.Api.Model
                             latestEndTime = new Option<string?>(utf8JsonReader.GetString());
                             break;
                         case "budget_planning_type":
-                            string? budgetPlanningTypeRawValue = utf8JsonReader.GetString();
-                            if (budgetPlanningTypeRawValue != null)
-                                budgetPlanningType = new Option<BudgetPlanningTypeRequest?>(BudgetPlanningTypeRequestValueConverter.FromStringOrDefault(budgetPlanningTypeRawValue));
+                            budgetPlanningType = new Option<BudgetPlanningTypeRequest?>(JsonSerializer.Deserialize<BudgetPlanningTypeRequest?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "budget_hours_planned":
                             budgetHoursPlanned = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
@@ -626,34 +634,34 @@ namespace Timr.Api.Model
             }
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class TaskCreate.", nameof(name));
+                throw new JsonException("Property is required for class TaskCreate: name.");
 
             if (!bookable.IsSet)
-                throw new ArgumentException("Property is required for class TaskCreate.", nameof(bookable));
+                throw new JsonException("Property is required for class TaskCreate: bookable.");
 
             if (!billable.IsSet)
-                throw new ArgumentException("Property is required for class TaskCreate.", nameof(billable));
+                throw new JsonException("Property is required for class TaskCreate: billable.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: name.");
 
             if (bookable.IsSet && bookable.Value == null)
-                throw new ArgumentNullException(nameof(bookable), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: bookable.");
 
             if (billable.IsSet && billable.Value == null)
-                throw new ArgumentNullException(nameof(billable), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: billable.");
 
             if (projectTimeNotesRequired.IsSet && projectTimeNotesRequired.Value == null)
-                throw new ArgumentNullException(nameof(projectTimeNotesRequired), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: project_time_notes_required.");
 
             if (budgetPlanningType.IsSet && budgetPlanningType.Value == null)
-                throw new ArgumentNullException(nameof(budgetPlanningType), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: budget_planning_type.");
 
             if (budgetIncludeNonBillableProjectTimes.IsSet && budgetIncludeNonBillableProjectTimes.Value == null)
-                throw new ArgumentNullException(nameof(budgetIncludeNonBillableProjectTimes), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: budget_include_non_billable_project_times.");
 
             if (locationInherited.IsSet && locationInherited.Value == null)
-                throw new ArgumentNullException(nameof(locationInherited), "Property is not nullable for class TaskCreate.");
+                throw new JsonException("Property is not nullable for class TaskCreate: location_inherited.");
 
             return new TaskCreate(name.Value!, bookable.Value!.Value!, billable.Value!.Value!, parentTaskId, externalId, description, descriptionExternal, projectTimeNotesRequired, startDate, endDate, lockDate, earliestStartTime, latestEndTime, budgetPlanningType, budgetHoursPlanned, budgetHourlyRate, budgetPlanned, budgetIncludeNonBillableProjectTimes, locationInherited, location, locationRestrictionRadiusMeters, customField1, customField2, customField3, metadata);
         }
@@ -664,7 +672,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskCreate taskCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -679,11 +686,19 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskCreate taskCreate, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskCreate.Name == null)
-                throw new ArgumentNullException(nameof(taskCreate.Name), "Property is required for class TaskCreate.");
+            if (taskCreate.ProjectTimeNotesRequiredOption.IsSet && taskCreate.ProjectTimeNotesRequired == null)
+                throw new JsonException("Cannot write null property TaskCreate.ProjectTimeNotesRequired to non-nullable JSON property 'project_time_notes_required'.");
+
+            if (taskCreate.BudgetPlanningTypeOption.IsSet && taskCreate.BudgetPlanningType == null)
+                throw new JsonException("Cannot write null property TaskCreate.BudgetPlanningType to non-nullable JSON property 'budget_planning_type'.");
+
+            if (taskCreate.BudgetIncludeNonBillableProjectTimesOption.IsSet && taskCreate.BudgetIncludeNonBillableProjectTimes == null)
+                throw new JsonException("Cannot write null property TaskCreate.BudgetIncludeNonBillableProjectTimes to non-nullable JSON property 'budget_include_non_billable_project_times'.");
+
+            if (taskCreate.LocationInheritedOption.IsSet && taskCreate.LocationInherited == null)
+                throw new JsonException("Cannot write null property TaskCreate.LocationInherited to non-nullable JSON property 'location_inherited'.");
 
             writer.WriteString("name", taskCreate.Name);
 

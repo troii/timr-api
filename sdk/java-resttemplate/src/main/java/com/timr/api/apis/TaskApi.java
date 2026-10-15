@@ -35,7 +35,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.TaskApi")
 public class TaskApi extends BaseApi {
 
@@ -59,7 +59,7 @@ public class TaskApi extends BaseApi {
      * @return Task
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Task createTask(TaskCreate taskCreate) throws RestClientException {
+    public Task createTask(@jakarta.annotation.Nonnull TaskCreate taskCreate) throws RestClientException {
         return createTaskWithHttpInfo(taskCreate).getBody();
     }
 
@@ -74,7 +74,7 @@ public class TaskApi extends BaseApi {
      * @return ResponseEntity&lt;Task&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Task> createTaskWithHttpInfo(TaskCreate taskCreate) throws RestClientException {
+    public ResponseEntity<Task> createTaskWithHttpInfo(@jakarta.annotation.Nonnull TaskCreate taskCreate) throws RestClientException {
         Object localVarPostBody = taskCreate;
         
         // verify the required parameter 'taskCreate' is set
@@ -120,7 +120,7 @@ public class TaskApi extends BaseApi {
      * @return TasksPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TasksPage fetchTasks(String parentTaskId, Boolean traverseTaskTree, String name, Boolean bookable, Boolean billable, LocalDate activeAt, String pageToken, Integer limit, SortDirection sortDirection, TasksSortColumn sortBy) throws RestClientException {
+    public TasksPage fetchTasks(@jakarta.annotation.Nullable String parentTaskId, @jakarta.annotation.Nullable Boolean traverseTaskTree, @jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable Boolean bookable, @jakarta.annotation.Nullable Boolean billable, @jakarta.annotation.Nullable LocalDate activeAt, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TasksSortColumn sortBy) throws RestClientException {
         return fetchTasksWithHttpInfo(parentTaskId, traverseTaskTree, name, bookable, billable, activeAt, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -142,7 +142,7 @@ public class TaskApi extends BaseApi {
      * @return ResponseEntity&lt;TasksPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TasksPage> fetchTasksWithHttpInfo(String parentTaskId, Boolean traverseTaskTree, String name, Boolean bookable, Boolean billable, LocalDate activeAt, String pageToken, Integer limit, SortDirection sortDirection, TasksSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TasksPage> fetchTasksWithHttpInfo(@jakarta.annotation.Nullable String parentTaskId, @jakarta.annotation.Nullable Boolean traverseTaskTree, @jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable Boolean bookable, @jakarta.annotation.Nullable Boolean billable, @jakarta.annotation.Nullable LocalDate activeAt, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TasksSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -194,7 +194,7 @@ public class TaskApi extends BaseApi {
      * @return TasksReducedPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public TasksReducedPage fetchUserTasks(String id, String parentTaskId, Boolean traverseTaskTree, String name, Boolean bookable, Boolean billable, LocalDate activeAt, String pageToken, Integer limit, SortDirection sortDirection, TasksSortColumn sortBy) throws RestClientException {
+    public TasksReducedPage fetchUserTasks(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String parentTaskId, @jakarta.annotation.Nullable Boolean traverseTaskTree, @jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable Boolean bookable, @jakarta.annotation.Nullable Boolean billable, @jakarta.annotation.Nullable LocalDate activeAt, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TasksSortColumn sortBy) throws RestClientException {
         return fetchUserTasksWithHttpInfo(id, parentTaskId, traverseTaskTree, name, bookable, billable, activeAt, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -217,7 +217,7 @@ public class TaskApi extends BaseApi {
      * @return ResponseEntity&lt;TasksReducedPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TasksReducedPage> fetchUserTasksWithHttpInfo(String id, String parentTaskId, Boolean traverseTaskTree, String name, Boolean bookable, Boolean billable, LocalDate activeAt, String pageToken, Integer limit, SortDirection sortDirection, TasksSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<TasksReducedPage> fetchUserTasksWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nullable String parentTaskId, @jakarta.annotation.Nullable Boolean traverseTaskTree, @jakarta.annotation.Nullable String name, @jakarta.annotation.Nullable Boolean bookable, @jakarta.annotation.Nullable Boolean billable, @jakarta.annotation.Nullable LocalDate activeAt, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TasksSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -268,7 +268,7 @@ public class TaskApi extends BaseApi {
      * @return Task
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Task getTask(String id) throws RestClientException {
+    public Task getTask(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getTaskWithHttpInfo(id).getBody();
     }
 
@@ -282,7 +282,7 @@ public class TaskApi extends BaseApi {
      * @return ResponseEntity&lt;Task&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Task> getTaskWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Task> getTaskWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -325,7 +325,7 @@ public class TaskApi extends BaseApi {
      * @return Task
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Task updateTask(String id, TaskUpdate taskUpdate) throws RestClientException {
+    public Task updateTask(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull TaskUpdate taskUpdate) throws RestClientException {
         return updateTaskWithHttpInfo(id, taskUpdate).getBody();
     }
 
@@ -343,7 +343,7 @@ public class TaskApi extends BaseApi {
      * @return ResponseEntity&lt;Task&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Task> updateTaskWithHttpInfo(String id, TaskUpdate taskUpdate) throws RestClientException {
+    public ResponseEntity<Task> updateTaskWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull TaskUpdate taskUpdate) throws RestClientException {
         Object localVarPostBody = taskUpdate;
         
         // verify the required parameter 'id' is set

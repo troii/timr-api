@@ -28,14 +28,10 @@ import {
 export interface DailyWorkSchedule {
     /**
      * value in minutes
-     * @type {number}
-     * @memberof DailyWorkSchedule
      */
     targetDurationMinutes: number;
     /**
      * this property is always set, when the WorkScheduleModel is of type normal_working_time, in contrast when the WorkScheduleModel is of type daily_target_hours it is not set
-     * @type {Array<NormalWorkingTimes>}
-     * @memberof DailyWorkSchedule
      */
     normalWorkingTimes?: Array<NormalWorkingTimes>;
 }
@@ -44,7 +40,7 @@ export interface DailyWorkSchedule {
  * Check if a given object implements the DailyWorkSchedule interface.
  */
 export function instanceOfDailyWorkSchedule(value: object): value is DailyWorkSchedule {
-    if (!('targetDurationMinutes' in value) || value['targetDurationMinutes'] === undefined) return false;
+    if ((!('targetDurationMinutes' in (value as Record<string, any>)) && !('target_duration_minutes' in (value as Record<string, any>))) || ((value as Record<string, any>)['targetDurationMinutes'] === undefined && (value as Record<string, any>)['target_duration_minutes'] === undefined)) return false;
     return true;
 }
 

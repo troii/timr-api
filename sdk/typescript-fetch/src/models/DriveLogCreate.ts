@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { LocationCreate } from './LocationCreate';
 import {
     LocationCreateFromJSON,
@@ -35,92 +35,62 @@ import {
 export interface DriveLogCreate {
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLogCreate
      */
     start: Date;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof DriveLogCreate
      */
     end?: Date | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLogCreate
      */
     changed: boolean;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLogCreate
      */
     startMileage: number;
     /**
      * 
-     * @type {number}
-     * @memberof DriveLogCreate
      */
     endMileage?: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCreate
      */
     route?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCreate
      */
     purpose?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCreate
      */
     visited?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCreate
      */
     driveLogCategoryId: string;
     /**
      * 
-     * @type {DriveLogStatus}
-     * @memberof DriveLogCreate
      */
     status: DriveLogStatus;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof DriveLogCreate
      */
     metadata?: { [key: string]: any; } | null;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCreate
      */
     userId: string;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCreate
      */
     carId: string;
     /**
      * 
-     * @type {LocationCreate}
-     * @memberof DriveLogCreate
      */
     startLocation?: LocationCreate | null;
     /**
      * 
-     * @type {LocationCreate}
-     * @memberof DriveLogCreate
      */
     endLocation?: LocationCreate | null;
 }
@@ -133,11 +103,11 @@ export interface DriveLogCreate {
 export function instanceOfDriveLogCreate(value: object): value is DriveLogCreate {
     if (!('start' in value) || value['start'] === undefined) return false;
     if (!('changed' in value) || value['changed'] === undefined) return false;
-    if (!('startMileage' in value) || value['startMileage'] === undefined) return false;
-    if (!('driveLogCategoryId' in value) || value['driveLogCategoryId'] === undefined) return false;
+    if ((!('startMileage' in (value as Record<string, any>)) && !('start_mileage' in (value as Record<string, any>))) || ((value as Record<string, any>)['startMileage'] === undefined && (value as Record<string, any>)['start_mileage'] === undefined)) return false;
+    if ((!('driveLogCategoryId' in (value as Record<string, any>)) && !('drive_log_category_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['driveLogCategoryId'] === undefined && (value as Record<string, any>)['drive_log_category_id'] === undefined)) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
-    if (!('userId' in value) || value['userId'] === undefined) return false;
-    if (!('carId' in value) || value['carId'] === undefined) return false;
+    if ((!('userId' in (value as Record<string, any>)) && !('user_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['userId'] === undefined && (value as Record<string, any>)['user_id'] === undefined)) return false;
+    if ((!('carId' in (value as Record<string, any>)) && !('car_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['carId'] === undefined && (value as Record<string, any>)['car_id'] === undefined)) return false;
     return true;
 }
 
@@ -151,21 +121,21 @@ export function DriveLogCreateFromJSONTyped(json: any, ignoreDiscriminator: bool
     }
     return {
         
-        'start': (new Date(json['start'])),
-        'end': json['end'] == null ? undefined : (new Date(json['end'])),
+        'start': (json['start'] == null ? json['start'] : parseDateTime(json['start'])),
+        'end': json['end'] === undefined ? undefined : json['end'] === null ? null : (parseDateTime(json['end'])),
         'changed': json['changed'],
         'startMileage': json['start_mileage'],
-        'endMileage': json['end_mileage'] == null ? undefined : json['end_mileage'],
-        'route': json['route'] == null ? undefined : json['route'],
-        'purpose': json['purpose'] == null ? undefined : json['purpose'],
-        'visited': json['visited'] == null ? undefined : json['visited'],
+        'endMileage': json['end_mileage'] === undefined ? undefined : json['end_mileage'] === null ? null : json['end_mileage'],
+        'route': json['route'] === undefined ? undefined : json['route'] === null ? null : json['route'],
+        'purpose': json['purpose'] === undefined ? undefined : json['purpose'] === null ? null : json['purpose'],
+        'visited': json['visited'] === undefined ? undefined : json['visited'] === null ? null : json['visited'],
         'driveLogCategoryId': json['drive_log_category_id'],
         'status': DriveLogStatusFromJSON(json['status']),
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
         'userId': json['user_id'],
         'carId': json['car_id'],
-        'startLocation': json['start_location'] == null ? undefined : LocationCreateFromJSON(json['start_location']),
-        'endLocation': json['end_location'] == null ? undefined : LocationCreateFromJSON(json['end_location']),
+        'startLocation': json['start_location'] === undefined ? undefined : json['start_location'] === null ? null : LocationCreateFromJSON(json['start_location']),
+        'endLocation': json['end_location'] === undefined ? undefined : json['end_location'] === null ? null : LocationCreateFromJSON(json['end_location']),
     };
 }
 
@@ -180,8 +150,8 @@ export function DriveLogCreateToJSONTyped(value?: DriveLogCreate | null, ignoreD
 
     return {
         
-        'start': value['start'].toISOString(),
-        'end': value['end'] == null ? value['end'] : value['end'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
+        'end': value['end'] == null ? value['end'] : serializeDateTime(value['end']),
         'changed': value['changed'],
         'start_mileage': value['startMileage'],
         'end_mileage': value['endMileage'],

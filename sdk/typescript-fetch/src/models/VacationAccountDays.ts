@@ -28,32 +28,22 @@ import {
 export interface VacationAccountDays {
     /**
      * 
-     * @type {VacationUnit}
-     * @memberof VacationAccountDays
      */
     unit: VacationUnit;
     /**
      * vacation balance carried over from the previous vacation period, in days
-     * @type {number}
-     * @memberof VacationAccountDays
      */
     balanceLastPeriodDays?: number | null;
     /**
      * vacation consumed in the current vacation period, in days
-     * @type {number}
-     * @memberof VacationAccountDays
      */
     consumedDays?: number | null;
     /**
      * vacation newly granted in the current vacation period, in days
-     * @type {number}
-     * @memberof VacationAccountDays
      */
     newDays?: number | null;
     /**
      * total vacation balance for the current vacation period, in days
-     * @type {number}
-     * @memberof VacationAccountDays
      */
     balanceTotalDays?: number | null;
 }
@@ -79,10 +69,10 @@ export function VacationAccountDaysFromJSONTyped(json: any, ignoreDiscriminator:
     return {
         
         'unit': VacationUnitFromJSON(json['unit']),
-        'balanceLastPeriodDays': json['balance_last_period_days'] == null ? undefined : json['balance_last_period_days'],
-        'consumedDays': json['consumed_days'] == null ? undefined : json['consumed_days'],
-        'newDays': json['new_days'] == null ? undefined : json['new_days'],
-        'balanceTotalDays': json['balance_total_days'] == null ? undefined : json['balance_total_days'],
+        'balanceLastPeriodDays': json['balance_last_period_days'] === undefined ? undefined : json['balance_last_period_days'] === null ? null : json['balance_last_period_days'],
+        'consumedDays': json['consumed_days'] === undefined ? undefined : json['consumed_days'] === null ? null : json['consumed_days'],
+        'newDays': json['new_days'] === undefined ? undefined : json['new_days'] === null ? null : json['new_days'],
+        'balanceTotalDays': json['balance_total_days'] === undefined ? undefined : json['balance_total_days'] === null ? null : json['balance_total_days'],
     };
 }
 

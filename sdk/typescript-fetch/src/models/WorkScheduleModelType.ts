@@ -18,7 +18,7 @@
  */
 export const WorkScheduleModelType = {
     DailyTargetHours: 'daily_target_hours',
-    NormalWorkingTime: 'normal_working_time'
+    NormalWorkingTime: 'normal_working_time',
 } as const;
 export type WorkScheduleModelType = typeof WorkScheduleModelType[keyof typeof WorkScheduleModelType];
 

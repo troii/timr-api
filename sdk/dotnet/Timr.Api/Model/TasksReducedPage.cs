@@ -86,8 +86,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TasksReducedPage" />
     /// </summary>
-    public class TasksReducedPageJsonConverter : JsonConverter<TasksReducedPage>
+    public partial class TasksReducedPageJsonConverter : JsonConverter<TasksReducedPage>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TasksReducedPageJsonConverter" /> class.
+        /// </summary>
+        public TasksReducedPageJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TasksReducedPage" />
         /// </summary>
@@ -136,13 +146,13 @@ namespace Timr.Api.Model
             }
 
             if (!data.IsSet)
-                throw new ArgumentException("Property is required for class TasksReducedPage.", nameof(data));
+                throw new JsonException("Property is required for class TasksReducedPage: data.");
 
             if (!nextPageToken.IsSet)
-                throw new ArgumentException("Property is required for class TasksReducedPage.", nameof(nextPageToken));
+                throw new JsonException("Property is required for class TasksReducedPage: next_page_token.");
 
             if (data.IsSet && data.Value == null)
-                throw new ArgumentNullException(nameof(data), "Property is not nullable for class TasksReducedPage.");
+                throw new JsonException("Property is not nullable for class TasksReducedPage: data.");
 
             return new TasksReducedPage(data.Value!, nextPageToken.Value!);
         }
@@ -153,7 +163,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="tasksReducedPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TasksReducedPage tasksReducedPage, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -168,12 +177,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="tasksReducedPage"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TasksReducedPage tasksReducedPage, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (tasksReducedPage.Data == null)
-                throw new ArgumentNullException(nameof(tasksReducedPage.Data), "Property is required for class TasksReducedPage.");
-
             writer.WritePropertyName("data");
             JsonSerializer.Serialize(writer, tasksReducedPage.Data, jsonSerializerOptions);
             if (tasksReducedPage.NextPageToken != null)

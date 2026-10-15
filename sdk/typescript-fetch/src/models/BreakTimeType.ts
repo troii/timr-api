@@ -19,7 +19,7 @@
 export const BreakTimeType = {
     Manual: 'manual',
     Ongoing: 'ongoing',
-    Automatic: 'automatic'
+    Automatic: 'automatic',
 } as const;
 export type BreakTimeType = typeof BreakTimeType[keyof typeof BreakTimeType];
 

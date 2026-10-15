@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.*;
   Team.JSON_PROPERTY_DESCRIPTION,
   Team.JSON_PROPERTY_PARENT_TEAM
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class Team {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull

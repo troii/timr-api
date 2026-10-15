@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { UserPartial } from './UserPartial';
 import {
     UserPartialFromJSON,
@@ -29,40 +29,28 @@ import {
 export interface DriveLogCategory {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof DriveLogCategory
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCategory
      */
     name: string;
     /**
      * 
-     * @type {boolean}
-     * @memberof DriveLogCategory
      */
     business: boolean;
     /**
      * 
-     * @type {string}
-     * @memberof DriveLogCategory
      */
     color: string;
     /**
      * Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601)
      * 
-     * @type {Date}
-     * @memberof DriveLogCategory
      */
     lastModified: Date;
     /**
      * Read-only. The User who last modified the entry, or null if the change was not made in a user context.
      * 
-     * @type {UserPartial}
-     * @memberof DriveLogCategory
      */
     lastModifiedBy: UserPartial | null;
 }
@@ -75,8 +63,8 @@ export function instanceOfDriveLogCategory(value: object): value is DriveLogCate
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('business' in value) || value['business'] === undefined) return false;
     if (!('color' in value) || value['color'] === undefined) return false;
-    if (!('lastModified' in value) || value['lastModified'] === undefined) return false;
-    if (!('lastModifiedBy' in value) || value['lastModifiedBy'] === undefined) return false;
+    if ((!('lastModified' in (value as Record<string, any>)) && !('last_modified' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModified'] === undefined && (value as Record<string, any>)['last_modified'] === undefined)) return false;
+    if ((!('lastModifiedBy' in (value as Record<string, any>)) && !('last_modified_by' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastModifiedBy'] === undefined && (value as Record<string, any>)['last_modified_by'] === undefined)) return false;
     return true;
 }
 
@@ -94,7 +82,7 @@ export function DriveLogCategoryFromJSONTyped(json: any, ignoreDiscriminator: bo
         'name': json['name'],
         'business': json['business'],
         'color': json['color'],
-        'lastModified': (new Date(json['last_modified'])),
+        'lastModified': (json['last_modified'] == null ? json['last_modified'] : parseDateTime(json['last_modified'])),
         'lastModifiedBy': UserPartialFromJSON(json['last_modified_by']),
     };
 }
@@ -114,7 +102,7 @@ export function DriveLogCategoryToJSONTyped(value?: DriveLogCategory | null, ign
         'name': value['name'],
         'business': value['business'],
         'color': value['color'],
-        'last_modified': value['lastModified'].toISOString(),
+        'last_modified': value['lastModified'] == null ? value['lastModified'] : serializeDateTime(value['lastModified']),
         'last_modified_by': UserPartialToJSON(value['lastModifiedBy']),
     };
 }

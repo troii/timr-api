@@ -28,14 +28,10 @@ import {
 export interface WorkingTimeDateSpanPage {
     /**
      * Token for the next page, or null when this is the last page.
-     * @type {string}
-     * @memberof WorkingTimeDateSpanPage
      */
     nextPageToken: string | null;
     /**
      * 
-     * @type {Array<WorkingTimeDateSpan>}
-     * @memberof WorkingTimeDateSpanPage
      */
     data: Array<WorkingTimeDateSpan>;
 }
@@ -44,7 +40,7 @@ export interface WorkingTimeDateSpanPage {
  * Check if a given object implements the WorkingTimeDateSpanPage interface.
  */
 export function instanceOfWorkingTimeDateSpanPage(value: object): value is WorkingTimeDateSpanPage {
-    if (!('nextPageToken' in value) || value['nextPageToken'] === undefined) return false;
+    if ((!('nextPageToken' in (value as Record<string, any>)) && !('next_page_token' in (value as Record<string, any>))) || ((value as Record<string, any>)['nextPageToken'] === undefined && (value as Record<string, any>)['next_page_token'] === undefined)) return false;
     if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }

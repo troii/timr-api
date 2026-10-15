@@ -20,26 +20,18 @@ import { mapValues } from '../runtime';
 export interface TeamUpdate {
     /**
      * 
-     * @type {string}
-     * @memberof TeamUpdate
      */
     name?: string;
     /**
      * 
-     * @type {string}
-     * @memberof TeamUpdate
      */
     description?: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TeamUpdate
      */
     parentTeamId?: string | null;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof TeamUpdate
      */
     externalId?: string | null;
 }
@@ -62,9 +54,9 @@ export function TeamUpdateFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
         
         'name': json['name'] == null ? undefined : json['name'],
-        'description': json['description'] == null ? undefined : json['description'],
-        'parentTeamId': json['parent_team_id'] == null ? undefined : json['parent_team_id'],
-        'externalId': json['external_id'] == null ? undefined : json['external_id'],
+        'description': json['description'] === undefined ? undefined : json['description'] === null ? null : json['description'],
+        'parentTeamId': json['parent_team_id'] === undefined ? undefined : json['parent_team_id'] === null ? null : json['parent_team_id'],
+        'externalId': json['external_id'] === undefined ? undefined : json['external_id'] === null ? null : json['external_id'],
     };
 }
 

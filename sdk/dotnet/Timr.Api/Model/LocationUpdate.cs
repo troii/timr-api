@@ -156,12 +156,22 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="LocationUpdate" />
     /// </summary>
-    public class LocationUpdateJsonConverter : JsonConverter<LocationUpdate>
+    public partial class LocationUpdateJsonConverter : JsonConverter<LocationUpdate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LocationUpdateJsonConverter" /> class.
+        /// </summary>
+        public LocationUpdateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// The format to use to serialize Timestamp
         /// </summary>
-        public static string TimestampFormat { get; set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
+        public string TimestampFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="LocationUpdate" />
@@ -223,10 +233,10 @@ namespace Timr.Api.Model
             }
 
             if (lat.IsSet && lat.Value == null)
-                throw new ArgumentNullException(nameof(lat), "Property is not nullable for class LocationUpdate.");
+                throw new JsonException("Property is not nullable for class LocationUpdate: lat.");
 
             if (lon.IsSet && lon.Value == null)
-                throw new ArgumentNullException(nameof(lon), "Property is not nullable for class LocationUpdate.");
+                throw new JsonException("Property is not nullable for class LocationUpdate: lon.");
 
             return new LocationUpdate(lat, lon, timestamp, formattedAddress, accuracy);
         }
@@ -237,7 +247,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="locationUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, LocationUpdate locationUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -252,9 +261,14 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="locationUpdate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, LocationUpdate locationUpdate, JsonSerializerOptions jsonSerializerOptions)
         {
+            if (locationUpdate.LatOption.IsSet && locationUpdate.Lat == null)
+                throw new JsonException("Cannot write null property LocationUpdate.Lat to non-nullable JSON property 'lat'.");
+
+            if (locationUpdate.LonOption.IsSet && locationUpdate.Lon == null)
+                throw new JsonException("Cannot write null property LocationUpdate.Lon to non-nullable JSON property 'lon'.");
+
             if (locationUpdate.LatOption.IsSet)
                 writer.WriteNumber("lat", locationUpdate.LatOption.Value!.Value);
 

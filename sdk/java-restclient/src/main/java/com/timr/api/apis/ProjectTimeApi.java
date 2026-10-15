@@ -37,7 +37,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class ProjectTimeApi {
     private ApiClient apiClient;
 
@@ -77,7 +77,7 @@ public class ProjectTimeApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -94,7 +94,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times", HttpMethod.POST, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -108,7 +108,7 @@ public class ProjectTimeApi {
      * @return ProjectTime
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProjectTime createProjectTime( ProjectTimeCreate projectTimeCreate) throws RestClientResponseException {
+    public ProjectTime createProjectTime(ProjectTimeCreate projectTimeCreate) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createProjectTimeRequestCreation(projectTimeCreate).body(localVarReturnType);
     }
@@ -124,7 +124,7 @@ public class ProjectTimeApi {
      * @return ResponseEntity&lt;ProjectTime&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTime> createProjectTimeWithHttpInfo( ProjectTimeCreate projectTimeCreate) throws RestClientResponseException {
+    public ResponseEntity<ProjectTime> createProjectTimeWithHttpInfo(ProjectTimeCreate projectTimeCreate) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createProjectTimeRequestCreation(projectTimeCreate).toEntity(localVarReturnType);
     }
@@ -165,7 +165,7 @@ public class ProjectTimeApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -180,7 +180,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -193,7 +193,7 @@ public class ProjectTimeApi {
      * @param id ID of the Project Time.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteProjectTime( String id) throws RestClientResponseException {
+    public void deleteProjectTime(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteProjectTimeRequestCreation(id).body(localVarReturnType);
     }
@@ -208,7 +208,7 @@ public class ProjectTimeApi {
      * @param id ID of the Project Time.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteProjectTimeWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteProjectTimeWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteProjectTimeRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -246,16 +246,16 @@ public class ProjectTimeApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -267,7 +267,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times:deleted", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times:deleted", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -283,7 +283,7 @@ public class ProjectTimeApi {
      * @return DeletedEntryWithMetadataPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public DeletedEntryWithMetadataPage fetchDeletedProjectTimes( OffsetDateTime lastModifiedAfter,  String pageToken,  Integer limit,  SortDirection sortDirection,  DeletedEntrySortColumn sortBy) throws RestClientResponseException {
+    public DeletedEntryWithMetadataPage fetchDeletedProjectTimes(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDeletedProjectTimesRequestCreation(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -301,7 +301,7 @@ public class ProjectTimeApi {
      * @return ResponseEntity&lt;DeletedEntryWithMetadataPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedProjectTimesWithHttpInfo( OffsetDateTime lastModifiedAfter,  String pageToken,  Integer limit,  SortDirection sortDirection,  DeletedEntrySortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<DeletedEntryWithMetadataPage> fetchDeletedProjectTimesWithHttpInfo(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchDeletedProjectTimesRequestCreation(lastModifiedAfter, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -350,25 +350,25 @@ public class ProjectTimeApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "notes", notes));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_from", startFrom));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_to", startTo));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "task", task));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "traverse_task_tree", traverseTaskTree));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "billable", billable));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "statuses", statuses));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "users", users));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "changed", changed));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "notes", notes));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_from", startFrom));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "start_to", startTo));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "last_modified_after", lastModifiedAfter));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "task", task));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "traverse_task_tree", traverseTaskTree));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "billable", billable));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "statuses", statuses));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "users", users));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "changed", changed));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -380,7 +380,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTimesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -405,7 +405,7 @@ public class ProjectTimeApi {
      * @return ProjectTimesPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProjectTimesPage fetchProjectTimes( String notes,  LocalDate startFrom,  LocalDate startTo,  OffsetDateTime lastModifiedAfter,  String task,  Boolean traverseTaskTree,  Boolean billable,  List<ProjectTimeStatus> statuses,  List<String> users,  Boolean changed,  String pageToken,  Integer limit,  SortDirection sortDirection,  ProjectTimesSortColumn sortBy) throws RestClientResponseException {
+    public ProjectTimesPage fetchProjectTimes(@Nullable String notes, @Nullable LocalDate startFrom, @Nullable LocalDate startTo, @Nullable OffsetDateTime lastModifiedAfter, @Nullable String task, @Nullable Boolean traverseTaskTree, @Nullable Boolean billable, @Nullable List<ProjectTimeStatus> statuses, @Nullable List<String> users, @Nullable Boolean changed, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable ProjectTimesSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTimesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchProjectTimesRequestCreation(notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -432,7 +432,7 @@ public class ProjectTimeApi {
      * @return ResponseEntity&lt;ProjectTimesPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTimesPage> fetchProjectTimesWithHttpInfo( String notes,  LocalDate startFrom,  LocalDate startTo,  OffsetDateTime lastModifiedAfter,  String task,  Boolean traverseTaskTree,  Boolean billable,  List<ProjectTimeStatus> statuses,  List<String> users,  Boolean changed,  String pageToken,  Integer limit,  SortDirection sortDirection,  ProjectTimesSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<ProjectTimesPage> fetchProjectTimesWithHttpInfo(@Nullable String notes, @Nullable LocalDate startFrom, @Nullable LocalDate startTo, @Nullable OffsetDateTime lastModifiedAfter, @Nullable String task, @Nullable Boolean traverseTaskTree, @Nullable Boolean billable, @Nullable List<ProjectTimeStatus> statuses, @Nullable List<String> users, @Nullable Boolean changed, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable ProjectTimesSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTimesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchProjectTimesRequestCreation(notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -484,7 +484,7 @@ public class ProjectTimeApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -499,7 +499,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -512,7 +512,7 @@ public class ProjectTimeApi {
      * @return ProjectTime
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProjectTime getProjectTime( String id) throws RestClientResponseException {
+    public ProjectTime getProjectTime(String id) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getProjectTimeRequestCreation(id).body(localVarReturnType);
     }
@@ -527,7 +527,7 @@ public class ProjectTimeApi {
      * @return ResponseEntity&lt;ProjectTime&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTime> getProjectTimeWithHttpInfo( String id) throws RestClientResponseException {
+    public ResponseEntity<ProjectTime> getProjectTimeWithHttpInfo(String id) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getProjectTimeRequestCreation(id).toEntity(localVarReturnType);
     }
@@ -575,7 +575,7 @@ public class ProjectTimeApi {
 
         pathParams.put("id", id);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -592,7 +592,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.PATCH, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -609,7 +609,7 @@ public class ProjectTimeApi {
      * @return ProjectTime
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProjectTime updateProjectTime( String id,  ProjectTimeUpdate projectTimeUpdate) throws RestClientResponseException {
+    public ProjectTime updateProjectTime(String id, ProjectTimeUpdate projectTimeUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateProjectTimeRequestCreation(id, projectTimeUpdate).body(localVarReturnType);
     }
@@ -628,7 +628,7 @@ public class ProjectTimeApi {
      * @return ResponseEntity&lt;ProjectTime&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProjectTime> updateProjectTimeWithHttpInfo( String id,  ProjectTimeUpdate projectTimeUpdate) throws RestClientResponseException {
+    public ResponseEntity<ProjectTime> updateProjectTimeWithHttpInfo(String id, ProjectTimeUpdate projectTimeUpdate) throws RestClientResponseException {
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
         return updateProjectTimeRequestCreation(id, projectTimeUpdate).toEntity(localVarReturnType);
     }

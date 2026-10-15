@@ -28,11 +28,11 @@ class LocationUpdate(BaseModel):
     """
     LocationUpdate
     """ # noqa: E501
-    lat: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Latitude in decimal degrees.")
-    lon: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Longitude in decimal degrees.")
-    timestamp: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)")
-    formatted_address: Optional[StrictStr] = None
-    accuracy: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Horizontal GPS accuracy in meters.")
+    lat: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Latitude in decimal degrees.", json_schema_extra={"examples": [48.2455964]})
+    lon: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Longitude in decimal degrees.", json_schema_extra={"examples": [13.0543811]})
+    timestamp: Optional[datetime] = Field(default=None, description="RFC 3339 date-time (ISO-8601)", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
+    formatted_address: Optional[StrictStr] = Field(default=None, json_schema_extra={"examples": ["Salzburger Straße 2, 5280 Braunau am Inn"]})
+    accuracy: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Horizontal GPS accuracy in meters.", json_schema_extra={"examples": [12.5]})
     __properties: ClassVar[List[str]] = ["lat", "lon", "timestamp", "formatted_address", "accuracy"]
 
     model_config = ConfigDict(

@@ -28,7 +28,7 @@ class DailyWorkSchedule(BaseModel):
     """
     DailyWorkSchedule
     """ # noqa: E501
-    target_duration_minutes: StrictInt = Field(description="value in minutes")
+    target_duration_minutes: StrictInt = Field(description="value in minutes", json_schema_extra={"examples": [480]})
     normal_working_times: Optional[List[NormalWorkingTimes]] = Field(default=None, description="this property is always set, when the WorkScheduleModel is of type normal_working_time, in contrast when the WorkScheduleModel is of type daily_target_hours it is not set")
     __properties: ClassVar[List[str]] = ["target_duration_minutes", "normal_working_times"]
 
@@ -75,8 +75,7 @@ class DailyWorkSchedule(BaseModel):
         _items = []
         if self.normal_working_times:
             for _item_normal_working_times in self.normal_working_times:
-                if _item_normal_working_times:
-                    _items.append(_item_normal_working_times.to_dict())
+                _items.append(_item_normal_working_times.to_dict() if _item_normal_working_times is not None else None)
             _dict['normal_working_times'] = _items
         return _dict
 

@@ -30,7 +30,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TaskToLeaderAssignmentApi {
     private ApiClient apiClient;
 
@@ -79,7 +79,7 @@ public class TaskToLeaderAssignmentApi {
         pathParams.put("task_id", taskId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -94,7 +94,7 @@ public class TaskToLeaderAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToLeaderAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/leaders/{user_id}", HttpMethod.PUT, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/leaders/{user_id}", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -110,7 +110,7 @@ public class TaskToLeaderAssignmentApi {
      * @return TaskToLeaderAssignment
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TaskToLeaderAssignment createTaskToLeaderAssignment( String taskId,  String userId) throws RestClientResponseException {
+    public TaskToLeaderAssignment createTaskToLeaderAssignment(String taskId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToLeaderAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTaskToLeaderAssignmentRequestCreation(taskId, userId).body(localVarReturnType);
     }
@@ -128,7 +128,7 @@ public class TaskToLeaderAssignmentApi {
      * @return ResponseEntity&lt;TaskToLeaderAssignment&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToLeaderAssignment> createTaskToLeaderAssignmentWithHttpInfo( String taskId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<TaskToLeaderAssignment> createTaskToLeaderAssignmentWithHttpInfo(String taskId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToLeaderAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return createTaskToLeaderAssignmentRequestCreation(taskId, userId).toEntity(localVarReturnType);
     }
@@ -177,7 +177,7 @@ public class TaskToLeaderAssignmentApi {
         pathParams.put("task_id", taskId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -192,7 +192,7 @@ public class TaskToLeaderAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/leaders/{user_id}", HttpMethod.DELETE, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/leaders/{user_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -206,7 +206,7 @@ public class TaskToLeaderAssignmentApi {
      * @param userId ID of the User.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public void deleteTaskToLeaderAssignment( String taskId,  String userId) throws RestClientResponseException {
+    public void deleteTaskToLeaderAssignment(String taskId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         deleteTaskToLeaderAssignmentRequestCreation(taskId, userId).body(localVarReturnType);
     }
@@ -222,7 +222,7 @@ public class TaskToLeaderAssignmentApi {
      * @param userId ID of the User.
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Void> deleteTaskToLeaderAssignmentWithHttpInfo( String taskId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<Void> deleteTaskToLeaderAssignmentWithHttpInfo(String taskId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
         return deleteTaskToLeaderAssignmentRequestCreation(taskId, userId).toEntity(localVarReturnType);
     }
@@ -268,15 +268,15 @@ public class TaskToLeaderAssignmentApi {
 
         pathParams.put("task_id", taskId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_direction", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sort_by", sortBy));
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -288,7 +288,7 @@ public class TaskToLeaderAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToLeaderAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/leaders", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/leaders", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -305,7 +305,7 @@ public class TaskToLeaderAssignmentApi {
      * @return TaskToLeaderAssignmentsPage
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TaskToLeaderAssignmentsPage fetchTaskToLeaderAssignments( String taskId,  String pageToken,  Integer limit,  SortDirection sortDirection,  TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientResponseException {
+    public TaskToLeaderAssignmentsPage fetchTaskToLeaderAssignments(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToLeaderAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTaskToLeaderAssignmentsRequestCreation(taskId, pageToken, limit, sortDirection, sortBy).body(localVarReturnType);
     }
@@ -324,7 +324,7 @@ public class TaskToLeaderAssignmentApi {
      * @return ResponseEntity&lt;TaskToLeaderAssignmentsPage&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToLeaderAssignmentsPage> fetchTaskToLeaderAssignmentsWithHttpInfo( String taskId,  String pageToken,  Integer limit,  SortDirection sortDirection,  TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientResponseException {
+    public ResponseEntity<TaskToLeaderAssignmentsPage> fetchTaskToLeaderAssignmentsWithHttpInfo(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TaskToLeaderAssignmentsSortColumn sortBy) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToLeaderAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
         return fetchTaskToLeaderAssignmentsRequestCreation(taskId, pageToken, limit, sortDirection, sortBy).toEntity(localVarReturnType);
     }
@@ -374,7 +374,7 @@ public class TaskToLeaderAssignmentApi {
         pathParams.put("task_id", taskId);
         pathParams.put("user_id", userId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -389,7 +389,7 @@ public class TaskToLeaderAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToLeaderAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/leaders/{user_id}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/leaders/{user_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -403,7 +403,7 @@ public class TaskToLeaderAssignmentApi {
      * @return TaskToLeaderAssignment
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public TaskToLeaderAssignment getTaskToLeaderAssignment( String taskId,  String userId) throws RestClientResponseException {
+    public TaskToLeaderAssignment getTaskToLeaderAssignment(String taskId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToLeaderAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTaskToLeaderAssignmentRequestCreation(taskId, userId).body(localVarReturnType);
     }
@@ -419,7 +419,7 @@ public class TaskToLeaderAssignmentApi {
      * @return ResponseEntity&lt;TaskToLeaderAssignment&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<TaskToLeaderAssignment> getTaskToLeaderAssignmentWithHttpInfo( String taskId,  String userId) throws RestClientResponseException {
+    public ResponseEntity<TaskToLeaderAssignment> getTaskToLeaderAssignmentWithHttpInfo(String taskId, String userId) throws RestClientResponseException {
         ParameterizedTypeReference<TaskToLeaderAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getTaskToLeaderAssignmentRequestCreation(taskId, userId).toEntity(localVarReturnType);
     }

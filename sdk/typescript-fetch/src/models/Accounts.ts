@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { TimeAccount } from './TimeAccount';
 import {
     TimeAccountFromJSON,
@@ -42,26 +42,18 @@ import {
 export interface Accounts {
     /**
      * date of last balance
-     * @type {Date}
-     * @memberof Accounts
      */
     lastBalanceDate: Date | null;
     /**
      * 
-     * @type {TimeAccount}
-     * @memberof Accounts
      */
     timeAccount?: TimeAccount | null;
     /**
      * 
-     * @type {Array<OvertimeSurchargeAccounts>}
-     * @memberof Accounts
      */
     overtimeSurchargeAccounts?: Array<OvertimeSurchargeAccounts> | null;
     /**
      * 
-     * @type {VacationAccount}
-     * @memberof Accounts
      */
     vacationAccount?: VacationAccount | null;
 }
@@ -70,7 +62,7 @@ export interface Accounts {
  * Check if a given object implements the Accounts interface.
  */
 export function instanceOfAccounts(value: object): value is Accounts {
-    if (!('lastBalanceDate' in value) || value['lastBalanceDate'] === undefined) return false;
+    if ((!('lastBalanceDate' in (value as Record<string, any>)) && !('last_balance_date' in (value as Record<string, any>))) || ((value as Record<string, any>)['lastBalanceDate'] === undefined && (value as Record<string, any>)['last_balance_date'] === undefined)) return false;
     return true;
 }
 
@@ -84,10 +76,10 @@ export function AccountsFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
     }
     return {
         
-        'lastBalanceDate': (json['last_balance_date'] == null ? null : new Date(json['last_balance_date'])),
-        'timeAccount': json['time_account'] == null ? undefined : TimeAccountFromJSON(json['time_account']),
-        'overtimeSurchargeAccounts': json['overtime_surcharge_accounts'] == null ? undefined : ((json['overtime_surcharge_accounts'] as Array<any>).map(OvertimeSurchargeAccountsFromJSON)),
-        'vacationAccount': json['vacation_account'] == null ? undefined : VacationAccountFromJSON(json['vacation_account']),
+        'lastBalanceDate': (json['last_balance_date'] == null ? null : parseDate(json['last_balance_date'])),
+        'timeAccount': json['time_account'] === undefined ? undefined : json['time_account'] === null ? null : TimeAccountFromJSON(json['time_account']),
+        'overtimeSurchargeAccounts': json['overtime_surcharge_accounts'] === undefined ? undefined : json['overtime_surcharge_accounts'] === null ? null : ((json['overtime_surcharge_accounts'] as Array<any>).map(OvertimeSurchargeAccountsFromJSON)),
+        'vacationAccount': json['vacation_account'] === undefined ? undefined : json['vacation_account'] === null ? null : VacationAccountFromJSON(json['vacation_account']),
     };
 }
 
@@ -102,7 +94,7 @@ export function AccountsToJSONTyped(value?: Accounts | null, ignoreDiscriminator
 
     return {
         
-        'last_balance_date': value['lastBalanceDate'] == null ? value['lastBalanceDate'] : value['lastBalanceDate'].toISOString().substring(0,10),
+        'last_balance_date': value['lastBalanceDate'] == null ? value['lastBalanceDate'] : serializeDate(value['lastBalanceDate']),
         'time_account': TimeAccountToJSON(value['timeAccount']),
         'overtime_surcharge_accounts': value['overtimeSurchargeAccounts'] == null ? undefined : ((value['overtimeSurchargeAccounts'] as Array<any>).map(OvertimeSurchargeAccountsToJSON)),
         'vacation_account': VacationAccountToJSON(value['vacationAccount']),

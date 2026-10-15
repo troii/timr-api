@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { TaskPartial } from './TaskPartial';
 import {
     TaskPartialFromJSON,
@@ -42,128 +42,86 @@ import {
 export interface TaskReduced {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof TaskReduced
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof TaskReduced
      */
     name: string;
     /**
      * Full path of the entry within its hierarchy, including its own name.
-     * @type {string}
-     * @memberof TaskReduced
      */
     breadcrumbs: string;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof TaskReduced
      */
     externalId: string | null;
     /**
      * 
-     * @type {TaskPartial}
-     * @memberof TaskReduced
      */
     parentTask: TaskPartial | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskReduced
      */
     description: string | null;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskReduced
      */
     bookable: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskReduced
      */
     billable: boolean;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskReduced
      */
     projectTimeNotesRequired: boolean;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof TaskReduced
      */
     lockDate?: Date | null;
     /**
      * time of day (ISO-8601)
-     * @type {string}
-     * @memberof TaskReduced
      */
     earliestStartTime?: string | null;
     /**
      * time of day (ISO-8601)
-     * @type {string}
-     * @memberof TaskReduced
      */
     latestEndTime?: string | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof TaskReduced
      */
     activeFrom: Date | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof TaskReduced
      */
     activeTo: Date | null;
     /**
      * 
-     * @type {BudgetPlanningType}
-     * @memberof TaskReduced
      */
     budgetPlanningType?: BudgetPlanningType;
     /**
      * 
-     * @type {boolean}
-     * @memberof TaskReduced
      */
     locationInherited?: boolean;
     /**
      * 
-     * @type {TaskLocation}
-     * @memberof TaskReduced
      */
     location?: TaskLocation | null;
     /**
      * 
-     * @type {number}
-     * @memberof TaskReduced
      */
     locationRestrictionRadiusMeters?: number | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskReduced
      */
     customField1: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskReduced
      */
     customField2: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof TaskReduced
      */
     customField3: string | null;
 }
@@ -177,17 +135,17 @@ export function instanceOfTaskReduced(value: object): value is TaskReduced {
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('breadcrumbs' in value) || value['breadcrumbs'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
-    if (!('parentTask' in value) || value['parentTask'] === undefined) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
+    if ((!('parentTask' in (value as Record<string, any>)) && !('parent_task' in (value as Record<string, any>))) || ((value as Record<string, any>)['parentTask'] === undefined && (value as Record<string, any>)['parent_task'] === undefined)) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
     if (!('bookable' in value) || value['bookable'] === undefined) return false;
     if (!('billable' in value) || value['billable'] === undefined) return false;
-    if (!('projectTimeNotesRequired' in value) || value['projectTimeNotesRequired'] === undefined) return false;
-    if (!('activeFrom' in value) || value['activeFrom'] === undefined) return false;
-    if (!('activeTo' in value) || value['activeTo'] === undefined) return false;
-    if (!('customField1' in value) || value['customField1'] === undefined) return false;
-    if (!('customField2' in value) || value['customField2'] === undefined) return false;
-    if (!('customField3' in value) || value['customField3'] === undefined) return false;
+    if ((!('projectTimeNotesRequired' in (value as Record<string, any>)) && !('project_time_notes_required' in (value as Record<string, any>))) || ((value as Record<string, any>)['projectTimeNotesRequired'] === undefined && (value as Record<string, any>)['project_time_notes_required'] === undefined)) return false;
+    if ((!('activeFrom' in (value as Record<string, any>)) && !('active_from' in (value as Record<string, any>))) || ((value as Record<string, any>)['activeFrom'] === undefined && (value as Record<string, any>)['active_from'] === undefined)) return false;
+    if ((!('activeTo' in (value as Record<string, any>)) && !('active_to' in (value as Record<string, any>))) || ((value as Record<string, any>)['activeTo'] === undefined && (value as Record<string, any>)['active_to'] === undefined)) return false;
+    if ((!('customField1' in (value as Record<string, any>)) && !('custom_field_1' in (value as Record<string, any>))) || ((value as Record<string, any>)['customField1'] === undefined && (value as Record<string, any>)['custom_field_1'] === undefined)) return false;
+    if ((!('customField2' in (value as Record<string, any>)) && !('custom_field_2' in (value as Record<string, any>))) || ((value as Record<string, any>)['customField2'] === undefined && (value as Record<string, any>)['custom_field_2'] === undefined)) return false;
+    if ((!('customField3' in (value as Record<string, any>)) && !('custom_field_3' in (value as Record<string, any>))) || ((value as Record<string, any>)['customField3'] === undefined && (value as Record<string, any>)['custom_field_3'] === undefined)) return false;
     return true;
 }
 
@@ -210,15 +168,15 @@ export function TaskReducedFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'bookable': json['bookable'],
         'billable': json['billable'],
         'projectTimeNotesRequired': json['project_time_notes_required'],
-        'lockDate': json['lock_date'] == null ? undefined : (new Date(json['lock_date'])),
-        'earliestStartTime': json['earliest_start_time'] == null ? undefined : json['earliest_start_time'],
-        'latestEndTime': json['latest_end_time'] == null ? undefined : json['latest_end_time'],
-        'activeFrom': (json['active_from'] == null ? null : new Date(json['active_from'])),
-        'activeTo': (json['active_to'] == null ? null : new Date(json['active_to'])),
+        'lockDate': json['lock_date'] === undefined ? undefined : json['lock_date'] === null ? null : (parseDate(json['lock_date'])),
+        'earliestStartTime': json['earliest_start_time'] === undefined ? undefined : json['earliest_start_time'] === null ? null : json['earliest_start_time'],
+        'latestEndTime': json['latest_end_time'] === undefined ? undefined : json['latest_end_time'] === null ? null : json['latest_end_time'],
+        'activeFrom': (json['active_from'] == null ? null : parseDate(json['active_from'])),
+        'activeTo': (json['active_to'] == null ? null : parseDate(json['active_to'])),
         'budgetPlanningType': json['budget_planning_type'] == null ? undefined : BudgetPlanningTypeFromJSON(json['budget_planning_type']),
         'locationInherited': json['location_inherited'] == null ? undefined : json['location_inherited'],
-        'location': json['location'] == null ? undefined : TaskLocationFromJSON(json['location']),
-        'locationRestrictionRadiusMeters': json['location_restriction_radius_meters'] == null ? undefined : json['location_restriction_radius_meters'],
+        'location': json['location'] === undefined ? undefined : json['location'] === null ? null : TaskLocationFromJSON(json['location']),
+        'locationRestrictionRadiusMeters': json['location_restriction_radius_meters'] === undefined ? undefined : json['location_restriction_radius_meters'] === null ? null : json['location_restriction_radius_meters'],
         'customField1': json['custom_field_1'],
         'customField2': json['custom_field_2'],
         'customField3': json['custom_field_3'],
@@ -245,11 +203,11 @@ export function TaskReducedToJSONTyped(value?: TaskReduced | null, ignoreDiscrim
         'bookable': value['bookable'],
         'billable': value['billable'],
         'project_time_notes_required': value['projectTimeNotesRequired'],
-        'lock_date': value['lockDate'] == null ? value['lockDate'] : value['lockDate'].toISOString().substring(0,10),
+        'lock_date': value['lockDate'] == null ? value['lockDate'] : serializeDate(value['lockDate']),
         'earliest_start_time': value['earliestStartTime'],
         'latest_end_time': value['latestEndTime'],
-        'active_from': value['activeFrom'] == null ? value['activeFrom'] : value['activeFrom'].toISOString().substring(0,10),
-        'active_to': value['activeTo'] == null ? value['activeTo'] : value['activeTo'].toISOString().substring(0,10),
+        'active_from': value['activeFrom'] == null ? value['activeFrom'] : serializeDate(value['activeFrom']),
+        'active_to': value['activeTo'] == null ? value['activeTo'] : serializeDate(value['activeTo']),
         'budget_planning_type': BudgetPlanningTypeToJSON(value['budgetPlanningType']),
         'location_inherited': value['locationInherited'],
         'location': TaskLocationToJSON(value['location']),

@@ -45,7 +45,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkingTimeType.JSON_PROPERTY_ARCHIVED,
   WorkingTimeType.JSON_PROPERTY_REQUIRES_SUBSTITUTE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class WorkingTimeType {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull

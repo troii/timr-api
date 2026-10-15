@@ -39,7 +39,7 @@ class WorkingTimeDateSpan(BaseModel):
     user: UserPartial
     working_time_type: WorkingTimeTypePartial
     substitute: Optional[UserPartial] = None
-    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ")
+    last_modified: datetime = Field(description="Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) ", json_schema_extra={"examples": ["2021-07-16T08:20:00Z"]})
     last_modified_by: Optional[UserPartial] = Field(description="Read-only. The User who last modified the entry, or null if the change was not made in a user context. ")
     metadata: Optional[Dict[str, Any]] = None
     __properties: ClassVar[List[str]] = ["id", "start", "start_half_day", "end", "end_half_day", "notes", "user", "working_time_type", "substitute", "last_modified", "last_modified_by", "metadata"]

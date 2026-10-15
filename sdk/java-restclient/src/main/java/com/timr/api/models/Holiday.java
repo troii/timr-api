@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.*;
   Holiday.JSON_PROPERTY_DESCRIPTION,
   Holiday.JSON_PROPERTY_HALF_DAY
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class Holiday {
   public static final String JSON_PROPERTY_DATE = "date";
   

@@ -38,13 +38,28 @@ type QueryArguments<T> = {} extends T
     : [query: T, initOverrides?: RequestInit | runtime.InitOverrideFunction];
 
 export interface DeleteWorkScheduleModelRequest {
+    /**
+     * ID of the Work Schedule Model.
+     */
     id: string;
 }
 
 export interface FetchWorkScheduleModelsRequest {
+    /**
+     * Token identifying the page to return. Take it from the 'next_page_token' field of the previous response.
+     */
     pageToken?: string;
+    /**
+     * Maximum number of entries per page. Values above 500 are capped at 500.
+     */
     limit?: number;
+    /**
+     * Direction to sort the entries in.
+     */
     sortDirection?: SortDirection;
+    /**
+     * Property to sort the entries by.
+     */
     sortBy?: WorkScheduleModelSortColumn;
 }
 
@@ -54,6 +69,9 @@ export type FetchWorkScheduleModelsQuery = Pick<
 >;
 
 export interface GetWorkScheduleModelRequest {
+    /**
+     * ID of the Work Schedule Model.
+     */
     id: string;
 }
 

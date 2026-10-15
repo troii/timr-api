@@ -106,8 +106,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TaskPartial" />
     /// </summary>
-    public class TaskPartialJsonConverter : JsonConverter<TaskPartial>
+    public partial class TaskPartialJsonConverter : JsonConverter<TaskPartial>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskPartialJsonConverter" /> class.
+        /// </summary>
+        public TaskPartialJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TaskPartial" />
         /// </summary>
@@ -164,25 +174,25 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class TaskPartial.", nameof(id));
+                throw new JsonException("Property is required for class TaskPartial: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class TaskPartial.", nameof(name));
+                throw new JsonException("Property is required for class TaskPartial: name.");
 
             if (!breadcrumbs.IsSet)
-                throw new ArgumentException("Property is required for class TaskPartial.", nameof(breadcrumbs));
+                throw new JsonException("Property is required for class TaskPartial: breadcrumbs.");
 
             if (!externalId.IsSet)
-                throw new ArgumentException("Property is required for class TaskPartial.", nameof(externalId));
+                throw new JsonException("Property is required for class TaskPartial: external_id.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class TaskPartial.");
+                throw new JsonException("Property is not nullable for class TaskPartial: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class TaskPartial.");
+                throw new JsonException("Property is not nullable for class TaskPartial: name.");
 
             if (breadcrumbs.IsSet && breadcrumbs.Value == null)
-                throw new ArgumentNullException(nameof(breadcrumbs), "Property is not nullable for class TaskPartial.");
+                throw new JsonException("Property is not nullable for class TaskPartial: breadcrumbs.");
 
             return new TaskPartial(id.Value!, name.Value!, breadcrumbs.Value!, externalId.Value!);
         }
@@ -193,7 +203,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TaskPartial taskPartial, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -208,18 +217,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="taskPartial"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TaskPartial taskPartial, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (taskPartial.Id == null)
-                throw new ArgumentNullException(nameof(taskPartial.Id), "Property is required for class TaskPartial.");
-
-            if (taskPartial.Name == null)
-                throw new ArgumentNullException(nameof(taskPartial.Name), "Property is required for class TaskPartial.");
-
-            if (taskPartial.Breadcrumbs == null)
-                throw new ArgumentNullException(nameof(taskPartial.Breadcrumbs), "Property is required for class TaskPartial.");
-
             writer.WriteString("id", taskPartial.Id);
 
             writer.WriteString("name", taskPartial.Name);

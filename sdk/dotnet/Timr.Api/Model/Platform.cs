@@ -206,6 +206,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override Platform? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             Platform? result = rawValue == null
@@ -226,7 +229,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, Platform? platform, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(platform.HasValue ? PlatformValueConverter.ToJsonValue(platform.Value).ToString() : "null");
+            if (platform.HasValue)
+                writer.WriteStringValue(PlatformValueConverter.ToJsonValue(platform.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

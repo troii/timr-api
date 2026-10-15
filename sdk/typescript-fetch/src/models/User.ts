@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { WorkScheduleModelPartial } from './WorkScheduleModelPartial';
 import {
     WorkScheduleModelPartialFromJSON,
@@ -36,86 +36,58 @@ import {
 export interface User {
     /**
      * Unique identifier. Treat it as an opaque string.
-     * @type {string}
-     * @memberof User
      */
     id: string;
     /**
      * 
-     * @type {string}
-     * @memberof User
      */
     firstname: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof User
      */
     lastname: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof User
      */
     fullname: string | null;
     /**
      * Email address must be either valid or null.
-     * @type {string}
-     * @memberof User
      */
     email: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof User
      */
     employeeNumber: string | null;
     /**
      * Identifier of the corresponding object in an external system. Set and owned by the client.
-     * @type {string}
-     * @memberof User
      */
     externalId: string | null;
     /**
      * 
-     * @type {string}
-     * @memberof User
      */
     login?: string;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof User
      */
     entryDate?: Date | null;
     /**
      * RFC 3339 date (ISO-8601)
-     * @type {Date}
-     * @memberof User
      */
     resignDate?: Date | null;
     /**
      * 
-     * @type {WorkScheduleModelPartial}
-     * @memberof User
      */
     workScheduleModel?: WorkScheduleModelPartial | null;
     /**
      * 
-     * @type {HolidayCalendarPartial}
-     * @memberof User
      */
     holidayCalendar?: HolidayCalendarPartial;
     /**
      * recurring month and day on which the user's vacation year starts
-     * @type {string}
-     * @memberof User
      */
     vacationYearStart?: string | null;
     /**
      * 
-     * @type {{ [key: string]: any; }}
-     * @memberof User
      */
     metadata?: { [key: string]: any; } | null;
 }
@@ -129,8 +101,8 @@ export function instanceOfUser(value: object): value is User {
     if (!('lastname' in value) || value['lastname'] === undefined) return false;
     if (!('fullname' in value) || value['fullname'] === undefined) return false;
     if (!('email' in value) || value['email'] === undefined) return false;
-    if (!('employeeNumber' in value) || value['employeeNumber'] === undefined) return false;
-    if (!('externalId' in value) || value['externalId'] === undefined) return false;
+    if ((!('employeeNumber' in (value as Record<string, any>)) && !('employee_number' in (value as Record<string, any>))) || ((value as Record<string, any>)['employeeNumber'] === undefined && (value as Record<string, any>)['employee_number'] === undefined)) return false;
+    if ((!('externalId' in (value as Record<string, any>)) && !('external_id' in (value as Record<string, any>))) || ((value as Record<string, any>)['externalId'] === undefined && (value as Record<string, any>)['external_id'] === undefined)) return false;
     return true;
 }
 
@@ -152,12 +124,12 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
         'employeeNumber': json['employee_number'],
         'externalId': json['external_id'],
         'login': json['login'] == null ? undefined : json['login'],
-        'entryDate': json['entry_date'] == null ? undefined : (new Date(json['entry_date'])),
-        'resignDate': json['resign_date'] == null ? undefined : (new Date(json['resign_date'])),
-        'workScheduleModel': json['work_schedule_model'] == null ? undefined : WorkScheduleModelPartialFromJSON(json['work_schedule_model']),
+        'entryDate': json['entry_date'] === undefined ? undefined : json['entry_date'] === null ? null : (parseDate(json['entry_date'])),
+        'resignDate': json['resign_date'] === undefined ? undefined : json['resign_date'] === null ? null : (parseDate(json['resign_date'])),
+        'workScheduleModel': json['work_schedule_model'] === undefined ? undefined : json['work_schedule_model'] === null ? null : WorkScheduleModelPartialFromJSON(json['work_schedule_model']),
         'holidayCalendar': json['holiday_calendar'] == null ? undefined : HolidayCalendarPartialFromJSON(json['holiday_calendar']),
-        'vacationYearStart': json['vacation_year_start'] == null ? undefined : json['vacation_year_start'],
-        'metadata': json['metadata'] == null ? undefined : json['metadata'],
+        'vacationYearStart': json['vacation_year_start'] === undefined ? undefined : json['vacation_year_start'] === null ? null : json['vacation_year_start'],
+        'metadata': json['metadata'] === undefined ? undefined : json['metadata'] === null ? null : json['metadata'],
     };
 }
 
@@ -180,8 +152,8 @@ export function UserToJSONTyped(value?: User | null, ignoreDiscriminator: boolea
         'employee_number': value['employeeNumber'],
         'external_id': value['externalId'],
         'login': value['login'],
-        'entry_date': value['entryDate'] == null ? value['entryDate'] : value['entryDate'].toISOString().substring(0,10),
-        'resign_date': value['resignDate'] == null ? value['resignDate'] : value['resignDate'].toISOString().substring(0,10),
+        'entry_date': value['entryDate'] == null ? value['entryDate'] : serializeDate(value['entryDate']),
+        'resign_date': value['resignDate'] == null ? value['resignDate'] : serializeDate(value['resignDate']),
         'work_schedule_model': WorkScheduleModelPartialToJSON(value['workScheduleModel']),
         'holiday_calendar': HolidayCalendarPartialToJSON(value['holidayCalendar']),
         'vacation_year_start': value['vacationYearStart'],

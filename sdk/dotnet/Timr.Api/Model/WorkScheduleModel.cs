@@ -115,8 +115,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="WorkScheduleModel" />
     /// </summary>
-    public class WorkScheduleModelJsonConverter : JsonConverter<WorkScheduleModel>
+    public partial class WorkScheduleModelJsonConverter : JsonConverter<WorkScheduleModel>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkScheduleModelJsonConverter" /> class.
+        /// </summary>
+        public WorkScheduleModelJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="WorkScheduleModel" />
         /// </summary>
@@ -162,9 +172,7 @@ namespace Timr.Api.Model
                             name = new Option<string?>(utf8JsonReader.GetString()!);
                             break;
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<WorkScheduleModelType?>(WorkScheduleModelTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<WorkScheduleModelType?>(JsonSerializer.Deserialize<WorkScheduleModelType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "weeks":
                             weeks = new Option<List<WorkScheduleModelWeek>?>(JsonSerializer.Deserialize<List<WorkScheduleModelWeek>>(ref utf8JsonReader, jsonSerializerOptions)!);
@@ -179,31 +187,31 @@ namespace Timr.Api.Model
             }
 
             if (!id.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModel.", nameof(id));
+                throw new JsonException("Property is required for class WorkScheduleModel: id.");
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModel.", nameof(name));
+                throw new JsonException("Property is required for class WorkScheduleModel: name.");
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModel.", nameof(type));
+                throw new JsonException("Property is required for class WorkScheduleModel: type.");
 
             if (!weeks.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModel.", nameof(weeks));
+                throw new JsonException("Property is required for class WorkScheduleModel: weeks.");
 
             if (!workingTimeRules.IsSet)
-                throw new ArgumentException("Property is required for class WorkScheduleModel.", nameof(workingTimeRules));
+                throw new JsonException("Property is required for class WorkScheduleModel: working_time_rules.");
 
             if (id.IsSet && id.Value == null)
-                throw new ArgumentNullException(nameof(id), "Property is not nullable for class WorkScheduleModel.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModel: id.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class WorkScheduleModel.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModel: name.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class WorkScheduleModel.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModel: type.");
 
             if (weeks.IsSet && weeks.Value == null)
-                throw new ArgumentNullException(nameof(weeks), "Property is not nullable for class WorkScheduleModel.");
+                throw new JsonException("Property is not nullable for class WorkScheduleModel: weeks.");
 
             return new WorkScheduleModel(id.Value!, name.Value!, type.Value!.Value!, weeks.Value!, workingTimeRules.Value!);
         }
@@ -214,7 +222,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModel"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, WorkScheduleModel workScheduleModel, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -229,18 +236,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="workScheduleModel"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, WorkScheduleModel workScheduleModel, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (workScheduleModel.Id == null)
-                throw new ArgumentNullException(nameof(workScheduleModel.Id), "Property is required for class WorkScheduleModel.");
-
-            if (workScheduleModel.Name == null)
-                throw new ArgumentNullException(nameof(workScheduleModel.Name), "Property is required for class WorkScheduleModel.");
-
-            if (workScheduleModel.Weeks == null)
-                throw new ArgumentNullException(nameof(workScheduleModel.Weeks), "Property is required for class WorkScheduleModel.");
-
             writer.WriteString("id", workScheduleModel.Id);
 
             writer.WriteString("name", workScheduleModel.Name);

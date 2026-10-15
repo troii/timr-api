@@ -34,7 +34,7 @@ namespace Timr.Api.Model
         /// Initializes a new instance of the <see cref="BreakTime" /> class.
         /// </summary>
         /// <param name="breakTimeManual"></param>
-        public BreakTime(BreakTimeManual breakTimeManual)
+        internal BreakTime(BreakTimeManual breakTimeManual)
         {
             BreakTimeManual = breakTimeManual;
             OnCreated();
@@ -44,7 +44,7 @@ namespace Timr.Api.Model
         /// Initializes a new instance of the <see cref="BreakTime" /> class.
         /// </summary>
         /// <param name="breakTimeOngoing"></param>
-        public BreakTime(BreakTimeOngoing breakTimeOngoing)
+        internal BreakTime(BreakTimeOngoing breakTimeOngoing)
         {
             BreakTimeOngoing = breakTimeOngoing;
             OnCreated();
@@ -54,7 +54,7 @@ namespace Timr.Api.Model
         /// Initializes a new instance of the <see cref="BreakTime" /> class.
         /// </summary>
         /// <param name="breakTimeAutomatic"></param>
-        public BreakTime(BreakTimeAutomatic breakTimeAutomatic)
+        internal BreakTime(BreakTimeAutomatic breakTimeAutomatic)
         {
             BreakTimeAutomatic = breakTimeAutomatic;
             OnCreated();
@@ -113,8 +113,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="BreakTime" />
     /// </summary>
-    public class BreakTimeJsonConverter : JsonConverter<BreakTime>
+    public partial class BreakTimeJsonConverter : JsonConverter<BreakTime>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BreakTimeJsonConverter" /> class.
+        /// </summary>
+        public BreakTimeJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="BreakTime" />
         /// </summary>
@@ -189,9 +199,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "type":
-                            string? typeRawValue = utf8JsonReader.GetString();
-                            if (typeRawValue != null)
-                                type = new Option<BreakTimeType?>(BreakTimeTypeValueConverter.FromStringOrDefault(typeRawValue));
+                            type = new Option<BreakTimeType?>(JsonSerializer.Deserialize<BreakTimeType?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         default:
                             break;
@@ -200,10 +208,10 @@ namespace Timr.Api.Model
             }
 
             if (!type.IsSet)
-                throw new ArgumentException("Property is required for class BreakTime.", nameof(type));
+                throw new JsonException("Property is required for class BreakTime: type.");
 
             if (type.IsSet && type.Value == null)
-                throw new ArgumentNullException(nameof(type), "Property is not nullable for class BreakTime.");
+                throw new JsonException("Property is not nullable for class BreakTime: type.");
 
             if (breakTimeAutomatic != null)
                 return new BreakTime(breakTimeAutomatic);
@@ -223,7 +231,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTime"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, BreakTime breakTime, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -256,7 +263,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="breakTime"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, BreakTime breakTime, JsonSerializerOptions jsonSerializerOptions)
         {
 

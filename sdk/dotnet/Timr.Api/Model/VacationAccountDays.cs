@@ -144,8 +144,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="VacationAccountDays" />
     /// </summary>
-    public class VacationAccountDaysJsonConverter : JsonConverter<VacationAccountDays>
+    public partial class VacationAccountDaysJsonConverter : JsonConverter<VacationAccountDays>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VacationAccountDaysJsonConverter" /> class.
+        /// </summary>
+        public VacationAccountDaysJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="VacationAccountDays" />
         /// </summary>
@@ -185,9 +195,7 @@ namespace Timr.Api.Model
                     switch (localVarJsonPropertyName)
                     {
                         case "unit":
-                            string? unitRawValue = utf8JsonReader.GetString();
-                            if (unitRawValue != null)
-                                unit = new Option<VacationUnit?>(VacationUnitValueConverter.FromStringOrDefault(unitRawValue));
+                            unit = new Option<VacationUnit?>(JsonSerializer.Deserialize<VacationUnit?>(ref utf8JsonReader, jsonSerializerOptions));
                             break;
                         case "balance_last_period_days":
                             balanceLastPeriodDays = new Option<decimal?>(utf8JsonReader.TokenType == JsonTokenType.Null ? (decimal?)null : utf8JsonReader.GetDecimal());
@@ -208,10 +216,10 @@ namespace Timr.Api.Model
             }
 
             if (!unit.IsSet)
-                throw new ArgumentException("Property is required for class VacationAccountDays.", nameof(unit));
+                throw new JsonException("Property is required for class VacationAccountDays: unit.");
 
             if (unit.IsSet && unit.Value == null)
-                throw new ArgumentNullException(nameof(unit), "Property is not nullable for class VacationAccountDays.");
+                throw new JsonException("Property is not nullable for class VacationAccountDays: unit.");
 
             return new VacationAccountDays(unit.Value!.Value!, balanceLastPeriodDays, consumedDays, newDays, balanceTotalDays);
         }
@@ -222,7 +230,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="vacationAccountDays"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, VacationAccountDays vacationAccountDays, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -237,7 +244,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="vacationAccountDays"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, VacationAccountDays vacationAccountDays, JsonSerializerOptions jsonSerializerOptions)
         {
             var unitRawValue = VacationUnitValueConverter.ToJsonValue(vacationAccountDays.Unit);

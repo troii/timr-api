@@ -136,6 +136,9 @@ namespace Timr.Api.Model
         /// <returns></returns>
         public override TaskToTeamAssignmentsSortColumn? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            if (reader.TokenType == JsonTokenType.Null)
+                return null;
+
             string? rawValue = reader.GetString();
 
             TaskToTeamAssignmentsSortColumn? result = rawValue == null
@@ -156,7 +159,10 @@ namespace Timr.Api.Model
         /// <param name="options"></param>
         public override void Write(Utf8JsonWriter writer, TaskToTeamAssignmentsSortColumn? taskToTeamAssignmentsSortColumn, JsonSerializerOptions options)
         {
-            writer.WriteStringValue(taskToTeamAssignmentsSortColumn.HasValue ? TaskToTeamAssignmentsSortColumnValueConverter.ToJsonValue(taskToTeamAssignmentsSortColumn.Value).ToString() : "null");
+            if (taskToTeamAssignmentsSortColumn.HasValue)
+                writer.WriteStringValue(TaskToTeamAssignmentsSortColumnValueConverter.ToJsonValue(taskToTeamAssignmentsSortColumn.Value).ToString());
+            else
+                writer.WriteNullValue();
         }
     }
 }

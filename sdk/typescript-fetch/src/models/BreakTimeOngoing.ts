@@ -11,7 +11,7 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
+import { mapValues, parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { BreakTimeType } from './BreakTimeType';
 import {
     BreakTimeTypeFromJSON,
@@ -28,14 +28,10 @@ import {
 export interface BreakTimeOngoing {
     /**
      * 
-     * @type {BreakTimeType}
-     * @memberof BreakTimeOngoing
      */
     type: BreakTimeType;
     /**
      * RFC 3339 date-time (ISO-8601)
-     * @type {Date}
-     * @memberof BreakTimeOngoing
      */
     start: Date;
 }
@@ -62,7 +58,7 @@ export function BreakTimeOngoingFromJSONTyped(json: any, ignoreDiscriminator: bo
     return {
         
         'type': BreakTimeTypeFromJSON(json['type']),
-        'start': (new Date(json['start'])),
+        'start': (json['start'] == null ? json['start'] : parseDateTime(json['start'])),
     };
 }
 
@@ -78,7 +74,7 @@ export function BreakTimeOngoingToJSONTyped(value?: BreakTimeOngoing | null, ign
     return {
         
         'type': BreakTimeTypeToJSON(value['type']),
-        'start': value['start'].toISOString(),
+        'start': value['start'] == null ? value['start'] : serializeDateTime(value['start']),
     };
 }
 

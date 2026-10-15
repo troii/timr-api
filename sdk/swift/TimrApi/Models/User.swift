@@ -14,8 +14,8 @@ import AnyCodable
 public struct User: Codable, JSONEncodable, Hashable {
 
     public static let emailRule = StringRule(minLength: 1, maxLength: nil, pattern: nil)
-    public static let loginRule = StringRule(minLength: nil, maxLength: nil, pattern: "/^[A-Za-z0-9!#$%&'*+/=@\\.?^_`{|}~-]*$/")
-    public static let vacationYearStartRule = StringRule(minLength: nil, maxLength: nil, pattern: "/^--(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$/")
+    public static let loginRule = StringRule(minLength: nil, maxLength: nil, pattern: "^[A-Za-z0-9!#$%&'*+/=@\\.?^_`{|}~-]*$")
+    public static let vacationYearStartRule = StringRule(minLength: nil, maxLength: nil, pattern: "^--(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$")
     /** Unique identifier. Treat it as an opaque string. */
     public var id: String
     public var firstname: String?

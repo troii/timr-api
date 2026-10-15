@@ -11,6 +11,7 @@
  * Do not edit the class manually.
  */
 
+import { parseDate, parseDateTime, serializeDate, serializeDateTime } from '../runtime';
 import type { BreakTimeAutomatic } from './BreakTimeAutomatic';
 import {
     instanceOfBreakTimeAutomatic,
@@ -70,11 +71,11 @@ export function BreakTimeToJSONTyped(value?: BreakTime | null, ignoreDiscriminat
     }
     switch (value['type']) {
         case 'automatic':
-            return Object.assign({}, BreakTimeAutomaticToJSON(value), { type: 'automatic' } as const);
+            return Object.assign({}, BreakTimeAutomaticToJSON(value), { 'type': 'automatic' } as const);
         case 'manual':
-            return Object.assign({}, BreakTimeManualToJSON(value), { type: 'manual' } as const);
+            return Object.assign({}, BreakTimeManualToJSON(value), { 'type': 'manual' } as const);
         case 'ongoing':
-            return Object.assign({}, BreakTimeOngoingToJSON(value), { type: 'ongoing' } as const);
+            return Object.assign({}, BreakTimeOngoingToJSON(value), { 'type': 'ongoing' } as const);
         default:
             return value;
     }

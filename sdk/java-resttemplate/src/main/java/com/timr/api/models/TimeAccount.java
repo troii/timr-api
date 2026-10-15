@@ -43,7 +43,7 @@ import com.fasterxml.jackson.annotation.*;
   TimeAccount.JSON_PROPERTY_WORK_FROM_HOME_DAYS_PARTIAL,
   TimeAccount.JSON_PROPERTY_FLEX_TIME_INDICATOR
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 public class TimeAccount {
   public static final String JSON_PROPERTY_BALANCE_LAST_PERIOD_MINUTES = "balance_last_period_minutes";
   @jakarta.annotation.Nullable

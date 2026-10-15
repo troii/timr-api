@@ -125,8 +125,18 @@ namespace Timr.Api.Model
     /// <summary>
     /// A Json converter for type <see cref="TeamCreate" />
     /// </summary>
-    public class TeamCreateJsonConverter : JsonConverter<TeamCreate>
+    public partial class TeamCreateJsonConverter : JsonConverter<TeamCreate>
     {
+        partial void OnCreated();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TeamCreateJsonConverter" /> class.
+        /// </summary>
+        public TeamCreateJsonConverter()
+        {
+            OnCreated();
+        }
+
         /// <summary>
         /// Deserializes json to <see cref="TeamCreate" />
         /// </summary>
@@ -183,10 +193,10 @@ namespace Timr.Api.Model
             }
 
             if (!name.IsSet)
-                throw new ArgumentException("Property is required for class TeamCreate.", nameof(name));
+                throw new JsonException("Property is required for class TeamCreate: name.");
 
             if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name), "Property is not nullable for class TeamCreate.");
+                throw new JsonException("Property is not nullable for class TeamCreate: name.");
 
             return new TeamCreate(name.Value!, description, parentTeamId, externalId);
         }
@@ -197,7 +207,6 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public override void Write(Utf8JsonWriter writer, TeamCreate teamCreate, JsonSerializerOptions jsonSerializerOptions)
         {
             writer.WriteStartObject();
@@ -212,12 +221,8 @@ namespace Timr.Api.Model
         /// <param name="writer"></param>
         /// <param name="teamCreate"></param>
         /// <param name="jsonSerializerOptions"></param>
-        /// <exception cref="NotImplementedException"></exception>
         public void WriteProperties(Utf8JsonWriter writer, TeamCreate teamCreate, JsonSerializerOptions jsonSerializerOptions)
         {
-            if (teamCreate.Name == null)
-                throw new ArgumentNullException(nameof(teamCreate.Name), "Property is required for class TeamCreate.");
-
             writer.WriteString("name", teamCreate.Name);
 
             if (teamCreate.DescriptionOption.IsSet)

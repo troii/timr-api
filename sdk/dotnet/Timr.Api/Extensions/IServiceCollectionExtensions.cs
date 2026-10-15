@@ -26,10 +26,10 @@ namespace Timr.Api.Extensions
         /// </summary>
         /// <param name="services"></param>
         /// <param name="options"></param>
-        public static void AddTimrApiClient(this IServiceCollection services, Action<HostConfiguration> options)
+        public static void AddTimrApiClient(this IServiceCollection services, Action<HostConfiguration>? options = null)
         {
             HostConfiguration config = new(services);
-            options(config);
+            options?.Invoke(config);
             AddTimrApiClient(services, config);
         }
 
@@ -58,6 +58,8 @@ namespace Timr.Api.Extensions
                         s => s.GetRequiredService(typeof(RateLimitProvider<>).MakeGenericType(tokenType)));
                 }
             }
+
+            host.NotifyServicesAdded(services);
         }
     }
 }

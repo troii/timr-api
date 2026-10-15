@@ -33,7 +33,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.22.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
 @Component("com.timr.api.apis.CarApi")
 public class CarApi extends BaseApi {
 
@@ -58,7 +58,7 @@ public class CarApi extends BaseApi {
      * @return Car
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Car createCar(CarCreate carCreate) throws RestClientException {
+    public Car createCar(@jakarta.annotation.Nonnull CarCreate carCreate) throws RestClientException {
         return createCarWithHttpInfo(carCreate).getBody();
     }
 
@@ -74,7 +74,7 @@ public class CarApi extends BaseApi {
      * @return ResponseEntity&lt;Car&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Car> createCarWithHttpInfo(CarCreate carCreate) throws RestClientException {
+    public ResponseEntity<Car> createCarWithHttpInfo(@jakarta.annotation.Nonnull CarCreate carCreate) throws RestClientException {
         Object localVarPostBody = carCreate;
         
         // verify the required parameter 'carCreate' is set
@@ -116,7 +116,7 @@ public class CarApi extends BaseApi {
      * @return CarsPage
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public CarsPage fetchCars(String nameOrPlate, Boolean usable, String pageToken, Integer limit, SortDirection sortDirection, CarsSortColumn sortBy) throws RestClientException {
+    public CarsPage fetchCars(@jakarta.annotation.Nullable String nameOrPlate, @jakarta.annotation.Nullable Boolean usable, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable CarsSortColumn sortBy) throws RestClientException {
         return fetchCarsWithHttpInfo(nameOrPlate, usable, pageToken, limit, sortDirection, sortBy).getBody();
     }
 
@@ -134,7 +134,7 @@ public class CarApi extends BaseApi {
      * @return ResponseEntity&lt;CarsPage&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<CarsPage> fetchCarsWithHttpInfo(String nameOrPlate, Boolean usable, String pageToken, Integer limit, SortDirection sortDirection, CarsSortColumn sortBy) throws RestClientException {
+    public ResponseEntity<CarsPage> fetchCarsWithHttpInfo(@jakarta.annotation.Nullable String nameOrPlate, @jakarta.annotation.Nullable Boolean usable, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable CarsSortColumn sortBy) throws RestClientException {
         Object localVarPostBody = null;
         
 
@@ -173,7 +173,7 @@ public class CarApi extends BaseApi {
      * @return Car
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Car getCar(String id) throws RestClientException {
+    public Car getCar(@jakarta.annotation.Nonnull String id) throws RestClientException {
         return getCarWithHttpInfo(id).getBody();
     }
 
@@ -187,7 +187,7 @@ public class CarApi extends BaseApi {
      * @return ResponseEntity&lt;Car&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Car> getCarWithHttpInfo(String id) throws RestClientException {
+    public ResponseEntity<Car> getCarWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
@@ -230,7 +230,7 @@ public class CarApi extends BaseApi {
      * @return Car
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Car updateCar(String id, CarUpdate carUpdate) throws RestClientException {
+    public Car updateCar(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull CarUpdate carUpdate) throws RestClientException {
         return updateCarWithHttpInfo(id, carUpdate).getBody();
     }
 
@@ -248,7 +248,7 @@ public class CarApi extends BaseApi {
      * @return ResponseEntity&lt;Car&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<Car> updateCarWithHttpInfo(String id, CarUpdate carUpdate) throws RestClientException {
+    public ResponseEntity<Car> updateCarWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull CarUpdate carUpdate) throws RestClientException {
         Object localVarPostBody = carUpdate;
         
         // verify the required parameter 'id' is set

@@ -17,7 +17,7 @@
  * @export
  */
 export const WorkingTimeTypesSortColumn = {
-    Name: 'name'
+    Name: 'name',
 } as const;
 export type WorkingTimeTypesSortColumn = typeof WorkingTimeTypesSortColumn[keyof typeof WorkingTimeTypesSortColumn];
 
