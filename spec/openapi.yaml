@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.1
+  version: 1.1.0
 
 servers:
   - url: https://api.timr.com/v1/
@@ -2087,6 +2087,30 @@ paths:
           $ref: '#/components/responses/Conflict'
         "422":
           $ref: '#/components/responses/UnprocessableContent'
+
+    delete:
+      operationId: deleteTask
+      tags:
+        - Task
+      summary: Delete a Task
+      description: Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can't be deleted; the request is answered with 409 and nothing is deleted.
+      parameters:
+        - name: id
+          in: path
+          description: ID of the Task.
+          required: true
+          example: 074e7048-9097-11eb-a8b3-0242ac130003
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Deleted. No content is returned.
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
 
   /tasks/{task_id}/users:
     get:
