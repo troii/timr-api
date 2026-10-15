@@ -1,7 +1,7 @@
 # timr API
 
 [![SDK CI](https://github.com/troii/timr-api/actions/workflows/sdk.yml/badge.svg?branch=main)](https://github.com/troii/timr-api/actions/workflows/sdk.yml)
-[![Documentation CI](https://github.com/troii/timr-api/actions/workflows/docs.yml/badge.svg?branch=main)](https://github.com/troii/timr-api/actions/workflows/docs.yml)
+[![Documentation](https://github.com/troii/timr-api/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/troii/timr-api/actions/workflows/pages.yml)
 
 The public REST API of [timr](https://www.timr.com), the time tracking service: the OpenAPI
 specification that defines it, the developer documentation published at
