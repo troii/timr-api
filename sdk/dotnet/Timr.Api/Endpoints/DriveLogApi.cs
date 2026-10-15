@@ -25,223 +25,198 @@ using Timr.Api.Logging;
 using Timr.Api.Model;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Timr.Api.Api
+namespace Timr.Api.Endpoints
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// This class is registered as transient.
     /// </summary>
-    public interface IUserApi : IApi
+    public interface IDriveLogApi : IApi
     {
         /// <summary>
         /// The class containing the events
         /// </summary>
-        UserApiEvents Events { get; }
+        DriveLogApiEvents Events { get; }
 
         /// <summary>
-        /// Create a User
+        /// Create a Drive Log
         /// </summary>
         /// <remarks>
-        /// Creates a User from the data in the request body.
+        /// Creates a Drive Log from the data in the request body.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="userCreate">User entity</param>
+        /// <param name="driveLogCreate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateUserApiResponse"/>&gt;</returns>
-        Task<ICreateUserApiResponse> CreateUserAsync(UserCreate userCreate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateDriveLogApiResponse"/>&gt;</returns>
+        Task<ICreateDriveLogApiResponse> CreateDriveLogAsync(DriveLogCreate driveLogCreate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a User
+        /// Create a Drive Log
         /// </summary>
         /// <remarks>
-        /// Creates a User from the data in the request body.
+        /// Creates a Drive Log from the data in the request body.
         /// </remarks>
-        /// <param name="userCreate">User entity</param>
+        /// <param name="driveLogCreate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateUserApiResponse"/>?&gt;</returns>
-        Task<ICreateUserApiResponse?> CreateUserOrDefaultAsync(UserCreate userCreate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateDriveLogApiResponse"/>?&gt;</returns>
+        Task<ICreateDriveLogApiResponse?> CreateDriveLogOrDefaultAsync(DriveLogCreate driveLogCreate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List a User&#39;s Team leaderships
+        /// Delete a Drive Log
         /// </summary>
         /// <remarks>
-        /// Lists the Teams the User leads.
+        /// Deletes the Drive Log, including its Track.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteDriveLogApiResponse"/>&gt;</returns>
+        Task<IDeleteDriveLogApiResponse> DeleteDriveLogAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Delete a Drive Log
+        /// </summary>
+        /// <remarks>
+        /// Deletes the Drive Log, including its Track.
+        /// </remarks>
+        /// <param name="id">ID of the Drive Log.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteDriveLogApiResponse"/>?&gt;</returns>
+        Task<IDeleteDriveLogApiResponse?> DeleteDriveLogOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// List deleted Drive Logs
+        /// </summary>
+        /// <remarks>
+        /// Lists Drive Logs that were deleted, so a client holding a local copy can reconcile.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamLeadershipsApiResponse"/>&gt;</returns>
-        Task<IFetchUserTeamLeadershipsApiResponse> FetchUserTeamLeadershipsAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedDriveLogsApiResponse"/>&gt;</returns>
+        Task<IFetchDeletedDriveLogsApiResponse> FetchDeletedDriveLogsAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List a User&#39;s Team leaderships
+        /// List deleted Drive Logs
         /// </summary>
         /// <remarks>
-        /// Lists the Teams the User leads.
+        /// Lists Drive Logs that were deleted, so a client holding a local copy can reconcile.
         /// </remarks>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamLeadershipsApiResponse"/>?&gt;</returns>
-        Task<IFetchUserTeamLeadershipsApiResponse?> FetchUserTeamLeadershipsOrDefaultAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedDriveLogsApiResponse"/>?&gt;</returns>
+        Task<IFetchDeletedDriveLogsApiResponse?> FetchDeletedDriveLogsOrDefaultAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List a User&#39;s Team memberships
+        /// List Drive Logs
         /// </summary>
         /// <remarks>
-        /// Lists the Teams the User is a member of.
+        /// Lists the Drive Logs the authenticated user or API token can access.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
+        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
+        /// <param name="cars">Only return entries recorded for these Cars. (optional)</param>
+        /// <param name="driveLogCategories">Only return entries in these Drive Log Categories. (optional)</param>
+        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="users">Only return entries belonging to these users. (optional)</param>
+        /// <param name="details">Only return Drive Logs whose route, purpose or visited contains this text. (optional)</param>
+        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
+        /// <param name="hasTrack">Only return Drive Logs that have a Track (true) or have none (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamMembershipsApiResponse"/>&gt;</returns>
-        Task<IFetchUserTeamMembershipsApiResponse> FetchUserTeamMembershipsAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDriveLogsApiResponse"/>&gt;</returns>
+        Task<IFetchDriveLogsApiResponse> FetchDriveLogsAsync(Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> cars = default, Option<List<string>> driveLogCategories = default, Option<List<DriveLogStatus>> statuses = default, Option<List<string>> users = default, Option<string> details = default, Option<bool> changed = default, Option<bool> hasTrack = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DriveLogsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List a User&#39;s Team memberships
+        /// List Drive Logs
         /// </summary>
         /// <remarks>
-        /// Lists the Teams the User is a member of.
+        /// Lists the Drive Logs the authenticated user or API token can access.
         /// </remarks>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
+        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
+        /// <param name="cars">Only return entries recorded for these Cars. (optional)</param>
+        /// <param name="driveLogCategories">Only return entries in these Drive Log Categories. (optional)</param>
+        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="users">Only return entries belonging to these users. (optional)</param>
+        /// <param name="details">Only return Drive Logs whose route, purpose or visited contains this text. (optional)</param>
+        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
+        /// <param name="hasTrack">Only return Drive Logs that have a Track (true) or have none (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamMembershipsApiResponse"/>?&gt;</returns>
-        Task<IFetchUserTeamMembershipsApiResponse?> FetchUserTeamMembershipsOrDefaultAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDriveLogsApiResponse"/>?&gt;</returns>
+        Task<IFetchDriveLogsApiResponse?> FetchDriveLogsOrDefaultAsync(Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> cars = default, Option<List<string>> driveLogCategories = default, Option<List<DriveLogStatus>> statuses = default, Option<List<string>> users = default, Option<string> details = default, Option<bool> changed = default, Option<bool> hasTrack = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DriveLogsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Users
+        /// Get a Drive Log
         /// </summary>
         /// <remarks>
-        /// Lists the Users the authenticated user or API token can access.
+        /// Returns a single Drive Log by its ID.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="name">Only return Users whose name contains this text. (optional)</param>
-        /// <param name="entryDateFrom">Only return Users whose entry date is on or after this day. (optional)</param>
-        /// <param name="entryDateTo">Only return Users whose entry date is on or before this day. (optional)</param>
-        /// <param name="resignDateFrom">Only return Users whose resignation date is on or after this day. (optional)</param>
-        /// <param name="resignDateTo">Only return Users whose resignation date is on or before this day. (optional)</param>
-        /// <param name="resigned">Only return Users who have resigned (true) or have not resigned (false). (optional)</param>
-        /// <param name="employeeNumber">Only return Users with this employee number. (optional)</param>
-        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
-        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
-        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
-        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
+        /// <param name="id">ID of the Drive Log.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUsersApiResponse"/>&gt;</returns>
-        Task<IFetchUsersApiResponse> FetchUsersAsync(Option<string> name = default, Option<DateOnly> entryDateFrom = default, Option<DateOnly> entryDateTo = default, Option<DateOnly> resignDateFrom = default, Option<DateOnly> resignDateTo = default, Option<bool> resigned = default, Option<string> employeeNumber = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<UsersSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetDriveLogApiResponse"/>&gt;</returns>
+        Task<IGetDriveLogApiResponse> GetDriveLogAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Users
+        /// Get a Drive Log
         /// </summary>
         /// <remarks>
-        /// Lists the Users the authenticated user or API token can access.
+        /// Returns a single Drive Log by its ID.
         /// </remarks>
-        /// <param name="name">Only return Users whose name contains this text. (optional)</param>
-        /// <param name="entryDateFrom">Only return Users whose entry date is on or after this day. (optional)</param>
-        /// <param name="entryDateTo">Only return Users whose entry date is on or before this day. (optional)</param>
-        /// <param name="resignDateFrom">Only return Users whose resignation date is on or after this day. (optional)</param>
-        /// <param name="resignDateTo">Only return Users whose resignation date is on or before this day. (optional)</param>
-        /// <param name="resigned">Only return Users who have resigned (true) or have not resigned (false). (optional)</param>
-        /// <param name="employeeNumber">Only return Users with this employee number. (optional)</param>
-        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
-        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
-        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
-        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
+        /// <param name="id">ID of the Drive Log.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUsersApiResponse"/>?&gt;</returns>
-        Task<IFetchUsersApiResponse?> FetchUsersOrDefaultAsync(Option<string> name = default, Option<DateOnly> entryDateFrom = default, Option<DateOnly> entryDateTo = default, Option<DateOnly> resignDateFrom = default, Option<DateOnly> resignDateTo = default, Option<bool> resigned = default, Option<string> employeeNumber = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<UsersSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetDriveLogApiResponse"/>?&gt;</returns>
+        Task<IGetDriveLogApiResponse?> GetDriveLogOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a User
+        /// Update a Drive Log
         /// </summary>
         /// <remarks>
-        /// Returns a single User by its ID.
+        /// Updates the Drive Log with the fields present in the request body. Fields that are omitted stay unchanged.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
+        /// <param name="driveLogUpdate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserApiResponse"/>&gt;</returns>
-        Task<IGetUserApiResponse> GetUserAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateDriveLogApiResponse"/>&gt;</returns>
+        Task<IUpdateDriveLogApiResponse> UpdateDriveLogAsync(string id, DriveLogUpdate driveLogUpdate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a User
+        /// Update a Drive Log
         /// </summary>
         /// <remarks>
-        /// Returns a single User by its ID.
+        /// Updates the Drive Log with the fields present in the request body. Fields that are omitted stay unchanged.
         /// </remarks>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
+        /// <param name="driveLogUpdate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserApiResponse"/>?&gt;</returns>
-        Task<IGetUserApiResponse?> GetUserOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get a User&#39;s Work Schedule Model
-        /// </summary>
-        /// <remarks>
-        /// Returns the Work Schedule Model assigned to the User, with all durations expressed in minutes.
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkScheduleModelApiResponse"/>&gt;</returns>
-        Task<IGetUserWorkScheduleModelApiResponse> GetUserWorkScheduleModelAsync(string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get a User&#39;s Work Schedule Model
-        /// </summary>
-        /// <remarks>
-        /// Returns the Work Schedule Model assigned to the User, with all durations expressed in minutes.
-        /// </remarks>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkScheduleModelApiResponse"/>?&gt;</returns>
-        Task<IGetUserWorkScheduleModelApiResponse?> GetUserWorkScheduleModelOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Update a User
-        /// </summary>
-        /// <remarks>
-        /// Updates the User with the fields present in the request body. Fields that are omitted stay unchanged.
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="userUpdate">User entity</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateUserApiResponse"/>&gt;</returns>
-        Task<IUpdateUserApiResponse> UpdateUserAsync(string id, UserUpdate userUpdate, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Update a User
-        /// </summary>
-        /// <remarks>
-        /// Updates the User with the fields present in the request body. Fields that are omitted stay unchanged.
-        /// </remarks>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="userUpdate">User entity</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateUserApiResponse"/>?&gt;</returns>
-        Task<IUpdateUserApiResponse?> UpdateUserOrDefaultAsync(string id, UserUpdate userUpdate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateDriveLogApiResponse"/>?&gt;</returns>
+        Task<IUpdateDriveLogApiResponse?> UpdateDriveLogOrDefaultAsync(string id, DriveLogUpdate driveLogUpdate, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
-    /// The <see cref="ICreateUserApiResponse"/>
+    /// The <see cref="ICreateDriveLogApiResponse"/>
     /// </summary>
-    public interface ICreateUserApiResponse : Timr.Api.Client.IApiResponse, ICreated<Timr.Api.Model.User?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface ICreateDriveLogApiResponse : Timr.Api.Client.IApiResponse, ICreated<Timr.Api.Model.DriveLog?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -269,9 +244,39 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchUserTeamLeadershipsApiResponse"/>
+    /// The <see cref="IDeleteDriveLogApiResponse"/>
     /// </summary>
-    public interface IFetchUserTeamLeadershipsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TeamsPartialPage?>, IBadRequest<Timr.Api.Model.Error?>
+    public interface IDeleteDriveLogApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
+    {
+        /// <summary>
+        /// Returns true if the response is 204 NoContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsNoContent { get; }
+
+        /// <summary>
+        /// Returns true if the response is 403 Forbidden
+        /// </summary>
+        /// <returns></returns>
+        bool IsForbidden { get; }
+
+        /// <summary>
+        /// Returns true if the response is 404 NotFound
+        /// </summary>
+        /// <returns></returns>
+        bool IsNotFound { get; }
+
+        /// <summary>
+        /// Returns true if the response is 409 Conflict
+        /// </summary>
+        /// <returns></returns>
+        bool IsConflict { get; }
+    }
+
+    /// <summary>
+    /// The <see cref="IFetchDeletedDriveLogsApiResponse"/>
+    /// </summary>
+    public interface IFetchDeletedDriveLogsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.DeletedEntryPage?>, IBadRequest<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -287,9 +292,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchUserTeamMembershipsApiResponse"/>
+    /// The <see cref="IFetchDriveLogsApiResponse"/>
     /// </summary>
-    public interface IFetchUserTeamMembershipsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TeamsPartialPage?>, IBadRequest<Timr.Api.Model.Error?>
+    public interface IFetchDriveLogsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.DriveLogsPage?>, IBadRequest<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -305,27 +310,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchUsersApiResponse"/>
+    /// The <see cref="IGetDriveLogApiResponse"/>
     /// </summary>
-    public interface IFetchUsersApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.UsersPage?>, IBadRequest<Timr.Api.Model.Error?>
-    {
-        /// <summary>
-        /// Returns true if the response is 200 Ok
-        /// </summary>
-        /// <returns></returns>
-        bool IsOk { get; }
-
-        /// <summary>
-        /// Returns true if the response is 400 BadRequest
-        /// </summary>
-        /// <returns></returns>
-        bool IsBadRequest { get; }
-    }
-
-    /// <summary>
-    /// The <see cref="IGetUserApiResponse"/>
-    /// </summary>
-    public interface IGetUserApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.User?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
+    public interface IGetDriveLogApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.DriveLog?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -347,33 +334,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetUserWorkScheduleModelApiResponse"/>
+    /// The <see cref="IUpdateDriveLogApiResponse"/>
     /// </summary>
-    public interface IGetUserWorkScheduleModelApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkScheduleModel?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
-    {
-        /// <summary>
-        /// Returns true if the response is 200 Ok
-        /// </summary>
-        /// <returns></returns>
-        bool IsOk { get; }
-
-        /// <summary>
-        /// Returns true if the response is 403 Forbidden
-        /// </summary>
-        /// <returns></returns>
-        bool IsForbidden { get; }
-
-        /// <summary>
-        /// Returns true if the response is 404 NotFound
-        /// </summary>
-        /// <returns></returns>
-        bool IsNotFound { get; }
-    }
-
-    /// <summary>
-    /// The <see cref="IUpdateUserApiResponse"/>
-    /// </summary>
-    public interface IUpdateUserApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.User?>, IBadRequest<Timr.Api.Model.Error?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface IUpdateDriveLogApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.DriveLog?>, IBadRequest<Timr.Api.Model.Error?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -415,160 +378,140 @@ namespace Timr.Api.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class UserApiEvents
+    public class DriveLogApiEvents
     {
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnCreateUser;
+        public event EventHandler<ApiResponseEventArgs>? OnCreateDriveLog;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorCreateUser;
+        public event EventHandler<ExceptionEventArgs>? OnErrorCreateDriveLog;
 
-        internal void ExecuteOnCreateUser(UserApi.CreateUserApiResponse apiResponse)
+        internal void ExecuteOnCreateDriveLog(DriveLogApi.CreateDriveLogApiResponse apiResponse)
         {
-            OnCreateUser?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnCreateDriveLog?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorCreateUser(Exception exception)
+        internal void ExecuteOnErrorCreateDriveLog(Exception exception)
         {
-            OnErrorCreateUser?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorCreateDriveLog?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchUserTeamLeaderships;
+        public event EventHandler<ApiResponseEventArgs>? OnDeleteDriveLog;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchUserTeamLeaderships;
+        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteDriveLog;
 
-        internal void ExecuteOnFetchUserTeamLeaderships(UserApi.FetchUserTeamLeadershipsApiResponse apiResponse)
+        internal void ExecuteOnDeleteDriveLog(DriveLogApi.DeleteDriveLogApiResponse apiResponse)
         {
-            OnFetchUserTeamLeaderships?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnDeleteDriveLog?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchUserTeamLeaderships(Exception exception)
+        internal void ExecuteOnErrorDeleteDriveLog(Exception exception)
         {
-            OnErrorFetchUserTeamLeaderships?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorDeleteDriveLog?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchUserTeamMemberships;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchDeletedDriveLogs;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchUserTeamMemberships;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchDeletedDriveLogs;
 
-        internal void ExecuteOnFetchUserTeamMemberships(UserApi.FetchUserTeamMembershipsApiResponse apiResponse)
+        internal void ExecuteOnFetchDeletedDriveLogs(DriveLogApi.FetchDeletedDriveLogsApiResponse apiResponse)
         {
-            OnFetchUserTeamMemberships?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchDeletedDriveLogs?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchUserTeamMemberships(Exception exception)
+        internal void ExecuteOnErrorFetchDeletedDriveLogs(Exception exception)
         {
-            OnErrorFetchUserTeamMemberships?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchDeletedDriveLogs?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchUsers;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchDriveLogs;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchUsers;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchDriveLogs;
 
-        internal void ExecuteOnFetchUsers(UserApi.FetchUsersApiResponse apiResponse)
+        internal void ExecuteOnFetchDriveLogs(DriveLogApi.FetchDriveLogsApiResponse apiResponse)
         {
-            OnFetchUsers?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchDriveLogs?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchUsers(Exception exception)
+        internal void ExecuteOnErrorFetchDriveLogs(Exception exception)
         {
-            OnErrorFetchUsers?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchDriveLogs?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetUser;
+        public event EventHandler<ApiResponseEventArgs>? OnGetDriveLog;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetUser;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetDriveLog;
 
-        internal void ExecuteOnGetUser(UserApi.GetUserApiResponse apiResponse)
+        internal void ExecuteOnGetDriveLog(DriveLogApi.GetDriveLogApiResponse apiResponse)
         {
-            OnGetUser?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetDriveLog?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetUser(Exception exception)
+        internal void ExecuteOnErrorGetDriveLog(Exception exception)
         {
-            OnErrorGetUser?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetDriveLog?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetUserWorkScheduleModel;
+        public event EventHandler<ApiResponseEventArgs>? OnUpdateDriveLog;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetUserWorkScheduleModel;
+        public event EventHandler<ExceptionEventArgs>? OnErrorUpdateDriveLog;
 
-        internal void ExecuteOnGetUserWorkScheduleModel(UserApi.GetUserWorkScheduleModelApiResponse apiResponse)
+        internal void ExecuteOnUpdateDriveLog(DriveLogApi.UpdateDriveLogApiResponse apiResponse)
         {
-            OnGetUserWorkScheduleModel?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnUpdateDriveLog?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetUserWorkScheduleModel(Exception exception)
+        internal void ExecuteOnErrorUpdateDriveLog(Exception exception)
         {
-            OnErrorGetUserWorkScheduleModel?.Invoke(this, new ExceptionEventArgs(exception));
-        }
-
-        /// <summary>
-        /// The event raised after the server response
-        /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnUpdateUser;
-
-        /// <summary>
-        /// The event raised after an error querying the server
-        /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorUpdateUser;
-
-        internal void ExecuteOnUpdateUser(UserApi.UpdateUserApiResponse apiResponse)
-        {
-            OnUpdateUser?.Invoke(this, new ApiResponseEventArgs(apiResponse));
-        }
-
-        internal void ExecuteOnErrorUpdateUser(Exception exception)
-        {
-            OnErrorUpdateUser?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorUpdateDriveLog?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public sealed partial class UserApi : IUserApi
+    public sealed partial class DriveLogApi : IDriveLogApi
     {
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
         /// The logger
         /// </summary>
-        public ILogger<UserApi> Logger { get; }
+        public ILogger<DriveLogApi> Logger { get; }
 
         /// <summary>
         /// The HttpClient
@@ -578,7 +521,7 @@ namespace Timr.Api.Api
         /// <summary>
         /// The class containing the events
         /// </summary>
-        public UserApiEvents Events { get; }
+        public DriveLogApiEvents Events { get; }
 
         /// <summary>
         /// A token provider of type <see cref="OauthTokenProvider"/>
@@ -586,41 +529,41 @@ namespace Timr.Api.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserApi"/> class.
+        /// Initializes a new instance of the <see cref="DriveLogApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public UserApi(ILogger<UserApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, UserApiEvents userApiEvents,
+        public DriveLogApi(ILogger<DriveLogApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, DriveLogApiEvents driveLogApiEvents,
             TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             Logger = logger;
             HttpClient = httpClient;
-            Events = userApiEvents;
+            Events = driveLogApiEvents;
             OauthTokenProvider = oauthTokenProvider;
         }
 
-        partial void FormatCreateUser(UserCreate userCreate);
+        partial void FormatCreateDriveLog(DriveLogCreate driveLogCreate);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="userCreate"></param>
+        /// <param name="driveLogCreate"></param>
         /// <returns></returns>
-        private void ValidateCreateUser(UserCreate userCreate)
+        private void ValidateCreateDriveLog(DriveLogCreate driveLogCreate)
         {
-            if (userCreate == null)
-                throw new ArgumentNullException(nameof(userCreate));
+            if (driveLogCreate == null)
+                throw new ArgumentNullException(nameof(driveLogCreate));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="userCreate"></param>
-        private void AfterCreateUserDefaultImplementation(ICreateUserApiResponse apiResponseLocalVar, UserCreate userCreate)
+        /// <param name="driveLogCreate"></param>
+        private void AfterCreateDriveLogDefaultImplementation(ICreateDriveLogApiResponse apiResponseLocalVar, DriveLogCreate driveLogCreate)
         {
             bool suppressDefaultLog = false;
-            AfterCreateUser(ref suppressDefaultLog, apiResponseLocalVar, userCreate);
+            AfterCreateDriveLog(ref suppressDefaultLog, apiResponseLocalVar, driveLogCreate);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -630,8 +573,8 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="userCreate"></param>
-        partial void AfterCreateUser(ref bool suppressDefaultLog, ICreateUserApiResponse apiResponseLocalVar, UserCreate userCreate);
+        /// <param name="driveLogCreate"></param>
+        partial void AfterCreateDriveLog(ref bool suppressDefaultLog, ICreateDriveLogApiResponse apiResponseLocalVar, DriveLogCreate driveLogCreate);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -639,11 +582,11 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="userCreate"></param>
-        private void OnErrorCreateUserDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, UserCreate userCreate)
+        /// <param name="driveLogCreate"></param>
+        private void OnErrorCreateDriveLogDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, DriveLogCreate driveLogCreate)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateUser(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, userCreate);
+            OnErrorCreateDriveLog(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, driveLogCreate);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -655,20 +598,20 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="userCreate"></param>
-        partial void OnErrorCreateUser(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, UserCreate userCreate);
+        /// <param name="driveLogCreate"></param>
+        partial void OnErrorCreateDriveLog(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, DriveLogCreate driveLogCreate);
 
         /// <summary>
-        /// Create a User Creates a User from the data in the request body.
+        /// Create a Drive Log Creates a Drive Log from the data in the request body.
         /// </summary>
-        /// <param name="userCreate">User entity</param>
+        /// <param name="driveLogCreate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateUserApiResponse"/>&gt;</returns>
-        public async Task<ICreateUserApiResponse?> CreateUserOrDefaultAsync(UserCreate userCreate, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateDriveLogApiResponse"/>&gt;</returns>
+        public async Task<ICreateDriveLogApiResponse?> CreateDriveLogOrDefaultAsync(DriveLogCreate driveLogCreate, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateUserAsync(userCreate, cancellationToken).ConfigureAwait(false);
+                return await CreateDriveLogAsync(driveLogCreate, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -677,21 +620,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Create a User Creates a User from the data in the request body.
+        /// Create a Drive Log Creates a Drive Log from the data in the request body.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="userCreate">User entity</param>
+        /// <param name="driveLogCreate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateUserApiResponse"/>&gt;</returns>
-        public async Task<ICreateUserApiResponse> CreateUserAsync(UserCreate userCreate, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateDriveLogApiResponse"/>&gt;</returns>
+        public async Task<ICreateDriveLogApiResponse> CreateDriveLogAsync(DriveLogCreate driveLogCreate, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateUser(userCreate);
+                ValidateCreateDriveLog(driveLogCreate);
 
-                FormatCreateUser(userCreate);
+                FormatCreateDriveLog(driveLogCreate);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -699,12 +642,12 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users");
+                        ? "/drive-logs"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs");
 
-                    httpRequestMessageLocalVar.Content = (userCreate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
+                    httpRequestMessageLocalVar.Content = (driveLogCreate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
-                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(userCreate, _jsonSerializerOptions));
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(driveLogCreate, _jsonSerializerOptions));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -746,20 +689,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        CreateUserApiResponse apiResponseLocalVar;
+                        CreateDriveLogApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterCreateUserDefaultImplementation(apiResponseLocalVar, userCreate);
+                        AfterCreateDriveLogDefaultImplementation(apiResponseLocalVar, driveLogCreate);
 
-                        Events.ExecuteOnCreateUser(apiResponseLocalVar);
+                        Events.ExecuteOnCreateDriveLog(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -771,24 +714,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateUserDefaultImplementation(e, "/users", uriBuilderLocalVar.Path, userCreate);
-                Events.ExecuteOnErrorCreateUser(e);
+                OnErrorCreateDriveLogDefaultImplementation(e, "/drive-logs", uriBuilderLocalVar.Path, driveLogCreate);
+                Events.ExecuteOnErrorCreateDriveLog(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="CreateUserApiResponse"/>
+        /// The <see cref="CreateDriveLogApiResponse"/>
         /// </summary>
-        public partial class CreateUserApiResponse : Timr.Api.Client.ApiResponse, ICreateUserApiResponse
+        public partial class CreateDriveLogApiResponse : Timr.Api.Client.ApiResponse, ICreateDriveLogApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<UserApi> Logger { get; }
+            public ILogger<DriveLogApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="CreateUserApiResponse"/>
+            /// The <see cref="CreateDriveLogApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -797,14 +740,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateUserApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public CreateDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="CreateUserApiResponse"/>
+            /// The <see cref="CreateDriveLogApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -813,7 +756,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateUserApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public CreateDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -831,32 +774,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 201 Created
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.User? Created()
+            public Timr.Api.Model.DriveLog? Created()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.User? result = null;
+                Timr.Api.Model.DriveLog? result = null;
                 OnCreated(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultCreated();
                 return result;
             }
 
-            private Timr.Api.Model.User? DefaultCreated()
+            private Timr.Api.Model.DriveLog? DefaultCreated()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsCreated
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.User>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.DriveLog>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.User? result);
+            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.DriveLog? result);
 
             /// <summary>
             /// Returns true if the response is 201 Created and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.User? result)
+            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.DriveLog? result)
             {
                 result = null;
 
@@ -1032,21 +975,17 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchUserTeamLeaderships(ref string id, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<TeamsSortColumn> sortBy);
+        partial void FormatDeleteDriveLog(ref string id);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateFetchUserTeamLeaderships(string id, Option<string> pageToken)
+        private void ValidateDeleteDriveLog(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
-
-            if (pageToken.IsSet && pageToken.Value == null)
-                throw new ArgumentNullException(nameof(pageToken));
         }
 
         /// <summary>
@@ -1054,14 +993,10 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        private void AfterFetchUserTeamLeadershipsDefaultImplementation(IFetchUserTeamLeadershipsApiResponse apiResponseLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy)
+        private void AfterDeleteDriveLogDefaultImplementation(IDeleteDriveLogApiResponse apiResponseLocalVar, string id)
         {
             bool suppressDefaultLog = false;
-            AfterFetchUserTeamLeaderships(ref suppressDefaultLog, apiResponseLocalVar, id, pageToken, limit, sortDirection, sortBy);
+            AfterDeleteDriveLog(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1072,11 +1007,7 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        partial void AfterFetchUserTeamLeaderships(ref bool suppressDefaultLog, IFetchUserTeamLeadershipsApiResponse apiResponseLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy);
+        partial void AfterDeleteDriveLog(ref bool suppressDefaultLog, IDeleteDriveLogApiResponse apiResponseLocalVar, string id);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1085,14 +1016,10 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        private void OnErrorFetchUserTeamLeadershipsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy)
+        private void OnErrorDeleteDriveLogDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchUserTeamLeaderships(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, pageToken, limit, sortDirection, sortBy);
+            OnErrorDeleteDriveLog(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1105,27 +1032,19 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        partial void OnErrorFetchUserTeamLeaderships(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy);
+        partial void OnErrorDeleteDriveLog(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
 
         /// <summary>
-        /// List a User&#39;s Team leaderships Lists the Teams the User leads.
+        /// Delete a Drive Log Deletes the Drive Log, including its Track.
         /// </summary>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
-        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
-        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
-        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
+        /// <param name="id">ID of the Drive Log.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamLeadershipsApiResponse"/>&gt;</returns>
-        public async Task<IFetchUserTeamLeadershipsApiResponse?> FetchUserTeamLeadershipsOrDefaultAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteDriveLogApiResponse"/>&gt;</returns>
+        public async Task<IDeleteDriveLogApiResponse?> DeleteDriveLogOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await FetchUserTeamLeadershipsAsync(id, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+                return await DeleteDriveLogAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1134,25 +1053,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// List a User&#39;s Team leaderships Lists the Teams the User leads.
+        /// Delete a Drive Log Deletes the Drive Log, including its Track.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
-        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
-        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
-        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
+        /// <param name="id">ID of the Drive Log.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamLeadershipsApiResponse"/>&gt;</returns>
-        public async Task<IFetchUserTeamLeadershipsApiResponse> FetchUserTeamLeadershipsAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteDriveLogApiResponse"/>&gt;</returns>
+        public async Task<IDeleteDriveLogApiResponse> DeleteDriveLogAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateFetchUserTeamLeaderships(id, pageToken);
+                ValidateDeleteDriveLog(id);
 
-                FormatFetchUserTeamLeaderships(ref id, ref pageToken, ref limit, ref sortDirection, ref sortBy);
+                FormatDeleteDriveLog(ref id);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1160,11 +1075,413 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{id}/team-leaderships"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users/{id}/team-leaderships");
+                        ? "/drive-logs/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
+                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
+                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
+
+                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
+
+                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    OAuthToken oauthTokenLocalVar2 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
+
+                    tokenBaseLocalVars.Add(oauthTokenLocalVar2);
+
+                    oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
+
+                    string[] acceptLocalVars = new string[] {
+                        "application/problem+json"
+                    };
+
+                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
+
+                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
+                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
+
+                    httpRequestMessageLocalVar.Method = HttpMethod.Delete;
+
+                    DateTime requestedAtLocalVar = DateTime.UtcNow;
+
+                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
+                    {
+                        DeleteDriveLogApiResponse apiResponseLocalVar;
+
+                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
+                            default: {
+                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+
+                                break;
+                            }
+                        }
+
+                        AfterDeleteDriveLogDefaultImplementation(apiResponseLocalVar, id);
+
+                        Events.ExecuteOnDeleteDriveLog(apiResponseLocalVar);
+
+                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
+                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
+                                tokenBaseLocalVar.BeginRateLimit();
+
+                        return apiResponseLocalVar;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                OnErrorDeleteDriveLogDefaultImplementation(e, "/drive-logs/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorDeleteDriveLog(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteDriveLogApiResponse"/>
+        /// </summary>
+        public partial class DeleteDriveLogApiResponse : Timr.Api.Client.ApiResponse, IDeleteDriveLogApiResponse
+        {
+            /// <summary>
+            /// The logger
+            /// </summary>
+            public ILogger<DriveLogApi> Logger { get; }
+
+            /// <summary>
+            /// The <see cref="DeleteDriveLogApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="rawContent"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            /// <summary>
+            /// The <see cref="DeleteDriveLogApiResponse"/>
+            /// </summary>
+            /// <param name="logger"></param>
+            /// <param name="httpRequestMessage"></param>
+            /// <param name="httpResponseMessage"></param>
+            /// <param name="contentStream"></param>
+            /// <param name="path"></param>
+            /// <param name="requestedAt"></param>
+            /// <param name="jsonSerializerOptions"></param>
+            public DeleteDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            {
+                Logger = logger;
+                OnCreated(httpRequestMessage, httpResponseMessage);
+            }
+
+            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 204 NoContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNoContent => 204 == (int)StatusCode;
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public bool IsForbidden => 403 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 403 Forbidden
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.Error? Forbidden()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnForbidden(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultForbidden();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultForbidden()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsForbidden
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+
+            /// <summary>
+            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryForbidden([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Forbidden();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNotFound => 404 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 404 NotFound
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.Error? NotFound()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnNotFound(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultNotFound();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultNotFound()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsNotFound
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+
+            /// <summary>
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryNotFound([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = NotFound();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
+                }
+
+                return result != null;
+            }
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public bool IsConflict => 409 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 409 Conflict
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.Error? Conflict()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.Error? result = null;
+                OnConflict(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultConflict();
+                return result;
+            }
+
+            private Timr.Api.Model.Error? DefaultConflict()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsConflict
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnConflict(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+
+            /// <summary>
+            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryConflict([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Conflict();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
+                }
+
+                return result != null;
+            }
+
+            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
+            {
+                bool suppressDefaultLog = false;
+                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
+                if (!suppressDefaultLog)
+                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
+            }
+
+            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
+        }
+
+        partial void FormatFetchDeletedDriveLogs(ref Option<DateTimeOffset> lastModifiedAfter, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<DeletedEntrySortColumn> sortBy);
+
+        /// <summary>
+        /// Validates the request parameters
+        /// </summary>
+        /// <param name="pageToken"></param>
+        /// <returns></returns>
+        private void ValidateFetchDeletedDriveLogs(Option<string> pageToken)
+        {
+            if (pageToken.IsSet && pageToken.Value == null)
+                throw new ArgumentNullException(nameof(pageToken));
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        private void AfterFetchDeletedDriveLogsDefaultImplementation(IFetchDeletedDriveLogsApiResponse apiResponseLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy)
+        {
+            bool suppressDefaultLog = false;
+            AfterFetchDeletedDriveLogs(ref suppressDefaultLog, apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+            if (!suppressDefaultLog)
+                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
+        }
+
+        /// <summary>
+        /// Processes the server response
+        /// </summary>
+        /// <param name="suppressDefaultLog"></param>
+        /// <param name="apiResponseLocalVar"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        partial void AfterFetchDeletedDriveLogs(ref bool suppressDefaultLog, IFetchDeletedDriveLogsApiResponse apiResponseLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy);
+
+        /// <summary>
+        /// Logs exceptions that occur while retrieving the server response
+        /// </summary>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        private void OnErrorFetchDeletedDriveLogsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy)
+        {
+            bool suppressDefaultLogLocalVar = false;
+            OnErrorFetchDeletedDriveLogs(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+            if (!suppressDefaultLogLocalVar)
+                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
+        }
+
+        /// <summary>
+        /// A partial method that gives developers a way to provide customized exception handling
+        /// </summary>
+        /// <param name="suppressDefaultLogLocalVar"></param>
+        /// <param name="exceptionLocalVar"></param>
+        /// <param name="pathFormatLocalVar"></param>
+        /// <param name="pathLocalVar"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        partial void OnErrorFetchDeletedDriveLogs(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy);
+
+        /// <summary>
+        /// List deleted Drive Logs Lists Drive Logs that were deleted, so a client holding a local copy can reconcile.
+        /// </summary>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
+        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
+        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
+        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
+        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedDriveLogsApiResponse"/>&gt;</returns>
+        public async Task<IFetchDeletedDriveLogsApiResponse?> FetchDeletedDriveLogsOrDefaultAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                return await FetchDeletedDriveLogsAsync(lastModifiedAfter, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// List deleted Drive Logs Lists Drive Logs that were deleted, so a client holding a local copy can reconcile.
+        /// </summary>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
+        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
+        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
+        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
+        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedDriveLogsApiResponse"/>&gt;</returns>
+        public async Task<IFetchDeletedDriveLogsApiResponse> FetchDeletedDriveLogsAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        {
+            UriBuilder uriBuilderLocalVar = new UriBuilder();
+
+            try
+            {
+                ValidateFetchDeletedDriveLogs(pageToken);
+
+                FormatFetchDeletedDriveLogs(ref lastModifiedAfter, ref pageToken, ref limit, ref sortDirection, ref sortBy);
+
+                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
+                {
+                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
+                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
+                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
+                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
+                        ? "/drive-logs:deleted"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs:deleted");
+
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (lastModifiedAfter.IsSet)
+                        parseQueryStringLocalVar["last_modified_after"] = ClientUtils.ParameterToString(lastModifiedAfter.Value);
 
                     if (pageToken.IsSet)
                         parseQueryStringLocalVar["page_token"] = ClientUtils.ParameterToString(pageToken.Value);
@@ -1211,20 +1528,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        FetchUserTeamLeadershipsApiResponse apiResponseLocalVar;
+                        FetchDeletedDriveLogsApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{id}/team-leaderships", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs:deleted", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterFetchUserTeamLeadershipsDefaultImplementation(apiResponseLocalVar, id, pageToken, limit, sortDirection, sortBy);
+                        AfterFetchDeletedDriveLogsDefaultImplementation(apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnFetchUserTeamLeaderships(apiResponseLocalVar);
+                        Events.ExecuteOnFetchDeletedDriveLogs(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1236,24 +1553,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorFetchUserTeamLeadershipsDefaultImplementation(e, "/users/{id}/team-leaderships", uriBuilderLocalVar.Path, id, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchUserTeamLeaderships(e);
+                OnErrorFetchDeletedDriveLogsDefaultImplementation(e, "/drive-logs:deleted", uriBuilderLocalVar.Path, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchDeletedDriveLogs(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="FetchUserTeamLeadershipsApiResponse"/>
+        /// The <see cref="FetchDeletedDriveLogsApiResponse"/>
         /// </summary>
-        public partial class FetchUserTeamLeadershipsApiResponse : Timr.Api.Client.ApiResponse, IFetchUserTeamLeadershipsApiResponse
+        public partial class FetchDeletedDriveLogsApiResponse : Timr.Api.Client.ApiResponse, IFetchDeletedDriveLogsApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<UserApi> Logger { get; }
+            public ILogger<DriveLogApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="FetchUserTeamLeadershipsApiResponse"/>
+            /// The <see cref="FetchDeletedDriveLogsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1262,14 +1579,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchUserTeamLeadershipsApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchDeletedDriveLogsApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="FetchUserTeamLeadershipsApiResponse"/>
+            /// The <see cref="FetchDeletedDriveLogsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1278,7 +1595,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchUserTeamLeadershipsApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchDeletedDriveLogsApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1296,32 +1613,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.TeamsPartialPage? Ok()
+            public Timr.Api.Model.DeletedEntryPage? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.TeamsPartialPage? result = null;
+                Timr.Api.Model.DeletedEntryPage? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.TeamsPartialPage? DefaultOk()
+            private Timr.Api.Model.DeletedEntryPage? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TeamsPartialPage>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.DeletedEntryPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TeamsPartialPage? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.DeletedEntryPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TeamsPartialPage? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.DeletedEntryPage? result)
             {
                 result = null;
 
@@ -1397,18 +1714,34 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchUserTeamMemberships(ref string id, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<TeamsSortColumn> sortBy);
+        partial void FormatFetchDriveLogs(ref Option<DateOnly> startFrom, ref Option<DateOnly> startTo, ref Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> cars, Option<List<string>> driveLogCategories, Option<List<DriveLogStatus>> statuses, Option<List<string>> users, ref Option<string> details, ref Option<bool> changed, ref Option<bool> hasTrack, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<DriveLogsSortColumn> sortBy);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="cars"></param>
+        /// <param name="driveLogCategories"></param>
+        /// <param name="statuses"></param>
+        /// <param name="users"></param>
+        /// <param name="details"></param>
         /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateFetchUserTeamMemberships(string id, Option<string> pageToken)
+        private void ValidateFetchDriveLogs(Option<List<string>> cars, Option<List<string>> driveLogCategories, Option<List<DriveLogStatus>> statuses, Option<List<string>> users, Option<string> details, Option<string> pageToken)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (cars.IsSet && cars.Value == null)
+                throw new ArgumentNullException(nameof(cars));
+
+            if (driveLogCategories.IsSet && driveLogCategories.Value == null)
+                throw new ArgumentNullException(nameof(driveLogCategories));
+
+            if (statuses.IsSet && statuses.Value == null)
+                throw new ArgumentNullException(nameof(statuses));
+
+            if (users.IsSet && users.Value == null)
+                throw new ArgumentNullException(nameof(users));
+
+            if (details.IsSet && details.Value == null)
+                throw new ArgumentNullException(nameof(details));
 
             if (pageToken.IsSet && pageToken.Value == null)
                 throw new ArgumentNullException(nameof(pageToken));
@@ -1418,15 +1751,24 @@ namespace Timr.Api.Api
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
+        /// <param name="startFrom"></param>
+        /// <param name="startTo"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="cars"></param>
+        /// <param name="driveLogCategories"></param>
+        /// <param name="statuses"></param>
+        /// <param name="users"></param>
+        /// <param name="details"></param>
+        /// <param name="changed"></param>
+        /// <param name="hasTrack"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void AfterFetchUserTeamMembershipsDefaultImplementation(IFetchUserTeamMembershipsApiResponse apiResponseLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy)
+        private void AfterFetchDriveLogsDefaultImplementation(IFetchDriveLogsApiResponse apiResponseLocalVar, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> cars, Option<List<string>> driveLogCategories, Option<List<DriveLogStatus>> statuses, Option<List<string>> users, Option<string> details, Option<bool> changed, Option<bool> hasTrack, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DriveLogsSortColumn> sortBy)
         {
             bool suppressDefaultLog = false;
-            AfterFetchUserTeamMemberships(ref suppressDefaultLog, apiResponseLocalVar, id, pageToken, limit, sortDirection, sortBy);
+            AfterFetchDriveLogs(ref suppressDefaultLog, apiResponseLocalVar, startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1436,12 +1778,21 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
+        /// <param name="startFrom"></param>
+        /// <param name="startTo"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="cars"></param>
+        /// <param name="driveLogCategories"></param>
+        /// <param name="statuses"></param>
+        /// <param name="users"></param>
+        /// <param name="details"></param>
+        /// <param name="changed"></param>
+        /// <param name="hasTrack"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void AfterFetchUserTeamMemberships(ref bool suppressDefaultLog, IFetchUserTeamMembershipsApiResponse apiResponseLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy);
+        partial void AfterFetchDriveLogs(ref bool suppressDefaultLog, IFetchDriveLogsApiResponse apiResponseLocalVar, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> cars, Option<List<string>> driveLogCategories, Option<List<DriveLogStatus>> statuses, Option<List<string>> users, Option<string> details, Option<bool> changed, Option<bool> hasTrack, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DriveLogsSortColumn> sortBy);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1449,15 +1800,24 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
+        /// <param name="startFrom"></param>
+        /// <param name="startTo"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="cars"></param>
+        /// <param name="driveLogCategories"></param>
+        /// <param name="statuses"></param>
+        /// <param name="users"></param>
+        /// <param name="details"></param>
+        /// <param name="changed"></param>
+        /// <param name="hasTrack"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void OnErrorFetchUserTeamMembershipsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy)
+        private void OnErrorFetchDriveLogsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> cars, Option<List<string>> driveLogCategories, Option<List<DriveLogStatus>> statuses, Option<List<string>> users, Option<string> details, Option<bool> changed, Option<bool> hasTrack, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DriveLogsSortColumn> sortBy)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchUserTeamMemberships(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, pageToken, limit, sortDirection, sortBy);
+            OnErrorFetchDriveLogs(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1469,28 +1829,46 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
+        /// <param name="startFrom"></param>
+        /// <param name="startTo"></param>
+        /// <param name="lastModifiedAfter"></param>
+        /// <param name="cars"></param>
+        /// <param name="driveLogCategories"></param>
+        /// <param name="statuses"></param>
+        /// <param name="users"></param>
+        /// <param name="details"></param>
+        /// <param name="changed"></param>
+        /// <param name="hasTrack"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void OnErrorFetchUserTeamMemberships(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TeamsSortColumn> sortBy);
+        partial void OnErrorFetchDriveLogs(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> cars, Option<List<string>> driveLogCategories, Option<List<DriveLogStatus>> statuses, Option<List<string>> users, Option<string> details, Option<bool> changed, Option<bool> hasTrack, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DriveLogsSortColumn> sortBy);
 
         /// <summary>
-        /// List a User&#39;s Team memberships Lists the Teams the User is a member of.
+        /// List Drive Logs Lists the Drive Logs the authenticated user or API token can access.
         /// </summary>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
+        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
+        /// <param name="cars">Only return entries recorded for these Cars. (optional)</param>
+        /// <param name="driveLogCategories">Only return entries in these Drive Log Categories. (optional)</param>
+        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="users">Only return entries belonging to these users. (optional)</param>
+        /// <param name="details">Only return Drive Logs whose route, purpose or visited contains this text. (optional)</param>
+        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
+        /// <param name="hasTrack">Only return Drive Logs that have a Track (true) or have none (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamMembershipsApiResponse"/>&gt;</returns>
-        public async Task<IFetchUserTeamMembershipsApiResponse?> FetchUserTeamMembershipsOrDefaultAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDriveLogsApiResponse"/>&gt;</returns>
+        public async Task<IFetchDriveLogsApiResponse?> FetchDriveLogsOrDefaultAsync(Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> cars = default, Option<List<string>> driveLogCategories = default, Option<List<DriveLogStatus>> statuses = default, Option<List<string>> users = default, Option<string> details = default, Option<bool> changed = default, Option<bool> hasTrack = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DriveLogsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await FetchUserTeamMembershipsAsync(id, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+                return await FetchDriveLogsAsync(startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1499,25 +1877,34 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// List a User&#39;s Team memberships Lists the Teams the User is a member of.
+        /// List Drive Logs Lists the Drive Logs the authenticated user or API token can access.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
+        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
+        /// <param name="cars">Only return entries recorded for these Cars. (optional)</param>
+        /// <param name="driveLogCategories">Only return entries in these Drive Log Categories. (optional)</param>
+        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="users">Only return entries belonging to these users. (optional)</param>
+        /// <param name="details">Only return Drive Logs whose route, purpose or visited contains this text. (optional)</param>
+        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
+        /// <param name="hasTrack">Only return Drive Logs that have a Track (true) or have none (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUserTeamMembershipsApiResponse"/>&gt;</returns>
-        public async Task<IFetchUserTeamMembershipsApiResponse> FetchUserTeamMembershipsAsync(string id, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TeamsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDriveLogsApiResponse"/>&gt;</returns>
+        public async Task<IFetchDriveLogsApiResponse> FetchDriveLogsAsync(Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> cars = default, Option<List<string>> driveLogCategories = default, Option<List<DriveLogStatus>> statuses = default, Option<List<string>> users = default, Option<string> details = default, Option<bool> changed = default, Option<bool> hasTrack = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DriveLogsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateFetchUserTeamMemberships(id, pageToken);
+                ValidateFetchDriveLogs(cars, driveLogCategories, statuses, users, details, pageToken);
 
-                FormatFetchUserTeamMemberships(ref id, ref pageToken, ref limit, ref sortDirection, ref sortBy);
+                FormatFetchDriveLogs(ref startFrom, ref startTo, ref lastModifiedAfter, cars, driveLogCategories, statuses, users, ref details, ref changed, ref hasTrack, ref pageToken, ref limit, ref sortDirection, ref sortBy);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1525,11 +1912,40 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{id}/team-memberships"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users/{id}/team-memberships");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
+                        ? "/drive-logs"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs");
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (startFrom.IsSet)
+                        parseQueryStringLocalVar["start_from"] = ClientUtils.ParameterToString(startFrom.Value);
+
+                    if (startTo.IsSet)
+                        parseQueryStringLocalVar["start_to"] = ClientUtils.ParameterToString(startTo.Value);
+
+                    if (lastModifiedAfter.IsSet)
+                        parseQueryStringLocalVar["last_modified_after"] = ClientUtils.ParameterToString(lastModifiedAfter.Value);
+
+                    if (cars.IsSet)
+                        parseQueryStringLocalVar["cars"] = ClientUtils.ParameterToString(cars.Value);
+
+                    if (driveLogCategories.IsSet)
+                        parseQueryStringLocalVar["drive_log_categories"] = ClientUtils.ParameterToString(driveLogCategories.Value);
+
+                    if (statuses.IsSet)
+                        parseQueryStringLocalVar["statuses"] = ClientUtils.ParameterToString(statuses.Value);
+
+                    if (users.IsSet)
+                        parseQueryStringLocalVar["users"] = ClientUtils.ParameterToString(users.Value);
+
+                    if (details.IsSet)
+                        parseQueryStringLocalVar["details"] = ClientUtils.ParameterToString(details.Value);
+
+                    if (changed.IsSet)
+                        parseQueryStringLocalVar["changed"] = ClientUtils.ParameterToString(changed.Value);
+
+                    if (hasTrack.IsSet)
+                        parseQueryStringLocalVar["has_track"] = ClientUtils.ParameterToString(hasTrack.Value);
 
                     if (pageToken.IsSet)
                         parseQueryStringLocalVar["page_token"] = ClientUtils.ParameterToString(pageToken.Value);
@@ -1576,20 +1992,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        FetchUserTeamMembershipsApiResponse apiResponseLocalVar;
+                        FetchDriveLogsApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{id}/team-memberships", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterFetchUserTeamMembershipsDefaultImplementation(apiResponseLocalVar, id, pageToken, limit, sortDirection, sortBy);
+                        AfterFetchDriveLogsDefaultImplementation(apiResponseLocalVar, startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnFetchUserTeamMemberships(apiResponseLocalVar);
+                        Events.ExecuteOnFetchDriveLogs(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1601,24 +2017,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorFetchUserTeamMembershipsDefaultImplementation(e, "/users/{id}/team-memberships", uriBuilderLocalVar.Path, id, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchUserTeamMemberships(e);
+                OnErrorFetchDriveLogsDefaultImplementation(e, "/drive-logs", uriBuilderLocalVar.Path, startFrom, startTo, lastModifiedAfter, cars, driveLogCategories, statuses, users, details, changed, hasTrack, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchDriveLogs(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="FetchUserTeamMembershipsApiResponse"/>
+        /// The <see cref="FetchDriveLogsApiResponse"/>
         /// </summary>
-        public partial class FetchUserTeamMembershipsApiResponse : Timr.Api.Client.ApiResponse, IFetchUserTeamMembershipsApiResponse
+        public partial class FetchDriveLogsApiResponse : Timr.Api.Client.ApiResponse, IFetchDriveLogsApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<UserApi> Logger { get; }
+            public ILogger<DriveLogApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="FetchUserTeamMembershipsApiResponse"/>
+            /// The <see cref="FetchDriveLogsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1627,14 +2043,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchUserTeamMembershipsApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchDriveLogsApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="FetchUserTeamMembershipsApiResponse"/>
+            /// The <see cref="FetchDriveLogsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1643,7 +2059,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchUserTeamMembershipsApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchDriveLogsApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1661,32 +2077,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.TeamsPartialPage? Ok()
+            public Timr.Api.Model.DriveLogsPage? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.TeamsPartialPage? result = null;
+                Timr.Api.Model.DriveLogsPage? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.TeamsPartialPage? DefaultOk()
+            private Timr.Api.Model.DriveLogsPage? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TeamsPartialPage>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.DriveLogsPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TeamsPartialPage? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.DriveLogsPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TeamsPartialPage? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.DriveLogsPage? result)
             {
                 result = null;
 
@@ -1762,439 +2178,14 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchUsers(ref Option<string> name, ref Option<DateOnly> entryDateFrom, ref Option<DateOnly> entryDateTo, ref Option<DateOnly> resignDateFrom, ref Option<DateOnly> resignDateTo, ref Option<bool> resigned, ref Option<string> employeeNumber, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<UsersSortColumn> sortBy);
-
-        /// <summary>
-        /// Validates the request parameters
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="employeeNumber"></param>
-        /// <param name="pageToken"></param>
-        /// <returns></returns>
-        private void ValidateFetchUsers(Option<string> name, Option<string> employeeNumber, Option<string> pageToken)
-        {
-            if (name.IsSet && name.Value == null)
-                throw new ArgumentNullException(nameof(name));
-
-            if (employeeNumber.IsSet && employeeNumber.Value == null)
-                throw new ArgumentNullException(nameof(employeeNumber));
-
-            if (pageToken.IsSet && pageToken.Value == null)
-                throw new ArgumentNullException(nameof(pageToken));
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="name"></param>
-        /// <param name="entryDateFrom"></param>
-        /// <param name="entryDateTo"></param>
-        /// <param name="resignDateFrom"></param>
-        /// <param name="resignDateTo"></param>
-        /// <param name="resigned"></param>
-        /// <param name="employeeNumber"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        private void AfterFetchUsersDefaultImplementation(IFetchUsersApiResponse apiResponseLocalVar, Option<string> name, Option<DateOnly> entryDateFrom, Option<DateOnly> entryDateTo, Option<DateOnly> resignDateFrom, Option<DateOnly> resignDateTo, Option<bool> resigned, Option<string> employeeNumber, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<UsersSortColumn> sortBy)
-        {
-            bool suppressDefaultLog = false;
-            AfterFetchUsers(ref suppressDefaultLog, apiResponseLocalVar, name, entryDateFrom, entryDateTo, resignDateFrom, resignDateTo, resigned, employeeNumber, pageToken, limit, sortDirection, sortBy);
-            if (!suppressDefaultLog)
-                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="name"></param>
-        /// <param name="entryDateFrom"></param>
-        /// <param name="entryDateTo"></param>
-        /// <param name="resignDateFrom"></param>
-        /// <param name="resignDateTo"></param>
-        /// <param name="resigned"></param>
-        /// <param name="employeeNumber"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        partial void AfterFetchUsers(ref bool suppressDefaultLog, IFetchUsersApiResponse apiResponseLocalVar, Option<string> name, Option<DateOnly> entryDateFrom, Option<DateOnly> entryDateTo, Option<DateOnly> resignDateFrom, Option<DateOnly> resignDateTo, Option<bool> resigned, Option<string> employeeNumber, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<UsersSortColumn> sortBy);
-
-        /// <summary>
-        /// Logs exceptions that occur while retrieving the server response
-        /// </summary>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="name"></param>
-        /// <param name="entryDateFrom"></param>
-        /// <param name="entryDateTo"></param>
-        /// <param name="resignDateFrom"></param>
-        /// <param name="resignDateTo"></param>
-        /// <param name="resigned"></param>
-        /// <param name="employeeNumber"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        private void OnErrorFetchUsersDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> name, Option<DateOnly> entryDateFrom, Option<DateOnly> entryDateTo, Option<DateOnly> resignDateFrom, Option<DateOnly> resignDateTo, Option<bool> resigned, Option<string> employeeNumber, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<UsersSortColumn> sortBy)
-        {
-            bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchUsers(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, name, entryDateFrom, entryDateTo, resignDateFrom, resignDateTo, resigned, employeeNumber, pageToken, limit, sortDirection, sortBy);
-            if (!suppressDefaultLogLocalVar)
-                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
-        }
-
-        /// <summary>
-        /// A partial method that gives developers a way to provide customized exception handling
-        /// </summary>
-        /// <param name="suppressDefaultLogLocalVar"></param>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="name"></param>
-        /// <param name="entryDateFrom"></param>
-        /// <param name="entryDateTo"></param>
-        /// <param name="resignDateFrom"></param>
-        /// <param name="resignDateTo"></param>
-        /// <param name="resigned"></param>
-        /// <param name="employeeNumber"></param>
-        /// <param name="pageToken"></param>
-        /// <param name="limit"></param>
-        /// <param name="sortDirection"></param>
-        /// <param name="sortBy"></param>
-        partial void OnErrorFetchUsers(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> name, Option<DateOnly> entryDateFrom, Option<DateOnly> entryDateTo, Option<DateOnly> resignDateFrom, Option<DateOnly> resignDateTo, Option<bool> resigned, Option<string> employeeNumber, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<UsersSortColumn> sortBy);
-
-        /// <summary>
-        /// List Users Lists the Users the authenticated user or API token can access.
-        /// </summary>
-        /// <param name="name">Only return Users whose name contains this text. (optional)</param>
-        /// <param name="entryDateFrom">Only return Users whose entry date is on or after this day. (optional)</param>
-        /// <param name="entryDateTo">Only return Users whose entry date is on or before this day. (optional)</param>
-        /// <param name="resignDateFrom">Only return Users whose resignation date is on or after this day. (optional)</param>
-        /// <param name="resignDateTo">Only return Users whose resignation date is on or before this day. (optional)</param>
-        /// <param name="resigned">Only return Users who have resigned (true) or have not resigned (false). (optional)</param>
-        /// <param name="employeeNumber">Only return Users with this employee number. (optional)</param>
-        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
-        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
-        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
-        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUsersApiResponse"/>&gt;</returns>
-        public async Task<IFetchUsersApiResponse?> FetchUsersOrDefaultAsync(Option<string> name = default, Option<DateOnly> entryDateFrom = default, Option<DateOnly> entryDateTo = default, Option<DateOnly> resignDateFrom = default, Option<DateOnly> resignDateTo = default, Option<bool> resigned = default, Option<string> employeeNumber = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<UsersSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await FetchUsersAsync(name, entryDateFrom, entryDateTo, resignDateFrom, resignDateTo, resigned, employeeNumber, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// List Users Lists the Users the authenticated user or API token can access.
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="name">Only return Users whose name contains this text. (optional)</param>
-        /// <param name="entryDateFrom">Only return Users whose entry date is on or after this day. (optional)</param>
-        /// <param name="entryDateTo">Only return Users whose entry date is on or before this day. (optional)</param>
-        /// <param name="resignDateFrom">Only return Users whose resignation date is on or after this day. (optional)</param>
-        /// <param name="resignDateTo">Only return Users whose resignation date is on or before this day. (optional)</param>
-        /// <param name="resigned">Only return Users who have resigned (true) or have not resigned (false). (optional)</param>
-        /// <param name="employeeNumber">Only return Users with this employee number. (optional)</param>
-        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
-        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
-        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
-        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchUsersApiResponse"/>&gt;</returns>
-        public async Task<IFetchUsersApiResponse> FetchUsersAsync(Option<string> name = default, Option<DateOnly> entryDateFrom = default, Option<DateOnly> entryDateTo = default, Option<DateOnly> resignDateFrom = default, Option<DateOnly> resignDateTo = default, Option<bool> resigned = default, Option<string> employeeNumber = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<UsersSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
-        {
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                ValidateFetchUsers(name, employeeNumber, pageToken);
-
-                FormatFetchUsers(ref name, ref entryDateFrom, ref entryDateTo, ref resignDateFrom, ref resignDateTo, ref resigned, ref employeeNumber, ref pageToken, ref limit, ref sortDirection, ref sortBy);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users");
-
-                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
-
-                    if (name.IsSet)
-                        parseQueryStringLocalVar["name"] = ClientUtils.ParameterToString(name.Value);
-
-                    if (entryDateFrom.IsSet)
-                        parseQueryStringLocalVar["entry_date_from"] = ClientUtils.ParameterToString(entryDateFrom.Value);
-
-                    if (entryDateTo.IsSet)
-                        parseQueryStringLocalVar["entry_date_to"] = ClientUtils.ParameterToString(entryDateTo.Value);
-
-                    if (resignDateFrom.IsSet)
-                        parseQueryStringLocalVar["resign_date_from"] = ClientUtils.ParameterToString(resignDateFrom.Value);
-
-                    if (resignDateTo.IsSet)
-                        parseQueryStringLocalVar["resign_date_to"] = ClientUtils.ParameterToString(resignDateTo.Value);
-
-                    if (resigned.IsSet)
-                        parseQueryStringLocalVar["resigned"] = ClientUtils.ParameterToString(resigned.Value);
-
-                    if (employeeNumber.IsSet)
-                        parseQueryStringLocalVar["employee_number"] = ClientUtils.ParameterToString(employeeNumber.Value);
-
-                    if (pageToken.IsSet)
-                        parseQueryStringLocalVar["page_token"] = ClientUtils.ParameterToString(pageToken.Value);
-
-                    if (limit.IsSet)
-                        parseQueryStringLocalVar["limit"] = ClientUtils.ParameterToString(limit.Value);
-
-                    if (sortDirection.IsSet)
-                        parseQueryStringLocalVar["sort_direction"] = ClientUtils.ParameterToString(sortDirection.Value);
-
-                    if (sortBy.IsSet)
-                        parseQueryStringLocalVar["sort_by"] = ClientUtils.ParameterToString(sortBy.Value);
-
-                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
-
-                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
-
-                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
-
-                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
-
-                    OAuthToken oauthTokenLocalVar2 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
-
-                    tokenBaseLocalVars.Add(oauthTokenLocalVar2);
-
-                    oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
-
-                    string[] acceptLocalVars = new string[] {
-                        "application/json",
-                        "application/problem+json"
-                    };
-
-                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
-
-                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        FetchUsersApiResponse apiResponseLocalVar;
-
-                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
-                            default: {
-                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users", requestedAtLocalVar, _jsonSerializerOptions);
-
-                                break;
-                            }
-                        }
-
-                        AfterFetchUsersDefaultImplementation(apiResponseLocalVar, name, entryDateFrom, entryDateTo, resignDateFrom, resignDateTo, resigned, employeeNumber, pageToken, limit, sortDirection, sortBy);
-
-                        Events.ExecuteOnFetchUsers(apiResponseLocalVar);
-
-                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
-                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
-                                tokenBaseLocalVar.BeginRateLimit();
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorFetchUsersDefaultImplementation(e, "/users", uriBuilderLocalVar.Path, name, entryDateFrom, entryDateTo, resignDateFrom, resignDateTo, resigned, employeeNumber, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchUsers(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="FetchUsersApiResponse"/>
-        /// </summary>
-        public partial class FetchUsersApiResponse : Timr.Api.Client.ApiResponse, IFetchUsersApiResponse
-        {
-            /// <summary>
-            /// The logger
-            /// </summary>
-            public ILogger<UserApi> Logger { get; }
-
-            /// <summary>
-            /// The <see cref="FetchUsersApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="rawContent"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public FetchUsersApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            /// <summary>
-            /// The <see cref="FetchUsersApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="contentStream"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public FetchUsersApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public bool IsOk => 200 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.UsersPage? Ok()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.UsersPage? result = null;
-                OnOk(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultOk();
-                return result;
-            }
-
-            private Timr.Api.Model.UsersPage? DefaultOk()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.UsersPage>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.UsersPage? result);
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.UsersPage? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Ok();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public bool IsBadRequest => 400 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? BadRequest()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnBadRequest(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultBadRequest();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultBadRequest()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsBadRequest
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryBadRequest([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = BadRequest();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
-                }
-
-                return result != null;
-            }
-
-            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
-            {
-                bool suppressDefaultLog = false;
-                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
-                if (!suppressDefaultLog)
-                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
-            }
-
-            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
-        }
-
-        partial void FormatGetUser(ref string id);
+        partial void FormatGetDriveLog(ref string id);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private void ValidateGetUser(string id)
+        private void ValidateGetDriveLog(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -2205,10 +2196,10 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        private void AfterGetUserDefaultImplementation(IGetUserApiResponse apiResponseLocalVar, string id)
+        private void AfterGetDriveLogDefaultImplementation(IGetDriveLogApiResponse apiResponseLocalVar, string id)
         {
             bool suppressDefaultLog = false;
-            AfterGetUser(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterGetDriveLog(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -2219,7 +2210,7 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        partial void AfterGetUser(ref bool suppressDefaultLog, IGetUserApiResponse apiResponseLocalVar, string id);
+        partial void AfterGetDriveLog(ref bool suppressDefaultLog, IGetDriveLogApiResponse apiResponseLocalVar, string id);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -2228,10 +2219,10 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        private void OnErrorGetUserDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        private void OnErrorGetDriveLogDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetUser(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorGetDriveLog(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2244,19 +2235,19 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        partial void OnErrorGetUser(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        partial void OnErrorGetDriveLog(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
 
         /// <summary>
-        /// Get a User Returns a single User by its ID.
+        /// Get a Drive Log Returns a single Drive Log by its ID.
         /// </summary>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserApiResponse"/>&gt;</returns>
-        public async Task<IGetUserApiResponse?> GetUserOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetDriveLogApiResponse"/>&gt;</returns>
+        public async Task<IGetDriveLogApiResponse?> GetDriveLogOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetUserAsync(id, cancellationToken).ConfigureAwait(false);
+                return await GetDriveLogAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2265,21 +2256,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Get a User Returns a single User by its ID.
+        /// Get a Drive Log Returns a single Drive Log by its ID.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserApiResponse"/>&gt;</returns>
-        public async Task<IGetUserApiResponse> GetUserAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetDriveLogApiResponse"/>&gt;</returns>
+        public async Task<IGetDriveLogApiResponse> GetDriveLogAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetUser(id);
+                ValidateGetDriveLog(id);
 
-                FormatGetUser(ref id);
+                FormatGetDriveLog(ref id);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -2287,8 +2278,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users/{id}");
+                        ? "/drive-logs/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -2322,20 +2313,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        GetUserApiResponse apiResponseLocalVar;
+                        GetDriveLogApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterGetUserDefaultImplementation(apiResponseLocalVar, id);
+                        AfterGetDriveLogDefaultImplementation(apiResponseLocalVar, id);
 
-                        Events.ExecuteOnGetUser(apiResponseLocalVar);
+                        Events.ExecuteOnGetDriveLog(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -2347,24 +2338,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorGetUserDefaultImplementation(e, "/users/{id}", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorGetUser(e);
+                OnErrorGetDriveLogDefaultImplementation(e, "/drive-logs/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorGetDriveLog(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="GetUserApiResponse"/>
+        /// The <see cref="GetDriveLogApiResponse"/>
         /// </summary>
-        public partial class GetUserApiResponse : Timr.Api.Client.ApiResponse, IGetUserApiResponse
+        public partial class GetDriveLogApiResponse : Timr.Api.Client.ApiResponse, IGetDriveLogApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<UserApi> Logger { get; }
+            public ILogger<DriveLogApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="GetUserApiResponse"/>
+            /// The <see cref="GetDriveLogApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2373,14 +2364,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetUserApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="GetUserApiResponse"/>
+            /// The <see cref="GetDriveLogApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2389,7 +2380,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetUserApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2407,32 +2398,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.User? Ok()
+            public Timr.Api.Model.DriveLog? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.User? result = null;
+                Timr.Api.Model.DriveLog? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.User? DefaultOk()
+            private Timr.Api.Model.DriveLog? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.User>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.DriveLog>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.User? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.DriveLog? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.User? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.DriveLog? result)
             {
                 result = null;
 
@@ -2558,17 +2549,21 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetUserWorkScheduleModel(ref string id);
+        partial void FormatUpdateDriveLog(ref string id, DriveLogUpdate driveLogUpdate);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="driveLogUpdate"></param>
         /// <returns></returns>
-        private void ValidateGetUserWorkScheduleModel(string id)
+        private void ValidateUpdateDriveLog(string id, DriveLogUpdate driveLogUpdate)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
+
+            if (driveLogUpdate == null)
+                throw new ArgumentNullException(nameof(driveLogUpdate));
         }
 
         /// <summary>
@@ -2576,10 +2571,11 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        private void AfterGetUserWorkScheduleModelDefaultImplementation(IGetUserWorkScheduleModelApiResponse apiResponseLocalVar, string id)
+        /// <param name="driveLogUpdate"></param>
+        private void AfterUpdateDriveLogDefaultImplementation(IUpdateDriveLogApiResponse apiResponseLocalVar, string id, DriveLogUpdate driveLogUpdate)
         {
             bool suppressDefaultLog = false;
-            AfterGetUserWorkScheduleModel(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterUpdateDriveLog(ref suppressDefaultLog, apiResponseLocalVar, id, driveLogUpdate);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -2590,7 +2586,8 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        partial void AfterGetUserWorkScheduleModel(ref bool suppressDefaultLog, IGetUserWorkScheduleModelApiResponse apiResponseLocalVar, string id);
+        /// <param name="driveLogUpdate"></param>
+        partial void AfterUpdateDriveLog(ref bool suppressDefaultLog, IUpdateDriveLogApiResponse apiResponseLocalVar, string id, DriveLogUpdate driveLogUpdate);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -2599,10 +2596,11 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        private void OnErrorGetUserWorkScheduleModelDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        /// <param name="driveLogUpdate"></param>
+        private void OnErrorUpdateDriveLogDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, DriveLogUpdate driveLogUpdate)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetUserWorkScheduleModel(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorUpdateDriveLog(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, driveLogUpdate);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2615,19 +2613,21 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        partial void OnErrorGetUserWorkScheduleModel(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        /// <param name="driveLogUpdate"></param>
+        partial void OnErrorUpdateDriveLog(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, DriveLogUpdate driveLogUpdate);
 
         /// <summary>
-        /// Get a User&#39;s Work Schedule Model Returns the Work Schedule Model assigned to the User, with all durations expressed in minutes.
+        /// Update a Drive Log Updates the Drive Log with the fields present in the request body. Fields that are omitted stay unchanged.
         /// </summary>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
+        /// <param name="driveLogUpdate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkScheduleModelApiResponse"/>&gt;</returns>
-        public async Task<IGetUserWorkScheduleModelApiResponse?> GetUserWorkScheduleModelOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateDriveLogApiResponse"/>&gt;</returns>
+        public async Task<IUpdateDriveLogApiResponse?> UpdateDriveLogOrDefaultAsync(string id, DriveLogUpdate driveLogUpdate, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetUserWorkScheduleModelAsync(id, cancellationToken).ConfigureAwait(false);
+                return await UpdateDriveLogAsync(id, driveLogUpdate, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2636,21 +2636,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Get a User&#39;s Work Schedule Model Returns the Work Schedule Model assigned to the User, with all durations expressed in minutes.
+        /// Update a Drive Log Updates the Drive Log with the fields present in the request body. Fields that are omitted stay unchanged.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
+        /// <param name="id">ID of the Drive Log.</param>
+        /// <param name="driveLogUpdate">Drive Log entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkScheduleModelApiResponse"/>&gt;</returns>
-        public async Task<IGetUserWorkScheduleModelApiResponse> GetUserWorkScheduleModelAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateDriveLogApiResponse"/>&gt;</returns>
+        public async Task<IUpdateDriveLogApiResponse> UpdateDriveLogAsync(string id, DriveLogUpdate driveLogUpdate, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetUserWorkScheduleModel(id);
+                ValidateUpdateDriveLog(id, driveLogUpdate);
 
-                FormatGetUserWorkScheduleModel(ref id);
+                FormatUpdateDriveLog(ref id, driveLogUpdate);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -2658,394 +2659,13 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{id}/work-schedule-model"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users/{id}/work-schedule-model");
+                        ? "/drive-logs/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
-                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
-
-                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
-
-                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
-
-                    OAuthToken oauthTokenLocalVar2 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
-
-                    tokenBaseLocalVars.Add(oauthTokenLocalVar2);
-
-                    oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
-
-                    string[] acceptLocalVars = new string[] {
-                        "application/json",
-                        "application/problem+json"
-                    };
-
-                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
-
-                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        GetUserWorkScheduleModelApiResponse apiResponseLocalVar;
-
-                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
-                            default: {
-                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{id}/work-schedule-model", requestedAtLocalVar, _jsonSerializerOptions);
-
-                                break;
-                            }
-                        }
-
-                        AfterGetUserWorkScheduleModelDefaultImplementation(apiResponseLocalVar, id);
-
-                        Events.ExecuteOnGetUserWorkScheduleModel(apiResponseLocalVar);
-
-                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
-                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
-                                tokenBaseLocalVar.BeginRateLimit();
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorGetUserWorkScheduleModelDefaultImplementation(e, "/users/{id}/work-schedule-model", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorGetUserWorkScheduleModel(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="GetUserWorkScheduleModelApiResponse"/>
-        /// </summary>
-        public partial class GetUserWorkScheduleModelApiResponse : Timr.Api.Client.ApiResponse, IGetUserWorkScheduleModelApiResponse
-        {
-            /// <summary>
-            /// The logger
-            /// </summary>
-            public ILogger<UserApi> Logger { get; }
-
-            /// <summary>
-            /// The <see cref="GetUserWorkScheduleModelApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="rawContent"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetUserWorkScheduleModelApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            /// <summary>
-            /// The <see cref="GetUserWorkScheduleModelApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="contentStream"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetUserWorkScheduleModelApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public bool IsOk => 200 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.WorkScheduleModel? Ok()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.WorkScheduleModel? result = null;
-                OnOk(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultOk();
-                return result;
-            }
-
-            private Timr.Api.Model.WorkScheduleModel? DefaultOk()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkScheduleModel>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkScheduleModel? result);
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkScheduleModel? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Ok();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 403 Forbidden
-            /// </summary>
-            /// <returns></returns>
-            public bool IsForbidden => 403 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 403 Forbidden
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? Forbidden()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnForbidden(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultForbidden();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultForbidden()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsForbidden
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryForbidden([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Forbidden();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 404 NotFound
-            /// </summary>
-            /// <returns></returns>
-            public bool IsNotFound => 404 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 404 NotFound
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? NotFound()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnNotFound(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultNotFound();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultNotFound()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsNotFound
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 404 NotFound and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryNotFound([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = NotFound();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
-                }
-
-                return result != null;
-            }
-
-            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
-            {
-                bool suppressDefaultLog = false;
-                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
-                if (!suppressDefaultLog)
-                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
-            }
-
-            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
-        }
-
-        partial void FormatUpdateUser(ref string id, UserUpdate userUpdate);
-
-        /// <summary>
-        /// Validates the request parameters
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="userUpdate"></param>
-        /// <returns></returns>
-        private void ValidateUpdateUser(string id, UserUpdate userUpdate)
-        {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-
-            if (userUpdate == null)
-                throw new ArgumentNullException(nameof(userUpdate));
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="userUpdate"></param>
-        private void AfterUpdateUserDefaultImplementation(IUpdateUserApiResponse apiResponseLocalVar, string id, UserUpdate userUpdate)
-        {
-            bool suppressDefaultLog = false;
-            AfterUpdateUser(ref suppressDefaultLog, apiResponseLocalVar, id, userUpdate);
-            if (!suppressDefaultLog)
-                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="userUpdate"></param>
-        partial void AfterUpdateUser(ref bool suppressDefaultLog, IUpdateUserApiResponse apiResponseLocalVar, string id, UserUpdate userUpdate);
-
-        /// <summary>
-        /// Logs exceptions that occur while retrieving the server response
-        /// </summary>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="userUpdate"></param>
-        private void OnErrorUpdateUserDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, UserUpdate userUpdate)
-        {
-            bool suppressDefaultLogLocalVar = false;
-            OnErrorUpdateUser(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, userUpdate);
-            if (!suppressDefaultLogLocalVar)
-                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
-        }
-
-        /// <summary>
-        /// A partial method that gives developers a way to provide customized exception handling
-        /// </summary>
-        /// <param name="suppressDefaultLogLocalVar"></param>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="userUpdate"></param>
-        partial void OnErrorUpdateUser(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, UserUpdate userUpdate);
-
-        /// <summary>
-        /// Update a User Updates the User with the fields present in the request body. Fields that are omitted stay unchanged.
-        /// </summary>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="userUpdate">User entity</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateUserApiResponse"/>&gt;</returns>
-        public async Task<IUpdateUserApiResponse?> UpdateUserOrDefaultAsync(string id, UserUpdate userUpdate, System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await UpdateUserAsync(id, userUpdate, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Update a User Updates the User with the fields present in the request body. Fields that are omitted stay unchanged.
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="userUpdate">User entity</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateUserApiResponse"/>&gt;</returns>
-        public async Task<IUpdateUserApiResponse> UpdateUserAsync(string id, UserUpdate userUpdate, System.Threading.CancellationToken cancellationToken = default)
-        {
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                ValidateUpdateUser(id, userUpdate);
-
-                FormatUpdateUser(ref id, userUpdate);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users/{id}");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
-
-                    httpRequestMessageLocalVar.Content = (userUpdate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
+                    httpRequestMessageLocalVar.Content = (driveLogUpdate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
-                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(userUpdate, _jsonSerializerOptions));
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(driveLogUpdate, _jsonSerializerOptions));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -3087,20 +2707,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        UpdateUserApiResponse apiResponseLocalVar;
+                        UpdateDriveLogApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterUpdateUserDefaultImplementation(apiResponseLocalVar, id, userUpdate);
+                        AfterUpdateDriveLogDefaultImplementation(apiResponseLocalVar, id, driveLogUpdate);
 
-                        Events.ExecuteOnUpdateUser(apiResponseLocalVar);
+                        Events.ExecuteOnUpdateDriveLog(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -3112,24 +2732,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorUpdateUserDefaultImplementation(e, "/users/{id}", uriBuilderLocalVar.Path, id, userUpdate);
-                Events.ExecuteOnErrorUpdateUser(e);
+                OnErrorUpdateDriveLogDefaultImplementation(e, "/drive-logs/{id}", uriBuilderLocalVar.Path, id, driveLogUpdate);
+                Events.ExecuteOnErrorUpdateDriveLog(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="UpdateUserApiResponse"/>
+        /// The <see cref="UpdateDriveLogApiResponse"/>
         /// </summary>
-        public partial class UpdateUserApiResponse : Timr.Api.Client.ApiResponse, IUpdateUserApiResponse
+        public partial class UpdateDriveLogApiResponse : Timr.Api.Client.ApiResponse, IUpdateDriveLogApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<UserApi> Logger { get; }
+            public ILogger<DriveLogApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="UpdateUserApiResponse"/>
+            /// The <see cref="UpdateDriveLogApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -3138,14 +2758,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateUserApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public UpdateDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="UpdateUserApiResponse"/>
+            /// The <see cref="UpdateDriveLogApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -3154,7 +2774,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateUserApiResponse(ILogger<UserApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public UpdateDriveLogApiResponse(ILogger<DriveLogApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -3172,32 +2792,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.User? Ok()
+            public Timr.Api.Model.DriveLog? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.User? result = null;
+                Timr.Api.Model.DriveLog? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.User? DefaultOk()
+            private Timr.Api.Model.DriveLog? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.User>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.DriveLog>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.User? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.DriveLog? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.User? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.DriveLog? result)
             {
                 result = null;
 

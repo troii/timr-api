@@ -25,74 +25,74 @@ using Timr.Api.Logging;
 using Timr.Api.Model;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Timr.Api.Api
+namespace Timr.Api.Endpoints
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// This class is registered as transient.
     /// </summary>
-    public interface ITaskToTeamAssignmentApi : IApi
+    public interface ITaskToLeaderAssignmentApi : IApi
     {
         /// <summary>
         /// The class containing the events
         /// </summary>
-        TaskToTeamAssignmentApiEvents Events { get; }
+        TaskToLeaderAssignmentApiEvents Events { get; }
 
         /// <summary>
-        /// Create a Task to Team Assignment
+        /// Create a Task to Leader Assignment
         /// </summary>
         /// <remarks>
-        /// Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
+        /// Assigns the User to the Task as a leader. Returns 201 when the assignment is created and 200 when it already existed.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        Task<ICreateTaskToTeamAssignmentApiResponse> CreateTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        Task<ICreateTaskToLeaderAssignmentApiResponse> CreateTaskToLeaderAssignmentAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a Task to Team Assignment
+        /// Create a Task to Leader Assignment
         /// </summary>
         /// <remarks>
-        /// Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
+        /// Assigns the User to the Task as a leader. Returns 201 when the assignment is created and 200 when it already existed.
         /// </remarks>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>?&gt;</returns>
-        Task<ICreateTaskToTeamAssignmentApiResponse?> CreateTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToLeaderAssignmentApiResponse"/>?&gt;</returns>
+        Task<ICreateTaskToLeaderAssignmentApiResponse?> CreateTaskToLeaderAssignmentOrDefaultAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a Task to Team Assignment
+        /// Delete a Task to Leader Assignment
         /// </summary>
         /// <remarks>
-        /// Removes the Team&#39;s assignment to the Task.
+        /// Removes the User&#39;s leader assignment to the Task.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        Task<IDeleteTaskToTeamAssignmentApiResponse> DeleteTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        Task<IDeleteTaskToLeaderAssignmentApiResponse> DeleteTaskToLeaderAssignmentAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a Task to Team Assignment
+        /// Delete a Task to Leader Assignment
         /// </summary>
         /// <remarks>
-        /// Removes the Team&#39;s assignment to the Task.
+        /// Removes the User&#39;s leader assignment to the Task.
         /// </remarks>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>?&gt;</returns>
-        Task<IDeleteTaskToTeamAssignmentApiResponse?> DeleteTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToLeaderAssignmentApiResponse"/>?&gt;</returns>
+        Task<IDeleteTaskToLeaderAssignmentApiResponse?> DeleteTaskToLeaderAssignmentOrDefaultAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Task to Team Assignments
+        /// List Task to Leader Assignments
         /// </summary>
         /// <remarks>
-        /// Lists the Teams assigned to the Task.
+        /// Lists the Users assigned to the Task as leaders.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
@@ -101,14 +101,14 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>&gt;</returns>
-        Task<IFetchTaskToTeamAssignmentsApiResponse> FetchTaskToTeamAssignmentsAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToLeaderAssignmentsApiResponse"/>&gt;</returns>
+        Task<IFetchTaskToLeaderAssignmentsApiResponse> FetchTaskToLeaderAssignmentsAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToLeaderAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Task to Team Assignments
+        /// List Task to Leader Assignments
         /// </summary>
         /// <remarks>
-        /// Lists the Teams assigned to the Task.
+        /// Lists the Users assigned to the Task as leaders.
         /// </remarks>
         /// <param name="taskId">ID of the Task.</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
@@ -116,39 +116,39 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>?&gt;</returns>
-        Task<IFetchTaskToTeamAssignmentsApiResponse?> FetchTaskToTeamAssignmentsOrDefaultAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToLeaderAssignmentsApiResponse"/>?&gt;</returns>
+        Task<IFetchTaskToLeaderAssignmentsApiResponse?> FetchTaskToLeaderAssignmentsOrDefaultAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToLeaderAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Task to Team Assignment
+        /// Get a Task to Leader Assignment
         /// </summary>
         /// <remarks>
-        /// Returns the assignment of a single Team to the Task.
+        /// Returns the leader assignment of a single User to the Task.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        Task<IGetTaskToTeamAssignmentApiResponse> GetTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        Task<IGetTaskToLeaderAssignmentApiResponse> GetTaskToLeaderAssignmentAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Task to Team Assignment
+        /// Get a Task to Leader Assignment
         /// </summary>
         /// <remarks>
-        /// Returns the assignment of a single Team to the Task.
+        /// Returns the leader assignment of a single User to the Task.
         /// </remarks>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>?&gt;</returns>
-        Task<IGetTaskToTeamAssignmentApiResponse?> GetTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToLeaderAssignmentApiResponse"/>?&gt;</returns>
+        Task<IGetTaskToLeaderAssignmentApiResponse?> GetTaskToLeaderAssignmentOrDefaultAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
-    /// The <see cref="ICreateTaskToTeamAssignmentApiResponse"/>
+    /// The <see cref="ICreateTaskToLeaderAssignmentApiResponse"/>
     /// </summary>
-    public interface ICreateTaskToTeamAssignmentApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToTeamAssignment?>, ICreated<Timr.Api.Model.TaskToTeamAssignment?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface ICreateTaskToLeaderAssignmentApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToLeaderAssignment?>, ICreated<Timr.Api.Model.TaskToLeaderAssignment?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -182,9 +182,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IDeleteTaskToTeamAssignmentApiResponse"/>
+    /// The <see cref="IDeleteTaskToLeaderAssignmentApiResponse"/>
     /// </summary>
-    public interface IDeleteTaskToTeamAssignmentApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
+    public interface IDeleteTaskToLeaderAssignmentApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 204 NoContent
@@ -212,9 +212,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchTaskToTeamAssignmentsApiResponse"/>
+    /// The <see cref="IFetchTaskToLeaderAssignmentsApiResponse"/>
     /// </summary>
-    public interface IFetchTaskToTeamAssignmentsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToTeamAssignmentsPage?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
+    public interface IFetchTaskToLeaderAssignmentsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToLeaderAssignmentsPage?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -236,9 +236,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetTaskToTeamAssignmentApiResponse"/>
+    /// The <see cref="IGetTaskToLeaderAssignmentApiResponse"/>
     /// </summary>
-    public interface IGetTaskToTeamAssignmentApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToTeamAssignment?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
+    public interface IGetTaskToLeaderAssignmentApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToLeaderAssignment?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -262,100 +262,100 @@ namespace Timr.Api.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class TaskToTeamAssignmentApiEvents
+    public class TaskToLeaderAssignmentApiEvents
     {
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnCreateTaskToTeamAssignment;
+        public event EventHandler<ApiResponseEventArgs>? OnCreateTaskToLeaderAssignment;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorCreateTaskToTeamAssignment;
+        public event EventHandler<ExceptionEventArgs>? OnErrorCreateTaskToLeaderAssignment;
 
-        internal void ExecuteOnCreateTaskToTeamAssignment(TaskToTeamAssignmentApi.CreateTaskToTeamAssignmentApiResponse apiResponse)
+        internal void ExecuteOnCreateTaskToLeaderAssignment(TaskToLeaderAssignmentApi.CreateTaskToLeaderAssignmentApiResponse apiResponse)
         {
-            OnCreateTaskToTeamAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnCreateTaskToLeaderAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorCreateTaskToTeamAssignment(Exception exception)
+        internal void ExecuteOnErrorCreateTaskToLeaderAssignment(Exception exception)
         {
-            OnErrorCreateTaskToTeamAssignment?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorCreateTaskToLeaderAssignment?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnDeleteTaskToTeamAssignment;
+        public event EventHandler<ApiResponseEventArgs>? OnDeleteTaskToLeaderAssignment;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteTaskToTeamAssignment;
+        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteTaskToLeaderAssignment;
 
-        internal void ExecuteOnDeleteTaskToTeamAssignment(TaskToTeamAssignmentApi.DeleteTaskToTeamAssignmentApiResponse apiResponse)
+        internal void ExecuteOnDeleteTaskToLeaderAssignment(TaskToLeaderAssignmentApi.DeleteTaskToLeaderAssignmentApiResponse apiResponse)
         {
-            OnDeleteTaskToTeamAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnDeleteTaskToLeaderAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorDeleteTaskToTeamAssignment(Exception exception)
+        internal void ExecuteOnErrorDeleteTaskToLeaderAssignment(Exception exception)
         {
-            OnErrorDeleteTaskToTeamAssignment?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorDeleteTaskToLeaderAssignment?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchTaskToTeamAssignments;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchTaskToLeaderAssignments;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchTaskToTeamAssignments;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchTaskToLeaderAssignments;
 
-        internal void ExecuteOnFetchTaskToTeamAssignments(TaskToTeamAssignmentApi.FetchTaskToTeamAssignmentsApiResponse apiResponse)
+        internal void ExecuteOnFetchTaskToLeaderAssignments(TaskToLeaderAssignmentApi.FetchTaskToLeaderAssignmentsApiResponse apiResponse)
         {
-            OnFetchTaskToTeamAssignments?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchTaskToLeaderAssignments?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchTaskToTeamAssignments(Exception exception)
+        internal void ExecuteOnErrorFetchTaskToLeaderAssignments(Exception exception)
         {
-            OnErrorFetchTaskToTeamAssignments?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchTaskToLeaderAssignments?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetTaskToTeamAssignment;
+        public event EventHandler<ApiResponseEventArgs>? OnGetTaskToLeaderAssignment;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetTaskToTeamAssignment;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetTaskToLeaderAssignment;
 
-        internal void ExecuteOnGetTaskToTeamAssignment(TaskToTeamAssignmentApi.GetTaskToTeamAssignmentApiResponse apiResponse)
+        internal void ExecuteOnGetTaskToLeaderAssignment(TaskToLeaderAssignmentApi.GetTaskToLeaderAssignmentApiResponse apiResponse)
         {
-            OnGetTaskToTeamAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetTaskToLeaderAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetTaskToTeamAssignment(Exception exception)
+        internal void ExecuteOnErrorGetTaskToLeaderAssignment(Exception exception)
         {
-            OnErrorGetTaskToTeamAssignment?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetTaskToLeaderAssignment?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public sealed partial class TaskToTeamAssignmentApi : ITaskToTeamAssignmentApi
+    public sealed partial class TaskToLeaderAssignmentApi : ITaskToLeaderAssignmentApi
     {
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
         /// The logger
         /// </summary>
-        public ILogger<TaskToTeamAssignmentApi> Logger { get; }
+        public ILogger<TaskToLeaderAssignmentApi> Logger { get; }
 
         /// <summary>
         /// The HttpClient
@@ -365,7 +365,7 @@ namespace Timr.Api.Api
         /// <summary>
         /// The class containing the events
         /// </summary>
-        public TaskToTeamAssignmentApiEvents Events { get; }
+        public TaskToLeaderAssignmentApiEvents Events { get; }
 
         /// <summary>
         /// A token provider of type <see cref="OauthTokenProvider"/>
@@ -373,34 +373,34 @@ namespace Timr.Api.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskToTeamAssignmentApi"/> class.
+        /// Initializes a new instance of the <see cref="TaskToLeaderAssignmentApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public TaskToTeamAssignmentApi(ILogger<TaskToTeamAssignmentApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, TaskToTeamAssignmentApiEvents taskToTeamAssignmentApiEvents,
+        public TaskToLeaderAssignmentApi(ILogger<TaskToLeaderAssignmentApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, TaskToLeaderAssignmentApiEvents taskToLeaderAssignmentApiEvents,
             TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             Logger = logger;
             HttpClient = httpClient;
-            Events = taskToTeamAssignmentApiEvents;
+            Events = taskToLeaderAssignmentApiEvents;
             OauthTokenProvider = oauthTokenProvider;
         }
 
-        partial void FormatCreateTaskToTeamAssignment(ref string taskId, ref string teamId);
+        partial void FormatCreateTaskToLeaderAssignment(ref string taskId, ref string userId);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        private void ValidateCreateTaskToTeamAssignment(string taskId, string teamId)
+        private void ValidateCreateTaskToLeaderAssignment(string taskId, string userId)
         {
             if (taskId == null)
                 throw new ArgumentNullException(nameof(taskId));
 
-            if (teamId == null)
-                throw new ArgumentNullException(nameof(teamId));
+            if (userId == null)
+                throw new ArgumentNullException(nameof(userId));
         }
 
         /// <summary>
@@ -408,11 +408,11 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        private void AfterCreateTaskToTeamAssignmentDefaultImplementation(ICreateTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId)
+        /// <param name="userId"></param>
+        private void AfterCreateTaskToLeaderAssignmentDefaultImplementation(ICreateTaskToLeaderAssignmentApiResponse apiResponseLocalVar, string taskId, string userId)
         {
             bool suppressDefaultLog = false;
-            AfterCreateTaskToTeamAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, teamId);
+            AfterCreateTaskToLeaderAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, userId);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -423,8 +423,8 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        partial void AfterCreateTaskToTeamAssignment(ref bool suppressDefaultLog, ICreateTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId);
+        /// <param name="userId"></param>
+        partial void AfterCreateTaskToLeaderAssignment(ref bool suppressDefaultLog, ICreateTaskToLeaderAssignmentApiResponse apiResponseLocalVar, string taskId, string userId);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -433,11 +433,11 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        private void OnErrorCreateTaskToTeamAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId)
+        /// <param name="userId"></param>
+        private void OnErrorCreateTaskToLeaderAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string userId)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateTaskToTeamAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, teamId);
+            OnErrorCreateTaskToLeaderAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, userId);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -450,21 +450,21 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        partial void OnErrorCreateTaskToTeamAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId);
+        /// <param name="userId"></param>
+        partial void OnErrorCreateTaskToLeaderAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string userId);
 
         /// <summary>
-        /// Create a Task to Team Assignment Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
+        /// Create a Task to Leader Assignment Assigns the User to the Task as a leader. Returns 201 when the assignment is created and 200 when it already existed.
         /// </summary>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        public async Task<ICreateTaskToTeamAssignmentApiResponse?> CreateTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        public async Task<ICreateTaskToLeaderAssignmentApiResponse?> CreateTaskToLeaderAssignmentOrDefaultAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateTaskToTeamAssignmentAsync(taskId, teamId, cancellationToken).ConfigureAwait(false);
+                return await CreateTaskToLeaderAssignmentAsync(taskId, userId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -473,22 +473,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Create a Task to Team Assignment Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
+        /// Create a Task to Leader Assignment Assigns the User to the Task as a leader. Returns 201 when the assignment is created and 200 when it already existed.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        public async Task<ICreateTaskToTeamAssignmentApiResponse> CreateTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        public async Task<ICreateTaskToLeaderAssignmentApiResponse> CreateTaskToLeaderAssignmentAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateTaskToTeamAssignment(taskId, teamId);
+                ValidateCreateTaskToLeaderAssignment(taskId, userId);
 
-                FormatCreateTaskToTeamAssignment(ref taskId, ref teamId);
+                FormatCreateTaskToLeaderAssignment(ref taskId, ref userId);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -496,10 +496,10 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/tasks/{task_id}/teams/{team_id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams/{team_id}");
+                        ? "/tasks/{task_id}/leaders/{user_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/leaders/{user_id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bteam_id%7D", Uri.EscapeDataString(teamId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buser_id%7D", Uri.EscapeDataString(userId.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -532,20 +532,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        CreateTaskToTeamAssignmentApiResponse apiResponseLocalVar;
+                        CreateTaskToLeaderAssignmentApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams/{team_id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/leaders/{user_id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterCreateTaskToTeamAssignmentDefaultImplementation(apiResponseLocalVar, taskId, teamId);
+                        AfterCreateTaskToLeaderAssignmentDefaultImplementation(apiResponseLocalVar, taskId, userId);
 
-                        Events.ExecuteOnCreateTaskToTeamAssignment(apiResponseLocalVar);
+                        Events.ExecuteOnCreateTaskToLeaderAssignment(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -557,24 +557,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateTaskToTeamAssignmentDefaultImplementation(e, "/tasks/{task_id}/teams/{team_id}", uriBuilderLocalVar.Path, taskId, teamId);
-                Events.ExecuteOnErrorCreateTaskToTeamAssignment(e);
+                OnErrorCreateTaskToLeaderAssignmentDefaultImplementation(e, "/tasks/{task_id}/leaders/{user_id}", uriBuilderLocalVar.Path, taskId, userId);
+                Events.ExecuteOnErrorCreateTaskToLeaderAssignment(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="CreateTaskToTeamAssignmentApiResponse"/>
+        /// The <see cref="CreateTaskToLeaderAssignmentApiResponse"/>
         /// </summary>
-        public partial class CreateTaskToTeamAssignmentApiResponse : Timr.Api.Client.ApiResponse, ICreateTaskToTeamAssignmentApiResponse
+        public partial class CreateTaskToLeaderAssignmentApiResponse : Timr.Api.Client.ApiResponse, ICreateTaskToLeaderAssignmentApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
+            public ILogger<TaskToLeaderAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="CreateTaskToTeamAssignmentApiResponse"/>
+            /// The <see cref="CreateTaskToLeaderAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -583,14 +583,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public CreateTaskToLeaderAssignmentApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="CreateTaskToTeamAssignmentApiResponse"/>
+            /// The <see cref="CreateTaskToLeaderAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -599,7 +599,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public CreateTaskToLeaderAssignmentApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -617,32 +617,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.TaskToTeamAssignment? Ok()
+            public Timr.Api.Model.TaskToLeaderAssignment? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.TaskToTeamAssignment? result = null;
+                Timr.Api.Model.TaskToLeaderAssignment? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.TaskToTeamAssignment? DefaultOk()
+            private Timr.Api.Model.TaskToLeaderAssignment? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignment>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToLeaderAssignment>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignment? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToLeaderAssignment? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignment? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToLeaderAssignment? result)
             {
                 result = null;
 
@@ -667,32 +667,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 201 Created
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.TaskToTeamAssignment? Created()
+            public Timr.Api.Model.TaskToLeaderAssignment? Created()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.TaskToTeamAssignment? result = null;
+                Timr.Api.Model.TaskToLeaderAssignment? result = null;
                 OnCreated(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultCreated();
                 return result;
             }
 
-            private Timr.Api.Model.TaskToTeamAssignment? DefaultCreated()
+            private Timr.Api.Model.TaskToLeaderAssignment? DefaultCreated()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsCreated
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignment>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToLeaderAssignment>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignment? result);
+            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.TaskToLeaderAssignment? result);
 
             /// <summary>
             /// Returns true if the response is 201 Created and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignment? result)
+            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.TaskToLeaderAssignment? result)
             {
                 result = null;
 
@@ -868,21 +868,21 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatDeleteTaskToTeamAssignment(ref string taskId, ref string teamId);
+        partial void FormatDeleteTaskToLeaderAssignment(ref string taskId, ref string userId);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        private void ValidateDeleteTaskToTeamAssignment(string taskId, string teamId)
+        private void ValidateDeleteTaskToLeaderAssignment(string taskId, string userId)
         {
             if (taskId == null)
                 throw new ArgumentNullException(nameof(taskId));
 
-            if (teamId == null)
-                throw new ArgumentNullException(nameof(teamId));
+            if (userId == null)
+                throw new ArgumentNullException(nameof(userId));
         }
 
         /// <summary>
@@ -890,11 +890,11 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        private void AfterDeleteTaskToTeamAssignmentDefaultImplementation(IDeleteTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId)
+        /// <param name="userId"></param>
+        private void AfterDeleteTaskToLeaderAssignmentDefaultImplementation(IDeleteTaskToLeaderAssignmentApiResponse apiResponseLocalVar, string taskId, string userId)
         {
             bool suppressDefaultLog = false;
-            AfterDeleteTaskToTeamAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, teamId);
+            AfterDeleteTaskToLeaderAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, userId);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -905,8 +905,8 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        partial void AfterDeleteTaskToTeamAssignment(ref bool suppressDefaultLog, IDeleteTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId);
+        /// <param name="userId"></param>
+        partial void AfterDeleteTaskToLeaderAssignment(ref bool suppressDefaultLog, IDeleteTaskToLeaderAssignmentApiResponse apiResponseLocalVar, string taskId, string userId);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -915,11 +915,11 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        private void OnErrorDeleteTaskToTeamAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId)
+        /// <param name="userId"></param>
+        private void OnErrorDeleteTaskToLeaderAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string userId)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorDeleteTaskToTeamAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, teamId);
+            OnErrorDeleteTaskToLeaderAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, userId);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -932,21 +932,21 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        partial void OnErrorDeleteTaskToTeamAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId);
+        /// <param name="userId"></param>
+        partial void OnErrorDeleteTaskToLeaderAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string userId);
 
         /// <summary>
-        /// Delete a Task to Team Assignment Removes the Team&#39;s assignment to the Task.
+        /// Delete a Task to Leader Assignment Removes the User&#39;s leader assignment to the Task.
         /// </summary>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        public async Task<IDeleteTaskToTeamAssignmentApiResponse?> DeleteTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IDeleteTaskToLeaderAssignmentApiResponse?> DeleteTaskToLeaderAssignmentOrDefaultAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await DeleteTaskToTeamAssignmentAsync(taskId, teamId, cancellationToken).ConfigureAwait(false);
+                return await DeleteTaskToLeaderAssignmentAsync(taskId, userId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -955,22 +955,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Delete a Task to Team Assignment Removes the Team&#39;s assignment to the Task.
+        /// Delete a Task to Leader Assignment Removes the User&#39;s leader assignment to the Task.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        public async Task<IDeleteTaskToTeamAssignmentApiResponse> DeleteTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IDeleteTaskToLeaderAssignmentApiResponse> DeleteTaskToLeaderAssignmentAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateDeleteTaskToTeamAssignment(taskId, teamId);
+                ValidateDeleteTaskToLeaderAssignment(taskId, userId);
 
-                FormatDeleteTaskToTeamAssignment(ref taskId, ref teamId);
+                FormatDeleteTaskToLeaderAssignment(ref taskId, ref userId);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -978,10 +978,10 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/tasks/{task_id}/teams/{team_id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams/{team_id}");
+                        ? "/tasks/{task_id}/leaders/{user_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/leaders/{user_id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bteam_id%7D", Uri.EscapeDataString(teamId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buser_id%7D", Uri.EscapeDataString(userId.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -1013,20 +1013,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        DeleteTaskToTeamAssignmentApiResponse apiResponseLocalVar;
+                        DeleteTaskToLeaderAssignmentApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams/{team_id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/leaders/{user_id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterDeleteTaskToTeamAssignmentDefaultImplementation(apiResponseLocalVar, taskId, teamId);
+                        AfterDeleteTaskToLeaderAssignmentDefaultImplementation(apiResponseLocalVar, taskId, userId);
 
-                        Events.ExecuteOnDeleteTaskToTeamAssignment(apiResponseLocalVar);
+                        Events.ExecuteOnDeleteTaskToLeaderAssignment(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1038,24 +1038,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorDeleteTaskToTeamAssignmentDefaultImplementation(e, "/tasks/{task_id}/teams/{team_id}", uriBuilderLocalVar.Path, taskId, teamId);
-                Events.ExecuteOnErrorDeleteTaskToTeamAssignment(e);
+                OnErrorDeleteTaskToLeaderAssignmentDefaultImplementation(e, "/tasks/{task_id}/leaders/{user_id}", uriBuilderLocalVar.Path, taskId, userId);
+                Events.ExecuteOnErrorDeleteTaskToLeaderAssignment(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="DeleteTaskToTeamAssignmentApiResponse"/>
+        /// The <see cref="DeleteTaskToLeaderAssignmentApiResponse"/>
         /// </summary>
-        public partial class DeleteTaskToTeamAssignmentApiResponse : Timr.Api.Client.ApiResponse, IDeleteTaskToTeamAssignmentApiResponse
+        public partial class DeleteTaskToLeaderAssignmentApiResponse : Timr.Api.Client.ApiResponse, IDeleteTaskToLeaderAssignmentApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
+            public ILogger<TaskToLeaderAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="DeleteTaskToTeamAssignmentApiResponse"/>
+            /// The <see cref="DeleteTaskToLeaderAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1064,14 +1064,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public DeleteTaskToLeaderAssignmentApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="DeleteTaskToTeamAssignmentApiResponse"/>
+            /// The <see cref="DeleteTaskToLeaderAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1080,7 +1080,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public DeleteTaskToLeaderAssignmentApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1255,7 +1255,7 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchTaskToTeamAssignments(ref string taskId, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<TaskToTeamAssignmentsSortColumn> sortBy);
+        partial void FormatFetchTaskToLeaderAssignments(ref string taskId, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<TaskToLeaderAssignmentsSortColumn> sortBy);
 
         /// <summary>
         /// Validates the request parameters
@@ -1263,7 +1263,7 @@ namespace Timr.Api.Api
         /// <param name="taskId"></param>
         /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateFetchTaskToTeamAssignments(string taskId, Option<string> pageToken)
+        private void ValidateFetchTaskToLeaderAssignments(string taskId, Option<string> pageToken)
         {
             if (taskId == null)
                 throw new ArgumentNullException(nameof(taskId));
@@ -1281,10 +1281,10 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void AfterFetchTaskToTeamAssignmentsDefaultImplementation(IFetchTaskToTeamAssignmentsApiResponse apiResponseLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy)
+        private void AfterFetchTaskToLeaderAssignmentsDefaultImplementation(IFetchTaskToLeaderAssignmentsApiResponse apiResponseLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToLeaderAssignmentsSortColumn> sortBy)
         {
             bool suppressDefaultLog = false;
-            AfterFetchTaskToTeamAssignments(ref suppressDefaultLog, apiResponseLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
+            AfterFetchTaskToLeaderAssignments(ref suppressDefaultLog, apiResponseLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1299,7 +1299,7 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void AfterFetchTaskToTeamAssignments(ref bool suppressDefaultLog, IFetchTaskToTeamAssignmentsApiResponse apiResponseLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy);
+        partial void AfterFetchTaskToLeaderAssignments(ref bool suppressDefaultLog, IFetchTaskToLeaderAssignmentsApiResponse apiResponseLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToLeaderAssignmentsSortColumn> sortBy);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1312,10 +1312,10 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void OnErrorFetchTaskToTeamAssignmentsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy)
+        private void OnErrorFetchTaskToLeaderAssignmentsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToLeaderAssignmentsSortColumn> sortBy)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchTaskToTeamAssignments(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
+            OnErrorFetchTaskToLeaderAssignments(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1332,10 +1332,10 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void OnErrorFetchTaskToTeamAssignments(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy);
+        partial void OnErrorFetchTaskToLeaderAssignments(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToLeaderAssignmentsSortColumn> sortBy);
 
         /// <summary>
-        /// List Task to Team Assignments Lists the Teams assigned to the Task.
+        /// List Task to Leader Assignments Lists the Users assigned to the Task as leaders.
         /// </summary>
         /// <param name="taskId">ID of the Task.</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
@@ -1343,12 +1343,12 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>&gt;</returns>
-        public async Task<IFetchTaskToTeamAssignmentsApiResponse?> FetchTaskToTeamAssignmentsOrDefaultAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToLeaderAssignmentsApiResponse"/>&gt;</returns>
+        public async Task<IFetchTaskToLeaderAssignmentsApiResponse?> FetchTaskToLeaderAssignmentsOrDefaultAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToLeaderAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await FetchTaskToTeamAssignmentsAsync(taskId, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+                return await FetchTaskToLeaderAssignmentsAsync(taskId, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1357,7 +1357,7 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// List Task to Team Assignments Lists the Teams assigned to the Task.
+        /// List Task to Leader Assignments Lists the Users assigned to the Task as leaders.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
@@ -1366,16 +1366,16 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>&gt;</returns>
-        public async Task<IFetchTaskToTeamAssignmentsApiResponse> FetchTaskToTeamAssignmentsAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToLeaderAssignmentsApiResponse"/>&gt;</returns>
+        public async Task<IFetchTaskToLeaderAssignmentsApiResponse> FetchTaskToLeaderAssignmentsAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToLeaderAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateFetchTaskToTeamAssignments(taskId, pageToken);
+                ValidateFetchTaskToLeaderAssignments(taskId, pageToken);
 
-                FormatFetchTaskToTeamAssignments(ref taskId, ref pageToken, ref limit, ref sortDirection, ref sortBy);
+                FormatFetchTaskToLeaderAssignments(ref taskId, ref pageToken, ref limit, ref sortDirection, ref sortBy);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1383,8 +1383,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/tasks/{task_id}/teams"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams");
+                        ? "/tasks/{task_id}/leaders"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/leaders");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
@@ -1434,20 +1434,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        FetchTaskToTeamAssignmentsApiResponse apiResponseLocalVar;
+                        FetchTaskToLeaderAssignmentsApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/leaders", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterFetchTaskToTeamAssignmentsDefaultImplementation(apiResponseLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
+                        AfterFetchTaskToLeaderAssignmentsDefaultImplementation(apiResponseLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnFetchTaskToTeamAssignments(apiResponseLocalVar);
+                        Events.ExecuteOnFetchTaskToLeaderAssignments(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1459,24 +1459,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorFetchTaskToTeamAssignmentsDefaultImplementation(e, "/tasks/{task_id}/teams", uriBuilderLocalVar.Path, taskId, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchTaskToTeamAssignments(e);
+                OnErrorFetchTaskToLeaderAssignmentsDefaultImplementation(e, "/tasks/{task_id}/leaders", uriBuilderLocalVar.Path, taskId, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchTaskToLeaderAssignments(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="FetchTaskToTeamAssignmentsApiResponse"/>
+        /// The <see cref="FetchTaskToLeaderAssignmentsApiResponse"/>
         /// </summary>
-        public partial class FetchTaskToTeamAssignmentsApiResponse : Timr.Api.Client.ApiResponse, IFetchTaskToTeamAssignmentsApiResponse
+        public partial class FetchTaskToLeaderAssignmentsApiResponse : Timr.Api.Client.ApiResponse, IFetchTaskToLeaderAssignmentsApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
+            public ILogger<TaskToLeaderAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="FetchTaskToTeamAssignmentsApiResponse"/>
+            /// The <see cref="FetchTaskToLeaderAssignmentsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1485,14 +1485,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchTaskToTeamAssignmentsApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchTaskToLeaderAssignmentsApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="FetchTaskToTeamAssignmentsApiResponse"/>
+            /// The <see cref="FetchTaskToLeaderAssignmentsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1501,7 +1501,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchTaskToTeamAssignmentsApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchTaskToLeaderAssignmentsApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1519,32 +1519,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.TaskToTeamAssignmentsPage? Ok()
+            public Timr.Api.Model.TaskToLeaderAssignmentsPage? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.TaskToTeamAssignmentsPage? result = null;
+                Timr.Api.Model.TaskToLeaderAssignmentsPage? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.TaskToTeamAssignmentsPage? DefaultOk()
+            private Timr.Api.Model.TaskToLeaderAssignmentsPage? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignmentsPage>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToLeaderAssignmentsPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignmentsPage? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToLeaderAssignmentsPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignmentsPage? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToLeaderAssignmentsPage? result)
             {
                 result = null;
 
@@ -1670,21 +1670,21 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetTaskToTeamAssignment(ref string taskId, ref string teamId);
+        partial void FormatGetTaskToLeaderAssignment(ref string taskId, ref string userId);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        private void ValidateGetTaskToTeamAssignment(string taskId, string teamId)
+        private void ValidateGetTaskToLeaderAssignment(string taskId, string userId)
         {
             if (taskId == null)
                 throw new ArgumentNullException(nameof(taskId));
 
-            if (teamId == null)
-                throw new ArgumentNullException(nameof(teamId));
+            if (userId == null)
+                throw new ArgumentNullException(nameof(userId));
         }
 
         /// <summary>
@@ -1692,11 +1692,11 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        private void AfterGetTaskToTeamAssignmentDefaultImplementation(IGetTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId)
+        /// <param name="userId"></param>
+        private void AfterGetTaskToLeaderAssignmentDefaultImplementation(IGetTaskToLeaderAssignmentApiResponse apiResponseLocalVar, string taskId, string userId)
         {
             bool suppressDefaultLog = false;
-            AfterGetTaskToTeamAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, teamId);
+            AfterGetTaskToLeaderAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, userId);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1707,8 +1707,8 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        partial void AfterGetTaskToTeamAssignment(ref bool suppressDefaultLog, IGetTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId);
+        /// <param name="userId"></param>
+        partial void AfterGetTaskToLeaderAssignment(ref bool suppressDefaultLog, IGetTaskToLeaderAssignmentApiResponse apiResponseLocalVar, string taskId, string userId);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1717,11 +1717,11 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        private void OnErrorGetTaskToTeamAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId)
+        /// <param name="userId"></param>
+        private void OnErrorGetTaskToLeaderAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string userId)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetTaskToTeamAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, teamId);
+            OnErrorGetTaskToLeaderAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, userId);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1734,21 +1734,21 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="taskId"></param>
-        /// <param name="teamId"></param>
-        partial void OnErrorGetTaskToTeamAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId);
+        /// <param name="userId"></param>
+        partial void OnErrorGetTaskToLeaderAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string userId);
 
         /// <summary>
-        /// Get a Task to Team Assignment Returns the assignment of a single Team to the Task.
+        /// Get a Task to Leader Assignment Returns the leader assignment of a single User to the Task.
         /// </summary>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        public async Task<IGetTaskToTeamAssignmentApiResponse?> GetTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IGetTaskToLeaderAssignmentApiResponse?> GetTaskToLeaderAssignmentOrDefaultAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetTaskToTeamAssignmentAsync(taskId, teamId, cancellationToken).ConfigureAwait(false);
+                return await GetTaskToLeaderAssignmentAsync(taskId, userId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1757,22 +1757,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Get a Task to Team Assignment Returns the assignment of a single Team to the Task.
+        /// Get a Task to Leader Assignment Returns the leader assignment of a single User to the Task.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="taskId">ID of the Task.</param>
-        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="userId">ID of the User.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>&gt;</returns>
-        public async Task<IGetTaskToTeamAssignmentApiResponse> GetTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToLeaderAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IGetTaskToLeaderAssignmentApiResponse> GetTaskToLeaderAssignmentAsync(string taskId, string userId, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetTaskToTeamAssignment(taskId, teamId);
+                ValidateGetTaskToLeaderAssignment(taskId, userId);
 
-                FormatGetTaskToTeamAssignment(ref taskId, ref teamId);
+                FormatGetTaskToLeaderAssignment(ref taskId, ref userId);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1780,10 +1780,10 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/tasks/{task_id}/teams/{team_id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams/{team_id}");
+                        ? "/tasks/{task_id}/leaders/{user_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/leaders/{user_id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bteam_id%7D", Uri.EscapeDataString(teamId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Buser_id%7D", Uri.EscapeDataString(userId.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -1816,20 +1816,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        GetTaskToTeamAssignmentApiResponse apiResponseLocalVar;
+                        GetTaskToLeaderAssignmentApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams/{team_id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/leaders/{user_id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterGetTaskToTeamAssignmentDefaultImplementation(apiResponseLocalVar, taskId, teamId);
+                        AfterGetTaskToLeaderAssignmentDefaultImplementation(apiResponseLocalVar, taskId, userId);
 
-                        Events.ExecuteOnGetTaskToTeamAssignment(apiResponseLocalVar);
+                        Events.ExecuteOnGetTaskToLeaderAssignment(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1841,24 +1841,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorGetTaskToTeamAssignmentDefaultImplementation(e, "/tasks/{task_id}/teams/{team_id}", uriBuilderLocalVar.Path, taskId, teamId);
-                Events.ExecuteOnErrorGetTaskToTeamAssignment(e);
+                OnErrorGetTaskToLeaderAssignmentDefaultImplementation(e, "/tasks/{task_id}/leaders/{user_id}", uriBuilderLocalVar.Path, taskId, userId);
+                Events.ExecuteOnErrorGetTaskToLeaderAssignment(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="GetTaskToTeamAssignmentApiResponse"/>
+        /// The <see cref="GetTaskToLeaderAssignmentApiResponse"/>
         /// </summary>
-        public partial class GetTaskToTeamAssignmentApiResponse : Timr.Api.Client.ApiResponse, IGetTaskToTeamAssignmentApiResponse
+        public partial class GetTaskToLeaderAssignmentApiResponse : Timr.Api.Client.ApiResponse, IGetTaskToLeaderAssignmentApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
+            public ILogger<TaskToLeaderAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="GetTaskToTeamAssignmentApiResponse"/>
+            /// The <see cref="GetTaskToLeaderAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1867,14 +1867,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetTaskToLeaderAssignmentApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="GetTaskToTeamAssignmentApiResponse"/>
+            /// The <see cref="GetTaskToLeaderAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1883,7 +1883,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetTaskToLeaderAssignmentApiResponse(ILogger<TaskToLeaderAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1901,32 +1901,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.TaskToTeamAssignment? Ok()
+            public Timr.Api.Model.TaskToLeaderAssignment? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.TaskToTeamAssignment? result = null;
+                Timr.Api.Model.TaskToLeaderAssignment? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.TaskToTeamAssignment? DefaultOk()
+            private Timr.Api.Model.TaskToLeaderAssignment? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignment>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToLeaderAssignment>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignment? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToLeaderAssignment? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignment? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToLeaderAssignment? result)
             {
                 result = null;
 

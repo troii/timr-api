@@ -11,206 +11,210 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Timr.Api.Api;
+using Microsoft.Extensions.Http;
+using Timr.Api.Endpoints;
 using Timr.Api.Model;
 
 namespace Timr.Api.Client
 {
     /// <summary>
-    /// Provides hosting configuration for Timr.Api
+    /// Configures authentication and HTTP clients for Timr.Api
     /// </summary>
-    public partial class HostConfiguration
+    public sealed class HostConfiguration
     {
         private readonly IServiceCollection _services;
-        private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions();
 
-        internal bool HttpClientsAdded { get; private set; }
+        private Action? _configureAuthentication;
+        private readonly List<Action<HttpClient>> _configureHttpClients = new List<Action<HttpClient>>();
 
         /// <summary>
-        /// Instantiates the class 
+        /// Instantiates the class
         /// </summary>
         /// <param name="services"></param>
-        public HostConfiguration(IServiceCollection services)
+        internal HostConfiguration(IServiceCollection services)
         {
             _services = services;
-            _jsonOptions.Converters.Add(new JsonStringEnumConverter());
-            _jsonOptions.Converters.Add(new DateTimeJsonConverter());
-            _jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DateOnlyJsonConverter());
-            _jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
-            _jsonOptions.Converters.Add(new AccountsJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeAutomaticJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeBaseJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeManualJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeOngoingJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeTypeJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeTypeNullableJsonConverter());
-            _jsonOptions.Converters.Add(new BreakTimeUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new BudgetPlanningTypeJsonConverter());
-            _jsonOptions.Converters.Add(new BudgetPlanningTypeNullableJsonConverter());
-            _jsonOptions.Converters.Add(new BudgetPlanningTypeRequestJsonConverter());
-            _jsonOptions.Converters.Add(new BudgetPlanningTypeRequestNullableJsonConverter());
-            _jsonOptions.Converters.Add(new CarJsonConverter());
-            _jsonOptions.Converters.Add(new CarCreateJsonConverter());
-            _jsonOptions.Converters.Add(new CarPartialJsonConverter());
-            _jsonOptions.Converters.Add(new CarUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new CarsPageJsonConverter());
-            _jsonOptions.Converters.Add(new CarsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new CarsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DailyWorkScheduleJsonConverter());
-            _jsonOptions.Converters.Add(new DeletedEntryPageJsonConverter());
-            _jsonOptions.Converters.Add(new DeletedEntryPartialJsonConverter());
-            _jsonOptions.Converters.Add(new DeletedEntrySortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new DeletedEntrySortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DeletedEntryWithMetadataJsonConverter());
-            _jsonOptions.Converters.Add(new DeletedEntryWithMetadataPageJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogCategoriesPageJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogCategoriesSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogCategoriesSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogCategoryJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogCategoryPartialJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogCreateJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogStatusJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogStatusNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogUpsertJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogsPageJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new DriveLogsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DurationJsonConverter());
-            _jsonOptions.Converters.Add(new DurationTypeJsonConverter());
-            _jsonOptions.Converters.Add(new DurationTypeNullableJsonConverter());
-            _jsonOptions.Converters.Add(new DurationUnitJsonConverter());
-            _jsonOptions.Converters.Add(new DurationUnitNullableJsonConverter());
-            _jsonOptions.Converters.Add(new ErrorJsonConverter());
-            _jsonOptions.Converters.Add(new ErrorEntryJsonConverter());
-            _jsonOptions.Converters.Add(new FlexTimeIndicatorJsonConverter());
-            _jsonOptions.Converters.Add(new FlexTimeIndicatorNullableJsonConverter());
-            _jsonOptions.Converters.Add(new HolidayJsonConverter());
-            _jsonOptions.Converters.Add(new HolidayCalendarPartialJsonConverter());
-            _jsonOptions.Converters.Add(new HolidayCalendarsPageJsonConverter());
-            _jsonOptions.Converters.Add(new HolidayCalendarsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new HolidayCalendarsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new HolidaysPageJsonConverter());
-            _jsonOptions.Converters.Add(new HolidaysSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new HolidaysSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new LocationJsonConverter());
-            _jsonOptions.Converters.Add(new LocationCreateJsonConverter());
-            _jsonOptions.Converters.Add(new LocationUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new NormalWorkingTimesJsonConverter());
-            _jsonOptions.Converters.Add(new OvertimeSurchargeAccountJsonConverter());
-            _jsonOptions.Converters.Add(new OvertimeSurchargeAccountsJsonConverter());
-            _jsonOptions.Converters.Add(new OvertimeSurchargeRuleJsonConverter());
-            _jsonOptions.Converters.Add(new PagingInformationJsonConverter());
-            _jsonOptions.Converters.Add(new PlatformJsonConverter());
-            _jsonOptions.Converters.Add(new PlatformNullableJsonConverter());
-            _jsonOptions.Converters.Add(new ProblemDetailJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimeJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimeCreateJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimeStatusJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimeStatusNullableJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimeUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimeUpsertJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimesPageJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimesSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new ProjectTimesSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new RecordingLockTypeJsonConverter());
-            _jsonOptions.Converters.Add(new RecordingLockTypeNullableJsonConverter());
-            _jsonOptions.Converters.Add(new RecordingModeUserJsonConverter());
-            _jsonOptions.Converters.Add(new RecordingModeUserNullableJsonConverter());
-            _jsonOptions.Converters.Add(new SortDirectionJsonConverter());
-            _jsonOptions.Converters.Add(new SortDirectionNullableJsonConverter());
-            _jsonOptions.Converters.Add(new TaskJsonConverter());
-            _jsonOptions.Converters.Add(new TaskBaseJsonConverter());
-            _jsonOptions.Converters.Add(new TaskCreateJsonConverter());
-            _jsonOptions.Converters.Add(new TaskLocationJsonConverter());
-            _jsonOptions.Converters.Add(new TaskPartialJsonConverter());
-            _jsonOptions.Converters.Add(new TaskReducedJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToLeaderAssignmentJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToLeaderAssignmentsPageJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToLeaderAssignmentsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToLeaderAssignmentsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToTeamAssignmentJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToTeamAssignmentsPageJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToTeamAssignmentsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToTeamAssignmentsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToUserAssignmentJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToUserAssignmentUpsertJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToUserAssignmentsPageJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToUserAssignmentsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new TaskToUserAssignmentsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new TaskUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new TasksPageJsonConverter());
-            _jsonOptions.Converters.Add(new TasksReducedPageJsonConverter());
-            _jsonOptions.Converters.Add(new TasksSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new TasksSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new TeamJsonConverter());
-            _jsonOptions.Converters.Add(new TeamCreateJsonConverter());
-            _jsonOptions.Converters.Add(new TeamPartialJsonConverter());
-            _jsonOptions.Converters.Add(new TeamUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new TeamsPageJsonConverter());
-            _jsonOptions.Converters.Add(new TeamsPartialPageJsonConverter());
-            _jsonOptions.Converters.Add(new TeamsSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new TeamsSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new TimeAccountJsonConverter());
-            _jsonOptions.Converters.Add(new UserJsonConverter());
-            _jsonOptions.Converters.Add(new UserCreateJsonConverter());
-            _jsonOptions.Converters.Add(new UserPartialJsonConverter());
-            _jsonOptions.Converters.Add(new UserUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new UsersPageJsonConverter());
-            _jsonOptions.Converters.Add(new UsersPartialPageJsonConverter());
-            _jsonOptions.Converters.Add(new UsersSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new UsersSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new VacationAccountJsonConverter());
-            _jsonOptions.Converters.Add(new VacationAccountBaseJsonConverter());
-            _jsonOptions.Converters.Add(new VacationAccountDaysJsonConverter());
-            _jsonOptions.Converters.Add(new VacationAccountMinutesJsonConverter());
-            _jsonOptions.Converters.Add(new VacationUnitJsonConverter());
-            _jsonOptions.Converters.Add(new VacationUnitNullableJsonConverter());
-            _jsonOptions.Converters.Add(new VenuePartialJsonConverter());
-            _jsonOptions.Converters.Add(new WaypointJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelPartialJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelTypeJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelTypeNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelWeekJsonConverter());
-            _jsonOptions.Converters.Add(new WorkScheduleModelsPageJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeCreateJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpanJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpanCreateJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpanPageJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpanPartialJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpanUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpansSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeDateSpansSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeRulesJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeStatusJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeStatusNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypeJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypeCategoryJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypeCategoryNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypePartialJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypeSubCategoryJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypeSubCategoryNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypesPageJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypesSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeTypesSortColumnNullableJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeUpdateJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimeUpsertJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimesPageJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimesSortColumnJsonConverter());
-            _jsonOptions.Converters.Add(new WorkingTimesSortColumnNullableJsonConverter());
-            JsonSerializerOptionsProvider jsonSerializerOptionsProvider = new(_jsonOptions);
+            var jsonOptions = new JsonSerializerOptions();
+            jsonOptions.Converters.Add(new JsonStringEnumConverter());
+            jsonOptions.Converters.Add(new DateTimeJsonConverter());
+            jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
+            jsonOptions.Converters.Add(new DateOnlyJsonConverter());
+            jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
+            jsonOptions.Converters.Add(new AccountsJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeAutomaticJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeBaseJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeManualJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeOngoingJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeTypeJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeTypeNullableJsonConverter());
+            jsonOptions.Converters.Add(new BreakTimeUpdateJsonConverter());
+            jsonOptions.Converters.Add(new BudgetPlanningTypeJsonConverter());
+            jsonOptions.Converters.Add(new BudgetPlanningTypeNullableJsonConverter());
+            jsonOptions.Converters.Add(new BudgetPlanningTypeRequestJsonConverter());
+            jsonOptions.Converters.Add(new BudgetPlanningTypeRequestNullableJsonConverter());
+            jsonOptions.Converters.Add(new CarJsonConverter());
+            jsonOptions.Converters.Add(new CarCreateJsonConverter());
+            jsonOptions.Converters.Add(new CarPartialJsonConverter());
+            jsonOptions.Converters.Add(new CarUpdateJsonConverter());
+            jsonOptions.Converters.Add(new CarsPageJsonConverter());
+            jsonOptions.Converters.Add(new CarsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new CarsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new DailyWorkScheduleJsonConverter());
+            jsonOptions.Converters.Add(new DeletedEntryPageJsonConverter());
+            jsonOptions.Converters.Add(new DeletedEntryPartialJsonConverter());
+            jsonOptions.Converters.Add(new DeletedEntrySortColumnJsonConverter());
+            jsonOptions.Converters.Add(new DeletedEntrySortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new DeletedEntryWithMetadataJsonConverter());
+            jsonOptions.Converters.Add(new DeletedEntryWithMetadataPageJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogCategoriesPageJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogCategoriesSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogCategoriesSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogCategoryJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogCategoryPartialJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogCreateJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogStatusJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogStatusNullableJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogUpdateJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogUpsertJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogsPageJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new DriveLogsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new DurationJsonConverter());
+            jsonOptions.Converters.Add(new DurationTypeJsonConverter());
+            jsonOptions.Converters.Add(new DurationTypeNullableJsonConverter());
+            jsonOptions.Converters.Add(new DurationUnitJsonConverter());
+            jsonOptions.Converters.Add(new DurationUnitNullableJsonConverter());
+            jsonOptions.Converters.Add(new ErrorJsonConverter());
+            jsonOptions.Converters.Add(new ErrorEntryJsonConverter());
+            jsonOptions.Converters.Add(new FlexTimeIndicatorJsonConverter());
+            jsonOptions.Converters.Add(new FlexTimeIndicatorNullableJsonConverter());
+            jsonOptions.Converters.Add(new HolidayJsonConverter());
+            jsonOptions.Converters.Add(new HolidayCalendarPartialJsonConverter());
+            jsonOptions.Converters.Add(new HolidayCalendarsPageJsonConverter());
+            jsonOptions.Converters.Add(new HolidayCalendarsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new HolidayCalendarsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new HolidaysPageJsonConverter());
+            jsonOptions.Converters.Add(new HolidaysSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new HolidaysSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new LocationJsonConverter());
+            jsonOptions.Converters.Add(new LocationCreateJsonConverter());
+            jsonOptions.Converters.Add(new LocationUpdateJsonConverter());
+            jsonOptions.Converters.Add(new NormalWorkingTimesJsonConverter());
+            jsonOptions.Converters.Add(new OvertimeSurchargeAccountJsonConverter());
+            jsonOptions.Converters.Add(new OvertimeSurchargeAccountsJsonConverter());
+            jsonOptions.Converters.Add(new OvertimeSurchargeRuleJsonConverter());
+            jsonOptions.Converters.Add(new PagingInformationJsonConverter());
+            jsonOptions.Converters.Add(new PlatformJsonConverter());
+            jsonOptions.Converters.Add(new PlatformNullableJsonConverter());
+            jsonOptions.Converters.Add(new ProblemDetailJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimeJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimeCreateJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimeStatusJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimeStatusNullableJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimeUpdateJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimeUpsertJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimesPageJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimesSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new ProjectTimesSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new RecordingLockTypeJsonConverter());
+            jsonOptions.Converters.Add(new RecordingLockTypeNullableJsonConverter());
+            jsonOptions.Converters.Add(new RecordingModeUserJsonConverter());
+            jsonOptions.Converters.Add(new RecordingModeUserNullableJsonConverter());
+            jsonOptions.Converters.Add(new SortDirectionJsonConverter());
+            jsonOptions.Converters.Add(new SortDirectionNullableJsonConverter());
+            jsonOptions.Converters.Add(new TaskJsonConverter());
+            jsonOptions.Converters.Add(new TaskBaseJsonConverter());
+            jsonOptions.Converters.Add(new TaskCreateJsonConverter());
+            jsonOptions.Converters.Add(new TaskLocationJsonConverter());
+            jsonOptions.Converters.Add(new TaskPartialJsonConverter());
+            jsonOptions.Converters.Add(new TaskReducedJsonConverter());
+            jsonOptions.Converters.Add(new TaskToLeaderAssignmentJsonConverter());
+            jsonOptions.Converters.Add(new TaskToLeaderAssignmentsPageJsonConverter());
+            jsonOptions.Converters.Add(new TaskToLeaderAssignmentsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new TaskToLeaderAssignmentsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new TaskToTeamAssignmentJsonConverter());
+            jsonOptions.Converters.Add(new TaskToTeamAssignmentsPageJsonConverter());
+            jsonOptions.Converters.Add(new TaskToTeamAssignmentsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new TaskToTeamAssignmentsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new TaskToUserAssignmentJsonConverter());
+            jsonOptions.Converters.Add(new TaskToUserAssignmentUpsertJsonConverter());
+            jsonOptions.Converters.Add(new TaskToUserAssignmentsPageJsonConverter());
+            jsonOptions.Converters.Add(new TaskToUserAssignmentsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new TaskToUserAssignmentsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new TaskUpdateJsonConverter());
+            jsonOptions.Converters.Add(new TasksPageJsonConverter());
+            jsonOptions.Converters.Add(new TasksReducedPageJsonConverter());
+            jsonOptions.Converters.Add(new TasksSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new TasksSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new TeamJsonConverter());
+            jsonOptions.Converters.Add(new TeamCreateJsonConverter());
+            jsonOptions.Converters.Add(new TeamPartialJsonConverter());
+            jsonOptions.Converters.Add(new TeamUpdateJsonConverter());
+            jsonOptions.Converters.Add(new TeamsPageJsonConverter());
+            jsonOptions.Converters.Add(new TeamsPartialPageJsonConverter());
+            jsonOptions.Converters.Add(new TeamsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new TeamsSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new TimeAccountJsonConverter());
+            jsonOptions.Converters.Add(new UserJsonConverter());
+            jsonOptions.Converters.Add(new UserCreateJsonConverter());
+            jsonOptions.Converters.Add(new UserPartialJsonConverter());
+            jsonOptions.Converters.Add(new UserUpdateJsonConverter());
+            jsonOptions.Converters.Add(new UsersPageJsonConverter());
+            jsonOptions.Converters.Add(new UsersPartialPageJsonConverter());
+            jsonOptions.Converters.Add(new UsersSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new UsersSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new VacationAccountJsonConverter());
+            jsonOptions.Converters.Add(new VacationAccountBaseJsonConverter());
+            jsonOptions.Converters.Add(new VacationAccountDaysJsonConverter());
+            jsonOptions.Converters.Add(new VacationAccountMinutesJsonConverter());
+            jsonOptions.Converters.Add(new VacationUnitJsonConverter());
+            jsonOptions.Converters.Add(new VacationUnitNullableJsonConverter());
+            jsonOptions.Converters.Add(new VenuePartialJsonConverter());
+            jsonOptions.Converters.Add(new WaypointJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelPartialJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelTypeJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelTypeNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelWeekJsonConverter());
+            jsonOptions.Converters.Add(new WorkScheduleModelsPageJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeCreateJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpanJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpanCreateJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpanPageJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpanPartialJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpanUpdateJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpansSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeDateSpansSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeRulesJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeStatusJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeStatusNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypeJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypeCategoryJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypeCategoryNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypePartialJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypeSubCategoryJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypeSubCategoryNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypesPageJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypesSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeTypesSortColumnNullableJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeUpdateJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimeUpsertJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimesPageJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimesSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new WorkingTimesSortColumnNullableJsonConverter());
+            jsonOptions.MakeReadOnly(populateMissingResolver: true);
+            JsonSerializerOptionsProvider jsonSerializerOptionsProvider = new(jsonOptions);
             _services.AddSingleton(jsonSerializerOptionsProvider);
             _services.AddSingleton<IApiFactory, ApiFactory>();
             _services.AddSingleton<CarApiEvents>();
@@ -230,161 +234,73 @@ namespace Timr.Api.Client
             _services.AddSingleton<WorkingTimeApiEvents>();
             _services.AddSingleton<WorkingTimeDateSpanApiEvents>();
             _services.AddSingleton<WorkingTimeTypeApiEvents>();
-            OnHostConfigurationCreated();
         }
 
-        /// <summary>
-        /// Configures the HttpClients.
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTimrApiClientHttpClients(Action<IHttpClientBuilder>? builder = null)
+        /// <summary>Uses a static access token, replacing any previous authentication configuration.</summary>
+        public HostConfiguration UseAccessToken(string accessToken)
         {
-            return AddTimrApiClientHttpClients((Action<IServiceProvider, HttpClient>?)null, builder);
+            ArgumentException.ThrowIfNullOrWhiteSpace(accessToken);
+            _configureAuthentication = () => _services.AddSingleton(
+                new TokenContainer<OAuthToken>(new[] { new OAuthToken(accessToken) }));
+            return this;
         }
 
-        /// <summary>
-        /// Configures the HttpClients.
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTimrApiClientHttpClients(
-            Action<HttpClient>? client,
-            Action<IHttpClientBuilder>? builder = null)
+        /// <summary>Uses a callback that supplies valid access tokens, replacing previous authentication configuration.</summary>
+        /// <remarks>The callback owns caching and refresh, and can run more than once per request.</remarks>
+        public HostConfiguration UseAccessTokenProvider(Func<CancellationToken, ValueTask<string>> getAccessToken)
         {
-            var wrapped = client != null ? new Action<IServiceProvider, HttpClient>((_, httpClient) =>
+            ArgumentNullException.ThrowIfNull(getAccessToken);
+            _configureAuthentication = () => _services.AddSingleton<TokenProvider<OAuthToken>>(
+                new OAuthTokenProvider(getAccessToken));
+            return this;
+        }
+
+        /// <summary>Configures every SDK HTTP client; callbacks run in registration order.</summary>
+        public HostConfiguration ConfigureHttpClient(Action<HttpClient> configure)
+        {
+            ArgumentNullException.ThrowIfNull(configure);
+            _configureHttpClients.Add(configure);
+            return this;
+        }
+
+        internal void Register()
+        {
+            var configureAuthentication = _configureAuthentication
+                ?? throw new InvalidOperationException("Configure an access token with UseAccessToken or UseAccessTokenProvider.");
+            configureAuthentication();
+            var configureHttpClients = _configureHttpClients.ToArray();
+            Action<HttpClient> configureClient = client =>
             {
-                client(httpClient);
-            }) : null;
-            return AddTimrApiClientHttpClients(wrapped, builder);
-        }
-
-        /// <summary>
-        /// Configures the HttpClients.
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTimrApiClientHttpClients(
-            Action<IServiceProvider, HttpClient>? client,
-            Action<IHttpClientBuilder>? builder = null)
-        {
-            if (client == null)
-                client = (_, c) => c.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS);
-
+                client.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS);
+                foreach (var configure in configureHttpClients)
+                    configure(client);
+            };
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
-            builders.Add(_services.AddHttpClient<ICarApi, CarApi>(client));
-            builders.Add(_services.AddHttpClient<IDriveLogApi, DriveLogApi>(client));
-            builders.Add(_services.AddHttpClient<IDriveLogCategoryApi, DriveLogCategoryApi>(client));
-            builders.Add(_services.AddHttpClient<IHolidayCalendarApi, HolidayCalendarApi>(client));
-            builders.Add(_services.AddHttpClient<IProjectTimeApi, ProjectTimeApi>(client));
-            builders.Add(_services.AddHttpClient<ITaskApi, TaskApi>(client));
-            builders.Add(_services.AddHttpClient<ITaskToLeaderAssignmentApi, TaskToLeaderAssignmentApi>(client));
-            builders.Add(_services.AddHttpClient<ITaskToTeamAssignmentApi, TaskToTeamAssignmentApi>(client));
-            builders.Add(_services.AddHttpClient<ITaskToUserAssignmentApi, TaskToUserAssignmentApi>(client));
-            builders.Add(_services.AddHttpClient<ITeamApi, TeamApi>(client));
-            builders.Add(_services.AddHttpClient<ITimeAccountApi, TimeAccountApi>(client));
-            builders.Add(_services.AddHttpClient<ITrackApi, TrackApi>(client));
-            builders.Add(_services.AddHttpClient<IUserApi, UserApi>(client));
-            builders.Add(_services.AddHttpClient<IWorkScheduleModelApi, WorkScheduleModelApi>(client));
-            builders.Add(_services.AddHttpClient<IWorkingTimeApi, WorkingTimeApi>(client));
-            builders.Add(_services.AddHttpClient<IWorkingTimeDateSpanApi, WorkingTimeDateSpanApi>(client));
-            builders.Add(_services.AddHttpClient<IWorkingTimeTypeApi, WorkingTimeTypeApi>(client));
+            builders.Add(_services.AddHttpClient<ICarApi, CarApi>("Timr.Api.Endpoints.ICarApi", configureClient));
+            builders.Add(_services.AddHttpClient<IDriveLogApi, DriveLogApi>("Timr.Api.Endpoints.IDriveLogApi", configureClient));
+            builders.Add(_services.AddHttpClient<IDriveLogCategoryApi, DriveLogCategoryApi>("Timr.Api.Endpoints.IDriveLogCategoryApi", configureClient));
+            builders.Add(_services.AddHttpClient<IHolidayCalendarApi, HolidayCalendarApi>("Timr.Api.Endpoints.IHolidayCalendarApi", configureClient));
+            builders.Add(_services.AddHttpClient<IProjectTimeApi, ProjectTimeApi>("Timr.Api.Endpoints.IProjectTimeApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITaskApi, TaskApi>("Timr.Api.Endpoints.ITaskApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITaskToLeaderAssignmentApi, TaskToLeaderAssignmentApi>("Timr.Api.Endpoints.ITaskToLeaderAssignmentApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITaskToTeamAssignmentApi, TaskToTeamAssignmentApi>("Timr.Api.Endpoints.ITaskToTeamAssignmentApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITaskToUserAssignmentApi, TaskToUserAssignmentApi>("Timr.Api.Endpoints.ITaskToUserAssignmentApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITeamApi, TeamApi>("Timr.Api.Endpoints.ITeamApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITimeAccountApi, TimeAccountApi>("Timr.Api.Endpoints.ITimeAccountApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITrackApi, TrackApi>("Timr.Api.Endpoints.ITrackApi", configureClient));
+            builders.Add(_services.AddHttpClient<IUserApi, UserApi>("Timr.Api.Endpoints.IUserApi", configureClient));
+            builders.Add(_services.AddHttpClient<IWorkScheduleModelApi, WorkScheduleModelApi>("Timr.Api.Endpoints.IWorkScheduleModelApi", configureClient));
+            builders.Add(_services.AddHttpClient<IWorkingTimeApi, WorkingTimeApi>("Timr.Api.Endpoints.IWorkingTimeApi", configureClient));
+            builders.Add(_services.AddHttpClient<IWorkingTimeDateSpanApi, WorkingTimeDateSpanApi>("Timr.Api.Endpoints.IWorkingTimeDateSpanApi", configureClient));
+            builders.Add(_services.AddHttpClient<IWorkingTimeTypeApi, WorkingTimeTypeApi>("Timr.Api.Endpoints.IWorkingTimeTypeApi", configureClient));
 
-            foreach (IHttpClientBuilder instance in builders)
+            foreach (var builder in builders)
             {
-                bool suppressDefault = false;
-                OnAddTimrApiClientHttpClientBuilder(instance, builder, ref suppressDefault);
-                if (!suppressDefault)
-                    builder?.Invoke(instance);
+                // Apply the fallback after consumer HTTP-client configuration.
+                _services.PostConfigure<HttpClientFactoryOptions>(builder.Name, options =>
+                    options.HttpClientActions.Add(client => client.ApplyDefaultUserAgent()));
             }
-
-            HttpClientsAdded = true;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Applies configuration to each HttpClient.
-        /// Implement this partial method to prepend configuration, invoke <paramref name="userBuilder"/> at the
-        /// desired position, and append further configuration. Set <paramref name="suppressDefault"/> to
-        /// <c>true</c> when you invoke <paramref name="userBuilder"/> yourself to prevent a second invocation,
-        /// or to ignore the user's builder entirely.
-        /// If this method is not implemented, <paramref name="userBuilder"/> is invoked automatically.
-        /// </summary>
-        /// <param name="builder">The <see cref="IHttpClientBuilder"/> to configure.</param>
-        /// <param name="userBuilder">The caller-supplied builder action, or <c>null</c> if none was provided.</param>
-        /// <param name="suppressDefault">Set to <c>true</c> to prevent the default invocation of <paramref name="userBuilder"/>.</param>
-        partial void OnAddTimrApiClientHttpClientBuilder(IHttpClientBuilder builder, Action<IHttpClientBuilder>? userBuilder, ref bool suppressDefault);
-
-        /// <summary>
-        /// Called at the end of the constructor after all JSON converters and services are registered.
-        /// Implement this partial method to further configure <c>_jsonOptions</c> or register additional singletons via <c>_services</c>.
-        /// </summary>
-        partial void OnHostConfigurationCreated();
-
-        /// <summary>
-        /// Called after all services have been registered.
-        /// Implement this partial method to register additional services.
-        /// </summary>
-        /// <param name="services"></param>
-        partial void OnServicesAdded(IServiceCollection services);
-
-        internal void NotifyServicesAdded(IServiceCollection services) => OnServicesAdded(services);
-
-        /// <summary>
-        /// Configures the JsonSerializerSettings
-        /// </summary>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public HostConfiguration ConfigureJsonOptions(Action<JsonSerializerOptions> options)
-        {
-            options(_jsonOptions);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Adds tokens to your IServiceCollection
-        /// </summary>
-        /// <typeparam name="TTokenBase"></typeparam>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTokens<TTokenBase>(TTokenBase token) where TTokenBase : TokenBase
-        {
-            return AddTokens(new TTokenBase[]{ token });
-        }
-
-        /// <summary>
-        /// Adds tokens to your IServiceCollection
-        /// </summary>
-        /// <typeparam name="TTokenBase"></typeparam>
-        /// <param name="tokens"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTokens<TTokenBase>(IEnumerable<TTokenBase> tokens) where TTokenBase : TokenBase
-        {
-            TokenContainer<TTokenBase> container = new TokenContainer<TTokenBase>(tokens);
-            _services.AddSingleton(services => container);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a token provider to your IServiceCollection
-        /// </summary>
-        /// <typeparam name="TTokenProvider"></typeparam>
-        /// <typeparam name="TTokenBase"></typeparam>
-        /// <returns></returns>
-        public HostConfiguration UseProvider<TTokenProvider, TTokenBase>() 
-            where TTokenProvider : TokenProvider<TTokenBase>
-            where TTokenBase : TokenBase
-        {
-            _services.AddSingleton<TTokenProvider>();
-            _services.AddSingleton<TokenProvider<TTokenBase>>(services => services.GetRequiredService<TTokenProvider>());
-
-            return this;
         }
     }
 }

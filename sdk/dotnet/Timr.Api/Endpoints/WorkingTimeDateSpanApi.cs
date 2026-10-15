@@ -25,70 +25,70 @@ using Timr.Api.Logging;
 using Timr.Api.Model;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Timr.Api.Api
+namespace Timr.Api.Endpoints
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// This class is registered as transient.
     /// </summary>
-    public interface IProjectTimeApi : IApi
+    public interface IWorkingTimeDateSpanApi : IApi
     {
         /// <summary>
         /// The class containing the events
         /// </summary>
-        ProjectTimeApiEvents Events { get; }
+        WorkingTimeDateSpanApiEvents Events { get; }
 
         /// <summary>
-        /// Create a Project Time
+        /// Create a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Creates a Project Time from the data in the request body.
+        /// Creates a Working Time Date Span from the data in the request body, and the day-based Working Times it covers.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="projectTimeCreate">Project Time entity</param>
+        /// <param name="workingTimeDateSpanCreate">Working Time Date Span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateProjectTimeApiResponse"/>&gt;</returns>
-        Task<ICreateProjectTimeApiResponse> CreateProjectTimeAsync(ProjectTimeCreate projectTimeCreate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        Task<ICreateWorkingTimeDateSpanApiResponse> CreateWorkingTimeDateSpanAsync(WorkingTimeDateSpanCreate workingTimeDateSpanCreate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a Project Time
+        /// Create a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Creates a Project Time from the data in the request body.
+        /// Creates a Working Time Date Span from the data in the request body, and the day-based Working Times it covers.
         /// </remarks>
-        /// <param name="projectTimeCreate">Project Time entity</param>
+        /// <param name="workingTimeDateSpanCreate">Working Time Date Span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateProjectTimeApiResponse"/>?&gt;</returns>
-        Task<ICreateProjectTimeApiResponse?> CreateProjectTimeOrDefaultAsync(ProjectTimeCreate projectTimeCreate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWorkingTimeDateSpanApiResponse"/>?&gt;</returns>
+        Task<ICreateWorkingTimeDateSpanApiResponse?> CreateWorkingTimeDateSpanOrDefaultAsync(WorkingTimeDateSpanCreate workingTimeDateSpanCreate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a Project Time
+        /// Delete a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Deletes the Project Time.
+        /// Deletes the Working Time Date Span together with the Working Times it covers.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteProjectTimeApiResponse"/>&gt;</returns>
-        Task<IDeleteProjectTimeApiResponse> DeleteProjectTimeAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        Task<IDeleteWorkingTimeDateSpanApiResponse> DeleteWorkingTimeDateSpanAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a Project Time
+        /// Delete a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Deletes the Project Time.
+        /// Deletes the Working Time Date Span together with the Working Times it covers.
         /// </remarks>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteProjectTimeApiResponse"/>?&gt;</returns>
-        Task<IDeleteProjectTimeApiResponse?> DeleteProjectTimeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeDateSpanApiResponse"/>?&gt;</returns>
+        Task<IDeleteWorkingTimeDateSpanApiResponse?> DeleteWorkingTimeDateSpanOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List deleted Project Times
+        /// List deleted Working Time Date Spans
         /// </summary>
         /// <remarks>
-        /// Lists Project Times that were deleted, so a client holding a local copy can reconcile.
+        /// Lists Working Time Date Spans that were deleted, so a client holding a local copy can reconcile.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
@@ -97,14 +97,14 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedProjectTimesApiResponse"/>&gt;</returns>
-        Task<IFetchDeletedProjectTimesApiResponse> FetchDeletedProjectTimesAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedWorkingTimeDateSpansApiResponse"/>&gt;</returns>
+        Task<IFetchDeletedWorkingTimeDateSpansApiResponse> FetchDeletedWorkingTimeDateSpansAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List deleted Project Times
+        /// List deleted Working Time Date Spans
         /// </summary>
         /// <remarks>
-        /// Lists Project Times that were deleted, so a client holding a local copy can reconcile.
+        /// Lists Working Time Date Spans that were deleted, so a client holding a local copy can reconcile.
         /// </remarks>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
@@ -112,111 +112,101 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedProjectTimesApiResponse"/>?&gt;</returns>
-        Task<IFetchDeletedProjectTimesApiResponse?> FetchDeletedProjectTimesOrDefaultAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedWorkingTimeDateSpansApiResponse"/>?&gt;</returns>
+        Task<IFetchDeletedWorkingTimeDateSpansApiResponse?> FetchDeletedWorkingTimeDateSpansOrDefaultAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Project Times
+        /// List Working Time Date Spans
         /// </summary>
         /// <remarks>
-        /// Lists the Project Times the authenticated user or API token can access.
+        /// Lists the Working Time Date Spans the authenticated user or API token can access.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="notes">Only return entries whose notes contain this text. (optional)</param>
-        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
-        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="from">Only return Working Time Date Spans that end on or after this day. (optional)</param>
+        /// <param name="to">Only return entries starting on or before this day. (optional)</param>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
-        /// <param name="task">Only return entries recorded on the Task with this ID. (optional)</param>
-        /// <param name="traverseTaskTree">Include entries recorded on the whole subtree of the given Task (true) or only on the Task itself (false). (optional, default to true)</param>
-        /// <param name="billable">Only return entries that are billable (true) or not billable (false). (optional)</param>
-        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="workingTimeTypes">Only return entries of these Working Time Types. (optional)</param>
         /// <param name="users">Only return entries belonging to these users. (optional)</param>
-        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchProjectTimesApiResponse"/>&gt;</returns>
-        Task<IFetchProjectTimesApiResponse> FetchProjectTimesAsync(Option<string> notes = default, Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<string> task = default, Option<bool> traverseTaskTree = default, Option<bool> billable = default, Option<List<ProjectTimeStatus>> statuses = default, Option<List<string>> users = default, Option<bool> changed = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<ProjectTimesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeDateSpansApiResponse"/>&gt;</returns>
+        Task<IFetchWorkingTimeDateSpansApiResponse> FetchWorkingTimeDateSpansAsync(Option<DateOnly> from = default, Option<DateOnly> to = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> workingTimeTypes = default, Option<List<string>> users = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeDateSpansSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Project Times
+        /// List Working Time Date Spans
         /// </summary>
         /// <remarks>
-        /// Lists the Project Times the authenticated user or API token can access.
+        /// Lists the Working Time Date Spans the authenticated user or API token can access.
         /// </remarks>
-        /// <param name="notes">Only return entries whose notes contain this text. (optional)</param>
-        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
-        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="from">Only return Working Time Date Spans that end on or after this day. (optional)</param>
+        /// <param name="to">Only return entries starting on or before this day. (optional)</param>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
-        /// <param name="task">Only return entries recorded on the Task with this ID. (optional)</param>
-        /// <param name="traverseTaskTree">Include entries recorded on the whole subtree of the given Task (true) or only on the Task itself (false). (optional, default to true)</param>
-        /// <param name="billable">Only return entries that are billable (true) or not billable (false). (optional)</param>
-        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="workingTimeTypes">Only return entries of these Working Time Types. (optional)</param>
         /// <param name="users">Only return entries belonging to these users. (optional)</param>
-        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchProjectTimesApiResponse"/>?&gt;</returns>
-        Task<IFetchProjectTimesApiResponse?> FetchProjectTimesOrDefaultAsync(Option<string> notes = default, Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<string> task = default, Option<bool> traverseTaskTree = default, Option<bool> billable = default, Option<List<ProjectTimeStatus>> statuses = default, Option<List<string>> users = default, Option<bool> changed = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<ProjectTimesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeDateSpansApiResponse"/>?&gt;</returns>
+        Task<IFetchWorkingTimeDateSpansApiResponse?> FetchWorkingTimeDateSpansOrDefaultAsync(Option<DateOnly> from = default, Option<DateOnly> to = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> workingTimeTypes = default, Option<List<string>> users = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeDateSpansSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Project Time
+        /// Get a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Returns a single Project Time by its ID.
+        /// Returns a single Working Time Date Span by its ID.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetProjectTimeApiResponse"/>&gt;</returns>
-        Task<IGetProjectTimeApiResponse> GetProjectTimeAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        Task<IGetWorkingTimeDateSpanApiResponse> GetWorkingTimeDateSpanAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Project Time
+        /// Get a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Returns a single Project Time by its ID.
+        /// Returns a single Working Time Date Span by its ID.
         /// </remarks>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetProjectTimeApiResponse"/>?&gt;</returns>
-        Task<IGetProjectTimeApiResponse?> GetProjectTimeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeDateSpanApiResponse"/>?&gt;</returns>
+        Task<IGetWorkingTimeDateSpanApiResponse?> GetWorkingTimeDateSpanOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update a Project Time
+        /// Update a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Updates the Project Time with the fields present in the request body. Fields that are omitted stay unchanged.
+        /// Updates the Working Time Date Span with the fields present in the request body, and adjusts the Working Times it covers. Fields that are omitted stay unchanged.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Project Time.</param>
-        /// <param name="projectTimeUpdate">Project Time entity</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
+        /// <param name="workingTimeDateSpanUpdate">working time date span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateProjectTimeApiResponse"/>&gt;</returns>
-        Task<IUpdateProjectTimeApiResponse> UpdateProjectTimeAsync(string id, ProjectTimeUpdate projectTimeUpdate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        Task<IUpdateWorkingTimeDateSpanApiResponse> UpdateWorkingTimeDateSpanAsync(string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Update a Project Time
+        /// Update a Working Time Date Span
         /// </summary>
         /// <remarks>
-        /// Updates the Project Time with the fields present in the request body. Fields that are omitted stay unchanged.
+        /// Updates the Working Time Date Span with the fields present in the request body, and adjusts the Working Times it covers. Fields that are omitted stay unchanged.
         /// </remarks>
-        /// <param name="id">ID of the Project Time.</param>
-        /// <param name="projectTimeUpdate">Project Time entity</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
+        /// <param name="workingTimeDateSpanUpdate">working time date span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateProjectTimeApiResponse"/>?&gt;</returns>
-        Task<IUpdateProjectTimeApiResponse?> UpdateProjectTimeOrDefaultAsync(string id, ProjectTimeUpdate projectTimeUpdate, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWorkingTimeDateSpanApiResponse"/>?&gt;</returns>
+        Task<IUpdateWorkingTimeDateSpanApiResponse?> UpdateWorkingTimeDateSpanOrDefaultAsync(string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
-    /// The <see cref="ICreateProjectTimeApiResponse"/>
+    /// The <see cref="ICreateWorkingTimeDateSpanApiResponse"/>
     /// </summary>
-    public interface ICreateProjectTimeApiResponse : Timr.Api.Client.IApiResponse, ICreated<Timr.Api.Model.ProjectTime?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface ICreateWorkingTimeDateSpanApiResponse : Timr.Api.Client.IApiResponse, ICreated<Timr.Api.Model.WorkingTimeDateSpan?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 201 Created
@@ -244,9 +234,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IDeleteProjectTimeApiResponse"/>
+    /// The <see cref="IDeleteWorkingTimeDateSpanApiResponse"/>
     /// </summary>
-    public interface IDeleteProjectTimeApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
+    public interface IDeleteWorkingTimeDateSpanApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 204 NoContent
@@ -274,9 +264,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchDeletedProjectTimesApiResponse"/>
+    /// The <see cref="IFetchDeletedWorkingTimeDateSpansApiResponse"/>
     /// </summary>
-    public interface IFetchDeletedProjectTimesApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.DeletedEntryWithMetadataPage?>, IBadRequest<Timr.Api.Model.Error?>
+    public interface IFetchDeletedWorkingTimeDateSpansApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.DeletedEntryWithMetadataPage?>, IBadRequest<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -292,9 +282,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchProjectTimesApiResponse"/>
+    /// The <see cref="IFetchWorkingTimeDateSpansApiResponse"/>
     /// </summary>
-    public interface IFetchProjectTimesApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.ProjectTimesPage?>, IBadRequest<Timr.Api.Model.Error?>
+    public interface IFetchWorkingTimeDateSpansApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkingTimeDateSpanPage?>, IBadRequest<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -310,9 +300,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetProjectTimeApiResponse"/>
+    /// The <see cref="IGetWorkingTimeDateSpanApiResponse"/>
     /// </summary>
-    public interface IGetProjectTimeApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.ProjectTime?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
+    public interface IGetWorkingTimeDateSpanApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkingTimeDateSpan?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -334,15 +324,21 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IUpdateProjectTimeApiResponse"/>
+    /// The <see cref="IUpdateWorkingTimeDateSpanApiResponse"/>
     /// </summary>
-    public interface IUpdateProjectTimeApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.ProjectTime?>, IBadRequest<Timr.Api.Model.Error?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface IUpdateWorkingTimeDateSpanApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkingTimeDateSpan?>, IBadRequest<Timr.Api.Model.Error?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
         /// </summary>
         /// <returns></returns>
         bool IsOk { get; }
+
+        /// <summary>
+        /// Returns true if the response is 204 NoContent
+        /// </summary>
+        /// <returns></returns>
+        bool IsNoContent { get; }
 
         /// <summary>
         /// Returns true if the response is 400 BadRequest
@@ -378,140 +374,140 @@ namespace Timr.Api.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class ProjectTimeApiEvents
+    public class WorkingTimeDateSpanApiEvents
     {
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnCreateProjectTime;
+        public event EventHandler<ApiResponseEventArgs>? OnCreateWorkingTimeDateSpan;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorCreateProjectTime;
+        public event EventHandler<ExceptionEventArgs>? OnErrorCreateWorkingTimeDateSpan;
 
-        internal void ExecuteOnCreateProjectTime(ProjectTimeApi.CreateProjectTimeApiResponse apiResponse)
+        internal void ExecuteOnCreateWorkingTimeDateSpan(WorkingTimeDateSpanApi.CreateWorkingTimeDateSpanApiResponse apiResponse)
         {
-            OnCreateProjectTime?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnCreateWorkingTimeDateSpan?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorCreateProjectTime(Exception exception)
+        internal void ExecuteOnErrorCreateWorkingTimeDateSpan(Exception exception)
         {
-            OnErrorCreateProjectTime?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorCreateWorkingTimeDateSpan?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnDeleteProjectTime;
+        public event EventHandler<ApiResponseEventArgs>? OnDeleteWorkingTimeDateSpan;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteProjectTime;
+        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteWorkingTimeDateSpan;
 
-        internal void ExecuteOnDeleteProjectTime(ProjectTimeApi.DeleteProjectTimeApiResponse apiResponse)
+        internal void ExecuteOnDeleteWorkingTimeDateSpan(WorkingTimeDateSpanApi.DeleteWorkingTimeDateSpanApiResponse apiResponse)
         {
-            OnDeleteProjectTime?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnDeleteWorkingTimeDateSpan?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorDeleteProjectTime(Exception exception)
+        internal void ExecuteOnErrorDeleteWorkingTimeDateSpan(Exception exception)
         {
-            OnErrorDeleteProjectTime?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorDeleteWorkingTimeDateSpan?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchDeletedProjectTimes;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchDeletedWorkingTimeDateSpans;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchDeletedProjectTimes;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchDeletedWorkingTimeDateSpans;
 
-        internal void ExecuteOnFetchDeletedProjectTimes(ProjectTimeApi.FetchDeletedProjectTimesApiResponse apiResponse)
+        internal void ExecuteOnFetchDeletedWorkingTimeDateSpans(WorkingTimeDateSpanApi.FetchDeletedWorkingTimeDateSpansApiResponse apiResponse)
         {
-            OnFetchDeletedProjectTimes?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchDeletedWorkingTimeDateSpans?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchDeletedProjectTimes(Exception exception)
+        internal void ExecuteOnErrorFetchDeletedWorkingTimeDateSpans(Exception exception)
         {
-            OnErrorFetchDeletedProjectTimes?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchDeletedWorkingTimeDateSpans?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchProjectTimes;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchWorkingTimeDateSpans;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchProjectTimes;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchWorkingTimeDateSpans;
 
-        internal void ExecuteOnFetchProjectTimes(ProjectTimeApi.FetchProjectTimesApiResponse apiResponse)
+        internal void ExecuteOnFetchWorkingTimeDateSpans(WorkingTimeDateSpanApi.FetchWorkingTimeDateSpansApiResponse apiResponse)
         {
-            OnFetchProjectTimes?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchWorkingTimeDateSpans?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchProjectTimes(Exception exception)
+        internal void ExecuteOnErrorFetchWorkingTimeDateSpans(Exception exception)
         {
-            OnErrorFetchProjectTimes?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchWorkingTimeDateSpans?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetProjectTime;
+        public event EventHandler<ApiResponseEventArgs>? OnGetWorkingTimeDateSpan;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetProjectTime;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetWorkingTimeDateSpan;
 
-        internal void ExecuteOnGetProjectTime(ProjectTimeApi.GetProjectTimeApiResponse apiResponse)
+        internal void ExecuteOnGetWorkingTimeDateSpan(WorkingTimeDateSpanApi.GetWorkingTimeDateSpanApiResponse apiResponse)
         {
-            OnGetProjectTime?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetWorkingTimeDateSpan?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetProjectTime(Exception exception)
+        internal void ExecuteOnErrorGetWorkingTimeDateSpan(Exception exception)
         {
-            OnErrorGetProjectTime?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetWorkingTimeDateSpan?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnUpdateProjectTime;
+        public event EventHandler<ApiResponseEventArgs>? OnUpdateWorkingTimeDateSpan;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorUpdateProjectTime;
+        public event EventHandler<ExceptionEventArgs>? OnErrorUpdateWorkingTimeDateSpan;
 
-        internal void ExecuteOnUpdateProjectTime(ProjectTimeApi.UpdateProjectTimeApiResponse apiResponse)
+        internal void ExecuteOnUpdateWorkingTimeDateSpan(WorkingTimeDateSpanApi.UpdateWorkingTimeDateSpanApiResponse apiResponse)
         {
-            OnUpdateProjectTime?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnUpdateWorkingTimeDateSpan?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorUpdateProjectTime(Exception exception)
+        internal void ExecuteOnErrorUpdateWorkingTimeDateSpan(Exception exception)
         {
-            OnErrorUpdateProjectTime?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorUpdateWorkingTimeDateSpan?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public sealed partial class ProjectTimeApi : IProjectTimeApi
+    public sealed partial class WorkingTimeDateSpanApi : IWorkingTimeDateSpanApi
     {
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
         /// The logger
         /// </summary>
-        public ILogger<ProjectTimeApi> Logger { get; }
+        public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
         /// <summary>
         /// The HttpClient
@@ -521,7 +517,7 @@ namespace Timr.Api.Api
         /// <summary>
         /// The class containing the events
         /// </summary>
-        public ProjectTimeApiEvents Events { get; }
+        public WorkingTimeDateSpanApiEvents Events { get; }
 
         /// <summary>
         /// A token provider of type <see cref="OauthTokenProvider"/>
@@ -529,41 +525,41 @@ namespace Timr.Api.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectTimeApi"/> class.
+        /// Initializes a new instance of the <see cref="WorkingTimeDateSpanApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public ProjectTimeApi(ILogger<ProjectTimeApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, ProjectTimeApiEvents projectTimeApiEvents,
+        public WorkingTimeDateSpanApi(ILogger<WorkingTimeDateSpanApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, WorkingTimeDateSpanApiEvents workingTimeDateSpanApiEvents,
             TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             Logger = logger;
             HttpClient = httpClient;
-            Events = projectTimeApiEvents;
+            Events = workingTimeDateSpanApiEvents;
             OauthTokenProvider = oauthTokenProvider;
         }
 
-        partial void FormatCreateProjectTime(ProjectTimeCreate projectTimeCreate);
+        partial void FormatCreateWorkingTimeDateSpan(WorkingTimeDateSpanCreate workingTimeDateSpanCreate);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="projectTimeCreate"></param>
+        /// <param name="workingTimeDateSpanCreate"></param>
         /// <returns></returns>
-        private void ValidateCreateProjectTime(ProjectTimeCreate projectTimeCreate)
+        private void ValidateCreateWorkingTimeDateSpan(WorkingTimeDateSpanCreate workingTimeDateSpanCreate)
         {
-            if (projectTimeCreate == null)
-                throw new ArgumentNullException(nameof(projectTimeCreate));
+            if (workingTimeDateSpanCreate == null)
+                throw new ArgumentNullException(nameof(workingTimeDateSpanCreate));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="projectTimeCreate"></param>
-        private void AfterCreateProjectTimeDefaultImplementation(ICreateProjectTimeApiResponse apiResponseLocalVar, ProjectTimeCreate projectTimeCreate)
+        /// <param name="workingTimeDateSpanCreate"></param>
+        private void AfterCreateWorkingTimeDateSpanDefaultImplementation(ICreateWorkingTimeDateSpanApiResponse apiResponseLocalVar, WorkingTimeDateSpanCreate workingTimeDateSpanCreate)
         {
             bool suppressDefaultLog = false;
-            AfterCreateProjectTime(ref suppressDefaultLog, apiResponseLocalVar, projectTimeCreate);
+            AfterCreateWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, workingTimeDateSpanCreate);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -573,8 +569,8 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="projectTimeCreate"></param>
-        partial void AfterCreateProjectTime(ref bool suppressDefaultLog, ICreateProjectTimeApiResponse apiResponseLocalVar, ProjectTimeCreate projectTimeCreate);
+        /// <param name="workingTimeDateSpanCreate"></param>
+        partial void AfterCreateWorkingTimeDateSpan(ref bool suppressDefaultLog, ICreateWorkingTimeDateSpanApiResponse apiResponseLocalVar, WorkingTimeDateSpanCreate workingTimeDateSpanCreate);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -582,11 +578,11 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="projectTimeCreate"></param>
-        private void OnErrorCreateProjectTimeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, ProjectTimeCreate projectTimeCreate)
+        /// <param name="workingTimeDateSpanCreate"></param>
+        private void OnErrorCreateWorkingTimeDateSpanDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, WorkingTimeDateSpanCreate workingTimeDateSpanCreate)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateProjectTime(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, projectTimeCreate);
+            OnErrorCreateWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, workingTimeDateSpanCreate);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -598,20 +594,20 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="projectTimeCreate"></param>
-        partial void OnErrorCreateProjectTime(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, ProjectTimeCreate projectTimeCreate);
+        /// <param name="workingTimeDateSpanCreate"></param>
+        partial void OnErrorCreateWorkingTimeDateSpan(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, WorkingTimeDateSpanCreate workingTimeDateSpanCreate);
 
         /// <summary>
-        /// Create a Project Time Creates a Project Time from the data in the request body.
+        /// Create a Working Time Date Span Creates a Working Time Date Span from the data in the request body, and the day-based Working Times it covers.
         /// </summary>
-        /// <param name="projectTimeCreate">Project Time entity</param>
+        /// <param name="workingTimeDateSpanCreate">Working Time Date Span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<ICreateProjectTimeApiResponse?> CreateProjectTimeOrDefaultAsync(ProjectTimeCreate projectTimeCreate, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<ICreateWorkingTimeDateSpanApiResponse?> CreateWorkingTimeDateSpanOrDefaultAsync(WorkingTimeDateSpanCreate workingTimeDateSpanCreate, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateProjectTimeAsync(projectTimeCreate, cancellationToken).ConfigureAwait(false);
+                return await CreateWorkingTimeDateSpanAsync(workingTimeDateSpanCreate, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -620,21 +616,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Create a Project Time Creates a Project Time from the data in the request body.
+        /// Create a Working Time Date Span Creates a Working Time Date Span from the data in the request body, and the day-based Working Times it covers.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="projectTimeCreate">Project Time entity</param>
+        /// <param name="workingTimeDateSpanCreate">Working Time Date Span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<ICreateProjectTimeApiResponse> CreateProjectTimeAsync(ProjectTimeCreate projectTimeCreate, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<ICreateWorkingTimeDateSpanApiResponse> CreateWorkingTimeDateSpanAsync(WorkingTimeDateSpanCreate workingTimeDateSpanCreate, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateProjectTime(projectTimeCreate);
+                ValidateCreateWorkingTimeDateSpan(workingTimeDateSpanCreate);
 
-                FormatCreateProjectTime(projectTimeCreate);
+                FormatCreateWorkingTimeDateSpan(workingTimeDateSpanCreate);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -642,12 +638,12 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/project-times"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/project-times");
+                        ? "/working-time-date-spans"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans");
 
-                    httpRequestMessageLocalVar.Content = (projectTimeCreate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
+                    httpRequestMessageLocalVar.Content = (workingTimeDateSpanCreate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
-                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(projectTimeCreate, _jsonSerializerOptions));
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(workingTimeDateSpanCreate, _jsonSerializerOptions));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -689,20 +685,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        CreateProjectTimeApiResponse apiResponseLocalVar;
+                        CreateWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/project-times", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterCreateProjectTimeDefaultImplementation(apiResponseLocalVar, projectTimeCreate);
+                        AfterCreateWorkingTimeDateSpanDefaultImplementation(apiResponseLocalVar, workingTimeDateSpanCreate);
 
-                        Events.ExecuteOnCreateProjectTime(apiResponseLocalVar);
+                        Events.ExecuteOnCreateWorkingTimeDateSpan(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -714,24 +710,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateProjectTimeDefaultImplementation(e, "/project-times", uriBuilderLocalVar.Path, projectTimeCreate);
-                Events.ExecuteOnErrorCreateProjectTime(e);
+                OnErrorCreateWorkingTimeDateSpanDefaultImplementation(e, "/working-time-date-spans", uriBuilderLocalVar.Path, workingTimeDateSpanCreate);
+                Events.ExecuteOnErrorCreateWorkingTimeDateSpan(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="CreateProjectTimeApiResponse"/>
+        /// The <see cref="CreateWorkingTimeDateSpanApiResponse"/>
         /// </summary>
-        public partial class CreateProjectTimeApiResponse : Timr.Api.Client.ApiResponse, ICreateProjectTimeApiResponse
+        public partial class CreateWorkingTimeDateSpanApiResponse : Timr.Api.Client.ApiResponse, ICreateWorkingTimeDateSpanApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<ProjectTimeApi> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="CreateProjectTimeApiResponse"/>
+            /// The <see cref="CreateWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -740,14 +736,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public CreateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="CreateProjectTimeApiResponse"/>
+            /// The <see cref="CreateWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -756,7 +752,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public CreateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -774,32 +770,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 201 Created
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.ProjectTime? Created()
+            public Timr.Api.Model.WorkingTimeDateSpan? Created()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.ProjectTime? result = null;
+                Timr.Api.Model.WorkingTimeDateSpan? result = null;
                 OnCreated(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultCreated();
                 return result;
             }
 
-            private Timr.Api.Model.ProjectTime? DefaultCreated()
+            private Timr.Api.Model.WorkingTimeDateSpan? DefaultCreated()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsCreated
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.ProjectTime>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpan>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.ProjectTime? result);
+            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpan? result);
 
             /// <summary>
             /// Returns true if the response is 201 Created and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.ProjectTime? result)
+            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.WorkingTimeDateSpan? result)
             {
                 result = null;
 
@@ -975,14 +971,14 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatDeleteProjectTime(ref string id);
+        partial void FormatDeleteWorkingTimeDateSpan(ref string id);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private void ValidateDeleteProjectTime(string id)
+        private void ValidateDeleteWorkingTimeDateSpan(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -993,10 +989,10 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        private void AfterDeleteProjectTimeDefaultImplementation(IDeleteProjectTimeApiResponse apiResponseLocalVar, string id)
+        private void AfterDeleteWorkingTimeDateSpanDefaultImplementation(IDeleteWorkingTimeDateSpanApiResponse apiResponseLocalVar, string id)
         {
             bool suppressDefaultLog = false;
-            AfterDeleteProjectTime(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterDeleteWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1007,7 +1003,7 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        partial void AfterDeleteProjectTime(ref bool suppressDefaultLog, IDeleteProjectTimeApiResponse apiResponseLocalVar, string id);
+        partial void AfterDeleteWorkingTimeDateSpan(ref bool suppressDefaultLog, IDeleteWorkingTimeDateSpanApiResponse apiResponseLocalVar, string id);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1016,10 +1012,10 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        private void OnErrorDeleteProjectTimeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        private void OnErrorDeleteWorkingTimeDateSpanDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorDeleteProjectTime(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorDeleteWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1032,19 +1028,19 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        partial void OnErrorDeleteProjectTime(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        partial void OnErrorDeleteWorkingTimeDateSpan(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
 
         /// <summary>
-        /// Delete a Project Time Deletes the Project Time.
+        /// Delete a Working Time Date Span Deletes the Working Time Date Span together with the Working Times it covers.
         /// </summary>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<IDeleteProjectTimeApiResponse?> DeleteProjectTimeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<IDeleteWorkingTimeDateSpanApiResponse?> DeleteWorkingTimeDateSpanOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await DeleteProjectTimeAsync(id, cancellationToken).ConfigureAwait(false);
+                return await DeleteWorkingTimeDateSpanAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1053,21 +1049,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Delete a Project Time Deletes the Project Time.
+        /// Delete a Working Time Date Span Deletes the Working Time Date Span together with the Working Times it covers.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<IDeleteProjectTimeApiResponse> DeleteProjectTimeAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<IDeleteWorkingTimeDateSpanApiResponse> DeleteWorkingTimeDateSpanAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateDeleteProjectTime(id);
+                ValidateDeleteWorkingTimeDateSpan(id);
 
-                FormatDeleteProjectTime(ref id);
+                FormatDeleteWorkingTimeDateSpan(ref id);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1075,8 +1071,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/project-times/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/project-times/{id}");
+                        ? "/working-time-date-spans/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -1109,20 +1105,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        DeleteProjectTimeApiResponse apiResponseLocalVar;
+                        DeleteWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/project-times/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterDeleteProjectTimeDefaultImplementation(apiResponseLocalVar, id);
+                        AfterDeleteWorkingTimeDateSpanDefaultImplementation(apiResponseLocalVar, id);
 
-                        Events.ExecuteOnDeleteProjectTime(apiResponseLocalVar);
+                        Events.ExecuteOnDeleteWorkingTimeDateSpan(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1134,24 +1130,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorDeleteProjectTimeDefaultImplementation(e, "/project-times/{id}", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorDeleteProjectTime(e);
+                OnErrorDeleteWorkingTimeDateSpanDefaultImplementation(e, "/working-time-date-spans/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorDeleteWorkingTimeDateSpan(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="DeleteProjectTimeApiResponse"/>
+        /// The <see cref="DeleteWorkingTimeDateSpanApiResponse"/>
         /// </summary>
-        public partial class DeleteProjectTimeApiResponse : Timr.Api.Client.ApiResponse, IDeleteProjectTimeApiResponse
+        public partial class DeleteWorkingTimeDateSpanApiResponse : Timr.Api.Client.ApiResponse, IDeleteWorkingTimeDateSpanApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<ProjectTimeApi> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="DeleteProjectTimeApiResponse"/>
+            /// The <see cref="DeleteWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1160,14 +1156,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public DeleteWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="DeleteProjectTimeApiResponse"/>
+            /// The <see cref="DeleteWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1176,7 +1172,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public DeleteWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1351,14 +1347,14 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchDeletedProjectTimes(ref Option<DateTimeOffset> lastModifiedAfter, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<DeletedEntrySortColumn> sortBy);
+        partial void FormatFetchDeletedWorkingTimeDateSpans(ref Option<DateTimeOffset> lastModifiedAfter, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<DeletedEntrySortColumn> sortBy);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateFetchDeletedProjectTimes(Option<string> pageToken)
+        private void ValidateFetchDeletedWorkingTimeDateSpans(Option<string> pageToken)
         {
             if (pageToken.IsSet && pageToken.Value == null)
                 throw new ArgumentNullException(nameof(pageToken));
@@ -1373,10 +1369,10 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void AfterFetchDeletedProjectTimesDefaultImplementation(IFetchDeletedProjectTimesApiResponse apiResponseLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy)
+        private void AfterFetchDeletedWorkingTimeDateSpansDefaultImplementation(IFetchDeletedWorkingTimeDateSpansApiResponse apiResponseLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy)
         {
             bool suppressDefaultLog = false;
-            AfterFetchDeletedProjectTimes(ref suppressDefaultLog, apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+            AfterFetchDeletedWorkingTimeDateSpans(ref suppressDefaultLog, apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1391,7 +1387,7 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void AfterFetchDeletedProjectTimes(ref bool suppressDefaultLog, IFetchDeletedProjectTimesApiResponse apiResponseLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy);
+        partial void AfterFetchDeletedWorkingTimeDateSpans(ref bool suppressDefaultLog, IFetchDeletedWorkingTimeDateSpansApiResponse apiResponseLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1404,10 +1400,10 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void OnErrorFetchDeletedProjectTimesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy)
+        private void OnErrorFetchDeletedWorkingTimeDateSpansDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchDeletedProjectTimes(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+            OnErrorFetchDeletedWorkingTimeDateSpans(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1424,10 +1420,10 @@ namespace Timr.Api.Api
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void OnErrorFetchDeletedProjectTimes(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy);
+        partial void OnErrorFetchDeletedWorkingTimeDateSpans(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateTimeOffset> lastModifiedAfter, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<DeletedEntrySortColumn> sortBy);
 
         /// <summary>
-        /// List deleted Project Times Lists Project Times that were deleted, so a client holding a local copy can reconcile.
+        /// List deleted Working Time Date Spans Lists Working Time Date Spans that were deleted, so a client holding a local copy can reconcile.
         /// </summary>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
@@ -1435,12 +1431,12 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedProjectTimesApiResponse"/>&gt;</returns>
-        public async Task<IFetchDeletedProjectTimesApiResponse?> FetchDeletedProjectTimesOrDefaultAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedWorkingTimeDateSpansApiResponse"/>&gt;</returns>
+        public async Task<IFetchDeletedWorkingTimeDateSpansApiResponse?> FetchDeletedWorkingTimeDateSpansOrDefaultAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await FetchDeletedProjectTimesAsync(lastModifiedAfter, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+                return await FetchDeletedWorkingTimeDateSpansAsync(lastModifiedAfter, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1449,7 +1445,7 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// List deleted Project Times Lists Project Times that were deleted, so a client holding a local copy can reconcile.
+        /// List deleted Working Time Date Spans Lists Working Time Date Spans that were deleted, so a client holding a local copy can reconcile.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
@@ -1458,16 +1454,16 @@ namespace Timr.Api.Api
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedProjectTimesApiResponse"/>&gt;</returns>
-        public async Task<IFetchDeletedProjectTimesApiResponse> FetchDeletedProjectTimesAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchDeletedWorkingTimeDateSpansApiResponse"/>&gt;</returns>
+        public async Task<IFetchDeletedWorkingTimeDateSpansApiResponse> FetchDeletedWorkingTimeDateSpansAsync(Option<DateTimeOffset> lastModifiedAfter = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<DeletedEntrySortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateFetchDeletedProjectTimes(pageToken);
+                ValidateFetchDeletedWorkingTimeDateSpans(pageToken);
 
-                FormatFetchDeletedProjectTimes(ref lastModifiedAfter, ref pageToken, ref limit, ref sortDirection, ref sortBy);
+                FormatFetchDeletedWorkingTimeDateSpans(ref lastModifiedAfter, ref pageToken, ref limit, ref sortDirection, ref sortBy);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1475,8 +1471,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/project-times:deleted"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/project-times:deleted");
+                        ? "/working-time-date-spans:deleted"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans:deleted");
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
@@ -1528,20 +1524,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        FetchDeletedProjectTimesApiResponse apiResponseLocalVar;
+                        FetchDeletedWorkingTimeDateSpansApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/project-times:deleted", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans:deleted", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterFetchDeletedProjectTimesDefaultImplementation(apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+                        AfterFetchDeletedWorkingTimeDateSpansDefaultImplementation(apiResponseLocalVar, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnFetchDeletedProjectTimes(apiResponseLocalVar);
+                        Events.ExecuteOnFetchDeletedWorkingTimeDateSpans(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1553,24 +1549,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorFetchDeletedProjectTimesDefaultImplementation(e, "/project-times:deleted", uriBuilderLocalVar.Path, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchDeletedProjectTimes(e);
+                OnErrorFetchDeletedWorkingTimeDateSpansDefaultImplementation(e, "/working-time-date-spans:deleted", uriBuilderLocalVar.Path, lastModifiedAfter, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchDeletedWorkingTimeDateSpans(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="FetchDeletedProjectTimesApiResponse"/>
+        /// The <see cref="FetchDeletedWorkingTimeDateSpansApiResponse"/>
         /// </summary>
-        public partial class FetchDeletedProjectTimesApiResponse : Timr.Api.Client.ApiResponse, IFetchDeletedProjectTimesApiResponse
+        public partial class FetchDeletedWorkingTimeDateSpansApiResponse : Timr.Api.Client.ApiResponse, IFetchDeletedWorkingTimeDateSpansApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<ProjectTimeApi> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="FetchDeletedProjectTimesApiResponse"/>
+            /// The <see cref="FetchDeletedWorkingTimeDateSpansApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1579,14 +1575,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchDeletedProjectTimesApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchDeletedWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="FetchDeletedProjectTimesApiResponse"/>
+            /// The <see cref="FetchDeletedWorkingTimeDateSpansApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1595,7 +1591,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchDeletedProjectTimesApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchDeletedWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1714,27 +1710,19 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchProjectTimes(ref Option<string> notes, ref Option<DateOnly> startFrom, ref Option<DateOnly> startTo, ref Option<DateTimeOffset> lastModifiedAfter, ref Option<string> task, ref Option<bool> traverseTaskTree, ref Option<bool> billable, Option<List<ProjectTimeStatus>> statuses, Option<List<string>> users, ref Option<bool> changed, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<ProjectTimesSortColumn> sortBy);
+        partial void FormatFetchWorkingTimeDateSpans(ref Option<DateOnly> from, ref Option<DateOnly> to, ref Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> workingTimeTypes, Option<List<string>> users, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<WorkingTimeDateSpansSortColumn> sortBy);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="notes"></param>
-        /// <param name="task"></param>
-        /// <param name="statuses"></param>
+        /// <param name="workingTimeTypes"></param>
         /// <param name="users"></param>
         /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateFetchProjectTimes(Option<string> notes, Option<string> task, Option<List<ProjectTimeStatus>> statuses, Option<List<string>> users, Option<string> pageToken)
+        private void ValidateFetchWorkingTimeDateSpans(Option<List<string>> workingTimeTypes, Option<List<string>> users, Option<string> pageToken)
         {
-            if (notes.IsSet && notes.Value == null)
-                throw new ArgumentNullException(nameof(notes));
-
-            if (task.IsSet && task.Value == null)
-                throw new ArgumentNullException(nameof(task));
-
-            if (statuses.IsSet && statuses.Value == null)
-                throw new ArgumentNullException(nameof(statuses));
+            if (workingTimeTypes.IsSet && workingTimeTypes.Value == null)
+                throw new ArgumentNullException(nameof(workingTimeTypes));
 
             if (users.IsSet && users.Value == null)
                 throw new ArgumentNullException(nameof(users));
@@ -1747,24 +1735,19 @@ namespace Timr.Api.Api
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="notes"></param>
-        /// <param name="startFrom"></param>
-        /// <param name="startTo"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         /// <param name="lastModifiedAfter"></param>
-        /// <param name="task"></param>
-        /// <param name="traverseTaskTree"></param>
-        /// <param name="billable"></param>
-        /// <param name="statuses"></param>
+        /// <param name="workingTimeTypes"></param>
         /// <param name="users"></param>
-        /// <param name="changed"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void AfterFetchProjectTimesDefaultImplementation(IFetchProjectTimesApiResponse apiResponseLocalVar, Option<string> notes, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<string> task, Option<bool> traverseTaskTree, Option<bool> billable, Option<List<ProjectTimeStatus>> statuses, Option<List<string>> users, Option<bool> changed, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<ProjectTimesSortColumn> sortBy)
+        private void AfterFetchWorkingTimeDateSpansDefaultImplementation(IFetchWorkingTimeDateSpansApiResponse apiResponseLocalVar, Option<DateOnly> from, Option<DateOnly> to, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> workingTimeTypes, Option<List<string>> users, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeDateSpansSortColumn> sortBy)
         {
             bool suppressDefaultLog = false;
-            AfterFetchProjectTimes(ref suppressDefaultLog, apiResponseLocalVar, notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy);
+            AfterFetchWorkingTimeDateSpans(ref suppressDefaultLog, apiResponseLocalVar, from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1774,21 +1757,16 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="notes"></param>
-        /// <param name="startFrom"></param>
-        /// <param name="startTo"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         /// <param name="lastModifiedAfter"></param>
-        /// <param name="task"></param>
-        /// <param name="traverseTaskTree"></param>
-        /// <param name="billable"></param>
-        /// <param name="statuses"></param>
+        /// <param name="workingTimeTypes"></param>
         /// <param name="users"></param>
-        /// <param name="changed"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void AfterFetchProjectTimes(ref bool suppressDefaultLog, IFetchProjectTimesApiResponse apiResponseLocalVar, Option<string> notes, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<string> task, Option<bool> traverseTaskTree, Option<bool> billable, Option<List<ProjectTimeStatus>> statuses, Option<List<string>> users, Option<bool> changed, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<ProjectTimesSortColumn> sortBy);
+        partial void AfterFetchWorkingTimeDateSpans(ref bool suppressDefaultLog, IFetchWorkingTimeDateSpansApiResponse apiResponseLocalVar, Option<DateOnly> from, Option<DateOnly> to, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> workingTimeTypes, Option<List<string>> users, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeDateSpansSortColumn> sortBy);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1796,24 +1774,19 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="notes"></param>
-        /// <param name="startFrom"></param>
-        /// <param name="startTo"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         /// <param name="lastModifiedAfter"></param>
-        /// <param name="task"></param>
-        /// <param name="traverseTaskTree"></param>
-        /// <param name="billable"></param>
-        /// <param name="statuses"></param>
+        /// <param name="workingTimeTypes"></param>
         /// <param name="users"></param>
-        /// <param name="changed"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void OnErrorFetchProjectTimesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> notes, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<string> task, Option<bool> traverseTaskTree, Option<bool> billable, Option<List<ProjectTimeStatus>> statuses, Option<List<string>> users, Option<bool> changed, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<ProjectTimesSortColumn> sortBy)
+        private void OnErrorFetchWorkingTimeDateSpansDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateOnly> from, Option<DateOnly> to, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> workingTimeTypes, Option<List<string>> users, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeDateSpansSortColumn> sortBy)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchProjectTimes(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy);
+            OnErrorFetchWorkingTimeDateSpans(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1825,46 +1798,36 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="notes"></param>
-        /// <param name="startFrom"></param>
-        /// <param name="startTo"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         /// <param name="lastModifiedAfter"></param>
-        /// <param name="task"></param>
-        /// <param name="traverseTaskTree"></param>
-        /// <param name="billable"></param>
-        /// <param name="statuses"></param>
+        /// <param name="workingTimeTypes"></param>
         /// <param name="users"></param>
-        /// <param name="changed"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void OnErrorFetchProjectTimes(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> notes, Option<DateOnly> startFrom, Option<DateOnly> startTo, Option<DateTimeOffset> lastModifiedAfter, Option<string> task, Option<bool> traverseTaskTree, Option<bool> billable, Option<List<ProjectTimeStatus>> statuses, Option<List<string>> users, Option<bool> changed, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<ProjectTimesSortColumn> sortBy);
+        partial void OnErrorFetchWorkingTimeDateSpans(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<DateOnly> from, Option<DateOnly> to, Option<DateTimeOffset> lastModifiedAfter, Option<List<string>> workingTimeTypes, Option<List<string>> users, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeDateSpansSortColumn> sortBy);
 
         /// <summary>
-        /// List Project Times Lists the Project Times the authenticated user or API token can access.
+        /// List Working Time Date Spans Lists the Working Time Date Spans the authenticated user or API token can access.
         /// </summary>
-        /// <param name="notes">Only return entries whose notes contain this text. (optional)</param>
-        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
-        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="from">Only return Working Time Date Spans that end on or after this day. (optional)</param>
+        /// <param name="to">Only return entries starting on or before this day. (optional)</param>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
-        /// <param name="task">Only return entries recorded on the Task with this ID. (optional)</param>
-        /// <param name="traverseTaskTree">Include entries recorded on the whole subtree of the given Task (true) or only on the Task itself (false). (optional, default to true)</param>
-        /// <param name="billable">Only return entries that are billable (true) or not billable (false). (optional)</param>
-        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="workingTimeTypes">Only return entries of these Working Time Types. (optional)</param>
         /// <param name="users">Only return entries belonging to these users. (optional)</param>
-        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchProjectTimesApiResponse"/>&gt;</returns>
-        public async Task<IFetchProjectTimesApiResponse?> FetchProjectTimesOrDefaultAsync(Option<string> notes = default, Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<string> task = default, Option<bool> traverseTaskTree = default, Option<bool> billable = default, Option<List<ProjectTimeStatus>> statuses = default, Option<List<string>> users = default, Option<bool> changed = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<ProjectTimesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeDateSpansApiResponse"/>&gt;</returns>
+        public async Task<IFetchWorkingTimeDateSpansApiResponse?> FetchWorkingTimeDateSpansOrDefaultAsync(Option<DateOnly> from = default, Option<DateOnly> to = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> workingTimeTypes = default, Option<List<string>> users = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeDateSpansSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await FetchProjectTimesAsync(notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+                return await FetchWorkingTimeDateSpansAsync(from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1873,34 +1836,29 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// List Project Times Lists the Project Times the authenticated user or API token can access.
+        /// List Working Time Date Spans Lists the Working Time Date Spans the authenticated user or API token can access.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="notes">Only return entries whose notes contain this text. (optional)</param>
-        /// <param name="startFrom">Only return entries starting on or after this day. (optional)</param>
-        /// <param name="startTo">Only return entries starting on or before this day. (optional)</param>
+        /// <param name="from">Only return Working Time Date Spans that end on or after this day. (optional)</param>
+        /// <param name="to">Only return entries starting on or before this day. (optional)</param>
         /// <param name="lastModifiedAfter">Only return entries modified after this instant. (optional)</param>
-        /// <param name="task">Only return entries recorded on the Task with this ID. (optional)</param>
-        /// <param name="traverseTaskTree">Include entries recorded on the whole subtree of the given Task (true) or only on the Task itself (false). (optional, default to true)</param>
-        /// <param name="billable">Only return entries that are billable (true) or not billable (false). (optional)</param>
-        /// <param name="statuses">Only return entries in one of these statuses. (optional)</param>
+        /// <param name="workingTimeTypes">Only return entries of these Working Time Types. (optional)</param>
         /// <param name="users">Only return entries belonging to these users. (optional)</param>
-        /// <param name="changed">Only return entries that were changed by the user (true) or left unchanged (false). (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchProjectTimesApiResponse"/>&gt;</returns>
-        public async Task<IFetchProjectTimesApiResponse> FetchProjectTimesAsync(Option<string> notes = default, Option<DateOnly> startFrom = default, Option<DateOnly> startTo = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<string> task = default, Option<bool> traverseTaskTree = default, Option<bool> billable = default, Option<List<ProjectTimeStatus>> statuses = default, Option<List<string>> users = default, Option<bool> changed = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<ProjectTimesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeDateSpansApiResponse"/>&gt;</returns>
+        public async Task<IFetchWorkingTimeDateSpansApiResponse> FetchWorkingTimeDateSpansAsync(Option<DateOnly> from = default, Option<DateOnly> to = default, Option<DateTimeOffset> lastModifiedAfter = default, Option<List<string>> workingTimeTypes = default, Option<List<string>> users = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeDateSpansSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateFetchProjectTimes(notes, task, statuses, users, pageToken);
+                ValidateFetchWorkingTimeDateSpans(workingTimeTypes, users, pageToken);
 
-                FormatFetchProjectTimes(ref notes, ref startFrom, ref startTo, ref lastModifiedAfter, ref task, ref traverseTaskTree, ref billable, statuses, users, ref changed, ref pageToken, ref limit, ref sortDirection, ref sortBy);
+                FormatFetchWorkingTimeDateSpans(ref from, ref to, ref lastModifiedAfter, workingTimeTypes, users, ref pageToken, ref limit, ref sortDirection, ref sortBy);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1908,40 +1866,25 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/project-times"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/project-times");
+                        ? "/working-time-date-spans"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans");
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
 
-                    if (notes.IsSet)
-                        parseQueryStringLocalVar["notes"] = ClientUtils.ParameterToString(notes.Value);
+                    if (from.IsSet)
+                        parseQueryStringLocalVar["from"] = ClientUtils.ParameterToString(from.Value);
 
-                    if (startFrom.IsSet)
-                        parseQueryStringLocalVar["start_from"] = ClientUtils.ParameterToString(startFrom.Value);
-
-                    if (startTo.IsSet)
-                        parseQueryStringLocalVar["start_to"] = ClientUtils.ParameterToString(startTo.Value);
+                    if (to.IsSet)
+                        parseQueryStringLocalVar["to"] = ClientUtils.ParameterToString(to.Value);
 
                     if (lastModifiedAfter.IsSet)
                         parseQueryStringLocalVar["last_modified_after"] = ClientUtils.ParameterToString(lastModifiedAfter.Value);
 
-                    if (task.IsSet)
-                        parseQueryStringLocalVar["task"] = ClientUtils.ParameterToString(task.Value);
-
-                    if (traverseTaskTree.IsSet)
-                        parseQueryStringLocalVar["traverse_task_tree"] = ClientUtils.ParameterToString(traverseTaskTree.Value);
-
-                    if (billable.IsSet)
-                        parseQueryStringLocalVar["billable"] = ClientUtils.ParameterToString(billable.Value);
-
-                    if (statuses.IsSet)
-                        parseQueryStringLocalVar["statuses"] = ClientUtils.ParameterToString(statuses.Value);
+                    if (workingTimeTypes.IsSet)
+                        parseQueryStringLocalVar["working_time_types"] = ClientUtils.ParameterToString(workingTimeTypes.Value);
 
                     if (users.IsSet)
                         parseQueryStringLocalVar["users"] = ClientUtils.ParameterToString(users.Value);
-
-                    if (changed.IsSet)
-                        parseQueryStringLocalVar["changed"] = ClientUtils.ParameterToString(changed.Value);
 
                     if (pageToken.IsSet)
                         parseQueryStringLocalVar["page_token"] = ClientUtils.ParameterToString(pageToken.Value);
@@ -1988,20 +1931,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        FetchProjectTimesApiResponse apiResponseLocalVar;
+                        FetchWorkingTimeDateSpansApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/project-times", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterFetchProjectTimesDefaultImplementation(apiResponseLocalVar, notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy);
+                        AfterFetchWorkingTimeDateSpansDefaultImplementation(apiResponseLocalVar, from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnFetchProjectTimes(apiResponseLocalVar);
+                        Events.ExecuteOnFetchWorkingTimeDateSpans(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -2013,24 +1956,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorFetchProjectTimesDefaultImplementation(e, "/project-times", uriBuilderLocalVar.Path, notes, startFrom, startTo, lastModifiedAfter, task, traverseTaskTree, billable, statuses, users, changed, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchProjectTimes(e);
+                OnErrorFetchWorkingTimeDateSpansDefaultImplementation(e, "/working-time-date-spans", uriBuilderLocalVar.Path, from, to, lastModifiedAfter, workingTimeTypes, users, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchWorkingTimeDateSpans(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="FetchProjectTimesApiResponse"/>
+        /// The <see cref="FetchWorkingTimeDateSpansApiResponse"/>
         /// </summary>
-        public partial class FetchProjectTimesApiResponse : Timr.Api.Client.ApiResponse, IFetchProjectTimesApiResponse
+        public partial class FetchWorkingTimeDateSpansApiResponse : Timr.Api.Client.ApiResponse, IFetchWorkingTimeDateSpansApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<ProjectTimeApi> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="FetchProjectTimesApiResponse"/>
+            /// The <see cref="FetchWorkingTimeDateSpansApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2039,14 +1982,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchProjectTimesApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="FetchProjectTimesApiResponse"/>
+            /// The <see cref="FetchWorkingTimeDateSpansApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2055,7 +1998,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchProjectTimesApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchWorkingTimeDateSpansApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2073,32 +2016,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.ProjectTimesPage? Ok()
+            public Timr.Api.Model.WorkingTimeDateSpanPage? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.ProjectTimesPage? result = null;
+                Timr.Api.Model.WorkingTimeDateSpanPage? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.ProjectTimesPage? DefaultOk()
+            private Timr.Api.Model.WorkingTimeDateSpanPage? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.ProjectTimesPage>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpanPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.ProjectTimesPage? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpanPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.ProjectTimesPage? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkingTimeDateSpanPage? result)
             {
                 result = null;
 
@@ -2174,14 +2117,14 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetProjectTime(ref string id);
+        partial void FormatGetWorkingTimeDateSpan(ref string id);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private void ValidateGetProjectTime(string id)
+        private void ValidateGetWorkingTimeDateSpan(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -2192,10 +2135,10 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        private void AfterGetProjectTimeDefaultImplementation(IGetProjectTimeApiResponse apiResponseLocalVar, string id)
+        private void AfterGetWorkingTimeDateSpanDefaultImplementation(IGetWorkingTimeDateSpanApiResponse apiResponseLocalVar, string id)
         {
             bool suppressDefaultLog = false;
-            AfterGetProjectTime(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterGetWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -2206,7 +2149,7 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        partial void AfterGetProjectTime(ref bool suppressDefaultLog, IGetProjectTimeApiResponse apiResponseLocalVar, string id);
+        partial void AfterGetWorkingTimeDateSpan(ref bool suppressDefaultLog, IGetWorkingTimeDateSpanApiResponse apiResponseLocalVar, string id);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -2215,10 +2158,10 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        private void OnErrorGetProjectTimeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        private void OnErrorGetWorkingTimeDateSpanDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetProjectTime(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorGetWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2231,19 +2174,19 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        partial void OnErrorGetProjectTime(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        partial void OnErrorGetWorkingTimeDateSpan(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
 
         /// <summary>
-        /// Get a Project Time Returns a single Project Time by its ID.
+        /// Get a Working Time Date Span Returns a single Working Time Date Span by its ID.
         /// </summary>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<IGetProjectTimeApiResponse?> GetProjectTimeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<IGetWorkingTimeDateSpanApiResponse?> GetWorkingTimeDateSpanOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetProjectTimeAsync(id, cancellationToken).ConfigureAwait(false);
+                return await GetWorkingTimeDateSpanAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2252,21 +2195,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Get a Project Time Returns a single Project Time by its ID.
+        /// Get a Working Time Date Span Returns a single Working Time Date Span by its ID.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Project Time.</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<IGetProjectTimeApiResponse> GetProjectTimeAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<IGetWorkingTimeDateSpanApiResponse> GetWorkingTimeDateSpanAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetProjectTime(id);
+                ValidateGetWorkingTimeDateSpan(id);
 
-                FormatGetProjectTime(ref id);
+                FormatGetWorkingTimeDateSpan(ref id);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -2274,8 +2217,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/project-times/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/project-times/{id}");
+                        ? "/working-time-date-spans/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -2309,20 +2252,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        GetProjectTimeApiResponse apiResponseLocalVar;
+                        GetWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/project-times/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterGetProjectTimeDefaultImplementation(apiResponseLocalVar, id);
+                        AfterGetWorkingTimeDateSpanDefaultImplementation(apiResponseLocalVar, id);
 
-                        Events.ExecuteOnGetProjectTime(apiResponseLocalVar);
+                        Events.ExecuteOnGetWorkingTimeDateSpan(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -2334,24 +2277,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorGetProjectTimeDefaultImplementation(e, "/project-times/{id}", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorGetProjectTime(e);
+                OnErrorGetWorkingTimeDateSpanDefaultImplementation(e, "/working-time-date-spans/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorGetWorkingTimeDateSpan(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="GetProjectTimeApiResponse"/>
+        /// The <see cref="GetWorkingTimeDateSpanApiResponse"/>
         /// </summary>
-        public partial class GetProjectTimeApiResponse : Timr.Api.Client.ApiResponse, IGetProjectTimeApiResponse
+        public partial class GetWorkingTimeDateSpanApiResponse : Timr.Api.Client.ApiResponse, IGetWorkingTimeDateSpanApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<ProjectTimeApi> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="GetProjectTimeApiResponse"/>
+            /// The <see cref="GetWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2360,14 +2303,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="GetProjectTimeApiResponse"/>
+            /// The <see cref="GetWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2376,7 +2319,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2394,32 +2337,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.ProjectTime? Ok()
+            public Timr.Api.Model.WorkingTimeDateSpan? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.ProjectTime? result = null;
+                Timr.Api.Model.WorkingTimeDateSpan? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.ProjectTime? DefaultOk()
+            private Timr.Api.Model.WorkingTimeDateSpan? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.ProjectTime>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpan>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.ProjectTime? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpan? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.ProjectTime? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkingTimeDateSpan? result)
             {
                 result = null;
 
@@ -2545,21 +2488,21 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatUpdateProjectTime(ref string id, ProjectTimeUpdate projectTimeUpdate);
+        partial void FormatUpdateWorkingTimeDateSpan(ref string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="projectTimeUpdate"></param>
+        /// <param name="workingTimeDateSpanUpdate"></param>
         /// <returns></returns>
-        private void ValidateUpdateProjectTime(string id, ProjectTimeUpdate projectTimeUpdate)
+        private void ValidateUpdateWorkingTimeDateSpan(string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
 
-            if (projectTimeUpdate == null)
-                throw new ArgumentNullException(nameof(projectTimeUpdate));
+            if (workingTimeDateSpanUpdate == null)
+                throw new ArgumentNullException(nameof(workingTimeDateSpanUpdate));
         }
 
         /// <summary>
@@ -2567,11 +2510,11 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="projectTimeUpdate"></param>
-        private void AfterUpdateProjectTimeDefaultImplementation(IUpdateProjectTimeApiResponse apiResponseLocalVar, string id, ProjectTimeUpdate projectTimeUpdate)
+        /// <param name="workingTimeDateSpanUpdate"></param>
+        private void AfterUpdateWorkingTimeDateSpanDefaultImplementation(IUpdateWorkingTimeDateSpanApiResponse apiResponseLocalVar, string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate)
         {
             bool suppressDefaultLog = false;
-            AfterUpdateProjectTime(ref suppressDefaultLog, apiResponseLocalVar, id, projectTimeUpdate);
+            AfterUpdateWorkingTimeDateSpan(ref suppressDefaultLog, apiResponseLocalVar, id, workingTimeDateSpanUpdate);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -2582,8 +2525,8 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="projectTimeUpdate"></param>
-        partial void AfterUpdateProjectTime(ref bool suppressDefaultLog, IUpdateProjectTimeApiResponse apiResponseLocalVar, string id, ProjectTimeUpdate projectTimeUpdate);
+        /// <param name="workingTimeDateSpanUpdate"></param>
+        partial void AfterUpdateWorkingTimeDateSpan(ref bool suppressDefaultLog, IUpdateWorkingTimeDateSpanApiResponse apiResponseLocalVar, string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -2592,11 +2535,11 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="projectTimeUpdate"></param>
-        private void OnErrorUpdateProjectTimeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, ProjectTimeUpdate projectTimeUpdate)
+        /// <param name="workingTimeDateSpanUpdate"></param>
+        private void OnErrorUpdateWorkingTimeDateSpanDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorUpdateProjectTime(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, projectTimeUpdate);
+            OnErrorUpdateWorkingTimeDateSpan(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, workingTimeDateSpanUpdate);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -2609,21 +2552,21 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        /// <param name="projectTimeUpdate"></param>
-        partial void OnErrorUpdateProjectTime(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, ProjectTimeUpdate projectTimeUpdate);
+        /// <param name="workingTimeDateSpanUpdate"></param>
+        partial void OnErrorUpdateWorkingTimeDateSpan(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate);
 
         /// <summary>
-        /// Update a Project Time Updates the Project Time with the fields present in the request body. Fields that are omitted stay unchanged.
+        /// Update a Working Time Date Span Updates the Working Time Date Span with the fields present in the request body, and adjusts the Working Times it covers. Fields that are omitted stay unchanged.
         /// </summary>
-        /// <param name="id">ID of the Project Time.</param>
-        /// <param name="projectTimeUpdate">Project Time entity</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
+        /// <param name="workingTimeDateSpanUpdate">working time date span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<IUpdateProjectTimeApiResponse?> UpdateProjectTimeOrDefaultAsync(string id, ProjectTimeUpdate projectTimeUpdate, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<IUpdateWorkingTimeDateSpanApiResponse?> UpdateWorkingTimeDateSpanOrDefaultAsync(string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await UpdateProjectTimeAsync(id, projectTimeUpdate, cancellationToken).ConfigureAwait(false);
+                return await UpdateWorkingTimeDateSpanAsync(id, workingTimeDateSpanUpdate, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -2632,22 +2575,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Update a Project Time Updates the Project Time with the fields present in the request body. Fields that are omitted stay unchanged.
+        /// Update a Working Time Date Span Updates the Working Time Date Span with the fields present in the request body, and adjusts the Working Times it covers. Fields that are omitted stay unchanged.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Project Time.</param>
-        /// <param name="projectTimeUpdate">Project Time entity</param>
+        /// <param name="id">ID of the Working Time Date Span.</param>
+        /// <param name="workingTimeDateSpanUpdate">working time date span entity</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateProjectTimeApiResponse"/>&gt;</returns>
-        public async Task<IUpdateProjectTimeApiResponse> UpdateProjectTimeAsync(string id, ProjectTimeUpdate projectTimeUpdate, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateWorkingTimeDateSpanApiResponse"/>&gt;</returns>
+        public async Task<IUpdateWorkingTimeDateSpanApiResponse> UpdateWorkingTimeDateSpanAsync(string id, WorkingTimeDateSpanUpdate workingTimeDateSpanUpdate, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateUpdateProjectTime(id, projectTimeUpdate);
+                ValidateUpdateWorkingTimeDateSpan(id, workingTimeDateSpanUpdate);
 
-                FormatUpdateProjectTime(ref id, projectTimeUpdate);
+                FormatUpdateWorkingTimeDateSpan(ref id, workingTimeDateSpanUpdate);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -2655,13 +2598,13 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/project-times/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/project-times/{id}");
+                        ? "/working-time-date-spans/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-date-spans/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
-                    httpRequestMessageLocalVar.Content = (projectTimeUpdate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
+                    httpRequestMessageLocalVar.Content = (workingTimeDateSpanUpdate as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
                         ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
-                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(projectTimeUpdate, _jsonSerializerOptions));
+                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(workingTimeDateSpanUpdate, _jsonSerializerOptions));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -2703,20 +2646,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        UpdateProjectTimeApiResponse apiResponseLocalVar;
+                        UpdateWorkingTimeDateSpanApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/project-times/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-date-spans/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterUpdateProjectTimeDefaultImplementation(apiResponseLocalVar, id, projectTimeUpdate);
+                        AfterUpdateWorkingTimeDateSpanDefaultImplementation(apiResponseLocalVar, id, workingTimeDateSpanUpdate);
 
-                        Events.ExecuteOnUpdateProjectTime(apiResponseLocalVar);
+                        Events.ExecuteOnUpdateWorkingTimeDateSpan(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -2728,24 +2671,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorUpdateProjectTimeDefaultImplementation(e, "/project-times/{id}", uriBuilderLocalVar.Path, id, projectTimeUpdate);
-                Events.ExecuteOnErrorUpdateProjectTime(e);
+                OnErrorUpdateWorkingTimeDateSpanDefaultImplementation(e, "/working-time-date-spans/{id}", uriBuilderLocalVar.Path, id, workingTimeDateSpanUpdate);
+                Events.ExecuteOnErrorUpdateWorkingTimeDateSpan(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="UpdateProjectTimeApiResponse"/>
+        /// The <see cref="UpdateWorkingTimeDateSpanApiResponse"/>
         /// </summary>
-        public partial class UpdateProjectTimeApiResponse : Timr.Api.Client.ApiResponse, IUpdateProjectTimeApiResponse
+        public partial class UpdateWorkingTimeDateSpanApiResponse : Timr.Api.Client.ApiResponse, IUpdateWorkingTimeDateSpanApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<ProjectTimeApi> Logger { get; }
+            public ILogger<WorkingTimeDateSpanApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="UpdateProjectTimeApiResponse"/>
+            /// The <see cref="UpdateWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2754,14 +2697,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public UpdateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="UpdateProjectTimeApiResponse"/>
+            /// The <see cref="UpdateWorkingTimeDateSpanApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -2770,7 +2713,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateProjectTimeApiResponse(ILogger<ProjectTimeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public UpdateWorkingTimeDateSpanApiResponse(ILogger<WorkingTimeDateSpanApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -2788,32 +2731,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.ProjectTime? Ok()
+            public Timr.Api.Model.WorkingTimeDateSpan? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.ProjectTime? result = null;
+                Timr.Api.Model.WorkingTimeDateSpan? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.ProjectTime? DefaultOk()
+            private Timr.Api.Model.WorkingTimeDateSpan? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.ProjectTime>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeDateSpan>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.ProjectTime? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeDateSpan? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.ProjectTime? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkingTimeDateSpan? result)
             {
                 result = null;
 
@@ -2827,6 +2770,12 @@ namespace Timr.Api.Api
 
                 return result != null;
             }
+
+            /// <summary>
+            /// Returns true if the response is 204 NoContent
+            /// </summary>
+            /// <returns></returns>
+            public bool IsNoContent => 204 == (int)StatusCode;
 
             /// <summary>
             /// Returns true if the response is 400 BadRequest

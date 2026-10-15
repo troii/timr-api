@@ -25,121 +25,137 @@ using Timr.Api.Logging;
 using Timr.Api.Model;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Timr.Api.Api
+namespace Timr.Api.Endpoints
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// This class is registered as transient.
     /// </summary>
-    public interface ITrackApi : IApi
+    public interface ITaskToTeamAssignmentApi : IApi
     {
         /// <summary>
         /// The class containing the events
         /// </summary>
-        TrackApiEvents Events { get; }
+        TaskToTeamAssignmentApiEvents Events { get; }
 
         /// <summary>
-        /// Create a Drive Log&#39;s Track
+        /// Create a Task to Team Assignment
         /// </summary>
         /// <remarks>
-        /// Stores a Track for the Drive Log from the waypoints in the request body. A Drive Log holds at most one Track.
+        /// Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">Working Time Date Span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTrackApiResponse"/>&gt;</returns>
-        Task<ICreateTrackApiResponse> CreateTrackAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        Task<ICreateTaskToTeamAssignmentApiResponse> CreateTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Create a Drive Log&#39;s Track
+        /// Create a Task to Team Assignment
         /// </summary>
         /// <remarks>
-        /// Stores a Track for the Drive Log from the waypoints in the request body. A Drive Log holds at most one Track.
+        /// Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
         /// </remarks>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">Working Time Date Span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTrackApiResponse"/>?&gt;</returns>
-        Task<ICreateTrackApiResponse?> CreateTrackOrDefaultAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>?&gt;</returns>
+        Task<ICreateTaskToTeamAssignmentApiResponse?> CreateTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a Drive Log&#39;s Track
+        /// Delete a Task to Team Assignment
         /// </summary>
         /// <remarks>
-        /// Deletes the Drive Log&#39;s Track. The Drive Log itself is kept.
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTrackApiResponse"/>&gt;</returns>
-        Task<IDeleteTrackApiResponse> DeleteTrackAsync(string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Delete a Drive Log&#39;s Track
-        /// </summary>
-        /// <remarks>
-        /// Deletes the Drive Log&#39;s Track. The Drive Log itself is kept.
-        /// </remarks>
-        /// <param name="id">drive log id</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTrackApiResponse"/>?&gt;</returns>
-        Task<IDeleteTrackApiResponse?> DeleteTrackOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get a Drive Log&#39;s Track
-        /// </summary>
-        /// <remarks>
-        /// Returns the recorded Track of the Drive Log. Responds with 404 when no Track was recorded.
+        /// Removes the Team&#39;s assignment to the Task.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTrackApiResponse"/>&gt;</returns>
-        Task<IGetTrackApiResponse> GetTrackAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        Task<IDeleteTaskToTeamAssignmentApiResponse> DeleteTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Drive Log&#39;s Track
+        /// Delete a Task to Team Assignment
         /// </summary>
         /// <remarks>
-        /// Returns the recorded Track of the Drive Log. Responds with 404 when no Track was recorded.
+        /// Removes the Team&#39;s assignment to the Task.
         /// </remarks>
-        /// <param name="id">drive log id</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTrackApiResponse"/>?&gt;</returns>
-        Task<IGetTrackApiResponse?> GetTrackOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>?&gt;</returns>
+        Task<IDeleteTaskToTeamAssignmentApiResponse?> DeleteTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Replace a Drive Log&#39;s Track
+        /// List Task to Team Assignments
         /// </summary>
         /// <remarks>
-        /// Replaces the Drive Log&#39;s Track with the waypoints in the request body.
+        /// Lists the Teams assigned to the Task.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">working time date span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
+        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
+        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
+        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTrackApiResponse"/>&gt;</returns>
-        Task<IUpdateTrackApiResponse> UpdateTrackAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>&gt;</returns>
+        Task<IFetchTaskToTeamAssignmentsApiResponse> FetchTaskToTeamAssignmentsAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Replace a Drive Log&#39;s Track
+        /// List Task to Team Assignments
         /// </summary>
         /// <remarks>
-        /// Replaces the Drive Log&#39;s Track with the waypoints in the request body.
+        /// Lists the Teams assigned to the Task.
         /// </remarks>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">working time date span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
+        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
+        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
+        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTrackApiResponse"/>?&gt;</returns>
-        Task<IUpdateTrackApiResponse?> UpdateTrackOrDefaultAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>?&gt;</returns>
+        Task<IFetchTaskToTeamAssignmentsApiResponse?> FetchTaskToTeamAssignmentsOrDefaultAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a Task to Team Assignment
+        /// </summary>
+        /// <remarks>
+        /// Returns the assignment of a single Team to the Task.
+        /// </remarks>
+        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        Task<IGetTaskToTeamAssignmentApiResponse> GetTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Get a Task to Team Assignment
+        /// </summary>
+        /// <remarks>
+        /// Returns the assignment of a single Team to the Task.
+        /// </remarks>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>?&gt;</returns>
+        Task<IGetTaskToTeamAssignmentApiResponse?> GetTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
-    /// The <see cref="ICreateTrackApiResponse"/>
+    /// The <see cref="ICreateTaskToTeamAssignmentApiResponse"/>
     /// </summary>
-    public interface ICreateTrackApiResponse : Timr.Api.Client.IApiResponse, ICreated<List<Waypoint>?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface ICreateTaskToTeamAssignmentApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToTeamAssignment?>, ICreated<Timr.Api.Model.TaskToTeamAssignment?>, IBadRequest<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
     {
+        /// <summary>
+        /// Returns true if the response is 200 Ok
+        /// </summary>
+        /// <returns></returns>
+        bool IsOk { get; }
+
         /// <summary>
         /// Returns true if the response is 201 Created
         /// </summary>
@@ -166,9 +182,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IDeleteTrackApiResponse"/>
+    /// The <see cref="IDeleteTaskToTeamAssignmentApiResponse"/>
     /// </summary>
-    public interface IDeleteTrackApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
+    public interface IDeleteTaskToTeamAssignmentApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 204 NoContent
@@ -196,21 +212,15 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetTrackApiResponse"/>
+    /// The <see cref="IFetchTaskToTeamAssignmentsApiResponse"/>
     /// </summary>
-    public interface IGetTrackApiResponse : Timr.Api.Client.IApiResponse, IOk<List<Waypoint>?>, IBadRequest<Timr.Api.Model.Error?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
+    public interface IFetchTaskToTeamAssignmentsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToTeamAssignmentsPage?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
         /// </summary>
         /// <returns></returns>
         bool IsOk { get; }
-
-        /// <summary>
-        /// Returns true if the response is 400 BadRequest
-        /// </summary>
-        /// <returns></returns>
-        bool IsBadRequest { get; }
 
         /// <summary>
         /// Returns true if the response is 403 Forbidden
@@ -226,9 +236,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IUpdateTrackApiResponse"/>
+    /// The <see cref="IGetTaskToTeamAssignmentApiResponse"/>
     /// </summary>
-    public interface IUpdateTrackApiResponse : Timr.Api.Client.IApiResponse, IOk<List<Waypoint>?>, IBadRequest<Timr.Api.Model.Error?>, IForbidden<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>, IUnprocessableContent<Timr.Api.Model.Error?>
+    public interface IGetTaskToTeamAssignmentApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.TaskToTeamAssignment?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -237,127 +247,115 @@ namespace Timr.Api.Api
         bool IsOk { get; }
 
         /// <summary>
-        /// Returns true if the response is 400 BadRequest
-        /// </summary>
-        /// <returns></returns>
-        bool IsBadRequest { get; }
-
-        /// <summary>
         /// Returns true if the response is 403 Forbidden
         /// </summary>
         /// <returns></returns>
         bool IsForbidden { get; }
 
         /// <summary>
-        /// Returns true if the response is 409 Conflict
+        /// Returns true if the response is 404 NotFound
         /// </summary>
         /// <returns></returns>
-        bool IsConflict { get; }
-
-        /// <summary>
-        /// Returns true if the response is 422 UnprocessableContent
-        /// </summary>
-        /// <returns></returns>
-        bool IsUnprocessableContent { get; }
+        bool IsNotFound { get; }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class TrackApiEvents
+    public class TaskToTeamAssignmentApiEvents
     {
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnCreateTrack;
+        public event EventHandler<ApiResponseEventArgs>? OnCreateTaskToTeamAssignment;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorCreateTrack;
+        public event EventHandler<ExceptionEventArgs>? OnErrorCreateTaskToTeamAssignment;
 
-        internal void ExecuteOnCreateTrack(TrackApi.CreateTrackApiResponse apiResponse)
+        internal void ExecuteOnCreateTaskToTeamAssignment(TaskToTeamAssignmentApi.CreateTaskToTeamAssignmentApiResponse apiResponse)
         {
-            OnCreateTrack?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnCreateTaskToTeamAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorCreateTrack(Exception exception)
+        internal void ExecuteOnErrorCreateTaskToTeamAssignment(Exception exception)
         {
-            OnErrorCreateTrack?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorCreateTaskToTeamAssignment?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnDeleteTrack;
+        public event EventHandler<ApiResponseEventArgs>? OnDeleteTaskToTeamAssignment;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteTrack;
+        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteTaskToTeamAssignment;
 
-        internal void ExecuteOnDeleteTrack(TrackApi.DeleteTrackApiResponse apiResponse)
+        internal void ExecuteOnDeleteTaskToTeamAssignment(TaskToTeamAssignmentApi.DeleteTaskToTeamAssignmentApiResponse apiResponse)
         {
-            OnDeleteTrack?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnDeleteTaskToTeamAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorDeleteTrack(Exception exception)
+        internal void ExecuteOnErrorDeleteTaskToTeamAssignment(Exception exception)
         {
-            OnErrorDeleteTrack?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorDeleteTaskToTeamAssignment?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetTrack;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchTaskToTeamAssignments;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetTrack;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchTaskToTeamAssignments;
 
-        internal void ExecuteOnGetTrack(TrackApi.GetTrackApiResponse apiResponse)
+        internal void ExecuteOnFetchTaskToTeamAssignments(TaskToTeamAssignmentApi.FetchTaskToTeamAssignmentsApiResponse apiResponse)
         {
-            OnGetTrack?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchTaskToTeamAssignments?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetTrack(Exception exception)
+        internal void ExecuteOnErrorFetchTaskToTeamAssignments(Exception exception)
         {
-            OnErrorGetTrack?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchTaskToTeamAssignments?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnUpdateTrack;
+        public event EventHandler<ApiResponseEventArgs>? OnGetTaskToTeamAssignment;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorUpdateTrack;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetTaskToTeamAssignment;
 
-        internal void ExecuteOnUpdateTrack(TrackApi.UpdateTrackApiResponse apiResponse)
+        internal void ExecuteOnGetTaskToTeamAssignment(TaskToTeamAssignmentApi.GetTaskToTeamAssignmentApiResponse apiResponse)
         {
-            OnUpdateTrack?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetTaskToTeamAssignment?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorUpdateTrack(Exception exception)
+        internal void ExecuteOnErrorGetTaskToTeamAssignment(Exception exception)
         {
-            OnErrorUpdateTrack?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetTaskToTeamAssignment?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public sealed partial class TrackApi : ITrackApi
+    public sealed partial class TaskToTeamAssignmentApi : ITaskToTeamAssignmentApi
     {
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
         /// The logger
         /// </summary>
-        public ILogger<TrackApi> Logger { get; }
+        public ILogger<TaskToTeamAssignmentApi> Logger { get; }
 
         /// <summary>
         /// The HttpClient
@@ -367,7 +365,7 @@ namespace Timr.Api.Api
         /// <summary>
         /// The class containing the events
         /// </summary>
-        public TrackApiEvents Events { get; }
+        public TaskToTeamAssignmentApiEvents Events { get; }
 
         /// <summary>
         /// A token provider of type <see cref="OauthTokenProvider"/>
@@ -375,46 +373,46 @@ namespace Timr.Api.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TrackApi"/> class.
+        /// Initializes a new instance of the <see cref="TaskToTeamAssignmentApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public TrackApi(ILogger<TrackApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, TrackApiEvents trackApiEvents,
+        public TaskToTeamAssignmentApi(ILogger<TaskToTeamAssignmentApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, TaskToTeamAssignmentApiEvents taskToTeamAssignmentApiEvents,
             TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             Logger = logger;
             HttpClient = httpClient;
-            Events = trackApiEvents;
+            Events = taskToTeamAssignmentApiEvents;
             OauthTokenProvider = oauthTokenProvider;
         }
 
-        partial void FormatCreateTrack(ref string id, List<Waypoint> waypoint);
+        partial void FormatCreateTaskToTeamAssignment(ref string taskId, ref string teamId);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
         /// <returns></returns>
-        private void ValidateCreateTrack(string id, List<Waypoint> waypoint)
+        private void ValidateCreateTaskToTeamAssignment(string taskId, string teamId)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (taskId == null)
+                throw new ArgumentNullException(nameof(taskId));
 
-            if (waypoint == null)
-                throw new ArgumentNullException(nameof(waypoint));
+            if (teamId == null)
+                throw new ArgumentNullException(nameof(teamId));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        private void AfterCreateTrackDefaultImplementation(ICreateTrackApiResponse apiResponseLocalVar, string id, List<Waypoint> waypoint)
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        private void AfterCreateTaskToTeamAssignmentDefaultImplementation(ICreateTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId)
         {
             bool suppressDefaultLog = false;
-            AfterCreateTrack(ref suppressDefaultLog, apiResponseLocalVar, id, waypoint);
+            AfterCreateTaskToTeamAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, teamId);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -424,9 +422,9 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        partial void AfterCreateTrack(ref bool suppressDefaultLog, ICreateTrackApiResponse apiResponseLocalVar, string id, List<Waypoint> waypoint);
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        partial void AfterCreateTaskToTeamAssignment(ref bool suppressDefaultLog, ICreateTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -434,12 +432,12 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        private void OnErrorCreateTrackDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, List<Waypoint> waypoint)
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        private void OnErrorCreateTaskToTeamAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorCreateTrack(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, waypoint);
+            OnErrorCreateTaskToTeamAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, teamId);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -451,22 +449,22 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        partial void OnErrorCreateTrack(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, List<Waypoint> waypoint);
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        partial void OnErrorCreateTaskToTeamAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId);
 
         /// <summary>
-        /// Create a Drive Log&#39;s Track Stores a Track for the Drive Log from the waypoints in the request body. A Drive Log holds at most one Track.
+        /// Create a Task to Team Assignment Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
         /// </summary>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">Working Time Date Span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTrackApiResponse"/>&gt;</returns>
-        public async Task<ICreateTrackApiResponse?> CreateTrackOrDefaultAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        public async Task<ICreateTaskToTeamAssignmentApiResponse?> CreateTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await CreateTrackAsync(id, waypoint, cancellationToken).ConfigureAwait(false);
+                return await CreateTaskToTeamAssignmentAsync(taskId, teamId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -475,22 +473,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Create a Drive Log&#39;s Track Stores a Track for the Drive Log from the waypoints in the request body. A Drive Log holds at most one Track.
+        /// Create a Task to Team Assignment Assigns the Team to the Task. Returns 201 when the assignment is created and 200 when it already existed.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">Working Time Date Span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTrackApiResponse"/>&gt;</returns>
-        public async Task<ICreateTrackApiResponse> CreateTrackAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="ICreateTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        public async Task<ICreateTaskToTeamAssignmentApiResponse> CreateTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateCreateTrack(id, waypoint);
+                ValidateCreateTaskToTeamAssignment(taskId, teamId);
 
-                FormatCreateTrack(ref id, waypoint);
+                FormatCreateTaskToTeamAssignment(ref taskId, ref teamId);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -498,13 +496,10 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/drive-logs/{id}/track"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}/track");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
-
-                    httpRequestMessageLocalVar.Content = (waypoint as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
-                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
-                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(waypoint, _jsonSerializerOptions));
+                        ? "/tasks/{task_id}/teams/{team_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams/{team_id}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bteam_id%7D", Uri.EscapeDataString(teamId.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -521,15 +516,6 @@ namespace Timr.Api.Api
 
                     oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
 
-                    string[] contentTypes = new string[] {
-                        "application/json"
-                    };
-
-                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
-
-                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
-                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
-
                     string[] acceptLocalVars = new string[] {
                         "application/json",
                         "application/problem+json"
@@ -540,26 +526,26 @@ namespace Timr.Api.Api
                     foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
                         httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
 
-                    httpRequestMessageLocalVar.Method = HttpMethod.Post;
+                    httpRequestMessageLocalVar.Method = HttpMethod.Put;
 
                     DateTime requestedAtLocalVar = DateTime.UtcNow;
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        CreateTrackApiResponse apiResponseLocalVar;
+                        CreateTaskToTeamAssignmentApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}/track", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams/{team_id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterCreateTrackDefaultImplementation(apiResponseLocalVar, id, waypoint);
+                        AfterCreateTaskToTeamAssignmentDefaultImplementation(apiResponseLocalVar, taskId, teamId);
 
-                        Events.ExecuteOnCreateTrack(apiResponseLocalVar);
+                        Events.ExecuteOnCreateTaskToTeamAssignment(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -571,24 +557,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorCreateTrackDefaultImplementation(e, "/drive-logs/{id}/track", uriBuilderLocalVar.Path, id, waypoint);
-                Events.ExecuteOnErrorCreateTrack(e);
+                OnErrorCreateTaskToTeamAssignmentDefaultImplementation(e, "/tasks/{task_id}/teams/{team_id}", uriBuilderLocalVar.Path, taskId, teamId);
+                Events.ExecuteOnErrorCreateTaskToTeamAssignment(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="CreateTrackApiResponse"/>
+        /// The <see cref="CreateTaskToTeamAssignmentApiResponse"/>
         /// </summary>
-        public partial class CreateTrackApiResponse : Timr.Api.Client.ApiResponse, ICreateTrackApiResponse
+        public partial class CreateTaskToTeamAssignmentApiResponse : Timr.Api.Client.ApiResponse, ICreateTaskToTeamAssignmentApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TrackApi> Logger { get; }
+            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="CreateTrackApiResponse"/>
+            /// The <see cref="CreateTaskToTeamAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -597,14 +583,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public CreateTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="CreateTrackApiResponse"/>
+            /// The <see cref="CreateTaskToTeamAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -613,13 +599,63 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public CreateTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public CreateTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public bool IsOk => 200 == (int)StatusCode;
+
+            /// <summary>
+            /// Deserializes the response if the response is 200 Ok
+            /// </summary>
+            /// <returns></returns>
+            public Timr.Api.Model.TaskToTeamAssignment? Ok()
+            {
+                bool suppressDefault = false;
+                Timr.Api.Model.TaskToTeamAssignment? result = null;
+                OnOk(ref suppressDefault, ref result);
+                if (!suppressDefault)
+                    result = DefaultOk();
+                return result;
+            }
+
+            private Timr.Api.Model.TaskToTeamAssignment? DefaultOk()
+            {
+                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
+                return IsOk
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignment>(RawContent, _jsonSerializerOptions)
+                    : null;
+            }
+
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignment? result);
+
+            /// <summary>
+            /// Returns true if the response is 200 Ok and the deserialized response is not null
+            /// </summary>
+            /// <param name="result"></param>
+            /// <returns></returns>
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignment? result)
+            {
+                result = null;
+
+                try
+                {
+                    result = Ok();
+                } catch (Exception e)
+                {
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
+                }
+
+                return result != null;
+            }
 
             /// <summary>
             /// Returns true if the response is 201 Created
@@ -631,32 +667,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 201 Created
             /// </summary>
             /// <returns></returns>
-            public List<Waypoint>? Created()
+            public Timr.Api.Model.TaskToTeamAssignment? Created()
             {
                 bool suppressDefault = false;
-                List<Waypoint>? result = null;
+                Timr.Api.Model.TaskToTeamAssignment? result = null;
                 OnCreated(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultCreated();
                 return result;
             }
 
-            private List<Waypoint>? DefaultCreated()
+            private Timr.Api.Model.TaskToTeamAssignment? DefaultCreated()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsCreated
-                    ? System.Text.Json.JsonSerializer.Deserialize<List<Waypoint>>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignment>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnCreated(ref bool suppressDefault, ref List<Waypoint>? result);
+            partial void OnCreated(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignment? result);
 
             /// <summary>
             /// Returns true if the response is 201 Created and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryCreated([NotNullWhen(true)]out List<Waypoint>? result)
+            public bool TryCreated([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignment? result)
             {
                 result = null;
 
@@ -832,28 +868,33 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatDeleteTrack(ref string id);
+        partial void FormatDeleteTaskToTeamAssignment(ref string taskId, ref string teamId);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
         /// <returns></returns>
-        private void ValidateDeleteTrack(string id)
+        private void ValidateDeleteTaskToTeamAssignment(string taskId, string teamId)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (taskId == null)
+                throw new ArgumentNullException(nameof(taskId));
+
+            if (teamId == null)
+                throw new ArgumentNullException(nameof(teamId));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        private void AfterDeleteTrackDefaultImplementation(IDeleteTrackApiResponse apiResponseLocalVar, string id)
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        private void AfterDeleteTaskToTeamAssignmentDefaultImplementation(IDeleteTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId)
         {
             bool suppressDefaultLog = false;
-            AfterDeleteTrack(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterDeleteTaskToTeamAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, teamId);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -863,8 +904,9 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        partial void AfterDeleteTrack(ref bool suppressDefaultLog, IDeleteTrackApiResponse apiResponseLocalVar, string id);
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        partial void AfterDeleteTaskToTeamAssignment(ref bool suppressDefaultLog, IDeleteTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -872,11 +914,12 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        private void OnErrorDeleteTrackDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        private void OnErrorDeleteTaskToTeamAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorDeleteTrack(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorDeleteTaskToTeamAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, teamId);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -888,20 +931,22 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        partial void OnErrorDeleteTrack(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        partial void OnErrorDeleteTaskToTeamAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId);
 
         /// <summary>
-        /// Delete a Drive Log&#39;s Track Deletes the Drive Log&#39;s Track. The Drive Log itself is kept.
+        /// Delete a Task to Team Assignment Removes the Team&#39;s assignment to the Task.
         /// </summary>
-        /// <param name="id">drive log id</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTrackApiResponse"/>&gt;</returns>
-        public async Task<IDeleteTrackApiResponse?> DeleteTrackOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IDeleteTaskToTeamAssignmentApiResponse?> DeleteTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await DeleteTrackAsync(id, cancellationToken).ConfigureAwait(false);
+                return await DeleteTaskToTeamAssignmentAsync(taskId, teamId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -910,21 +955,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Delete a Drive Log&#39;s Track Deletes the Drive Log&#39;s Track. The Drive Log itself is kept.
+        /// Delete a Task to Team Assignment Removes the Team&#39;s assignment to the Task.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTrackApiResponse"/>&gt;</returns>
-        public async Task<IDeleteTrackApiResponse> DeleteTrackAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IDeleteTaskToTeamAssignmentApiResponse> DeleteTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateDeleteTrack(id);
+                ValidateDeleteTaskToTeamAssignment(taskId, teamId);
 
-                FormatDeleteTrack(ref id);
+                FormatDeleteTaskToTeamAssignment(ref taskId, ref teamId);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -932,9 +978,10 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/drive-logs/{id}/track"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}/track");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
+                        ? "/tasks/{task_id}/teams/{team_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams/{team_id}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bteam_id%7D", Uri.EscapeDataString(teamId.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -966,20 +1013,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        DeleteTrackApiResponse apiResponseLocalVar;
+                        DeleteTaskToTeamAssignmentApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}/track", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams/{team_id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterDeleteTrackDefaultImplementation(apiResponseLocalVar, id);
+                        AfterDeleteTaskToTeamAssignmentDefaultImplementation(apiResponseLocalVar, taskId, teamId);
 
-                        Events.ExecuteOnDeleteTrack(apiResponseLocalVar);
+                        Events.ExecuteOnDeleteTaskToTeamAssignment(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -991,24 +1038,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorDeleteTrackDefaultImplementation(e, "/drive-logs/{id}/track", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorDeleteTrack(e);
+                OnErrorDeleteTaskToTeamAssignmentDefaultImplementation(e, "/tasks/{task_id}/teams/{team_id}", uriBuilderLocalVar.Path, taskId, teamId);
+                Events.ExecuteOnErrorDeleteTaskToTeamAssignment(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="DeleteTrackApiResponse"/>
+        /// The <see cref="DeleteTaskToTeamAssignmentApiResponse"/>
         /// </summary>
-        public partial class DeleteTrackApiResponse : Timr.Api.Client.ApiResponse, IDeleteTrackApiResponse
+        public partial class DeleteTaskToTeamAssignmentApiResponse : Timr.Api.Client.ApiResponse, IDeleteTaskToTeamAssignmentApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TrackApi> Logger { get; }
+            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="DeleteTrackApiResponse"/>
+            /// The <see cref="DeleteTaskToTeamAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1017,14 +1064,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public DeleteTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="DeleteTrackApiResponse"/>
+            /// The <see cref="DeleteTaskToTeamAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1033,7 +1080,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public DeleteTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1208,28 +1255,36 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetTrack(ref string id);
+        partial void FormatFetchTaskToTeamAssignments(ref string taskId, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<TaskToTeamAssignmentsSortColumn> sortBy);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="taskId"></param>
+        /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateGetTrack(string id)
+        private void ValidateFetchTaskToTeamAssignments(string taskId, Option<string> pageToken)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (taskId == null)
+                throw new ArgumentNullException(nameof(taskId));
+
+            if (pageToken.IsSet && pageToken.Value == null)
+                throw new ArgumentNullException(nameof(pageToken));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        private void AfterGetTrackDefaultImplementation(IGetTrackApiResponse apiResponseLocalVar, string id)
+        /// <param name="taskId"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        private void AfterFetchTaskToTeamAssignmentsDefaultImplementation(IFetchTaskToTeamAssignmentsApiResponse apiResponseLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy)
         {
             bool suppressDefaultLog = false;
-            AfterGetTrack(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterFetchTaskToTeamAssignments(ref suppressDefaultLog, apiResponseLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1239,8 +1294,12 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        partial void AfterGetTrack(ref bool suppressDefaultLog, IGetTrackApiResponse apiResponseLocalVar, string id);
+        /// <param name="taskId"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        partial void AfterFetchTaskToTeamAssignments(ref bool suppressDefaultLog, IFetchTaskToTeamAssignmentsApiResponse apiResponseLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1248,11 +1307,15 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        private void OnErrorGetTrackDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        /// <param name="taskId"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        private void OnErrorFetchTaskToTeamAssignmentsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetTrack(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorFetchTaskToTeamAssignments(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1264,20 +1327,28 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        partial void OnErrorGetTrack(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        /// <param name="taskId"></param>
+        /// <param name="pageToken"></param>
+        /// <param name="limit"></param>
+        /// <param name="sortDirection"></param>
+        /// <param name="sortBy"></param>
+        partial void OnErrorFetchTaskToTeamAssignments(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<TaskToTeamAssignmentsSortColumn> sortBy);
 
         /// <summary>
-        /// Get a Drive Log&#39;s Track Returns the recorded Track of the Drive Log. Responds with 404 when no Track was recorded.
+        /// List Task to Team Assignments Lists the Teams assigned to the Task.
         /// </summary>
-        /// <param name="id">drive log id</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
+        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
+        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
+        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTrackApiResponse"/>&gt;</returns>
-        public async Task<IGetTrackApiResponse?> GetTrackOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>&gt;</returns>
+        public async Task<IFetchTaskToTeamAssignmentsApiResponse?> FetchTaskToTeamAssignmentsOrDefaultAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetTrackAsync(id, cancellationToken).ConfigureAwait(false);
+                return await FetchTaskToTeamAssignmentsAsync(taskId, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1286,21 +1357,25 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Get a Drive Log&#39;s Track Returns the recorded Track of the Drive Log. Responds with 404 when no Track was recorded.
+        /// List Task to Team Assignments Lists the Teams assigned to the Task.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
+        /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
+        /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
+        /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetTrackApiResponse"/>&gt;</returns>
-        public async Task<IGetTrackApiResponse> GetTrackAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchTaskToTeamAssignmentsApiResponse"/>&gt;</returns>
+        public async Task<IFetchTaskToTeamAssignmentsApiResponse> FetchTaskToTeamAssignmentsAsync(string taskId, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<TaskToTeamAssignmentsSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetTrack(id);
+                ValidateFetchTaskToTeamAssignments(taskId, pageToken);
 
-                FormatGetTrack(ref id);
+                FormatFetchTaskToTeamAssignments(ref taskId, ref pageToken, ref limit, ref sortDirection, ref sortBy);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1308,9 +1383,25 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/drive-logs/{id}/track"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}/track");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
+                        ? "/tasks/{task_id}/teams"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
+
+                    System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (pageToken.IsSet)
+                        parseQueryStringLocalVar["page_token"] = ClientUtils.ParameterToString(pageToken.Value);
+
+                    if (limit.IsSet)
+                        parseQueryStringLocalVar["limit"] = ClientUtils.ParameterToString(limit.Value);
+
+                    if (sortDirection.IsSet)
+                        parseQueryStringLocalVar["sort_direction"] = ClientUtils.ParameterToString(sortDirection.Value);
+
+                    if (sortBy.IsSet)
+                        parseQueryStringLocalVar["sort_by"] = ClientUtils.ParameterToString(sortBy.Value);
+
+                    uriBuilderLocalVar.Query = parseQueryStringLocalVar.ToString();
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -1343,20 +1434,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        GetTrackApiResponse apiResponseLocalVar;
+                        FetchTaskToTeamAssignmentsApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}/track", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterGetTrackDefaultImplementation(apiResponseLocalVar, id);
+                        AfterFetchTaskToTeamAssignmentsDefaultImplementation(apiResponseLocalVar, taskId, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnGetTrack(apiResponseLocalVar);
+                        Events.ExecuteOnFetchTaskToTeamAssignments(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1368,24 +1459,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorGetTrackDefaultImplementation(e, "/drive-logs/{id}/track", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorGetTrack(e);
+                OnErrorFetchTaskToTeamAssignmentsDefaultImplementation(e, "/tasks/{task_id}/teams", uriBuilderLocalVar.Path, taskId, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchTaskToTeamAssignments(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="GetTrackApiResponse"/>
+        /// The <see cref="FetchTaskToTeamAssignmentsApiResponse"/>
         /// </summary>
-        public partial class GetTrackApiResponse : Timr.Api.Client.ApiResponse, IGetTrackApiResponse
+        public partial class FetchTaskToTeamAssignmentsApiResponse : Timr.Api.Client.ApiResponse, IFetchTaskToTeamAssignmentsApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TrackApi> Logger { get; }
+            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="GetTrackApiResponse"/>
+            /// The <see cref="FetchTaskToTeamAssignmentsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1394,14 +1485,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchTaskToTeamAssignmentsApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="GetTrackApiResponse"/>
+            /// The <see cref="FetchTaskToTeamAssignmentsApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1410,7 +1501,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchTaskToTeamAssignmentsApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1428,32 +1519,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public List<Waypoint>? Ok()
+            public Timr.Api.Model.TaskToTeamAssignmentsPage? Ok()
             {
                 bool suppressDefault = false;
-                List<Waypoint>? result = null;
+                Timr.Api.Model.TaskToTeamAssignmentsPage? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private List<Waypoint>? DefaultOk()
+            private Timr.Api.Model.TaskToTeamAssignmentsPage? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<List<Waypoint>>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignmentsPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref List<Waypoint>? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignmentsPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out List<Waypoint>? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignmentsPage? result)
             {
                 result = null;
 
@@ -1463,56 +1554,6 @@ namespace Timr.Api.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public bool IsBadRequest => 400 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? BadRequest()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnBadRequest(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultBadRequest();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultBadRequest()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsBadRequest
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryBadRequest([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = BadRequest();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
                 }
 
                 return result != null;
@@ -1629,33 +1670,33 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatUpdateTrack(ref string id, List<Waypoint> waypoint);
+        partial void FormatGetTaskToTeamAssignment(ref string taskId, ref string teamId);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
         /// <returns></returns>
-        private void ValidateUpdateTrack(string id, List<Waypoint> waypoint)
+        private void ValidateGetTaskToTeamAssignment(string taskId, string teamId)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            if (taskId == null)
+                throw new ArgumentNullException(nameof(taskId));
 
-            if (waypoint == null)
-                throw new ArgumentNullException(nameof(waypoint));
+            if (teamId == null)
+                throw new ArgumentNullException(nameof(teamId));
         }
 
         /// <summary>
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        private void AfterUpdateTrackDefaultImplementation(IUpdateTrackApiResponse apiResponseLocalVar, string id, List<Waypoint> waypoint)
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        private void AfterGetTaskToTeamAssignmentDefaultImplementation(IGetTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId)
         {
             bool suppressDefaultLog = false;
-            AfterUpdateTrack(ref suppressDefaultLog, apiResponseLocalVar, id, waypoint);
+            AfterGetTaskToTeamAssignment(ref suppressDefaultLog, apiResponseLocalVar, taskId, teamId);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1665,9 +1706,9 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        partial void AfterUpdateTrack(ref bool suppressDefaultLog, IUpdateTrackApiResponse apiResponseLocalVar, string id, List<Waypoint> waypoint);
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        partial void AfterGetTaskToTeamAssignment(ref bool suppressDefaultLog, IGetTaskToTeamAssignmentApiResponse apiResponseLocalVar, string taskId, string teamId);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1675,12 +1716,12 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        private void OnErrorUpdateTrackDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, List<Waypoint> waypoint)
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        private void OnErrorGetTaskToTeamAssignmentDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorUpdateTrack(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, waypoint);
+            OnErrorGetTaskToTeamAssignment(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, taskId, teamId);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1692,22 +1733,22 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="waypoint"></param>
-        partial void OnErrorUpdateTrack(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, List<Waypoint> waypoint);
+        /// <param name="taskId"></param>
+        /// <param name="teamId"></param>
+        partial void OnErrorGetTaskToTeamAssignment(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string taskId, string teamId);
 
         /// <summary>
-        /// Replace a Drive Log&#39;s Track Replaces the Drive Log&#39;s Track with the waypoints in the request body.
+        /// Get a Task to Team Assignment Returns the assignment of a single Team to the Task.
         /// </summary>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">working time date span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTrackApiResponse"/>&gt;</returns>
-        public async Task<IUpdateTrackApiResponse?> UpdateTrackOrDefaultAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IGetTaskToTeamAssignmentApiResponse?> GetTaskToTeamAssignmentOrDefaultAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await UpdateTrackAsync(id, waypoint, cancellationToken).ConfigureAwait(false);
+                return await GetTaskToTeamAssignmentAsync(taskId, teamId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1716,22 +1757,22 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Replace a Drive Log&#39;s Track Replaces the Drive Log&#39;s Track with the waypoints in the request body.
+        /// Get a Task to Team Assignment Returns the assignment of a single Team to the Task.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">drive log id</param>
-        /// <param name="waypoint">working time date span entity</param>
+        /// <param name="taskId">ID of the Task.</param>
+        /// <param name="teamId">ID of the Team.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IUpdateTrackApiResponse"/>&gt;</returns>
-        public async Task<IUpdateTrackApiResponse> UpdateTrackAsync(string id, List<Waypoint> waypoint, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetTaskToTeamAssignmentApiResponse"/>&gt;</returns>
+        public async Task<IGetTaskToTeamAssignmentApiResponse> GetTaskToTeamAssignmentAsync(string taskId, string teamId, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateUpdateTrack(id, waypoint);
+                ValidateGetTaskToTeamAssignment(taskId, teamId);
 
-                FormatUpdateTrack(ref id, waypoint);
+                FormatGetTaskToTeamAssignment(ref taskId, ref teamId);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1739,13 +1780,10 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/drive-logs/{id}/track"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/drive-logs/{id}/track");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
-
-                    httpRequestMessageLocalVar.Content = (waypoint as object) is Timr.Api.Client.FileParameter fileParameterLocalVar
-                        ? httpRequestMessageLocalVar.Content = new StreamContent(fileParameterLocalVar.Content)
-                        : httpRequestMessageLocalVar.Content = new StringContent(JsonSerializer.Serialize(waypoint, _jsonSerializerOptions));
+                        ? "/tasks/{task_id}/teams/{team_id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/tasks/{task_id}/teams/{team_id}");
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Btask_id%7D", Uri.EscapeDataString(taskId.ToString()));
+                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bteam_id%7D", Uri.EscapeDataString(teamId.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
                     httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
@@ -1762,15 +1800,6 @@ namespace Timr.Api.Api
 
                     oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
 
-                    string[] contentTypes = new string[] {
-                        "application/json"
-                    };
-
-                    string? contentTypeLocalVar = ClientUtils.SelectHeaderContentType(contentTypes);
-
-                    if (contentTypeLocalVar != null && httpRequestMessageLocalVar.Content != null)
-                        httpRequestMessageLocalVar.Content.Headers.ContentType = new MediaTypeHeaderValue(contentTypeLocalVar);
-
                     string[] acceptLocalVars = new string[] {
                         "application/json",
                         "application/problem+json"
@@ -1781,26 +1810,26 @@ namespace Timr.Api.Api
                     foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
                         httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
 
-                    httpRequestMessageLocalVar.Method = HttpMethod.Put;
+                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
 
                     DateTime requestedAtLocalVar = DateTime.UtcNow;
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        UpdateTrackApiResponse apiResponseLocalVar;
+                        GetTaskToTeamAssignmentApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/drive-logs/{id}/track", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/tasks/{task_id}/teams/{team_id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterUpdateTrackDefaultImplementation(apiResponseLocalVar, id, waypoint);
+                        AfterGetTaskToTeamAssignmentDefaultImplementation(apiResponseLocalVar, taskId, teamId);
 
-                        Events.ExecuteOnUpdateTrack(apiResponseLocalVar);
+                        Events.ExecuteOnGetTaskToTeamAssignment(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1812,24 +1841,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorUpdateTrackDefaultImplementation(e, "/drive-logs/{id}/track", uriBuilderLocalVar.Path, id, waypoint);
-                Events.ExecuteOnErrorUpdateTrack(e);
+                OnErrorGetTaskToTeamAssignmentDefaultImplementation(e, "/tasks/{task_id}/teams/{team_id}", uriBuilderLocalVar.Path, taskId, teamId);
+                Events.ExecuteOnErrorGetTaskToTeamAssignment(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="UpdateTrackApiResponse"/>
+        /// The <see cref="GetTaskToTeamAssignmentApiResponse"/>
         /// </summary>
-        public partial class UpdateTrackApiResponse : Timr.Api.Client.ApiResponse, IUpdateTrackApiResponse
+        public partial class GetTaskToTeamAssignmentApiResponse : Timr.Api.Client.ApiResponse, IGetTaskToTeamAssignmentApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<TrackApi> Logger { get; }
+            public ILogger<TaskToTeamAssignmentApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="UpdateTrackApiResponse"/>
+            /// The <see cref="GetTaskToTeamAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1838,14 +1867,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="UpdateTrackApiResponse"/>
+            /// The <see cref="GetTaskToTeamAssignmentApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1854,7 +1883,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public UpdateTrackApiResponse(ILogger<TrackApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetTaskToTeamAssignmentApiResponse(ILogger<TaskToTeamAssignmentApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1872,32 +1901,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public List<Waypoint>? Ok()
+            public Timr.Api.Model.TaskToTeamAssignment? Ok()
             {
                 bool suppressDefault = false;
-                List<Waypoint>? result = null;
+                Timr.Api.Model.TaskToTeamAssignment? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private List<Waypoint>? DefaultOk()
+            private Timr.Api.Model.TaskToTeamAssignment? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<List<Waypoint>>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.TaskToTeamAssignment>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref List<Waypoint>? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.TaskToTeamAssignment? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out List<Waypoint>? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.TaskToTeamAssignment? result)
             {
                 result = null;
 
@@ -1907,56 +1936,6 @@ namespace Timr.Api.Api
                 } catch (Exception e)
                 {
                     OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public bool IsBadRequest => 400 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 400 BadRequest
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? BadRequest()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnBadRequest(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultBadRequest();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultBadRequest()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsBadRequest
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnBadRequest(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 400 BadRequest and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryBadRequest([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = BadRequest();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)400);
                 }
 
                 return result != null;
@@ -2013,100 +1992,50 @@ namespace Timr.Api.Api
             }
 
             /// <summary>
-            /// Returns true if the response is 409 Conflict
+            /// Returns true if the response is 404 NotFound
             /// </summary>
             /// <returns></returns>
-            public bool IsConflict => 409 == (int)StatusCode;
+            public bool IsNotFound => 404 == (int)StatusCode;
 
             /// <summary>
-            /// Deserializes the response if the response is 409 Conflict
+            /// Deserializes the response if the response is 404 NotFound
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.Error? Conflict()
+            public Timr.Api.Model.Error? NotFound()
             {
                 bool suppressDefault = false;
                 Timr.Api.Model.Error? result = null;
-                OnConflict(ref suppressDefault, ref result);
+                OnNotFound(ref suppressDefault, ref result);
                 if (!suppressDefault)
-                    result = DefaultConflict();
+                    result = DefaultNotFound();
                 return result;
             }
 
-            private Timr.Api.Model.Error? DefaultConflict()
+            private Timr.Api.Model.Error? DefaultNotFound()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsConflict
+                return IsNotFound
                     ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnConflict(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
+            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
 
             /// <summary>
-            /// Returns true if the response is 409 Conflict and the deserialized response is not null
+            /// Returns true if the response is 404 NotFound and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryConflict([NotNullWhen(true)]out Timr.Api.Model.Error? result)
+            public bool TryNotFound([NotNullWhen(true)]out Timr.Api.Model.Error? result)
             {
                 result = null;
 
                 try
                 {
-                    result = Conflict();
+                    result = NotFound();
                 } catch (Exception e)
                 {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)409);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public bool IsUnprocessableContent => 422 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 422 UnprocessableContent
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? UnprocessableContent()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnUnprocessableContent(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultUnprocessableContent();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultUnprocessableContent()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsUnprocessableContent
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnUnprocessableContent(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 422 UnprocessableContent and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryUnprocessableContent([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = UnprocessableContent();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)422);
+                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
                 }
 
                 return result != null;

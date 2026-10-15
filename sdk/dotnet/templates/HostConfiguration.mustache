@@ -5,11 +5,13 @@
 {{/nrt}}
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 using {{packageName}}.{{apiPackage}};
 {{#models}}
 {{#-first}}
@@ -20,47 +22,46 @@ using {{packageName}}.{{modelPackage}};
 namespace {{packageName}}.{{clientPackage}}
 {
     /// <summary>
-    /// Provides hosting configuration for {{packageName}}
+    /// Configures authentication and HTTP clients for {{packageName}}
     /// </summary>
-    {{>visibility}} partial class HostConfiguration
+    public sealed class HostConfiguration
     {
         private readonly IServiceCollection _services;
-        private readonly JsonSerializerOptions _jsonOptions = new JsonSerializerOptions();
 
-        internal bool HttpClientsAdded { get; private set; }
+        private Action{{nrt?}} _configureAuthentication;
+        private readonly List<Action<HttpClient>> _configureHttpClients = new List<Action<HttpClient>>();
 
         /// <summary>
-        /// Instantiates the class 
+        /// Instantiates the class
         /// </summary>
         /// <param name="services"></param>
-        public HostConfiguration(IServiceCollection services)
+        internal HostConfiguration(IServiceCollection services)
         {
             _services = services;
-            _jsonOptions.Converters.Add(new JsonStringEnumConverter());
-            _jsonOptions.Converters.Add(new DateTimeJsonConverter());
-            _jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
+            var jsonOptions = new JsonSerializerOptions();
+            jsonOptions.Converters.Add(new JsonStringEnumConverter());
+            jsonOptions.Converters.Add(new DateTimeJsonConverter());
+            jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
             {{#supportsDateOnly}}
-            _jsonOptions.Converters.Add(new DateOnlyJsonConverter());
-            _jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
+            jsonOptions.Converters.Add(new DateOnlyJsonConverter());
+            jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
             {{/supportsDateOnly}}
             {{#models}}
             {{#model}}
             {{#isEnum}}
-            _jsonOptions.Converters.Add(new {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}JsonConverter());
-            _jsonOptions.Converters.Add(new {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}NullableJsonConverter());
+            jsonOptions.Converters.Add(new {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}JsonConverter());
+            jsonOptions.Converters.Add(new {{datatypeWithEnum}}{{^datatypeWithEnum}}{{classname}}{{/datatypeWithEnum}}NullableJsonConverter());
             {{/isEnum}}
             {{^isEnum}}
-            _jsonOptions.Converters.Add(new {{classname}}JsonConverter());
+            jsonOptions.Converters.Add(new {{classname}}JsonConverter());
             {{/isEnum}}
             {{/model}}
             {{/models}}
-            JsonSerializerOptionsProvider jsonSerializerOptionsProvider = new{{^net60OrLater}} JsonSerializerOptionsProvider{{/net60OrLater}}(_jsonOptions);
-            _services.AddSingleton(jsonSerializerOptionsProvider);
             {{#useSourceGeneration}}
 
             {{#models}}
             {{#-first}}
-            _jsonOptions.TypeInfoResolver = System.Text.Json.Serialization.Metadata.JsonTypeInfoResolver.Combine(
+            jsonOptions.TypeInfoResolver = System.Text.Json.Serialization.Metadata.JsonTypeInfoResolver.Combine(
             {{/-first}}
             {{/models}}
                 {{#lambda.joinLinesWithComma}}
@@ -79,151 +80,66 @@ namespace {{packageName}}.{{clientPackage}}
             {{/models}}
 
             {{/useSourceGeneration}}
+            jsonOptions.MakeReadOnly(populateMissingResolver: true);
+            JsonSerializerOptionsProvider jsonSerializerOptionsProvider = new{{^net60OrLater}} JsonSerializerOptionsProvider{{/net60OrLater}}(jsonOptions);
+            _services.AddSingleton(jsonSerializerOptionsProvider);
             _services.AddSingleton<IApiFactory, ApiFactory>();{{#apiInfo}}{{#apis}}
             _services.AddSingleton<{{classname}}Events>();{{/apis}}{{/apiInfo}}
-            OnHostConfigurationCreated();
         }
 
-        /// <summary>
-        /// Configures the HttpClients.
-        /// </summary>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public HostConfiguration Add{{apiName}}HttpClients(Action<IHttpClientBuilder>{{nrt?}} builder = null)
+        /// <summary>Uses a static access token, replacing any previous authentication configuration.</summary>
+        public HostConfiguration UseAccessToken(string accessToken)
         {
-            return Add{{apiName}}HttpClients((Action<IServiceProvider, HttpClient>{{nrt?}})null, builder);
+            ArgumentException.ThrowIfNullOrWhiteSpace(accessToken);
+            _configureAuthentication = () => _services.AddSingleton(
+                new TokenContainer<OAuthToken>(new[] { new OAuthToken(accessToken) }));
+            return this;
         }
 
-        /// <summary>
-        /// Configures the HttpClients.
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public HostConfiguration Add{{apiName}}HttpClients(
-            Action<HttpClient>{{nrt?}} client,
-            Action<IHttpClientBuilder>{{nrt?}} builder = null)
+        /// <summary>Uses a callback that supplies valid access tokens, replacing previous authentication configuration.</summary>
+        /// <remarks>The callback owns caching and refresh, and can run more than once per request.</remarks>
+        public HostConfiguration UseAccessTokenProvider(Func<CancellationToken, ValueTask<string>> getAccessToken)
         {
-            var wrapped = client != null ? new Action<IServiceProvider, HttpClient>((_, httpClient) =>
+            ArgumentNullException.ThrowIfNull(getAccessToken);
+            _configureAuthentication = () => _services.AddSingleton<TokenProvider<OAuthToken>>(
+                new OAuthTokenProvider(getAccessToken));
+            return this;
+        }
+
+        /// <summary>Configures every SDK HTTP client; callbacks run in registration order.</summary>
+        public HostConfiguration ConfigureHttpClient(Action<HttpClient> configure)
+        {
+            ArgumentNullException.ThrowIfNull(configure);
+            _configureHttpClients.Add(configure);
+            return this;
+        }
+
+        internal void Register()
+        {
+            var configureAuthentication = _configureAuthentication
+                ?? throw new InvalidOperationException("Configure an access token with UseAccessToken or UseAccessTokenProvider.");
+            configureAuthentication();
+            var configureHttpClients = _configureHttpClients.ToArray();
+            Action<HttpClient> configureClient = client =>
             {
-                client(httpClient);
-            }) : null;
-            return Add{{apiName}}HttpClients(wrapped, builder);
-        }
-
-        /// <summary>
-        /// Configures the HttpClients.
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="builder"></param>
-        /// <returns></returns>
-        public HostConfiguration Add{{apiName}}HttpClients(
-            Action<IServiceProvider, HttpClient>{{nrt?}} client,
-            Action<IHttpClientBuilder>{{nrt?}} builder = null)
-        {
-            if (client == null)
-                client = (_, c) => c.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS);
-
+                client.BaseAddress = new Uri(ClientUtils.BASE_ADDRESS);
+                foreach (var configure in configureHttpClients)
+                    configure(client);
+            };
             List<IHttpClientBuilder> builders = new List<IHttpClientBuilder>();
 
             {{#apiInfo}}
             {{#apis}}
-            builders.Add(_services.AddHttpClient<{{interfacePrefix}}{{classname}}, {{classname}}>(client));
+            builders.Add(_services.AddHttpClient<{{interfacePrefix}}{{classname}}, {{classname}}>("{{packageName}}.{{apiPackage}}.{{interfacePrefix}}{{classname}}", configureClient));
             {{/apis}}
             {{/apiInfo}}
 
-            foreach (IHttpClientBuilder instance in builders)
+            foreach (var builder in builders)
             {
-                bool suppressDefault = false;
-                OnAdd{{apiName}}HttpClientBuilder(instance, builder, ref suppressDefault);
-                if (!suppressDefault)
-                    builder?.Invoke(instance);
+                // Apply the fallback after consumer HTTP-client configuration.
+                _services.PostConfigure<HttpClientFactoryOptions>(builder.Name, options =>
+                    options.HttpClientActions.Add(client => client.ApplyDefaultUserAgent()));
             }
-
-            HttpClientsAdded = true;
-
-            return this;
-        }
-
-        /// <summary>
-        /// Applies configuration to each HttpClient.
-        /// Implement this partial method to prepend configuration, invoke <paramref name="userBuilder"/> at the
-        /// desired position, and append further configuration. Set <paramref name="suppressDefault"/> to
-        /// <c>true</c> when you invoke <paramref name="userBuilder"/> yourself to prevent a second invocation,
-        /// or to ignore the user's builder entirely.
-        /// If this method is not implemented, <paramref name="userBuilder"/> is invoked automatically.
-        /// </summary>
-        /// <param name="builder">The <see cref="IHttpClientBuilder"/> to configure.</param>
-        /// <param name="userBuilder">The caller-supplied builder action, or <c>null</c> if none was provided.</param>
-        /// <param name="suppressDefault">Set to <c>true</c> to prevent the default invocation of <paramref name="userBuilder"/>.</param>
-        partial void OnAdd{{apiName}}HttpClientBuilder(IHttpClientBuilder builder, Action<IHttpClientBuilder>{{nrt?}} userBuilder, ref bool suppressDefault);
-
-        /// <summary>
-        /// Called at the end of the constructor after all JSON converters and services are registered.
-        /// Implement this partial method to further configure <c>_jsonOptions</c> or register additional singletons via <c>_services</c>.
-        /// </summary>
-        partial void OnHostConfigurationCreated();
-
-        /// <summary>
-        /// Called after all services have been registered.
-        /// Implement this partial method to register additional services.
-        /// </summary>
-        /// <param name="services"></param>
-        partial void OnServicesAdded(IServiceCollection services);
-
-        internal void NotifyServicesAdded(IServiceCollection services) => OnServicesAdded(services);
-
-        /// <summary>
-        /// Configures the JsonSerializerSettings
-        /// </summary>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        public HostConfiguration ConfigureJsonOptions(Action<JsonSerializerOptions> options)
-        {
-            options(_jsonOptions);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Adds tokens to your IServiceCollection
-        /// </summary>
-        /// <typeparam name="TTokenBase"></typeparam>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTokens<TTokenBase>(TTokenBase token) where TTokenBase : TokenBase
-        {
-            return AddTokens(new TTokenBase[]{ token });
-        }
-
-        /// <summary>
-        /// Adds tokens to your IServiceCollection
-        /// </summary>
-        /// <typeparam name="TTokenBase"></typeparam>
-        /// <param name="tokens"></param>
-        /// <returns></returns>
-        public HostConfiguration AddTokens<TTokenBase>(IEnumerable<TTokenBase> tokens) where TTokenBase : TokenBase
-        {
-            TokenContainer<TTokenBase> container = new TokenContainer<TTokenBase>(tokens);
-            _services.AddSingleton(services => container);
-
-            return this;
-        }
-
-        /// <summary>
-        /// Adds a token provider to your IServiceCollection
-        /// </summary>
-        /// <typeparam name="TTokenProvider"></typeparam>
-        /// <typeparam name="TTokenBase"></typeparam>
-        /// <returns></returns>
-        public HostConfiguration UseProvider<TTokenProvider, TTokenBase>() 
-            where TTokenProvider : TokenProvider<TTokenBase>
-            where TTokenBase : TokenBase
-        {
-            _services.AddSingleton<TTokenProvider>();
-            _services.AddSingleton<TokenProvider<TTokenBase>>(services => services.GetRequiredService<TTokenProvider>());
-
-            return this;
         }
     }
 }

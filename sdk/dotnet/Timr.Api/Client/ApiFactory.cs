@@ -9,7 +9,7 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Timr.Api.Api;
+using Timr.Api.Endpoints;
 
 namespace Timr.Api.Client
 {

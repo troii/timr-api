@@ -25,99 +25,115 @@ using Timr.Api.Logging;
 using Timr.Api.Model;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Timr.Api.Api
+namespace Timr.Api.Endpoints
 {
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// This class is registered as transient.
     /// </summary>
-    public interface IWorkScheduleModelApi : IApi
+    public interface IWorkingTimeTypeApi : IApi
     {
         /// <summary>
         /// The class containing the events
         /// </summary>
-        WorkScheduleModelApiEvents Events { get; }
+        WorkingTimeTypeApiEvents Events { get; }
 
         /// <summary>
-        /// Delete a Work Schedule Model
+        /// Delete a Working Time Type
         /// </summary>
         /// <remarks>
-        /// Deletes the Work Schedule Model. It cannot be deleted while it is still assigned to a User.
+        /// Deletes the Working Time Type. It cannot be deleted while Working Times still reference it.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkScheduleModelApiResponse"/>&gt;</returns>
-        Task<IDeleteWorkScheduleModelApiResponse> DeleteWorkScheduleModelAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeTypeApiResponse"/>&gt;</returns>
+        Task<IDeleteWorkingTimeTypeApiResponse> DeleteWorkingTimeTypeAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Delete a Work Schedule Model
+        /// Delete a Working Time Type
         /// </summary>
         /// <remarks>
-        /// Deletes the Work Schedule Model. It cannot be deleted while it is still assigned to a User.
+        /// Deletes the Working Time Type. It cannot be deleted while Working Times still reference it.
         /// </remarks>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkScheduleModelApiResponse"/>?&gt;</returns>
-        Task<IDeleteWorkScheduleModelApiResponse?> DeleteWorkScheduleModelOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeTypeApiResponse"/>?&gt;</returns>
+        Task<IDeleteWorkingTimeTypeApiResponse?> DeleteWorkingTimeTypeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Work Schedule Models
+        /// List Working Time Types
         /// </summary>
         /// <remarks>
-        /// Lists the Work Schedule Models the authenticated user or API token can access.
+        /// Lists the Working Time Types the authenticated user or API token can access.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="name">Only return entries whose name contains this text. (optional)</param>
+        /// <param name="shortName">filter by short name (optional)</param>
+        /// <param name="description">filter by description (optional)</param>
+        /// <param name="categories">filter by WorkingTimeTypeCategory (optional)</param>
+        /// <param name="subCategories">filter by WorkingTimeTypeSubCategory (optional)</param>
+        /// <param name="editUnits">filter by WorkingTimeType&#39;s DurationUnit (optional)</param>
+        /// <param name="archived">Only return entries that are archived (true) or not archived (false). (optional)</param>
+        /// <param name="recordingModes">filter entries bAWS on their RecordingMode (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkScheduleModelsApiResponse"/>&gt;</returns>
-        Task<IFetchWorkScheduleModelsApiResponse> FetchWorkScheduleModelsAsync(Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkScheduleModelSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeTypesApiResponse"/>&gt;</returns>
+        Task<IFetchWorkingTimeTypesApiResponse> FetchWorkingTimeTypesAsync(Option<string> name = default, Option<string> shortName = default, Option<string> description = default, Option<List<WorkingTimeTypeCategory>> categories = default, Option<List<WorkingTimeTypeSubCategory>> subCategories = default, Option<List<DurationUnit>> editUnits = default, Option<bool> archived = default, Option<List<RecordingModeUser>> recordingModes = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeTypesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// List Work Schedule Models
+        /// List Working Time Types
         /// </summary>
         /// <remarks>
-        /// Lists the Work Schedule Models the authenticated user or API token can access.
+        /// Lists the Working Time Types the authenticated user or API token can access.
         /// </remarks>
+        /// <param name="name">Only return entries whose name contains this text. (optional)</param>
+        /// <param name="shortName">filter by short name (optional)</param>
+        /// <param name="description">filter by description (optional)</param>
+        /// <param name="categories">filter by WorkingTimeTypeCategory (optional)</param>
+        /// <param name="subCategories">filter by WorkingTimeTypeSubCategory (optional)</param>
+        /// <param name="editUnits">filter by WorkingTimeType&#39;s DurationUnit (optional)</param>
+        /// <param name="archived">Only return entries that are archived (true) or not archived (false). (optional)</param>
+        /// <param name="recordingModes">filter entries bAWS on their RecordingMode (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkScheduleModelsApiResponse"/>?&gt;</returns>
-        Task<IFetchWorkScheduleModelsApiResponse?> FetchWorkScheduleModelsOrDefaultAsync(Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkScheduleModelSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeTypesApiResponse"/>?&gt;</returns>
+        Task<IFetchWorkingTimeTypesApiResponse?> FetchWorkingTimeTypesOrDefaultAsync(Option<string> name = default, Option<string> shortName = default, Option<string> description = default, Option<List<WorkingTimeTypeCategory>> categories = default, Option<List<WorkingTimeTypeSubCategory>> subCategories = default, Option<List<DurationUnit>> editUnits = default, Option<bool> archived = default, Option<List<RecordingModeUser>> recordingModes = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeTypesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Work Schedule Model
+        /// Get a Working Time Type
         /// </summary>
         /// <remarks>
-        /// Returns a single Work Schedule Model by its ID.
+        /// Returns a single Working Time Type by its ID.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkScheduleModelApiResponse"/>&gt;</returns>
-        Task<IGetWorkScheduleModelApiResponse> GetWorkScheduleModelAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeTypeApiResponse"/>&gt;</returns>
+        Task<IGetWorkingTimeTypeApiResponse> GetWorkingTimeTypeAsync(string id, System.Threading.CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Get a Work Schedule Model
+        /// Get a Working Time Type
         /// </summary>
         /// <remarks>
-        /// Returns a single Work Schedule Model by its ID.
+        /// Returns a single Working Time Type by its ID.
         /// </remarks>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkScheduleModelApiResponse"/>?&gt;</returns>
-        Task<IGetWorkScheduleModelApiResponse?> GetWorkScheduleModelOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeTypeApiResponse"/>?&gt;</returns>
+        Task<IGetWorkingTimeTypeApiResponse?> GetWorkingTimeTypeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
-    /// The <see cref="IDeleteWorkScheduleModelApiResponse"/>
+    /// The <see cref="IDeleteWorkingTimeTypeApiResponse"/>
     /// </summary>
-    public interface IDeleteWorkScheduleModelApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
+    public interface IDeleteWorkingTimeTypeApiResponse : Timr.Api.Client.IApiResponse, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>, IConflict<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 204 NoContent
@@ -145,9 +161,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IFetchWorkScheduleModelsApiResponse"/>
+    /// The <see cref="IFetchWorkingTimeTypesApiResponse"/>
     /// </summary>
-    public interface IFetchWorkScheduleModelsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkScheduleModelsPage?>, IBadRequest<Timr.Api.Model.Error?>
+    public interface IFetchWorkingTimeTypesApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkingTimeTypesPage?>, IBadRequest<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -163,9 +179,9 @@ namespace Timr.Api.Api
     }
 
     /// <summary>
-    /// The <see cref="IGetWorkScheduleModelApiResponse"/>
+    /// The <see cref="IGetWorkingTimeTypeApiResponse"/>
     /// </summary>
-    public interface IGetWorkScheduleModelApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkScheduleModel?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
+    public interface IGetWorkingTimeTypeApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.WorkingTimeType?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -189,80 +205,80 @@ namespace Timr.Api.Api
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public class WorkScheduleModelApiEvents
+    public class WorkingTimeTypeApiEvents
     {
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnDeleteWorkScheduleModel;
+        public event EventHandler<ApiResponseEventArgs>? OnDeleteWorkingTimeType;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteWorkScheduleModel;
+        public event EventHandler<ExceptionEventArgs>? OnErrorDeleteWorkingTimeType;
 
-        internal void ExecuteOnDeleteWorkScheduleModel(WorkScheduleModelApi.DeleteWorkScheduleModelApiResponse apiResponse)
+        internal void ExecuteOnDeleteWorkingTimeType(WorkingTimeTypeApi.DeleteWorkingTimeTypeApiResponse apiResponse)
         {
-            OnDeleteWorkScheduleModel?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnDeleteWorkingTimeType?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorDeleteWorkScheduleModel(Exception exception)
+        internal void ExecuteOnErrorDeleteWorkingTimeType(Exception exception)
         {
-            OnErrorDeleteWorkScheduleModel?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorDeleteWorkingTimeType?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnFetchWorkScheduleModels;
+        public event EventHandler<ApiResponseEventArgs>? OnFetchWorkingTimeTypes;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorFetchWorkScheduleModels;
+        public event EventHandler<ExceptionEventArgs>? OnErrorFetchWorkingTimeTypes;
 
-        internal void ExecuteOnFetchWorkScheduleModels(WorkScheduleModelApi.FetchWorkScheduleModelsApiResponse apiResponse)
+        internal void ExecuteOnFetchWorkingTimeTypes(WorkingTimeTypeApi.FetchWorkingTimeTypesApiResponse apiResponse)
         {
-            OnFetchWorkScheduleModels?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnFetchWorkingTimeTypes?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorFetchWorkScheduleModels(Exception exception)
+        internal void ExecuteOnErrorFetchWorkingTimeTypes(Exception exception)
         {
-            OnErrorFetchWorkScheduleModels?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorFetchWorkingTimeTypes?.Invoke(this, new ExceptionEventArgs(exception));
         }
 
         /// <summary>
         /// The event raised after the server response
         /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetWorkScheduleModel;
+        public event EventHandler<ApiResponseEventArgs>? OnGetWorkingTimeType;
 
         /// <summary>
         /// The event raised after an error querying the server
         /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetWorkScheduleModel;
+        public event EventHandler<ExceptionEventArgs>? OnErrorGetWorkingTimeType;
 
-        internal void ExecuteOnGetWorkScheduleModel(WorkScheduleModelApi.GetWorkScheduleModelApiResponse apiResponse)
+        internal void ExecuteOnGetWorkingTimeType(WorkingTimeTypeApi.GetWorkingTimeTypeApiResponse apiResponse)
         {
-            OnGetWorkScheduleModel?.Invoke(this, new ApiResponseEventArgs(apiResponse));
+            OnGetWorkingTimeType?.Invoke(this, new ApiResponseEventArgs(apiResponse));
         }
 
-        internal void ExecuteOnErrorGetWorkScheduleModel(Exception exception)
+        internal void ExecuteOnErrorGetWorkingTimeType(Exception exception)
         {
-            OnErrorGetWorkScheduleModel?.Invoke(this, new ExceptionEventArgs(exception));
+            OnErrorGetWorkingTimeType?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
     /// <summary>
     /// Represents a collection of functions to interact with the API endpoints
     /// </summary>
-    public sealed partial class WorkScheduleModelApi : IWorkScheduleModelApi
+    public sealed partial class WorkingTimeTypeApi : IWorkingTimeTypeApi
     {
         private JsonSerializerOptions _jsonSerializerOptions;
 
         /// <summary>
         /// The logger
         /// </summary>
-        public ILogger<WorkScheduleModelApi> Logger { get; }
+        public ILogger<WorkingTimeTypeApi> Logger { get; }
 
         /// <summary>
         /// The HttpClient
@@ -272,7 +288,7 @@ namespace Timr.Api.Api
         /// <summary>
         /// The class containing the events
         /// </summary>
-        public WorkScheduleModelApiEvents Events { get; }
+        public WorkingTimeTypeApiEvents Events { get; }
 
         /// <summary>
         /// A token provider of type <see cref="OauthTokenProvider"/>
@@ -280,27 +296,27 @@ namespace Timr.Api.Api
         public TokenProvider<OAuthToken> OauthTokenProvider { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorkScheduleModelApi"/> class.
+        /// Initializes a new instance of the <see cref="WorkingTimeTypeApi"/> class.
         /// </summary>
         /// <returns></returns>
-        public WorkScheduleModelApi(ILogger<WorkScheduleModelApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, WorkScheduleModelApiEvents workScheduleModelApiEvents,
+        public WorkingTimeTypeApi(ILogger<WorkingTimeTypeApi> logger, HttpClient httpClient, JsonSerializerOptionsProvider jsonSerializerOptionsProvider, WorkingTimeTypeApiEvents workingTimeTypeApiEvents,
             TokenProvider<OAuthToken> oauthTokenProvider)
         {
             _jsonSerializerOptions = jsonSerializerOptionsProvider.Options;
             Logger = logger;
             HttpClient = httpClient;
-            Events = workScheduleModelApiEvents;
+            Events = workingTimeTypeApiEvents;
             OauthTokenProvider = oauthTokenProvider;
         }
 
-        partial void FormatDeleteWorkScheduleModel(ref string id);
+        partial void FormatDeleteWorkingTimeType(ref string id);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private void ValidateDeleteWorkScheduleModel(string id)
+        private void ValidateDeleteWorkingTimeType(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -311,10 +327,10 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        private void AfterDeleteWorkScheduleModelDefaultImplementation(IDeleteWorkScheduleModelApiResponse apiResponseLocalVar, string id)
+        private void AfterDeleteWorkingTimeTypeDefaultImplementation(IDeleteWorkingTimeTypeApiResponse apiResponseLocalVar, string id)
         {
             bool suppressDefaultLog = false;
-            AfterDeleteWorkScheduleModel(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterDeleteWorkingTimeType(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -325,7 +341,7 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        partial void AfterDeleteWorkScheduleModel(ref bool suppressDefaultLog, IDeleteWorkScheduleModelApiResponse apiResponseLocalVar, string id);
+        partial void AfterDeleteWorkingTimeType(ref bool suppressDefaultLog, IDeleteWorkingTimeTypeApiResponse apiResponseLocalVar, string id);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -334,10 +350,10 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        private void OnErrorDeleteWorkScheduleModelDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        private void OnErrorDeleteWorkingTimeTypeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorDeleteWorkScheduleModel(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorDeleteWorkingTimeType(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -350,19 +366,19 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        partial void OnErrorDeleteWorkScheduleModel(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        partial void OnErrorDeleteWorkingTimeType(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
 
         /// <summary>
-        /// Delete a Work Schedule Model Deletes the Work Schedule Model. It cannot be deleted while it is still assigned to a User.
+        /// Delete a Working Time Type Deletes the Working Time Type. It cannot be deleted while Working Times still reference it.
         /// </summary>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkScheduleModelApiResponse"/>&gt;</returns>
-        public async Task<IDeleteWorkScheduleModelApiResponse?> DeleteWorkScheduleModelOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeTypeApiResponse"/>&gt;</returns>
+        public async Task<IDeleteWorkingTimeTypeApiResponse?> DeleteWorkingTimeTypeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await DeleteWorkScheduleModelAsync(id, cancellationToken).ConfigureAwait(false);
+                return await DeleteWorkingTimeTypeAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -371,21 +387,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Delete a Work Schedule Model Deletes the Work Schedule Model. It cannot be deleted while it is still assigned to a User.
+        /// Delete a Working Time Type Deletes the Working Time Type. It cannot be deleted while Working Times still reference it.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkScheduleModelApiResponse"/>&gt;</returns>
-        public async Task<IDeleteWorkScheduleModelApiResponse> DeleteWorkScheduleModelAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IDeleteWorkingTimeTypeApiResponse"/>&gt;</returns>
+        public async Task<IDeleteWorkingTimeTypeApiResponse> DeleteWorkingTimeTypeAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateDeleteWorkScheduleModel(id);
+                ValidateDeleteWorkingTimeType(id);
 
-                FormatDeleteWorkScheduleModel(ref id);
+                FormatDeleteWorkingTimeType(ref id);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -393,8 +409,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/work-schedule-models/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/work-schedule-models/{id}");
+                        ? "/working-time-types/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-types/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -427,20 +443,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        DeleteWorkScheduleModelApiResponse apiResponseLocalVar;
+                        DeleteWorkingTimeTypeApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/work-schedule-models/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-types/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterDeleteWorkScheduleModelDefaultImplementation(apiResponseLocalVar, id);
+                        AfterDeleteWorkingTimeTypeDefaultImplementation(apiResponseLocalVar, id);
 
-                        Events.ExecuteOnDeleteWorkScheduleModel(apiResponseLocalVar);
+                        Events.ExecuteOnDeleteWorkingTimeType(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -452,24 +468,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorDeleteWorkScheduleModelDefaultImplementation(e, "/work-schedule-models/{id}", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorDeleteWorkScheduleModel(e);
+                OnErrorDeleteWorkingTimeTypeDefaultImplementation(e, "/working-time-types/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorDeleteWorkingTimeType(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="DeleteWorkScheduleModelApiResponse"/>
+        /// The <see cref="DeleteWorkingTimeTypeApiResponse"/>
         /// </summary>
-        public partial class DeleteWorkScheduleModelApiResponse : Timr.Api.Client.ApiResponse, IDeleteWorkScheduleModelApiResponse
+        public partial class DeleteWorkingTimeTypeApiResponse : Timr.Api.Client.ApiResponse, IDeleteWorkingTimeTypeApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<WorkScheduleModelApi> Logger { get; }
+            public ILogger<WorkingTimeTypeApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="DeleteWorkScheduleModelApiResponse"/>
+            /// The <see cref="DeleteWorkingTimeTypeApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -478,14 +494,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteWorkScheduleModelApiResponse(ILogger<WorkScheduleModelApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public DeleteWorkingTimeTypeApiResponse(ILogger<WorkingTimeTypeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="DeleteWorkScheduleModelApiResponse"/>
+            /// The <see cref="DeleteWorkingTimeTypeApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -494,7 +510,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public DeleteWorkScheduleModelApiResponse(ILogger<WorkScheduleModelApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public DeleteWorkingTimeTypeApiResponse(ILogger<WorkingTimeTypeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -669,15 +685,43 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatFetchWorkScheduleModels(ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<WorkScheduleModelSortColumn> sortBy);
+        partial void FormatFetchWorkingTimeTypes(ref Option<string> name, ref Option<string> shortName, ref Option<string> description, Option<List<WorkingTimeTypeCategory>> categories, Option<List<WorkingTimeTypeSubCategory>> subCategories, Option<List<DurationUnit>> editUnits, ref Option<bool> archived, Option<List<RecordingModeUser>> recordingModes, ref Option<string> pageToken, ref Option<int> limit, ref Option<SortDirection> sortDirection, ref Option<WorkingTimeTypesSortColumn> sortBy);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="shortName"></param>
+        /// <param name="description"></param>
+        /// <param name="categories"></param>
+        /// <param name="subCategories"></param>
+        /// <param name="editUnits"></param>
+        /// <param name="recordingModes"></param>
         /// <param name="pageToken"></param>
         /// <returns></returns>
-        private void ValidateFetchWorkScheduleModels(Option<string> pageToken)
+        private void ValidateFetchWorkingTimeTypes(Option<string> name, Option<string> shortName, Option<string> description, Option<List<WorkingTimeTypeCategory>> categories, Option<List<WorkingTimeTypeSubCategory>> subCategories, Option<List<DurationUnit>> editUnits, Option<List<RecordingModeUser>> recordingModes, Option<string> pageToken)
         {
+            if (name.IsSet && name.Value == null)
+                throw new ArgumentNullException(nameof(name));
+
+            if (shortName.IsSet && shortName.Value == null)
+                throw new ArgumentNullException(nameof(shortName));
+
+            if (description.IsSet && description.Value == null)
+                throw new ArgumentNullException(nameof(description));
+
+            if (categories.IsSet && categories.Value == null)
+                throw new ArgumentNullException(nameof(categories));
+
+            if (subCategories.IsSet && subCategories.Value == null)
+                throw new ArgumentNullException(nameof(subCategories));
+
+            if (editUnits.IsSet && editUnits.Value == null)
+                throw new ArgumentNullException(nameof(editUnits));
+
+            if (recordingModes.IsSet && recordingModes.Value == null)
+                throw new ArgumentNullException(nameof(recordingModes));
+
             if (pageToken.IsSet && pageToken.Value == null)
                 throw new ArgumentNullException(nameof(pageToken));
         }
@@ -686,14 +730,22 @@ namespace Timr.Api.Api
         /// Processes the server response
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
+        /// <param name="name"></param>
+        /// <param name="shortName"></param>
+        /// <param name="description"></param>
+        /// <param name="categories"></param>
+        /// <param name="subCategories"></param>
+        /// <param name="editUnits"></param>
+        /// <param name="archived"></param>
+        /// <param name="recordingModes"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void AfterFetchWorkScheduleModelsDefaultImplementation(IFetchWorkScheduleModelsApiResponse apiResponseLocalVar, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkScheduleModelSortColumn> sortBy)
+        private void AfterFetchWorkingTimeTypesDefaultImplementation(IFetchWorkingTimeTypesApiResponse apiResponseLocalVar, Option<string> name, Option<string> shortName, Option<string> description, Option<List<WorkingTimeTypeCategory>> categories, Option<List<WorkingTimeTypeSubCategory>> subCategories, Option<List<DurationUnit>> editUnits, Option<bool> archived, Option<List<RecordingModeUser>> recordingModes, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeTypesSortColumn> sortBy)
         {
             bool suppressDefaultLog = false;
-            AfterFetchWorkScheduleModels(ref suppressDefaultLog, apiResponseLocalVar, pageToken, limit, sortDirection, sortBy);
+            AfterFetchWorkingTimeTypes(ref suppressDefaultLog, apiResponseLocalVar, name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -703,11 +755,19 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
+        /// <param name="name"></param>
+        /// <param name="shortName"></param>
+        /// <param name="description"></param>
+        /// <param name="categories"></param>
+        /// <param name="subCategories"></param>
+        /// <param name="editUnits"></param>
+        /// <param name="archived"></param>
+        /// <param name="recordingModes"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void AfterFetchWorkScheduleModels(ref bool suppressDefaultLog, IFetchWorkScheduleModelsApiResponse apiResponseLocalVar, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkScheduleModelSortColumn> sortBy);
+        partial void AfterFetchWorkingTimeTypes(ref bool suppressDefaultLog, IFetchWorkingTimeTypesApiResponse apiResponseLocalVar, Option<string> name, Option<string> shortName, Option<string> description, Option<List<WorkingTimeTypeCategory>> categories, Option<List<WorkingTimeTypeSubCategory>> subCategories, Option<List<DurationUnit>> editUnits, Option<bool> archived, Option<List<RecordingModeUser>> recordingModes, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeTypesSortColumn> sortBy);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -715,14 +775,22 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
+        /// <param name="name"></param>
+        /// <param name="shortName"></param>
+        /// <param name="description"></param>
+        /// <param name="categories"></param>
+        /// <param name="subCategories"></param>
+        /// <param name="editUnits"></param>
+        /// <param name="archived"></param>
+        /// <param name="recordingModes"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        private void OnErrorFetchWorkScheduleModelsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkScheduleModelSortColumn> sortBy)
+        private void OnErrorFetchWorkingTimeTypesDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> name, Option<string> shortName, Option<string> description, Option<List<WorkingTimeTypeCategory>> categories, Option<List<WorkingTimeTypeSubCategory>> subCategories, Option<List<DurationUnit>> editUnits, Option<bool> archived, Option<List<RecordingModeUser>> recordingModes, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeTypesSortColumn> sortBy)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorFetchWorkScheduleModels(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, pageToken, limit, sortDirection, sortBy);
+            OnErrorFetchWorkingTimeTypes(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -734,26 +802,42 @@ namespace Timr.Api.Api
         /// <param name="exceptionLocalVar"></param>
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
+        /// <param name="name"></param>
+        /// <param name="shortName"></param>
+        /// <param name="description"></param>
+        /// <param name="categories"></param>
+        /// <param name="subCategories"></param>
+        /// <param name="editUnits"></param>
+        /// <param name="archived"></param>
+        /// <param name="recordingModes"></param>
         /// <param name="pageToken"></param>
         /// <param name="limit"></param>
         /// <param name="sortDirection"></param>
         /// <param name="sortBy"></param>
-        partial void OnErrorFetchWorkScheduleModels(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkScheduleModelSortColumn> sortBy);
+        partial void OnErrorFetchWorkingTimeTypes(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, Option<string> name, Option<string> shortName, Option<string> description, Option<List<WorkingTimeTypeCategory>> categories, Option<List<WorkingTimeTypeSubCategory>> subCategories, Option<List<DurationUnit>> editUnits, Option<bool> archived, Option<List<RecordingModeUser>> recordingModes, Option<string> pageToken, Option<int> limit, Option<SortDirection> sortDirection, Option<WorkingTimeTypesSortColumn> sortBy);
 
         /// <summary>
-        /// List Work Schedule Models Lists the Work Schedule Models the authenticated user or API token can access.
+        /// List Working Time Types Lists the Working Time Types the authenticated user or API token can access.
         /// </summary>
+        /// <param name="name">Only return entries whose name contains this text. (optional)</param>
+        /// <param name="shortName">filter by short name (optional)</param>
+        /// <param name="description">filter by description (optional)</param>
+        /// <param name="categories">filter by WorkingTimeTypeCategory (optional)</param>
+        /// <param name="subCategories">filter by WorkingTimeTypeSubCategory (optional)</param>
+        /// <param name="editUnits">filter by WorkingTimeType&#39;s DurationUnit (optional)</param>
+        /// <param name="archived">Only return entries that are archived (true) or not archived (false). (optional)</param>
+        /// <param name="recordingModes">filter entries bAWS on their RecordingMode (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkScheduleModelsApiResponse"/>&gt;</returns>
-        public async Task<IFetchWorkScheduleModelsApiResponse?> FetchWorkScheduleModelsOrDefaultAsync(Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkScheduleModelSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeTypesApiResponse"/>&gt;</returns>
+        public async Task<IFetchWorkingTimeTypesApiResponse?> FetchWorkingTimeTypesOrDefaultAsync(Option<string> name = default, Option<string> shortName = default, Option<string> description = default, Option<List<WorkingTimeTypeCategory>> categories = default, Option<List<WorkingTimeTypeSubCategory>> subCategories = default, Option<List<DurationUnit>> editUnits = default, Option<bool> archived = default, Option<List<RecordingModeUser>> recordingModes = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeTypesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await FetchWorkScheduleModelsAsync(pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
+                return await FetchWorkingTimeTypesAsync(name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -762,24 +846,32 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// List Work Schedule Models Lists the Work Schedule Models the authenticated user or API token can access.
+        /// List Working Time Types Lists the Working Time Types the authenticated user or API token can access.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
+        /// <param name="name">Only return entries whose name contains this text. (optional)</param>
+        /// <param name="shortName">filter by short name (optional)</param>
+        /// <param name="description">filter by description (optional)</param>
+        /// <param name="categories">filter by WorkingTimeTypeCategory (optional)</param>
+        /// <param name="subCategories">filter by WorkingTimeTypeSubCategory (optional)</param>
+        /// <param name="editUnits">filter by WorkingTimeType&#39;s DurationUnit (optional)</param>
+        /// <param name="archived">Only return entries that are archived (true) or not archived (false). (optional)</param>
+        /// <param name="recordingModes">filter entries bAWS on their RecordingMode (optional)</param>
         /// <param name="pageToken">Token identifying the page to return. Take it from the &#39;next_page_token&#39; field of the previous response. (optional)</param>
         /// <param name="limit">Maximum number of entries per page. Values above 500 are capped at 500. (optional, default to 20)</param>
         /// <param name="sortDirection">Direction to sort the entries in. (optional)</param>
         /// <param name="sortBy">Property to sort the entries by. (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkScheduleModelsApiResponse"/>&gt;</returns>
-        public async Task<IFetchWorkScheduleModelsApiResponse> FetchWorkScheduleModelsAsync(Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkScheduleModelSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IFetchWorkingTimeTypesApiResponse"/>&gt;</returns>
+        public async Task<IFetchWorkingTimeTypesApiResponse> FetchWorkingTimeTypesAsync(Option<string> name = default, Option<string> shortName = default, Option<string> description = default, Option<List<WorkingTimeTypeCategory>> categories = default, Option<List<WorkingTimeTypeSubCategory>> subCategories = default, Option<List<DurationUnit>> editUnits = default, Option<bool> archived = default, Option<List<RecordingModeUser>> recordingModes = default, Option<string> pageToken = default, Option<int> limit = default, Option<SortDirection> sortDirection = default, Option<WorkingTimeTypesSortColumn> sortBy = default, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateFetchWorkScheduleModels(pageToken);
+                ValidateFetchWorkingTimeTypes(name, shortName, description, categories, subCategories, editUnits, recordingModes, pageToken);
 
-                FormatFetchWorkScheduleModels(ref pageToken, ref limit, ref sortDirection, ref sortBy);
+                FormatFetchWorkingTimeTypes(ref name, ref shortName, ref description, categories, subCategories, editUnits, ref archived, recordingModes, ref pageToken, ref limit, ref sortDirection, ref sortBy);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -787,10 +879,34 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/work-schedule-models"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/work-schedule-models");
+                        ? "/working-time-types"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-types");
 
                     System.Collections.Specialized.NameValueCollection parseQueryStringLocalVar = System.Web.HttpUtility.ParseQueryString(string.Empty);
+
+                    if (name.IsSet)
+                        parseQueryStringLocalVar["name"] = ClientUtils.ParameterToString(name.Value);
+
+                    if (shortName.IsSet)
+                        parseQueryStringLocalVar["short_name"] = ClientUtils.ParameterToString(shortName.Value);
+
+                    if (description.IsSet)
+                        parseQueryStringLocalVar["description"] = ClientUtils.ParameterToString(description.Value);
+
+                    if (categories.IsSet)
+                        parseQueryStringLocalVar["categories"] = ClientUtils.ParameterToString(categories.Value);
+
+                    if (subCategories.IsSet)
+                        parseQueryStringLocalVar["sub_categories"] = ClientUtils.ParameterToString(subCategories.Value);
+
+                    if (editUnits.IsSet)
+                        parseQueryStringLocalVar["edit_units"] = ClientUtils.ParameterToString(editUnits.Value);
+
+                    if (archived.IsSet)
+                        parseQueryStringLocalVar["archived"] = ClientUtils.ParameterToString(archived.Value);
+
+                    if (recordingModes.IsSet)
+                        parseQueryStringLocalVar["recording_modes"] = ClientUtils.ParameterToString(recordingModes.Value);
 
                     if (pageToken.IsSet)
                         parseQueryStringLocalVar["page_token"] = ClientUtils.ParameterToString(pageToken.Value);
@@ -837,20 +953,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        FetchWorkScheduleModelsApiResponse apiResponseLocalVar;
+                        FetchWorkingTimeTypesApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/work-schedule-models", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-types", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterFetchWorkScheduleModelsDefaultImplementation(apiResponseLocalVar, pageToken, limit, sortDirection, sortBy);
+                        AfterFetchWorkingTimeTypesDefaultImplementation(apiResponseLocalVar, name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy);
 
-                        Events.ExecuteOnFetchWorkScheduleModels(apiResponseLocalVar);
+                        Events.ExecuteOnFetchWorkingTimeTypes(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -862,24 +978,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorFetchWorkScheduleModelsDefaultImplementation(e, "/work-schedule-models", uriBuilderLocalVar.Path, pageToken, limit, sortDirection, sortBy);
-                Events.ExecuteOnErrorFetchWorkScheduleModels(e);
+                OnErrorFetchWorkingTimeTypesDefaultImplementation(e, "/working-time-types", uriBuilderLocalVar.Path, name, shortName, description, categories, subCategories, editUnits, archived, recordingModes, pageToken, limit, sortDirection, sortBy);
+                Events.ExecuteOnErrorFetchWorkingTimeTypes(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="FetchWorkScheduleModelsApiResponse"/>
+        /// The <see cref="FetchWorkingTimeTypesApiResponse"/>
         /// </summary>
-        public partial class FetchWorkScheduleModelsApiResponse : Timr.Api.Client.ApiResponse, IFetchWorkScheduleModelsApiResponse
+        public partial class FetchWorkingTimeTypesApiResponse : Timr.Api.Client.ApiResponse, IFetchWorkingTimeTypesApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<WorkScheduleModelApi> Logger { get; }
+            public ILogger<WorkingTimeTypeApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="FetchWorkScheduleModelsApiResponse"/>
+            /// The <see cref="FetchWorkingTimeTypesApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -888,14 +1004,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchWorkScheduleModelsApiResponse(ILogger<WorkScheduleModelApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public FetchWorkingTimeTypesApiResponse(ILogger<WorkingTimeTypeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="FetchWorkScheduleModelsApiResponse"/>
+            /// The <see cref="FetchWorkingTimeTypesApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -904,7 +1020,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public FetchWorkScheduleModelsApiResponse(ILogger<WorkScheduleModelApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public FetchWorkingTimeTypesApiResponse(ILogger<WorkingTimeTypeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -922,32 +1038,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.WorkScheduleModelsPage? Ok()
+            public Timr.Api.Model.WorkingTimeTypesPage? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.WorkScheduleModelsPage? result = null;
+                Timr.Api.Model.WorkingTimeTypesPage? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.WorkScheduleModelsPage? DefaultOk()
+            private Timr.Api.Model.WorkingTimeTypesPage? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkScheduleModelsPage>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeTypesPage>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkScheduleModelsPage? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeTypesPage? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkScheduleModelsPage? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkingTimeTypesPage? result)
             {
                 result = null;
 
@@ -1023,14 +1139,14 @@ namespace Timr.Api.Api
             partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
         }
 
-        partial void FormatGetWorkScheduleModel(ref string id);
+        partial void FormatGetWorkingTimeType(ref string id);
 
         /// <summary>
         /// Validates the request parameters
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private void ValidateGetWorkScheduleModel(string id)
+        private void ValidateGetWorkingTimeType(string id)
         {
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
@@ -1041,10 +1157,10 @@ namespace Timr.Api.Api
         /// </summary>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        private void AfterGetWorkScheduleModelDefaultImplementation(IGetWorkScheduleModelApiResponse apiResponseLocalVar, string id)
+        private void AfterGetWorkingTimeTypeDefaultImplementation(IGetWorkingTimeTypeApiResponse apiResponseLocalVar, string id)
         {
             bool suppressDefaultLog = false;
-            AfterGetWorkScheduleModel(ref suppressDefaultLog, apiResponseLocalVar, id);
+            AfterGetWorkingTimeType(ref suppressDefaultLog, apiResponseLocalVar, id);
             if (!suppressDefaultLog)
                 Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
         }
@@ -1055,7 +1171,7 @@ namespace Timr.Api.Api
         /// <param name="suppressDefaultLog"></param>
         /// <param name="apiResponseLocalVar"></param>
         /// <param name="id"></param>
-        partial void AfterGetWorkScheduleModel(ref bool suppressDefaultLog, IGetWorkScheduleModelApiResponse apiResponseLocalVar, string id);
+        partial void AfterGetWorkingTimeType(ref bool suppressDefaultLog, IGetWorkingTimeTypeApiResponse apiResponseLocalVar, string id);
 
         /// <summary>
         /// Logs exceptions that occur while retrieving the server response
@@ -1064,10 +1180,10 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        private void OnErrorGetWorkScheduleModelDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
+        private void OnErrorGetWorkingTimeTypeDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id)
         {
             bool suppressDefaultLogLocalVar = false;
-            OnErrorGetWorkScheduleModel(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
+            OnErrorGetWorkingTimeType(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id);
             if (!suppressDefaultLogLocalVar)
                 Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
         }
@@ -1080,19 +1196,19 @@ namespace Timr.Api.Api
         /// <param name="pathFormatLocalVar"></param>
         /// <param name="pathLocalVar"></param>
         /// <param name="id"></param>
-        partial void OnErrorGetWorkScheduleModel(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
+        partial void OnErrorGetWorkingTimeType(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id);
 
         /// <summary>
-        /// Get a Work Schedule Model Returns a single Work Schedule Model by its ID.
+        /// Get a Working Time Type Returns a single Working Time Type by its ID.
         /// </summary>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkScheduleModelApiResponse"/>&gt;</returns>
-        public async Task<IGetWorkScheduleModelApiResponse?> GetWorkScheduleModelOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeTypeApiResponse"/>&gt;</returns>
+        public async Task<IGetWorkingTimeTypeApiResponse?> GetWorkingTimeTypeOrDefaultAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             try
             {
-                return await GetWorkScheduleModelAsync(id, cancellationToken).ConfigureAwait(false);
+                return await GetWorkingTimeTypeAsync(id, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
@@ -1101,21 +1217,21 @@ namespace Timr.Api.Api
         }
 
         /// <summary>
-        /// Get a Work Schedule Model Returns a single Work Schedule Model by its ID.
+        /// Get a Working Time Type Returns a single Working Time Type by its ID.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the Work Schedule Model.</param>
+        /// <param name="id">ID of the Working Time Type.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkScheduleModelApiResponse"/>&gt;</returns>
-        public async Task<IGetWorkScheduleModelApiResponse> GetWorkScheduleModelAsync(string id, System.Threading.CancellationToken cancellationToken = default)
+        /// <returns><see cref="Task"/>&lt;<see cref="IGetWorkingTimeTypeApiResponse"/>&gt;</returns>
+        public async Task<IGetWorkingTimeTypeApiResponse> GetWorkingTimeTypeAsync(string id, System.Threading.CancellationToken cancellationToken = default)
         {
             UriBuilder uriBuilderLocalVar = new UriBuilder();
 
             try
             {
-                ValidateGetWorkScheduleModel(id);
+                ValidateGetWorkingTimeType(id);
 
-                FormatGetWorkScheduleModel(ref id);
+                FormatGetWorkingTimeType(ref id);
 
                 using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
                 {
@@ -1123,8 +1239,8 @@ namespace Timr.Api.Api
                     uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
                     uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
                     uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/work-schedule-models/{id}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/work-schedule-models/{id}");
+                        ? "/working-time-types/{id}"
+                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/working-time-types/{id}");
                     uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
 
                     List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
@@ -1158,20 +1274,20 @@ namespace Timr.Api.Api
 
                     using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
                     {
-                        GetWorkScheduleModelApiResponse apiResponseLocalVar;
+                        GetWorkingTimeTypeApiResponse apiResponseLocalVar;
 
                         switch ((int)httpResponseMessageLocalVar.StatusCode) {
                             default: {
                                 string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/work-schedule-models/{id}", requestedAtLocalVar, _jsonSerializerOptions);
+                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/working-time-types/{id}", requestedAtLocalVar, _jsonSerializerOptions);
 
                                 break;
                             }
                         }
 
-                        AfterGetWorkScheduleModelDefaultImplementation(apiResponseLocalVar, id);
+                        AfterGetWorkingTimeTypeDefaultImplementation(apiResponseLocalVar, id);
 
-                        Events.ExecuteOnGetWorkScheduleModel(apiResponseLocalVar);
+                        Events.ExecuteOnGetWorkingTimeType(apiResponseLocalVar);
 
                         if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
                             foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
@@ -1183,24 +1299,24 @@ namespace Timr.Api.Api
             }
             catch(Exception e)
             {
-                OnErrorGetWorkScheduleModelDefaultImplementation(e, "/work-schedule-models/{id}", uriBuilderLocalVar.Path, id);
-                Events.ExecuteOnErrorGetWorkScheduleModel(e);
+                OnErrorGetWorkingTimeTypeDefaultImplementation(e, "/working-time-types/{id}", uriBuilderLocalVar.Path, id);
+                Events.ExecuteOnErrorGetWorkingTimeType(e);
                 throw;
             }
         }
 
         /// <summary>
-        /// The <see cref="GetWorkScheduleModelApiResponse"/>
+        /// The <see cref="GetWorkingTimeTypeApiResponse"/>
         /// </summary>
-        public partial class GetWorkScheduleModelApiResponse : Timr.Api.Client.ApiResponse, IGetWorkScheduleModelApiResponse
+        public partial class GetWorkingTimeTypeApiResponse : Timr.Api.Client.ApiResponse, IGetWorkingTimeTypeApiResponse
         {
             /// <summary>
             /// The logger
             /// </summary>
-            public ILogger<WorkScheduleModelApi> Logger { get; }
+            public ILogger<WorkingTimeTypeApi> Logger { get; }
 
             /// <summary>
-            /// The <see cref="GetWorkScheduleModelApiResponse"/>
+            /// The <see cref="GetWorkingTimeTypeApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1209,14 +1325,14 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetWorkScheduleModelApiResponse(ILogger<WorkScheduleModelApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
+            public GetWorkingTimeTypeApiResponse(ILogger<WorkingTimeTypeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
             }
 
             /// <summary>
-            /// The <see cref="GetWorkScheduleModelApiResponse"/>
+            /// The <see cref="GetWorkingTimeTypeApiResponse"/>
             /// </summary>
             /// <param name="logger"></param>
             /// <param name="httpRequestMessage"></param>
@@ -1225,7 +1341,7 @@ namespace Timr.Api.Api
             /// <param name="path"></param>
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
-            public GetWorkScheduleModelApiResponse(ILogger<WorkScheduleModelApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
+            public GetWorkingTimeTypeApiResponse(ILogger<WorkingTimeTypeApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
@@ -1243,32 +1359,32 @@ namespace Timr.Api.Api
             /// Deserializes the response if the response is 200 Ok
             /// </summary>
             /// <returns></returns>
-            public Timr.Api.Model.WorkScheduleModel? Ok()
+            public Timr.Api.Model.WorkingTimeType? Ok()
             {
                 bool suppressDefault = false;
-                Timr.Api.Model.WorkScheduleModel? result = null;
+                Timr.Api.Model.WorkingTimeType? result = null;
                 OnOk(ref suppressDefault, ref result);
                 if (!suppressDefault)
                     result = DefaultOk();
                 return result;
             }
 
-            private Timr.Api.Model.WorkScheduleModel? DefaultOk()
+            private Timr.Api.Model.WorkingTimeType? DefaultOk()
             {
                 // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
                 return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkScheduleModel>(RawContent, _jsonSerializerOptions)
+                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.WorkingTimeType>(RawContent, _jsonSerializerOptions)
                     : null;
             }
 
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkScheduleModel? result);
+            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.WorkingTimeType? result);
 
             /// <summary>
             /// Returns true if the response is 200 Ok and the deserialized response is not null
             /// </summary>
             /// <param name="result"></param>
             /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkScheduleModel? result)
+            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.WorkingTimeType? result)
             {
                 result = null;
 

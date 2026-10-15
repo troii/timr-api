@@ -10,5 +10,18 @@ Timr.Api.sln
 Timr.Api/Timr.Api.csproj
 Timr.Api/README.md
 Timr.Api/Program.cs
+Timr.Api/Extensions/IServiceCollectionExtensions.cs
+Timr.Api/Extensions/IHostBuilderExtensions.cs
+# Application builders register through their Services collection.
+Timr.Api/Extensions/IHostApplicationBuilderExtensions.cs
+Timr.Api/Client/OAuthToken.cs
+Timr.Api/Client/OAuthTokenProvider.cs
+Timr.Api/Client/TokenBase.cs
+Timr.Api/Client/TokenProvider.cs
+Timr.Api/Client/TokenContainer.cs
+Timr.Api/Client/RateLimitProvider.cs
+Timr.Api/Client/TokenProvider`1.cs
+Timr.Api/Client/TokenContainer`1.cs
+Timr.Api/Client/RateLimitProvider`1.cs
 
 Timr.Api.Test/

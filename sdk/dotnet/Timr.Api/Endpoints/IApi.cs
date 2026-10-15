@@ -9,7 +9,7 @@
 
 using System.Net.Http;
 
-namespace Timr.Api.Api
+namespace Timr.Api.Endpoints
 {
     /// <summary>
     /// Any Api client

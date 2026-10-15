@@ -4,12 +4,15 @@ plugins {
 }
 
 tasks.register('cleanOpenApiGenerate', Delete) {
+    // Clear both API directories so the assembly only exposes the configured namespace.
     delete layout.projectDirectory.dir("Timr.Api/Api")
+    delete layout.projectDirectory.dir("Timr.Api/Endpoints")
     delete layout.projectDirectory.dir("Timr.Api/Model")
 }
 
 openApiGenerate {
     generatorName = 'csharp'
+    apiPackage = 'Endpoints'
     outputDir = "$projectDir"
     templateDir = "$projectDir/templates"
     configOptions = [
@@ -61,6 +64,7 @@ tasks.register('dotnetBuild', Exec) {
 tasks.register('dotnetTest', Exec) {
     group = 'verification'
     description = 'Runs the timr SDK test suite.'
+    environment 'TIMR_SDK_VERSION', packageVersion
     workingDir = project.projectDir
 
     dependsOn tasks.named('dotnetRestore')
