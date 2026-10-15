@@ -142,6 +142,90 @@ public class TaskApi {
     }
 
     /**
+     * Delete a Task
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+     * <p><b>204</b> - Deleted. No content is returned.
+     * <p><b>403</b> - Forbidden
+     * <p><b>404</b> - Not Found
+     * <p><b>409</b> - Conflict
+     * @param id ID of the Task.
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    private ResponseSpec deleteTaskRequestCreation(String id) throws RestClientResponseException {
+        Object postBody = null;
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new RestClientResponseException("Missing the required parameter 'id' when calling deleteTask", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
+        }
+        // create path and map variables
+        final Map<String, Object> pathParams = new HashMap<>();
+
+        pathParams.put("id", id);
+
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
+        final HttpHeaders headerParams = new HttpHeaders();
+        final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
+
+        final String[] localVarAccepts = { 
+            "application/problem+json"
+        };
+        final List<MediaType> localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        final String[] localVarContentTypes = { };
+        final MediaType localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+        String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
+
+        ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/tasks/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+    }
+
+    /**
+     * Delete a Task
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+     * <p><b>204</b> - Deleted. No content is returned.
+     * <p><b>403</b> - Forbidden
+     * <p><b>404</b> - Not Found
+     * <p><b>409</b> - Conflict
+     * @param id ID of the Task.
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    public void deleteTask(String id) throws RestClientResponseException {
+        ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
+        deleteTaskRequestCreation(id).body(localVarReturnType);
+    }
+
+    /**
+     * Delete a Task
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+     * <p><b>204</b> - Deleted. No content is returned.
+     * <p><b>403</b> - Forbidden
+     * <p><b>404</b> - Not Found
+     * <p><b>409</b> - Conflict
+     * @param id ID of the Task.
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    public ResponseEntity<Void> deleteTaskWithHttpInfo(String id) throws RestClientResponseException {
+        ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
+        return deleteTaskRequestCreation(id).toEntity(localVarReturnType);
+    }
+
+    /**
+     * Delete a Task
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can&#39;t be deleted; the request is answered with 409 and nothing is deleted.
+     * <p><b>204</b> - Deleted. No content is returned.
+     * <p><b>403</b> - Forbidden
+     * <p><b>404</b> - Not Found
+     * <p><b>409</b> - Conflict
+     * @param id ID of the Task.
+     * @return ResponseSpec
+     * @throws RestClientResponseException if an error occurs while attempting to invoke the API
+     */
+    public ResponseSpec deleteTaskWithResponseSpec(String id) throws RestClientResponseException {
+        return deleteTaskRequestCreation(id);
+    }
+
+    /**
      * List Tasks
      * Lists the Tasks the authenticated user or API token can access.
      * <p><b>200</b> - Page of Tasks.

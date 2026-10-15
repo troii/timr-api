@@ -59,6 +59,13 @@ export interface CreateTaskRequest {
     taskCreate: TaskCreate;
 }
 
+export interface DeleteTaskRequest {
+    /**
+     * ID of the Task.
+     */
+    id: string;
+}
+
 export interface FetchTasksRequest {
     /**
      * Only return Tasks whose parent is the Task with this ID.
@@ -239,6 +246,62 @@ export class TaskApi extends runtime.BaseAPI {
     async createTask(taskCreate: TaskCreate, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Task> {
         const response = await this.createTaskRaw({ taskCreate: taskCreate, }, initOverrides);
         return await response.value();
+    }
+
+    /**
+     * Creates request options for deleteTask without sending the request
+     */
+    async deleteTaskRequestOpts(requestParameters: DeleteTaskRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['id'] == null) {
+            throw new runtime.RequiredError(
+                'id',
+                'Required parameter "id" was null or undefined when calling deleteTask().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+        }
+
+        if (this.configuration && this.configuration.accessToken) {
+            // oauth required
+            headerParameters["Authorization"] = await this.configuration.accessToken("OAuth2", []);
+        }
+
+
+        let urlPath = `/tasks/{id}`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        };
+    }
+
+    /**
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can\'t be deleted; the request is answered with 409 and nothing is deleted.
+     * Delete a Task
+     */
+    async deleteTaskRaw(requestParameters: DeleteTaskRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteTaskRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes the Task together with all its subtasks. A Task that has recorded or running Project Times on itself or any of its subtasks can\'t be deleted; the request is answered with 409 and nothing is deleted.
+     * Delete a Task
+     */
+    async deleteTask(id: string, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteTaskRaw({ id: id, }, initOverrides);
     }
 
     /**
