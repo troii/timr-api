@@ -32,7 +32,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * 
  *
- * @param lastBalanceDate date of last balance
+ * @param lastBalanceDate The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.
  * @param timeAccount 
  * @param overtimeSurchargeAccounts 
  * @param vacationAccount 
@@ -41,7 +41,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Accounts (
 
-    /* date of last balance */
+    /* The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself. */
     @SerializedName("last_balance_date")
     val lastBalanceDate: java.time.LocalDate?,
 

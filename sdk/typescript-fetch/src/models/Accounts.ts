@@ -41,7 +41,7 @@ import {
  */
 export interface Accounts {
     /**
-     * date of last balance
+     * The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.
      */
     lastBalanceDate: Date | null;
     /**

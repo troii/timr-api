@@ -59,7 +59,7 @@ open class TimeAccountApi(basePath: kotlin.String = defaultBasePath, client: Cal
     /**
      * GET /users/{id}/accounts/{date}
      * Get a User&#39;s accounts
-     * Returns all of the User&#39;s account balances as of the given day, including overtime and surcharge accounts.
+     * Returns all of the User&#39;s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User&#39;s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User&#39;s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  &#x60;last_balance_date&#x60; identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
      * @param id ID of the User.
      * @param date Day to return the balances for.
      * @return Accounts
@@ -92,7 +92,7 @@ open class TimeAccountApi(basePath: kotlin.String = defaultBasePath, client: Cal
     /**
      * GET /users/{id}/accounts/{date}
      * Get a User&#39;s accounts
-     * Returns all of the User&#39;s account balances as of the given day, including overtime and surcharge accounts.
+     * Returns all of the User&#39;s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User&#39;s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User&#39;s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  &#x60;last_balance_date&#x60; identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
      * @param id ID of the User.
      * @param date Day to return the balances for.
      * @return ApiResponse<Accounts?>
@@ -125,82 +125,6 @@ open class TimeAccountApi(basePath: kotlin.String = defaultBasePath, client: Cal
         return RequestConfig(
             method = RequestMethod.GET,
             path = "/users/{id}/accounts/{date}".replace("{"+"id"+"}", encodeURIComponent(id.toString())).replace("{"+"date"+"}", encodeURIComponent(date.toString())),
-            query = localVariableQuery,
-            headers = localVariableHeaders,
-            requiresAuthentication = true,
-            body = localVariableBody
-        )
-    }
-
-    /**
-     * GET /users/{id}/working-time-accounts/{date}
-     * Get a User&#39;s working time accounts
-     * Returns the User&#39;s working time account balances as of the given day.
-     * @param id ID of the User.
-     * @param date Day to return the balances for.
-     * @return Accounts
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     * @throws UnsupportedOperationException If the API returns an informational or redirection response
-     * @throws ClientException If the API returns a client error response
-     * @throws ServerException If the API returns a server error response
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class, UnsupportedOperationException::class, ClientException::class, ServerException::class)
-    suspend fun getUserWorkingTimeAccounts(id: kotlin.String, date: java.time.LocalDate) : Accounts = withContext(Dispatchers.IO) {
-        val localVarResponse = getUserWorkingTimeAccountsWithHttpInfo(id = id, date = date)
-
-        return@withContext when (localVarResponse.responseType) {
-            ResponseType.Success -> (localVarResponse as Success<*>).data as Accounts
-            ResponseType.Informational -> throw UnsupportedOperationException("Client does not support Informational responses.")
-            ResponseType.Redirection -> throw UnsupportedOperationException("Client does not support Redirection responses.")
-            ResponseType.ClientError -> {
-                val localVarError = localVarResponse as ClientError<*>
-                throw ClientException("Client error : ${localVarError.statusCode} ${localVarError.message.orEmpty()}", localVarError.statusCode, localVarResponse)
-            }
-            ResponseType.ServerError -> {
-                val localVarError = localVarResponse as ServerError<*>
-                throw ServerException("Server error : ${localVarError.statusCode} ${localVarError.message.orEmpty()} ${localVarError.body}", localVarError.statusCode, localVarResponse)
-            }
-        }
-    }
-
-    /**
-     * GET /users/{id}/working-time-accounts/{date}
-     * Get a User&#39;s working time accounts
-     * Returns the User&#39;s working time account balances as of the given day.
-     * @param id ID of the User.
-     * @param date Day to return the balances for.
-     * @return ApiResponse<Accounts?>
-     * @throws IllegalStateException If the request is not correctly configured
-     * @throws IOException Rethrows the OkHttp execute method exception
-     */
-    @Suppress("UNCHECKED_CAST")
-    @Throws(IllegalStateException::class, IOException::class)
-    suspend fun getUserWorkingTimeAccountsWithHttpInfo(id: kotlin.String, date: java.time.LocalDate) : ApiResponse<Accounts?> = withContext(Dispatchers.IO) {
-        val localVariableConfig = getUserWorkingTimeAccountsRequestConfig(id = id, date = date)
-
-        return@withContext request<Unit, Accounts>(
-            localVariableConfig
-        )
-    }
-
-    /**
-     * To obtain the request config of the operation getUserWorkingTimeAccounts
-     *
-     * @param id ID of the User.
-     * @param date Day to return the balances for.
-     * @return RequestConfig
-     */
-    fun getUserWorkingTimeAccountsRequestConfig(id: kotlin.String, date: java.time.LocalDate) : RequestConfig<Unit> {
-        val localVariableBody = null
-        val localVariableQuery: MultiValueMap = mutableMapOf()
-        val localVariableHeaders: MutableMap<String, String> = mutableMapOf()
-        localVariableHeaders["Accept"] = "application/json, application/problem+json"
-
-        return RequestConfig(
-            method = RequestMethod.GET,
-            path = "/users/{id}/working-time-accounts/{date}".replace("{"+"id"+"}", encodeURIComponent(id.toString())).replace("{"+"date"+"}", encodeURIComponent(date.toString())),
             query = localVariableQuery,
             headers = localVariableHeaders,
             requiresAuthentication = true,

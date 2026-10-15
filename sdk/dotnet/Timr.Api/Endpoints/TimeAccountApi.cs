@@ -42,7 +42,7 @@ namespace Timr.Api.Endpoints
         /// Get a User&#39;s accounts
         /// </summary>
         /// <remarks>
-        /// Returns all of the User&#39;s account balances as of the given day, including overtime and surcharge accounts.
+        /// Returns all of the User&#39;s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User&#39;s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User&#39;s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  &#x60;last_balance_date&#x60; identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
         /// </remarks>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">ID of the User.</param>
@@ -55,68 +55,19 @@ namespace Timr.Api.Endpoints
         /// Get a User&#39;s accounts
         /// </summary>
         /// <remarks>
-        /// Returns all of the User&#39;s account balances as of the given day, including overtime and surcharge accounts.
+        /// Returns all of the User&#39;s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User&#39;s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User&#39;s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  &#x60;last_balance_date&#x60; identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
         /// </remarks>
         /// <param name="id">ID of the User.</param>
         /// <param name="date">Day to return the balances for.</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns><see cref="Task"/>&lt;<see cref="IGetUserAccountsApiResponse"/>?&gt;</returns>
         Task<IGetUserAccountsApiResponse?> GetUserAccountsOrDefaultAsync(string id, DateOnly date, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get a User&#39;s working time accounts
-        /// </summary>
-        /// <remarks>
-        /// Returns the User&#39;s working time account balances as of the given day.
-        /// </remarks>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="date">Day to return the balances for.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkingTimeAccountsApiResponse"/>&gt;</returns>
-        Task<IGetUserWorkingTimeAccountsApiResponse> GetUserWorkingTimeAccountsAsync(string id, DateOnly date, System.Threading.CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Get a User&#39;s working time accounts
-        /// </summary>
-        /// <remarks>
-        /// Returns the User&#39;s working time account balances as of the given day.
-        /// </remarks>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="date">Day to return the balances for.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkingTimeAccountsApiResponse"/>?&gt;</returns>
-        Task<IGetUserWorkingTimeAccountsApiResponse?> GetUserWorkingTimeAccountsOrDefaultAsync(string id, DateOnly date, System.Threading.CancellationToken cancellationToken = default);
     }
 
     /// <summary>
     /// The <see cref="IGetUserAccountsApiResponse"/>
     /// </summary>
     public interface IGetUserAccountsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.Accounts?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
-    {
-        /// <summary>
-        /// Returns true if the response is 200 Ok
-        /// </summary>
-        /// <returns></returns>
-        bool IsOk { get; }
-
-        /// <summary>
-        /// Returns true if the response is 403 Forbidden
-        /// </summary>
-        /// <returns></returns>
-        bool IsForbidden { get; }
-
-        /// <summary>
-        /// Returns true if the response is 404 NotFound
-        /// </summary>
-        /// <returns></returns>
-        bool IsNotFound { get; }
-    }
-
-    /// <summary>
-    /// The <see cref="IGetUserWorkingTimeAccountsApiResponse"/>
-    /// </summary>
-    public interface IGetUserWorkingTimeAccountsApiResponse : Timr.Api.Client.IApiResponse, IOk<Timr.Api.Model.Accounts?>, IForbidden<Timr.Api.Model.Error?>, INotFound<Timr.Api.Model.Error?>
     {
         /// <summary>
         /// Returns true if the response is 200 Ok
@@ -160,26 +111,6 @@ namespace Timr.Api.Endpoints
         internal void ExecuteOnErrorGetUserAccounts(Exception exception)
         {
             OnErrorGetUserAccounts?.Invoke(this, new ExceptionEventArgs(exception));
-        }
-
-        /// <summary>
-        /// The event raised after the server response
-        /// </summary>
-        public event EventHandler<ApiResponseEventArgs>? OnGetUserWorkingTimeAccounts;
-
-        /// <summary>
-        /// The event raised after an error querying the server
-        /// </summary>
-        public event EventHandler<ExceptionEventArgs>? OnErrorGetUserWorkingTimeAccounts;
-
-        internal void ExecuteOnGetUserWorkingTimeAccounts(TimeAccountApi.GetUserWorkingTimeAccountsApiResponse apiResponse)
-        {
-            OnGetUserWorkingTimeAccounts?.Invoke(this, new ApiResponseEventArgs(apiResponse));
-        }
-
-        internal void ExecuteOnErrorGetUserWorkingTimeAccounts(Exception exception)
-        {
-            OnErrorGetUserWorkingTimeAccounts?.Invoke(this, new ExceptionEventArgs(exception));
         }
     }
 
@@ -288,7 +219,7 @@ namespace Timr.Api.Endpoints
         partial void OnErrorGetUserAccounts(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, DateOnly date);
 
         /// <summary>
-        /// Get a User&#39;s accounts Returns all of the User&#39;s account balances as of the given day, including overtime and surcharge accounts.
+        /// Get a User&#39;s accounts Returns all of the User&#39;s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User&#39;s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User&#39;s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  &#x60;last_balance_date&#x60; identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
         /// </summary>
         /// <param name="id">ID of the User.</param>
         /// <param name="date">Day to return the balances for.</param>
@@ -307,7 +238,7 @@ namespace Timr.Api.Endpoints
         }
 
         /// <summary>
-        /// Get a User&#39;s accounts Returns all of the User&#39;s account balances as of the given day, including overtime and surcharge accounts.
+        /// Get a User&#39;s accounts Returns all of the User&#39;s account balances as of the specified date. The calculation starts from the **most recent balance before or on the specified date**. If the specified date is itself a balance date, the stored balance is returned unchanged.  If the specified date does not fall on a balance date, timr uses the **most recent balance before the specified date** as the starting point and recalculates the account balances up to the requested date using the recorded actual times and the applicable target working time.  **Important:** The target working time is calculated using the User&#39;s **currently assigned Work Schedule Model**, not necessarily the model that was assigned on the requested historical date.  If the User&#39;s Work Schedule Model has changed, this endpoint should therefore only be used with dates **on or after the most recent Work Schedule Model change**. Requests for earlier dates may return incorrect target working times and therefore incorrect account balances.  &#x60;last_balance_date&#x60; identifies the balance entry preceding the returned period, including when the requested date is itself a balance date. It is null for the initialization date itself.
         /// </summary>
         /// <exception cref="ApiException">Thrown when fails to make API call</exception>
         /// <param name="id">ID of the User.</param>
@@ -434,384 +365,6 @@ namespace Timr.Api.Endpoints
             /// <param name="requestedAt"></param>
             /// <param name="jsonSerializerOptions"></param>
             public GetUserAccountsApiResponse(ILogger<TimeAccountApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            partial void OnCreated(global::System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage);
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public bool IsOk => 200 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 200 Ok
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Accounts? Ok()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Accounts? result = null;
-                OnOk(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultOk();
-                return result;
-            }
-
-            private Timr.Api.Model.Accounts? DefaultOk()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsOk
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Accounts>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnOk(ref bool suppressDefault, ref Timr.Api.Model.Accounts? result);
-
-            /// <summary>
-            /// Returns true if the response is 200 Ok and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryOk([NotNullWhen(true)]out Timr.Api.Model.Accounts? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Ok();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)200);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 403 Forbidden
-            /// </summary>
-            /// <returns></returns>
-            public bool IsForbidden => 403 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 403 Forbidden
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? Forbidden()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnForbidden(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultForbidden();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultForbidden()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsForbidden
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnForbidden(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 403 Forbidden and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryForbidden([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = Forbidden();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)403);
-                }
-
-                return result != null;
-            }
-
-            /// <summary>
-            /// Returns true if the response is 404 NotFound
-            /// </summary>
-            /// <returns></returns>
-            public bool IsNotFound => 404 == (int)StatusCode;
-
-            /// <summary>
-            /// Deserializes the response if the response is 404 NotFound
-            /// </summary>
-            /// <returns></returns>
-            public Timr.Api.Model.Error? NotFound()
-            {
-                bool suppressDefault = false;
-                Timr.Api.Model.Error? result = null;
-                OnNotFound(ref suppressDefault, ref result);
-                if (!suppressDefault)
-                    result = DefaultNotFound();
-                return result;
-            }
-
-            private Timr.Api.Model.Error? DefaultNotFound()
-            {
-                // NOTICE: Consider this AsModel template deprecated. Implement the appropriate partial method instead
-                return IsNotFound
-                    ? System.Text.Json.JsonSerializer.Deserialize<Timr.Api.Model.Error>(RawContent, _jsonSerializerOptions)
-                    : null;
-            }
-
-            partial void OnNotFound(ref bool suppressDefault, ref Timr.Api.Model.Error? result);
-
-            /// <summary>
-            /// Returns true if the response is 404 NotFound and the deserialized response is not null
-            /// </summary>
-            /// <param name="result"></param>
-            /// <returns></returns>
-            public bool TryNotFound([NotNullWhen(true)]out Timr.Api.Model.Error? result)
-            {
-                result = null;
-
-                try
-                {
-                    result = NotFound();
-                } catch (Exception e)
-                {
-                    OnDeserializationErrorDefaultImplementation(e, (HttpStatusCode)404);
-                }
-
-                return result != null;
-            }
-
-            private void OnDeserializationErrorDefaultImplementation(Exception exception, HttpStatusCode httpStatusCode)
-            {
-                bool suppressDefaultLog = false;
-                OnDeserializationError(ref suppressDefaultLog, exception, httpStatusCode);
-                if (!suppressDefaultLog)
-                    Logger.LogError(RestLogEvents.ApiDeserializationFailed, exception, "An error occurred while deserializing the {code} response.", httpStatusCode);
-            }
-
-            partial void OnDeserializationError(ref bool suppressDefaultLog, Exception exception, HttpStatusCode httpStatusCode);
-        }
-
-        partial void FormatGetUserWorkingTimeAccounts(ref string id, ref DateOnly date);
-
-        /// <summary>
-        /// Validates the request parameters
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        private void ValidateGetUserWorkingTimeAccounts(string id)
-        {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="date"></param>
-        private void AfterGetUserWorkingTimeAccountsDefaultImplementation(IGetUserWorkingTimeAccountsApiResponse apiResponseLocalVar, string id, DateOnly date)
-        {
-            bool suppressDefaultLog = false;
-            AfterGetUserWorkingTimeAccounts(ref suppressDefaultLog, apiResponseLocalVar, id, date);
-            if (!suppressDefaultLog)
-                Logger.LogInformation(RestLogEvents.ApiRequestCompleted, "{0,-9} | {1} | {2}", (apiResponseLocalVar.DownloadedAt - apiResponseLocalVar.RequestedAt).TotalSeconds, apiResponseLocalVar.StatusCode, apiResponseLocalVar.Path);
-        }
-
-        /// <summary>
-        /// Processes the server response
-        /// </summary>
-        /// <param name="suppressDefaultLog"></param>
-        /// <param name="apiResponseLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="date"></param>
-        partial void AfterGetUserWorkingTimeAccounts(ref bool suppressDefaultLog, IGetUserWorkingTimeAccountsApiResponse apiResponseLocalVar, string id, DateOnly date);
-
-        /// <summary>
-        /// Logs exceptions that occur while retrieving the server response
-        /// </summary>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="date"></param>
-        private void OnErrorGetUserWorkingTimeAccountsDefaultImplementation(Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, DateOnly date)
-        {
-            bool suppressDefaultLogLocalVar = false;
-            OnErrorGetUserWorkingTimeAccounts(ref suppressDefaultLogLocalVar, exceptionLocalVar, pathFormatLocalVar, pathLocalVar, id, date);
-            if (!suppressDefaultLogLocalVar)
-                Logger.LogError(RestLogEvents.ApiRequestFailed, exceptionLocalVar, "An error occurred while sending the request to the server.");
-        }
-
-        /// <summary>
-        /// A partial method that gives developers a way to provide customized exception handling
-        /// </summary>
-        /// <param name="suppressDefaultLogLocalVar"></param>
-        /// <param name="exceptionLocalVar"></param>
-        /// <param name="pathFormatLocalVar"></param>
-        /// <param name="pathLocalVar"></param>
-        /// <param name="id"></param>
-        /// <param name="date"></param>
-        partial void OnErrorGetUserWorkingTimeAccounts(ref bool suppressDefaultLogLocalVar, Exception exceptionLocalVar, string pathFormatLocalVar, string pathLocalVar, string id, DateOnly date);
-
-        /// <summary>
-        /// Get a User&#39;s working time accounts Returns the User&#39;s working time account balances as of the given day.
-        /// </summary>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="date">Day to return the balances for.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkingTimeAccountsApiResponse"/>&gt;</returns>
-        public async Task<IGetUserWorkingTimeAccountsApiResponse?> GetUserWorkingTimeAccountsOrDefaultAsync(string id, DateOnly date, System.Threading.CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                return await GetUserWorkingTimeAccountsAsync(id, date, cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Get a User&#39;s working time accounts Returns the User&#39;s working time account balances as of the given day.
-        /// </summary>
-        /// <exception cref="ApiException">Thrown when fails to make API call</exception>
-        /// <param name="id">ID of the User.</param>
-        /// <param name="date">Day to return the balances for.</param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns><see cref="Task"/>&lt;<see cref="IGetUserWorkingTimeAccountsApiResponse"/>&gt;</returns>
-        public async Task<IGetUserWorkingTimeAccountsApiResponse> GetUserWorkingTimeAccountsAsync(string id, DateOnly date, System.Threading.CancellationToken cancellationToken = default)
-        {
-            UriBuilder uriBuilderLocalVar = new UriBuilder();
-
-            try
-            {
-                ValidateGetUserWorkingTimeAccounts(id);
-
-                FormatGetUserWorkingTimeAccounts(ref id, ref date);
-
-                using (HttpRequestMessage httpRequestMessageLocalVar = new HttpRequestMessage())
-                {
-                    uriBuilderLocalVar.Host = HttpClient.BaseAddress!.Host;
-                    uriBuilderLocalVar.Port = HttpClient.BaseAddress.Port;
-                    uriBuilderLocalVar.Scheme = HttpClient.BaseAddress.Scheme;
-                    uriBuilderLocalVar.Path = HttpClient.BaseAddress.AbsolutePath == "/"
-                        ? "/users/{id}/working-time-accounts/{date}"
-                        : string.Concat(HttpClient.BaseAddress.AbsolutePath.TrimEnd('/'), "/users/{id}/working-time-accounts/{date}");
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bid%7D", Uri.EscapeDataString(id.ToString()));
-                    uriBuilderLocalVar.Path = uriBuilderLocalVar.Path.Replace("%7Bdate%7D", Uri.EscapeDataString(date.ToString()));
-
-                    List<TokenBase> tokenBaseLocalVars = new List<TokenBase>();
-                    httpRequestMessageLocalVar.RequestUri = uriBuilderLocalVar.Uri;
-
-                    OAuthToken oauthTokenLocalVar1 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
-
-                    tokenBaseLocalVars.Add(oauthTokenLocalVar1);
-
-                    oauthTokenLocalVar1.UseInHeader(httpRequestMessageLocalVar, "");
-
-                    OAuthToken oauthTokenLocalVar2 = (OAuthToken) await OauthTokenProvider.GetAsync(cancellation: cancellationToken).ConfigureAwait(false);
-
-                    tokenBaseLocalVars.Add(oauthTokenLocalVar2);
-
-                    oauthTokenLocalVar2.UseInHeader(httpRequestMessageLocalVar, "");
-
-                    string[] acceptLocalVars = new string[] {
-                        "application/json",
-                        "application/problem+json"
-                    };
-
-                    IEnumerable<MediaTypeWithQualityHeaderValue> acceptHeaderValuesLocalVar = ClientUtils.SelectHeaderAcceptArray(acceptLocalVars);
-
-                    foreach (var acceptLocalVar in acceptHeaderValuesLocalVar)
-                        httpRequestMessageLocalVar.Headers.Accept.Add(acceptLocalVar);
-
-                    httpRequestMessageLocalVar.Method = HttpMethod.Get;
-
-                    DateTime requestedAtLocalVar = DateTime.UtcNow;
-
-                    using (HttpResponseMessage httpResponseMessageLocalVar = await HttpClient.SendAsync(httpRequestMessageLocalVar, cancellationToken).ConfigureAwait(false))
-                    {
-                        GetUserWorkingTimeAccountsApiResponse apiResponseLocalVar;
-
-                        switch ((int)httpResponseMessageLocalVar.StatusCode) {
-                            default: {
-                                string responseContentLocalVar = await httpResponseMessageLocalVar.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                                apiResponseLocalVar = new(Logger, httpRequestMessageLocalVar, httpResponseMessageLocalVar, responseContentLocalVar, "/users/{id}/working-time-accounts/{date}", requestedAtLocalVar, _jsonSerializerOptions);
-
-                                break;
-                            }
-                        }
-
-                        AfterGetUserWorkingTimeAccountsDefaultImplementation(apiResponseLocalVar, id, date);
-
-                        Events.ExecuteOnGetUserWorkingTimeAccounts(apiResponseLocalVar);
-
-                        if (apiResponseLocalVar.StatusCode == (HttpStatusCode) 429)
-                            foreach(TokenBase tokenBaseLocalVar in tokenBaseLocalVars)
-                                tokenBaseLocalVar.BeginRateLimit();
-
-                        return apiResponseLocalVar;
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                OnErrorGetUserWorkingTimeAccountsDefaultImplementation(e, "/users/{id}/working-time-accounts/{date}", uriBuilderLocalVar.Path, id, date);
-                Events.ExecuteOnErrorGetUserWorkingTimeAccounts(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The <see cref="GetUserWorkingTimeAccountsApiResponse"/>
-        /// </summary>
-        public partial class GetUserWorkingTimeAccountsApiResponse : Timr.Api.Client.ApiResponse, IGetUserWorkingTimeAccountsApiResponse
-        {
-            /// <summary>
-            /// The logger
-            /// </summary>
-            public ILogger<TimeAccountApi> Logger { get; }
-
-            /// <summary>
-            /// The <see cref="GetUserWorkingTimeAccountsApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="rawContent"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetUserWorkingTimeAccountsApiResponse(ILogger<TimeAccountApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, string rawContent, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, rawContent, path, requestedAt, jsonSerializerOptions)
-            {
-                Logger = logger;
-                OnCreated(httpRequestMessage, httpResponseMessage);
-            }
-
-            /// <summary>
-            /// The <see cref="GetUserWorkingTimeAccountsApiResponse"/>
-            /// </summary>
-            /// <param name="logger"></param>
-            /// <param name="httpRequestMessage"></param>
-            /// <param name="httpResponseMessage"></param>
-            /// <param name="contentStream"></param>
-            /// <param name="path"></param>
-            /// <param name="requestedAt"></param>
-            /// <param name="jsonSerializerOptions"></param>
-            public GetUserWorkingTimeAccountsApiResponse(ILogger<TimeAccountApi> logger, System.Net.Http.HttpRequestMessage httpRequestMessage, System.Net.Http.HttpResponseMessage httpResponseMessage, System.IO.Stream contentStream, string path, DateTime requestedAt, System.Text.Json.JsonSerializerOptions jsonSerializerOptions) : base(httpRequestMessage, httpResponseMessage, contentStream, path, requestedAt, jsonSerializerOptions)
             {
                 Logger = logger;
                 OnCreated(httpRequestMessage, httpResponseMessage);
