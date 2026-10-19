@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@scalar/api-reference": "1.73.1",
+    "@scalar/api-reference": "1.74.0",
     "yaml": "^2.9.1"
   },
   "devDependencies": {
