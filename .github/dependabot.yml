@@ -7,6 +7,10 @@ updates:
       interval: weekly
       day: monday
       timezone: Europe/Vienna
+    groups:
+      github-actions:
+        patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: gradle
     directory: /
@@ -14,15 +18,55 @@ updates:
       interval: weekly
       day: monday
       timezone: Europe/Vienna
+    groups:
+      # Both Java SDKs use the same version catalog entries.
+      java-sdks:
+        patterns:
+          - "org.springframework*"
+          - "tools.jackson*"
+          - "com.fasterxml.jackson*"
+          - "org.apache.httpcomponents*"
+          - "org.openapitools:jackson-databind-nullable"
+          - "jakarta.annotation:*"
+          - "org.jspecify:*"
+          - "io.swagger:*"
+        update-types: [minor, patch]
+      kotlin-sdk:
+        patterns:
+          - "org.jetbrains.kotlin*"
+          - "com.google.code.gson:*"
+          - "com.squareup.okhttp3:*"
+          - "org.junit*"
+        update-types: [minor, patch]
+      # The first matching group wins; shared tooling is the fallback.
+      build-tooling:
+        patterns: ["*"]
+        exclude-patterns:
+          - "org.openapi.generator*"
+          - "org.openapitools:openapi-generator*"
+        update-types: [minor, patch]
 
   - package-ecosystem: npm
-    directories:
-      - /site
-      - /sdk/typescript-fetch
+    directory: /site
     schedule:
       interval: weekly
       day: monday
       timezone: Europe/Vienna
+    groups:
+      site:
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  - package-ecosystem: npm
+    directory: /sdk/typescript-fetch
+    schedule:
+      interval: weekly
+      day: monday
+      timezone: Europe/Vienna
+    groups:
+      typescript-sdk:
+        patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: nuget
     directory: /sdk/dotnet
@@ -30,6 +74,10 @@ updates:
       interval: weekly
       day: monday
       timezone: Europe/Vienna
+    groups:
+      dotnet-sdk:
+        patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: pip
     directory: /sdk/python
@@ -37,6 +85,10 @@ updates:
       interval: weekly
       day: monday
       timezone: Europe/Vienna
+    groups:
+      python-sdk:
+        patterns: ["*"]
+        update-types: [minor, patch]
 
   - package-ecosystem: swift
     directory: /sdk/swift
@@ -44,3 +96,7 @@ updates:
       interval: weekly
       day: monday
       timezone: Europe/Vienna
+    groups:
+      swift-sdk:
+        patterns: ["*"]
+        update-types: [minor, patch]
