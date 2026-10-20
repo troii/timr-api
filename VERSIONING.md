@@ -19,9 +19,9 @@ example). A break is not a major bump; it is a new path version.
 A version is published only once the API serves what it describes. Anything a release announces can
 be called the day it is published.
 
-Every release ships release notes as a guide, in the same navigation as the rest of the documentation.
-They are written against the difference between two releases, not from memory: the difference says
-what changed, the notes say what is worth acting on.
+Release notes live in [GitHub Releases](https://github.com/troii/timr-api/releases). They are written
+against the difference between two releases, not from memory: the difference says what changed,
+the notes say what is worth acting on.
 
 ## SDK versions
 

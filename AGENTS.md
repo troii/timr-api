@@ -90,11 +90,11 @@ Use the `update-openapi-templates` skill when the generator version changes.
 ## Skills
 
 Reusable agent workflows live in `.agents/skills/<skill-name>/SKILL.md` — the single source of truth.
-Claude Code picks them up through a symlink:
+Claude Code picks up the entire skills directory through one symlink:
 
 ```
-.claude/commands/<skill-name>.md -> ../../.agents/skills/<skill-name>/SKILL.md
+.claude/skills -> ../.agents/skills
 ```
 
-When adding a skill, create the `SKILL.md` (with `name:` and `description:` frontmatter) and the
-symlink. Never duplicate the content.
+When adding a skill, create its `SKILL.md` with `name:` and `description:` frontmatter. The directory
+symlink makes it available to Claude Code automatically. Never duplicate the content or add command entries.
