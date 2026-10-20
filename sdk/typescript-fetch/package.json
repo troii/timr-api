@@ -1,6 +1,6 @@
 {
   "name": "timr-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Official TypeScript client for the timr API",
   "author": "troii Software GmbH",
   "homepage": "https://developer.timr.com",

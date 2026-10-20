@@ -47,6 +47,14 @@ namespace Timr.Api.Client
             jsonOptions.Converters.Add(new DateOnlyJsonConverter());
             jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
             jsonOptions.Converters.Add(new AccountsJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentDownloadJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentMetadataJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentUploadJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentUploadResponseJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentsPageJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentsSortColumnJsonConverter());
+            jsonOptions.Converters.Add(new AttachmentsSortColumnNullableJsonConverter());
             jsonOptions.Converters.Add(new BreakTimeJsonConverter());
             jsonOptions.Converters.Add(new BreakTimeAutomaticJsonConverter());
             jsonOptions.Converters.Add(new BreakTimeBaseJsonConverter());
@@ -222,7 +230,9 @@ namespace Timr.Api.Client
             _services.AddSingleton<DriveLogCategoryApiEvents>();
             _services.AddSingleton<HolidayCalendarApiEvents>();
             _services.AddSingleton<ProjectTimeApiEvents>();
+            _services.AddSingleton<ProjectTimeAttachmentApiEvents>();
             _services.AddSingleton<TaskApiEvents>();
+            _services.AddSingleton<TaskAttachmentApiEvents>();
             _services.AddSingleton<TaskToLeaderAssignmentApiEvents>();
             _services.AddSingleton<TaskToTeamAssignmentApiEvents>();
             _services.AddSingleton<TaskToUserAssignmentApiEvents>();
@@ -282,7 +292,9 @@ namespace Timr.Api.Client
             builders.Add(_services.AddHttpClient<IDriveLogCategoryApi, DriveLogCategoryApi>("Timr.Api.Endpoints.IDriveLogCategoryApi", configureClient));
             builders.Add(_services.AddHttpClient<IHolidayCalendarApi, HolidayCalendarApi>("Timr.Api.Endpoints.IHolidayCalendarApi", configureClient));
             builders.Add(_services.AddHttpClient<IProjectTimeApi, ProjectTimeApi>("Timr.Api.Endpoints.IProjectTimeApi", configureClient));
+            builders.Add(_services.AddHttpClient<IProjectTimeAttachmentApi, ProjectTimeAttachmentApi>("Timr.Api.Endpoints.IProjectTimeAttachmentApi", configureClient));
             builders.Add(_services.AddHttpClient<ITaskApi, TaskApi>("Timr.Api.Endpoints.ITaskApi", configureClient));
+            builders.Add(_services.AddHttpClient<ITaskAttachmentApi, TaskAttachmentApi>("Timr.Api.Endpoints.ITaskAttachmentApi", configureClient));
             builders.Add(_services.AddHttpClient<ITaskToLeaderAssignmentApi, TaskToLeaderAssignmentApi>("Timr.Api.Endpoints.ITaskToLeaderAssignmentApi", configureClient));
             builders.Add(_services.AddHttpClient<ITaskToTeamAssignmentApi, TaskToTeamAssignmentApi>("Timr.Api.Endpoints.ITaskToTeamAssignmentApi", configureClient));
             builders.Add(_services.AddHttpClient<ITaskToUserAssignmentApi, TaskToUserAssignmentApi>("Timr.Api.Endpoints.ITaskToUserAssignmentApi", configureClient));
