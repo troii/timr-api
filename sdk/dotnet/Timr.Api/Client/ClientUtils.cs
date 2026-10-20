@@ -112,6 +112,8 @@ namespace Timr.Api.Client
                 return boolean
                     ? "true"
                     : "false";
+            if (obj is AttachmentsSortColumn attachmentsSortColumn)
+                return AttachmentsSortColumnValueConverter.ToJsonValue(attachmentsSortColumn);
             if (obj is BreakTimeType breakTimeType)
                 return BreakTimeTypeValueConverter.ToJsonValue(breakTimeType);
             if (obj is BudgetPlanningType budgetPlanningType)

@@ -14,6 +14,13 @@
 
 # import models into model package
 from timr_api.models.accounts import Accounts
+from timr_api.models.attachment import Attachment
+from timr_api.models.attachment_download import AttachmentDownload
+from timr_api.models.attachment_metadata import AttachmentMetadata
+from timr_api.models.attachment_upload import AttachmentUpload
+from timr_api.models.attachment_upload_response import AttachmentUploadResponse
+from timr_api.models.attachments_page import AttachmentsPage
+from timr_api.models.attachments_sort_column import AttachmentsSortColumn
 from timr_api.models.break_time import BreakTime
 from timr_api.models.break_time_automatic import BreakTimeAutomatic
 from timr_api.models.break_time_base import BreakTimeBase

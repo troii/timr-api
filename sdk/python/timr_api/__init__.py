@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 # Define package exports
 __all__ = [
@@ -23,7 +23,9 @@ __all__ = [
     "DriveLogCategoryApi",
     "HolidayCalendarApi",
     "ProjectTimeApi",
+    "ProjectTimeAttachmentApi",
     "TaskApi",
+    "TaskAttachmentApi",
     "TaskToLeaderAssignmentApi",
     "TaskToTeamAssignmentApi",
     "TaskToUserAssignmentApi",
@@ -45,6 +47,13 @@ __all__ = [
     "ApiAttributeError",
     "ApiException",
     "Accounts",
+    "Attachment",
+    "AttachmentDownload",
+    "AttachmentMetadata",
+    "AttachmentUpload",
+    "AttachmentUploadResponse",
+    "AttachmentsPage",
+    "AttachmentsSortColumn",
     "BreakTime",
     "BreakTimeAutomatic",
     "BreakTimeBase",
@@ -185,7 +194,9 @@ from timr_api.api.drive_log_api import DriveLogApi as DriveLogApi
 from timr_api.api.drive_log_category_api import DriveLogCategoryApi as DriveLogCategoryApi
 from timr_api.api.holiday_calendar_api import HolidayCalendarApi as HolidayCalendarApi
 from timr_api.api.project_time_api import ProjectTimeApi as ProjectTimeApi
+from timr_api.api.project_time_attachment_api import ProjectTimeAttachmentApi as ProjectTimeAttachmentApi
 from timr_api.api.task_api import TaskApi as TaskApi
+from timr_api.api.task_attachment_api import TaskAttachmentApi as TaskAttachmentApi
 from timr_api.api.task_to_leader_assignment_api import TaskToLeaderAssignmentApi as TaskToLeaderAssignmentApi
 from timr_api.api.task_to_team_assignment_api import TaskToTeamAssignmentApi as TaskToTeamAssignmentApi
 from timr_api.api.task_to_user_assignment_api import TaskToUserAssignmentApi as TaskToUserAssignmentApi
@@ -211,6 +222,13 @@ from timr_api.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from timr_api.models.accounts import Accounts as Accounts
+from timr_api.models.attachment import Attachment as Attachment
+from timr_api.models.attachment_download import AttachmentDownload as AttachmentDownload
+from timr_api.models.attachment_metadata import AttachmentMetadata as AttachmentMetadata
+from timr_api.models.attachment_upload import AttachmentUpload as AttachmentUpload
+from timr_api.models.attachment_upload_response import AttachmentUploadResponse as AttachmentUploadResponse
+from timr_api.models.attachments_page import AttachmentsPage as AttachmentsPage
+from timr_api.models.attachments_sort_column import AttachmentsSortColumn as AttachmentsSortColumn
 from timr_api.models.break_time import BreakTime as BreakTime
 from timr_api.models.break_time_automatic import BreakTimeAutomatic as BreakTimeAutomatic
 from timr_api.models.break_time_base import BreakTimeBase as BreakTimeBase

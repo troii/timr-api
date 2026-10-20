@@ -1,6 +1,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './Accounts.js';
+export * from './Attachment.js';
+export * from './AttachmentDownload.js';
+export * from './AttachmentMetadata.js';
+export * from './AttachmentUpload.js';
+export * from './AttachmentUploadResponse.js';
+export * from './AttachmentsPage.js';
+export * from './AttachmentsSortColumn.js';
 export * from './BreakTime.js';
 export * from './BreakTimeAutomatic.js';
 export * from './BreakTimeBase.js';
