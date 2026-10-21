@@ -37,7 +37,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * Accounts
+ * Account balances for a user. &#x60;time_account&#x60; is omitted for trust-based working time; &#x60;overtime_surcharge_accounts&#x60; requires the Overtime Allowance feature; &#x60;vacation_account&#x60; is omitted when the balance has no vacation account. Omitted balances do not mean zero. When no balance exists for the requested day, the response can be empty.
  */
 @JsonPropertyOrder({
   Accounts.JSON_PROPERTY_LAST_BALANCE_DATE,

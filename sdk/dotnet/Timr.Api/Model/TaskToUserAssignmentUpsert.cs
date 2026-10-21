@@ -33,8 +33,8 @@ namespace Timr.Api.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskToUserAssignmentUpsert" /> class.
         /// </summary>
-        /// <param name="hoursPlanned">hoursPlanned</param>
-        /// <param name="recordingLock">recordingLock</param>
+        /// <param name="hoursPlanned">Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged.</param>
+        /// <param name="recordingLock">Supplying a value other than &#x60;recordable&#x60;, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged.</param>
         [JsonConstructor]
         public TaskToUserAssignmentUpsert(Option<decimal?> hoursPlanned = default, Option<RecordingLockType?> recordingLock = default)
         {
@@ -53,8 +53,9 @@ namespace Timr.Api.Model
         public Option<RecordingLockType?> RecordingLockOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets RecordingLock
+        /// Supplying a value other than &#x60;recordable&#x60;, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged.
         /// </summary>
+        /// <value>Supplying a value other than &#x60;recordable&#x60;, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged.</value>
         [JsonPropertyName("recording_lock")]
         public RecordingLockType? RecordingLock { get { return this.RecordingLockOption.Value; } set { this.RecordingLockOption = new(value); } }
 
@@ -66,8 +67,9 @@ namespace Timr.Api.Model
         public Option<decimal?> HoursPlannedOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets HoursPlanned
+        /// Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged.
         /// </summary>
+        /// <value>Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged.</value>
         [JsonPropertyName("hours_planned")]
         public decimal? HoursPlanned { get { return this.HoursPlannedOption.Value; } set { this.HoursPlannedOption = new(value); } }
 

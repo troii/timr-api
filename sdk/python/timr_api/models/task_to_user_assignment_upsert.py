@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from timr_api.models.recording_lock_type import RecordingLockType
 from typing import Optional, Set
@@ -28,8 +28,8 @@ class TaskToUserAssignmentUpsert(BaseModel):
     """
     TaskToUserAssignmentUpsert
     """ # noqa: E501
-    hours_planned: Optional[Union[StrictFloat, StrictInt]] = None
-    recording_lock: Optional[RecordingLockType] = None
+    hours_planned: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged.")
+    recording_lock: Optional[RecordingLockType] = Field(default=None, description="Supplying a value other than `recordable`, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged.")
     __properties: ClassVar[List[str]] = ["hours_planned", "recording_lock"]
 
     model_config = ConfigDict(

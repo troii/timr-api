@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** A user&#39;s identity (&#x60;firstname&#x60;, &#x60;lastname&#x60;, &#x60;email&#x60;), employment dates (&#x60;entry_date&#x60;, &#x60;resign_date&#x60;), and the assigned &#x60;work_schedule_model&#x60; and &#x60;holiday_calendar&#x60;.  */
+/** A user&#39;s identity (&#x60;firstname&#x60;, &#x60;lastname&#x60;, &#x60;email&#x60;), employment dates (&#x60;entry_date&#x60;, &#x60;resign_date&#x60;), and the assigned &#x60;work_schedule_model&#x60; and &#x60;holiday_calendar&#x60;. &#x60;login&#x60;, &#x60;entry_date&#x60;, &#x60;resign_date&#x60; and &#x60;work_schedule_model&#x60; are omitted unless the caller is an administrator. &#x60;holiday_calendar&#x60; is returned only to administrators, the user themselves or a group leader of that user. Omission does not mean the corresponding value is not configured. */
 public struct User: Codable, JSONEncodable, Hashable {
 
     public static let emailRule = StringRule(minLength: 1, maxLength: nil, pattern: nil)

@@ -37,7 +37,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * TaskCreate
+ * For budget writes, task-leader authorization is based on the Task Leader or Overall Task Leader role. Budget visibility in the response is checked separately against the created task.
  */
 @JsonPropertyOrder({
   TaskCreate.JSON_PROPERTY_NAME,

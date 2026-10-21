@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class WorkingTimeDateSpan(BaseModel):
     """
-    A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become effective through an approved request. 
+    A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become effective through an approved request. `substitute` is omitted unless the Substitutes feature is available; omission does not mean no substitute is assigned.
     """ # noqa: E501
     id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
     start: date = Field(description="RFC 3339 date (ISO-8601)")

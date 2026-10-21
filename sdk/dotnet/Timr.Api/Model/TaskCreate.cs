@@ -26,7 +26,7 @@ using Timr.Api.Client;
 namespace Timr.Api.Model
 {
     /// <summary>
-    /// TaskCreate
+    /// For budget writes, task-leader authorization is based on the Task Leader or Overall Task Leader role. Budget visibility in the response is checked separately against the created task.
     /// </summary>
     public partial class TaskCreate : IValidatableObject
     {

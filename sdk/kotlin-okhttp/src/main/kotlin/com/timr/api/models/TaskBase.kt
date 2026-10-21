@@ -29,7 +29,7 @@ import com.timr.api.models.TaskLocation
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
+ * Common task fields. Task administration requires the Administrator or Task Manager role. Budget fields additionally require the Budgets feature and administrator or task-leader authorization; task leaders also need Corporate Features. Supplying a budget field without this authorization, including false or null for nullable fields, rejects the entire request with HTTP 403.
  *
  * @param name 
  * @param parentTaskId returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.

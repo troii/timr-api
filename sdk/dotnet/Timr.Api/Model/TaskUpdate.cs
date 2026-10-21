@@ -26,7 +26,7 @@ using Timr.Api.Client;
 namespace Timr.Api.Model
 {
     /// <summary>
-    /// TaskUpdate
+    /// For budget writes, task-leader authorization is checked for this task, including overall task leadership.
     /// </summary>
     public partial class TaskUpdate : IValidatableObject
     {
@@ -58,7 +58,7 @@ namespace Timr.Api.Model
         /// <param name="customField2">you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.</param>
         /// <param name="customField3">you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.</param>
         /// <param name="metadata">metadata</param>
-        /// <param name="budgetUpdateProjectTimes">this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not. </param>
+        /// <param name="budgetUpdateProjectTimes">Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false.</param>
         [JsonConstructor]
         public TaskUpdate(Option<string?> name = default, Option<string?> parentTaskId = default, Option<string?> externalId = default, Option<string?> description = default, Option<string?> descriptionExternal = default, Option<bool?> bookable = default, Option<bool?> billable = default, Option<bool?> projectTimeNotesRequired = default, Option<DateOnly?> startDate = default, Option<DateOnly?> endDate = default, Option<DateOnly?> lockDate = default, Option<string?> earliestStartTime = default, Option<string?> latestEndTime = default, Option<BudgetPlanningTypeRequest?> budgetPlanningType = default, Option<decimal?> budgetHoursPlanned = default, Option<decimal?> budgetHourlyRate = default, Option<decimal?> budgetPlanned = default, Option<bool?> budgetIncludeNonBillableProjectTimes = default, Option<bool?> locationInherited = default, Option<TaskLocation?> location = default, Option<int?> locationRestrictionRadiusMeters = default, Option<string?> customField1 = default, Option<string?> customField2 = default, Option<string?> customField3 = default, Option<Dictionary<string, Object>?> metadata = default, Option<bool?> budgetUpdateProjectTimes = default)
         {
@@ -447,9 +447,9 @@ namespace Timr.Api.Model
         public Option<bool?> BudgetUpdateProjectTimesOption { get; private set; }
 
         /// <summary>
-        /// this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not. 
+        /// Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false.
         /// </summary>
-        /// <value>this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not. </value>
+        /// <value>Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false.</value>
         [JsonPropertyName("budget_update_project_times")]
         public bool? BudgetUpdateProjectTimes { get { return this.BudgetUpdateProjectTimesOption.Value; } set { this.BudgetUpdateProjectTimesOption = new(value); } }
 
