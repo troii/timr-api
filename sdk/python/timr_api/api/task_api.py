@@ -98,6 +98,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "Task",
             '400': "Error",
+            '403': "Error",
             '409': "Error",
             '422': "Error",
         }
@@ -168,6 +169,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "Task",
             '400': "Error",
+            '403': "Error",
             '409': "Error",
             '422': "Error",
         }
@@ -238,6 +240,7 @@ class TaskApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '201': "Task",
             '400': "Error",
+            '403': "Error",
             '409': "Error",
             '422': "Error",
         }

@@ -36,7 +36,7 @@ namespace Timr.Api.Model
         /// <param name="user">user</param>
         /// <param name="recordingLock">recordingLock</param>
         /// <param name="automaticallyAssigned">automaticallyAssigned</param>
-        /// <param name="hoursPlanned">hoursPlanned</param>
+        /// <param name="hoursPlanned">Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured.</param>
         [JsonConstructor]
         public TaskToUserAssignment(UserPartial user, RecordingLockType recordingLock, bool automaticallyAssigned, Option<decimal?> hoursPlanned = default)
         {
@@ -75,8 +75,9 @@ namespace Timr.Api.Model
         public Option<decimal?> HoursPlannedOption { get; private set; }
 
         /// <summary>
-        /// Gets or Sets HoursPlanned
+        /// Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured.
         /// </summary>
+        /// <value>Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured.</value>
         [JsonPropertyName("hours_planned")]
         public decimal? HoursPlanned { get { return this.HoursPlannedOption.Value; } set { this.HoursPlannedOption = new(value); } }
 

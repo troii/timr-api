@@ -35,7 +35,7 @@ import {
 } from './BudgetPlanningType.js';
 
 /**
- * 
+ * A task with recording-related details. `budget_planning_type` is omitted unless the Budgets feature and administrator or task-leader access to the task are available; task leaders also need Corporate Features. `lock_date` requires Task Locking; `earliest_start_time` and `latest_end_time` require Recording Restrictions; `location` requires Task Locations; `location_restriction_radius_meters` requires Geofence. Fields whose requirements are not met are omitted without an error; omission does not mean no value is configured.
  * @export
  * @interface TaskReduced
  */

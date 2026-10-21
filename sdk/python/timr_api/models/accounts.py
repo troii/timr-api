@@ -29,7 +29,7 @@ from pydantic_core import to_jsonable_python
 
 class Accounts(BaseModel):
     """
-    Accounts
+    Account balances for a user. `time_account` is omitted for trust-based working time; `overtime_surcharge_accounts` requires the Overtime Allowance feature; `vacation_account` is omitted when the balance has no vacation account. Omitted balances do not mean zero. When no balance exists for the requested day, the response can be empty.
     """ # noqa: E501
     last_balance_date: Optional[date] = Field(description="The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself.")
     time_account: Optional[TimeAccount] = None

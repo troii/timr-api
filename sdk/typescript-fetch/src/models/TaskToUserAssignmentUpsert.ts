@@ -27,11 +27,11 @@ import {
  */
 export interface TaskToUserAssignmentUpsert {
     /**
-     * 
+     * Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged.
      */
     hoursPlanned?: number | null;
     /**
-     * 
+     * Supplying a value other than `recordable`, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged.
      */
     recordingLock?: RecordingLockType | null;
 }

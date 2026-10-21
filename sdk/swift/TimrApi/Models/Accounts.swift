@@ -10,6 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
+/** Account balances for a user. &#x60;time_account&#x60; is omitted for trust-based working time; &#x60;overtime_surcharge_accounts&#x60; requires the Overtime Allowance feature; &#x60;vacation_account&#x60; is omitted when the balance has no vacation account. Omitted balances do not mean zero. When no balance exists for the requested day, the response can be empty. */
 public struct Accounts: Codable, JSONEncodable, Hashable {
 
     /** The balance entry the figures continue from, always before the requested day. Null only for the initialization date itself. */

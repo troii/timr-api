@@ -35,7 +35,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * TaskReduced
+ * A task with recording-related details. &#x60;budget_planning_type&#x60; is omitted unless the Budgets feature and administrator or task-leader access to the task are available; task leaders also need Corporate Features. &#x60;lock_date&#x60; requires Task Locking; &#x60;earliest_start_time&#x60; and &#x60;latest_end_time&#x60; require Recording Restrictions; &#x60;location&#x60; requires Task Locations; &#x60;location_restriction_radius_meters&#x60; requires Geofence. Fields whose requirements are not met are omitted without an error; omission does not mean no value is configured.
  */
 @JsonPropertyOrder({
   TaskReduced.JSON_PROPERTY_ID,

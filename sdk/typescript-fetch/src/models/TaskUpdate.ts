@@ -28,7 +28,7 @@ import {
 } from './TaskLocation.js';
 
 /**
- * 
+ * For budget writes, task-leader authorization is checked for this task, including overall task leadership.
  * @export
  * @interface TaskUpdate
  */
@@ -153,8 +153,7 @@ export interface TaskUpdate {
      */
     metadata?: { [key: string]: any; } | null;
     /**
-     * this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not.
-     * 
+     * Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false.
      */
     budgetUpdateProjectTimes?: boolean;
 }

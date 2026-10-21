@@ -30,16 +30,18 @@ import com.google.gson.annotations.SerializedName
 /**
  * 
  *
- * @param hoursPlanned 
- * @param recordingLock 
+ * @param hoursPlanned Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged.
+ * @param recordingLock Supplying a value other than `recordable`, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged.
  */
 
 
 data class TaskToUserAssignmentUpsert (
 
+    /* Requires the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task leaders also need Corporate Features. Supplying this field without permission, including null to clear it, rejects the entire assignment request with HTTP 403. Omit it to leave the budget unchanged. */
     @SerializedName("hours_planned")
     val hoursPlanned: java.math.BigDecimal? = null,
 
+    /* Supplying a value other than `recordable`, including null, requires administrator or task-leader access to the task; otherwise the entire request is rejected with HTTP 403. Task leaders need Corporate Features. Omitted or null values leave the recording lock unchanged. */
     @SerializedName("recording_lock")
     val recordingLock: RecordingLockType? = null
 

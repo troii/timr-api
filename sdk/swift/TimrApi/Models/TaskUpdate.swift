@@ -10,6 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
+/** For budget writes, task-leader authorization is checked for this task, including overall task leadership. */
 public struct TaskUpdate: Codable, JSONEncodable, Hashable {
 
     public var name: String?
@@ -56,7 +57,7 @@ public struct TaskUpdate: Codable, JSONEncodable, Hashable {
     /** you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field. */
     public var customField3: String?
     public var metadata: [String: AnyCodable]?
-    /** this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not.  */
+    /** Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false. */
     public var budgetUpdateProjectTimes: Bool?
 
     public init(name: String? = nil, parentTaskId: String? = nil, externalId: String? = nil, description: String? = nil, descriptionExternal: String? = nil, bookable: Bool? = nil, billable: Bool? = nil, projectTimeNotesRequired: Bool? = nil, startDate: Date? = nil, endDate: Date? = nil, lockDate: Date? = nil, earliestStartTime: String? = nil, latestEndTime: String? = nil, budgetPlanningType: BudgetPlanningTypeRequest? = nil, budgetHoursPlanned: Double? = nil, budgetHourlyRate: Double? = nil, budgetPlanned: Double? = nil, budgetIncludeNonBillableProjectTimes: Bool? = nil, locationInherited: Bool? = nil, location: TaskLocation? = nil, locationRestrictionRadiusMeters: Int? = nil, customField1: String? = nil, customField2: String? = nil, customField3: String? = nil, metadata: [String: AnyCodable]? = nil, budgetUpdateProjectTimes: Bool? = nil) {

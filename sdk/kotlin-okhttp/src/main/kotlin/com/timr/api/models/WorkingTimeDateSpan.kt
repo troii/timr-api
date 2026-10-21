@@ -29,7 +29,7 @@ import com.timr.api.models.WorkingTimeTypePartial
 import com.google.gson.annotations.SerializedName
 
 /**
- * A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become effective through an approved request. 
+ * A span from `start` to `end` of a single `working_time_type`. Every working time derived for a covered day links back to it via `WorkingTime.working_time_date_span`. It can be created directly or become effective through an approved request. `substitute` is omitted unless the Substitutes feature is available; omission does not mean no substitute is assigned.
  *
  * @param id Unique identifier. Treat it as an opaque string.
  * @param start RFC 3339 date (ISO-8601)

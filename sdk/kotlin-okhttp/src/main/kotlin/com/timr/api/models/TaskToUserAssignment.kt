@@ -34,7 +34,7 @@ import com.google.gson.annotations.SerializedName
  * @param user 
  * @param recordingLock 
  * @param automaticallyAssigned 
- * @param hoursPlanned 
+ * @param hoursPlanned Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured.
  */
 
 
@@ -49,6 +49,7 @@ data class TaskToUserAssignment (
     @SerializedName("automatically_assigned")
     val automaticallyAssigned: kotlin.Boolean,
 
+    /* Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured. */
     @SerializedName("hours_planned")
     val hoursPlanned: java.math.BigDecimal? = null
 

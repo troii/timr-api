@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class TaskBase(BaseModel):
     """
-    TaskBase
+    Common task fields. Task administration requires the Administrator or Task Manager role. Budget fields additionally require the Budgets feature and administrator or task-leader authorization; task leaders also need Corporate Features. Supplying a budget field without this authorization, including false or null for nullable fields, rejects the entire request with HTTP 403.
     """ # noqa: E501
     name: Optional[StrictStr] = None
     parent_task_id: Optional[StrictStr] = Field(default=None, description="returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.")

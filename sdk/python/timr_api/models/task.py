@@ -29,7 +29,7 @@ from pydantic_core import to_jsonable_python
 
 class Task(BaseModel):
     """
-    A task, placed in the tree by `parent_task`, with the full path from the root in `breadcrumbs`. `bookable` and `billable` control recording and invoicing; `lock_date`, time windows and location constrain what may be recorded. 
+    A task, placed in the tree by `parent_task`, with the full path from the root in `breadcrumbs`. `bookable` and `billable` control recording and invoicing; `lock_date`, time windows and location constrain what may be recorded. Budget fields (`budget_*`) require the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task-leader access also requires Corporate Features. Otherwise these fields are omitted without an error; omission does not mean no budget is configured. `lock_date` requires Task Locking; `earliest_start_time` and `latest_end_time` require Recording Restrictions; `location_restriction_radius_meters` requires Geofence. These fields are otherwise omitted. `location` requires Task Locations, or Geofence when budget details are visible.
     """ # noqa: E501
     id: StrictStr = Field(description="Unique identifier. Treat it as an opaque string.")
     name: StrictStr

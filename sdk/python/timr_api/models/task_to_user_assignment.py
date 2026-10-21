@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictFloat, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from timr_api.models.recording_lock_type import RecordingLockType
 from timr_api.models.user_partial import UserPartial
@@ -30,7 +30,7 @@ class TaskToUserAssignment(BaseModel):
     TaskToUserAssignment
     """ # noqa: E501
     user: UserPartial
-    hours_planned: Optional[Union[StrictFloat, StrictInt]] = None
+    hours_planned: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured.")
     recording_lock: RecordingLockType
     automatically_assigned: StrictBool
     __properties: ClassVar[List[str]] = ["user", "hours_planned", "recording_lock", "automatically_assigned"]

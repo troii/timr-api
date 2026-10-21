@@ -53,6 +53,7 @@ public class TaskApi extends BaseApi {
      * Creates a Task from the data in the request body.
      * <p><b>201</b> - The created Task.
      * <p><b>400</b> - Bad Request
+     * <p><b>403</b> - Forbidden
      * <p><b>409</b> - Conflict
      * <p><b>422</b> - Unprocessable Content
      * @param taskCreate Project Time entity (required)
@@ -68,6 +69,7 @@ public class TaskApi extends BaseApi {
      * Creates a Task from the data in the request body.
      * <p><b>201</b> - The created Task.
      * <p><b>400</b> - Bad Request
+     * <p><b>403</b> - Forbidden
      * <p><b>409</b> - Conflict
      * <p><b>422</b> - Unprocessable Content
      * @param taskCreate Project Time entity (required)

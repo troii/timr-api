@@ -37,7 +37,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * A task, placed in the tree by &#x60;parent_task&#x60;, with the full path from the root in &#x60;breadcrumbs&#x60;. &#x60;bookable&#x60; and &#x60;billable&#x60; control recording and invoicing; &#x60;lock_date&#x60;, time windows and location constrain what may be recorded. 
+ * A task, placed in the tree by &#x60;parent_task&#x60;, with the full path from the root in &#x60;breadcrumbs&#x60;. &#x60;bookable&#x60; and &#x60;billable&#x60; control recording and invoicing; &#x60;lock_date&#x60;, time windows and location constrain what may be recorded. Budget fields (&#x60;budget_*&#x60;) require the Budgets feature and administrator or task-leader access to this task, including overall task leaders. Task-leader access also requires Corporate Features. Otherwise these fields are omitted without an error; omission does not mean no budget is configured. &#x60;lock_date&#x60; requires Task Locking; &#x60;earliest_start_time&#x60; and &#x60;latest_end_time&#x60; require Recording Restrictions; &#x60;location_restriction_radius_meters&#x60; requires Geofence. These fields are otherwise omitted. &#x60;location&#x60; requires Task Locations, or Geofence when budget details are visible.
  */
 @JsonPropertyOrder({
   Task.JSON_PROPERTY_ID,

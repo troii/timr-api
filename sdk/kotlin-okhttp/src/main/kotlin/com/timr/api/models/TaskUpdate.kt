@@ -29,7 +29,7 @@ import com.timr.api.models.TaskLocation
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
+ * For budget writes, task-leader authorization is checked for this task, including overall task leadership.
  *
  * @param name 
  * @param parentTaskId returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.
@@ -56,7 +56,7 @@ import com.google.gson.annotations.SerializedName
  * @param customField2 you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
  * @param customField3 you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
  * @param metadata 
- * @param budgetUpdateProjectTimes this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not. 
+ * @param budgetUpdateProjectTimes Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false.
  */
 
 
@@ -156,7 +156,7 @@ data class TaskUpdate (
     @SerializedName("metadata")
     val metadata: kotlin.collections.Map<kotlin.String, kotlin.Any>? = null,
 
-    /* this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not.  */
+    /* Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false. */
     @SerializedName("budget_update_project_times")
     val budgetUpdateProjectTimes: kotlin.Boolean? = null
 

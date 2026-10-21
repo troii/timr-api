@@ -1012,6 +1012,7 @@ class TaskToUserAssignmentApi:
             '200': "TaskToUserAssignment",
             '201': "TaskToUserAssignment",
             '400': "Error",
+            '403': "Error",
             '409': "Error",
             '422': "Error",
         }
@@ -1091,6 +1092,7 @@ class TaskToUserAssignmentApi:
             '200': "TaskToUserAssignment",
             '201': "TaskToUserAssignment",
             '400': "Error",
+            '403': "Error",
             '409': "Error",
             '422': "Error",
         }
@@ -1170,6 +1172,7 @@ class TaskToUserAssignmentApi:
             '200': "TaskToUserAssignment",
             '201': "TaskToUserAssignment",
             '400': "Error",
+            '403': "Error",
             '409': "Error",
             '422': "Error",
         }
