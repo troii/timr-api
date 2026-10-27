@@ -35,7 +35,7 @@ import {
 } from './OvertimeSurchargeAccounts.js';
 
 /**
- * 
+ * Account balances for a user. `time_account` is omitted for trust-based working time; `overtime_surcharge_accounts` requires the Overtime Allowance feature; `vacation_account` is omitted when the balance has no vacation account. Omitted balances do not mean zero. When no balance exists for the requested day, the response can be empty.
  * @export
  * @interface Accounts
  */

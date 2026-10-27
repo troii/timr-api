@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class TaskUpdate(BaseModel):
     """
-    TaskUpdate
+    For budget writes, task-leader authorization is checked for this task, including overall task leadership.
     """ # noqa: E501
     name: Optional[StrictStr] = None
     parent_task_id: Optional[StrictStr] = Field(default=None, description="returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.")
@@ -55,7 +55,7 @@ class TaskUpdate(BaseModel):
     custom_field_2: Optional[StrictStr] = Field(default=None, description="you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.")
     custom_field_3: Optional[StrictStr] = Field(default=None, description="you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.")
     metadata: Optional[Dict[str, Any]] = None
-    budget_update_project_times: Optional[StrictBool] = Field(default=None, description="this property is used to decide whether existing project times that have been booked to this task should be updated with the changed budget.  If budget_planning type or budget_hourly_rate are set, this property must also be set.   Based on this, the budgets of the existing project times are then recalculated or not. ")
+    budget_update_project_times: Optional[StrictBool] = Field(default=None, description="Whether to recalculate existing project times after a budget change. Required when budget_planning_type or budget_hourly_rate is supplied. The same budget permissions apply, including false.")
     __properties: ClassVar[List[str]] = ["name", "parent_task_id", "external_id", "description", "description_external", "bookable", "billable", "project_time_notes_required", "start_date", "end_date", "lock_date", "earliest_start_time", "latest_end_time", "budget_planning_type", "budget_hours_planned", "budget_hourly_rate", "budget_planned", "budget_include_non_billable_project_times", "location_inherited", "location", "location_restriction_radius_meters", "custom_field_1", "custom_field_2", "custom_field_3", "metadata", "budget_update_project_times"]
 
     model_config = ConfigDict(

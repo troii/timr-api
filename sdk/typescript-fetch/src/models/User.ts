@@ -28,8 +28,7 @@ import {
 } from './HolidayCalendarPartial.js';
 
 /**
- * A user's identity (`firstname`, `lastname`, `email`), employment dates (`entry_date`, `resign_date`), and the assigned `work_schedule_model` and `holiday_calendar`.
- * 
+ * A user's identity (`firstname`, `lastname`, `email`), employment dates (`entry_date`, `resign_date`), and the assigned `work_schedule_model` and `holiday_calendar`. `login`, `entry_date`, `resign_date` and `work_schedule_model` are omitted unless the caller is an administrator. `holiday_calendar` is returned only to administrators, the user themselves or a group leader of that user. Omission does not mean the corresponding value is not configured.
  * @export
  * @interface User
  */

@@ -37,7 +37,7 @@ import org.openapitools.jackson.nullable.JsonNullable;
 import com.fasterxml.jackson.annotation.*;
 
 /**
- * A span from &#x60;start&#x60; to &#x60;end&#x60; of a single &#x60;working_time_type&#x60;. Every working time derived for a covered day links back to it via &#x60;WorkingTime.working_time_date_span&#x60;. It can be created directly or become effective through an approved request. 
+ * A span from &#x60;start&#x60; to &#x60;end&#x60; of a single &#x60;working_time_type&#x60;. Every working time derived for a covered day links back to it via &#x60;WorkingTime.working_time_date_span&#x60;. It can be created directly or become effective through an approved request. &#x60;substitute&#x60; is omitted unless the Substitutes feature is available; omission does not mean no substitute is assigned.
  */
 @JsonPropertyOrder({
   WorkingTimeDateSpan.JSON_PROPERTY_ID,

@@ -42,8 +42,7 @@ import {
 } from './WorkingTimeTypeSubCategory.js';
 
 /**
- * A working time type. `category` and `sub_category` place it in the classification, `edit_unit` decides whether it is recorded by time or by day, and `requires_substitute` governs how it is recorded.
- * 
+ * A working time type. `category` and `sub_category` place it in the classification, `edit_unit` decides whether it is recorded by time or by day, and `requires_substitute` governs how it is recorded. `requires_substitute` is omitted unless the Substitutes feature is available; omission does not mean false.
  * @export
  * @interface WorkingTimeType
  */

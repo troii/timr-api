@@ -10,6 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
+/** For budget writes, task-leader authorization is based on the Task Leader or Overall Task Leader role. Budget visibility in the response is checked separately against the created task. */
 public struct TaskCreate: Codable, JSONEncodable, Hashable {
 
     public var name: String

@@ -10,7 +10,7 @@ import Foundation
 import AnyCodable
 #endif
 
-/** A working time type. &#x60;category&#x60; and &#x60;sub_category&#x60; place it in the classification, &#x60;edit_unit&#x60; decides whether it is recorded by time or by day, and &#x60;requires_substitute&#x60; governs how it is recorded.  */
+/** A working time type. &#x60;category&#x60; and &#x60;sub_category&#x60; place it in the classification, &#x60;edit_unit&#x60; decides whether it is recorded by time or by day, and &#x60;requires_substitute&#x60; governs how it is recorded. &#x60;requires_substitute&#x60; is omitted unless the Substitutes feature is available; omission does not mean false. */
 public struct WorkingTimeType: Codable, JSONEncodable, Hashable {
 
     /** Unique identifier. Treat it as an opaque string. */

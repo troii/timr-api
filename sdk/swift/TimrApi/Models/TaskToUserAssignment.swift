@@ -13,6 +13,7 @@ import AnyCodable
 public struct TaskToUserAssignment: Codable, JSONEncodable, Hashable {
 
     public var user: UserPartial
+    /** Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured. */
     public var hoursPlanned: Double?
     public var recordingLock: RecordingLockType
     public var automaticallyAssigned: Bool

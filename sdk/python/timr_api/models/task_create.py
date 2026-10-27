@@ -28,7 +28,7 @@ from pydantic_core import to_jsonable_python
 
 class TaskCreate(BaseModel):
     """
-    TaskCreate
+    For budget writes, task-leader authorization is based on the Task Leader or Overall Task Leader role. Budget visibility in the response is checked separately against the created task.
     """ # noqa: E501
     name: StrictStr
     parent_task_id: Optional[StrictStr] = Field(default=None, description="returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.")

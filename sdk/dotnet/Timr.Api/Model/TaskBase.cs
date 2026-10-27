@@ -26,7 +26,7 @@ using Timr.Api.Client;
 namespace Timr.Api.Model
 {
     /// <summary>
-    /// TaskBase
+    /// Common task fields. Task administration requires the Administrator or Task Manager role. Budget fields additionally require the Budgets feature and administrator or task-leader authorization; task leaders also need Corporate Features. Supplying a budget field without this authorization, including false or null for nullable fields, rejects the entire request with HTTP 403.
     /// </summary>
     public partial class TaskBase : IValidatableObject
     {
