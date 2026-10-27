@@ -16,3 +16,7 @@ setup.py
 # Markdown docs are repo-only: neither the wheel nor the SPM/CocoaPods package ships them,
 # and the reference lives at developer.timr.com.
 docs/**
+
+# Python tests run directly with pytest.
+tox.ini
+setup.cfg
