@@ -10,5 +10,5 @@ dependencies {
     implementation localGroovy()
     implementation gradleApi()
     implementation 'org.yaml:snakeyaml:2.7'
-    implementation 'com.jayway.jsonpath:json-path:2.9.0'
+    implementation 'com.jayway.jsonpath:json-path:3.0.0'
 }
