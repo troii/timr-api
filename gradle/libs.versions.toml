@@ -1,10 +1,10 @@
 [versions]
 openapi-generator = "7.26.0"
-spring-boot = "4.0.8"
-jackson = "3.1.7"
+spring-boot = "4.1.2"
+jackson = "3.2.4"
 httpclient5 = "5.6.5"
 httpcore5 = "5.4.4"
-jackson-nullable = "0.2.10"
+jackson-nullable = "0.2.13"
 jakarta-annotation = "3.0.0"
 jspecify = "1.0.1"
 swagger-annotations = "1.6.16"
