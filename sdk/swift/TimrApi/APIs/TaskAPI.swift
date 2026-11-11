@@ -104,7 +104,7 @@ open class TaskAPI {
      
      - parameter parentTaskId: (query) Only return Tasks whose parent is the Task with this ID. (optional)
      - parameter traverseTaskTree: (query) Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     - parameter name: (query) Only return Users whose name contains this text. (optional)
+     - parameter name: (query) Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      - parameter bookable: (query) Only return entries that are billable (true) or not billable (false). (optional)
      - parameter billable: (query) Only return entries that are billable (true) or not billable (false). (optional)
      - parameter activeAt: (query) Only return Tasks that are active on this day. (optional)
@@ -132,7 +132,7 @@ open class TaskAPI {
      - responseHeaders: [Link(String)]
      - parameter parentTaskId: (query) Only return Tasks whose parent is the Task with this ID. (optional)
      - parameter traverseTaskTree: (query) Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     - parameter name: (query) Only return Users whose name contains this text. (optional)
+     - parameter name: (query) Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      - parameter bookable: (query) Only return entries that are billable (true) or not billable (false). (optional)
      - parameter billable: (query) Only return entries that are billable (true) or not billable (false). (optional)
      - parameter activeAt: (query) Only return Tasks that are active on this day. (optional)

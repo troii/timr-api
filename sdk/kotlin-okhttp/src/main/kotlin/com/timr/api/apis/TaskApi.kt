@@ -213,7 +213,7 @@ open class TaskApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      * Lists the Tasks the authenticated user or API token can access.
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID. (optional)
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     * @param name Only return Users whose name contains this text. (optional)
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      * @param bookable Only return entries that are billable (true) or not billable (false). (optional)
      * @param billable Only return entries that are billable (true) or not billable (false). (optional)
      * @param activeAt Only return Tasks that are active on this day. (optional)
@@ -254,7 +254,7 @@ open class TaskApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      * Lists the Tasks the authenticated user or API token can access.
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID. (optional)
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     * @param name Only return Users whose name contains this text. (optional)
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      * @param bookable Only return entries that are billable (true) or not billable (false). (optional)
      * @param billable Only return entries that are billable (true) or not billable (false). (optional)
      * @param activeAt Only return Tasks that are active on this day. (optional)
@@ -281,7 +281,7 @@ open class TaskApi(basePath: kotlin.String = defaultBasePath, client: Call.Facto
      *
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID. (optional)
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     * @param name Only return Users whose name contains this text. (optional)
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      * @param bookable Only return entries that are billable (true) or not billable (false). (optional)
      * @param billable Only return entries that are billable (true) or not billable (false). (optional)
      * @param activeAt Only return Tasks that are active on this day. (optional)
