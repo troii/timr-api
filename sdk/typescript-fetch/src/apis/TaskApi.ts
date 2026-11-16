@@ -76,7 +76,7 @@ export interface FetchTasksRequest {
      */
     traverseTaskTree?: boolean;
     /**
-     * Only return Users whose name contains this text.
+     * Only return Tasks whose breadcrumb path contains all words in this query.
      */
     name?: string;
     /**
