@@ -606,7 +606,7 @@ class TaskApi:
         self,
         parent_task_id: Annotated[Optional[StrictStr], Field(description="Only return Tasks whose parent is the Task with this ID.")] = None,
         traverse_task_tree: Annotated[Optional[StrictBool], Field(description="Include Tasks from the whole subtree (true) or only direct children (false).")] = None,
-        name: Annotated[Optional[StrictStr], Field(description="Only return Users whose name contains this text.")] = None,
+        name: Annotated[Optional[StrictStr], Field(description="Only return Tasks whose breadcrumb path contains all words in this query.")] = None,
         bookable: Annotated[Optional[StrictBool], Field(description="Only return entries that are billable (true) or not billable (false).")] = None,
         billable: Annotated[Optional[StrictBool], Field(description="Only return entries that are billable (true) or not billable (false).")] = None,
         active_at: Annotated[Optional[Any], Field(description="Only return Tasks that are active on this day.")] = None,
@@ -635,7 +635,7 @@ class TaskApi:
         :type parent_task_id: str
         :param traverse_task_tree: Include Tasks from the whole subtree (true) or only direct children (false).
         :type traverse_task_tree: bool
-        :param name: Only return Users whose name contains this text.
+        :param name: Only return Tasks whose breadcrumb path contains all words in this query.
         :type name: str
         :param bookable: Only return entries that are billable (true) or not billable (false).
         :type bookable: bool
@@ -710,7 +710,7 @@ class TaskApi:
         self,
         parent_task_id: Annotated[Optional[StrictStr], Field(description="Only return Tasks whose parent is the Task with this ID.")] = None,
         traverse_task_tree: Annotated[Optional[StrictBool], Field(description="Include Tasks from the whole subtree (true) or only direct children (false).")] = None,
-        name: Annotated[Optional[StrictStr], Field(description="Only return Users whose name contains this text.")] = None,
+        name: Annotated[Optional[StrictStr], Field(description="Only return Tasks whose breadcrumb path contains all words in this query.")] = None,
         bookable: Annotated[Optional[StrictBool], Field(description="Only return entries that are billable (true) or not billable (false).")] = None,
         billable: Annotated[Optional[StrictBool], Field(description="Only return entries that are billable (true) or not billable (false).")] = None,
         active_at: Annotated[Optional[Any], Field(description="Only return Tasks that are active on this day.")] = None,
@@ -739,7 +739,7 @@ class TaskApi:
         :type parent_task_id: str
         :param traverse_task_tree: Include Tasks from the whole subtree (true) or only direct children (false).
         :type traverse_task_tree: bool
-        :param name: Only return Users whose name contains this text.
+        :param name: Only return Tasks whose breadcrumb path contains all words in this query.
         :type name: str
         :param bookable: Only return entries that are billable (true) or not billable (false).
         :type bookable: bool
@@ -814,7 +814,7 @@ class TaskApi:
         self,
         parent_task_id: Annotated[Optional[StrictStr], Field(description="Only return Tasks whose parent is the Task with this ID.")] = None,
         traverse_task_tree: Annotated[Optional[StrictBool], Field(description="Include Tasks from the whole subtree (true) or only direct children (false).")] = None,
-        name: Annotated[Optional[StrictStr], Field(description="Only return Users whose name contains this text.")] = None,
+        name: Annotated[Optional[StrictStr], Field(description="Only return Tasks whose breadcrumb path contains all words in this query.")] = None,
         bookable: Annotated[Optional[StrictBool], Field(description="Only return entries that are billable (true) or not billable (false).")] = None,
         billable: Annotated[Optional[StrictBool], Field(description="Only return entries that are billable (true) or not billable (false).")] = None,
         active_at: Annotated[Optional[Any], Field(description="Only return Tasks that are active on this day.")] = None,
@@ -843,7 +843,7 @@ class TaskApi:
         :type parent_task_id: str
         :param traverse_task_tree: Include Tasks from the whole subtree (true) or only direct children (false).
         :type traverse_task_tree: bool
-        :param name: Only return Users whose name contains this text.
+        :param name: Only return Tasks whose breadcrumb path contains all words in this query.
         :type name: str
         :param bookable: Only return entries that are billable (true) or not billable (false).
         :type bookable: bool
