@@ -10,7 +10,7 @@ info:
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.2.1
+  version: 1.2.2
 
 servers:
   - url: https://api.timr.com/v1/
@@ -2106,7 +2106,7 @@ paths:
             default: true
         - name: name
           in: query
-          description: Only return Users whose name contains this text.
+          description: Only return Tasks whose breadcrumb path contains all words in this query.
           required: false
           schema:
             type: string

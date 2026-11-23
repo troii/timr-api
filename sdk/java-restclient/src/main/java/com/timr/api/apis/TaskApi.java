@@ -236,7 +236,7 @@ public class TaskApi {
      * <p><b>400</b> - Bad Request
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID.
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false).
-     * @param name Only return Users whose name contains this text.
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query.
      * @param bookable Only return entries that are billable (true) or not billable (false).
      * @param billable Only return entries that are billable (true) or not billable (false).
      * @param activeAt Only return Tasks that are active on this day.
@@ -288,7 +288,7 @@ public class TaskApi {
      * <p><b>400</b> - Bad Request
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID.
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false).
-     * @param name Only return Users whose name contains this text.
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query.
      * @param bookable Only return entries that are billable (true) or not billable (false).
      * @param billable Only return entries that are billable (true) or not billable (false).
      * @param activeAt Only return Tasks that are active on this day.
@@ -311,7 +311,7 @@ public class TaskApi {
      * <p><b>400</b> - Bad Request
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID.
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false).
-     * @param name Only return Users whose name contains this text.
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query.
      * @param bookable Only return entries that are billable (true) or not billable (false).
      * @param billable Only return entries that are billable (true) or not billable (false).
      * @param activeAt Only return Tasks that are active on this day.
@@ -334,7 +334,7 @@ public class TaskApi {
      * <p><b>400</b> - Bad Request
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID.
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false).
-     * @param name Only return Users whose name contains this text.
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query.
      * @param bookable Only return entries that are billable (true) or not billable (false).
      * @param billable Only return entries that are billable (true) or not billable (false).
      * @param activeAt Only return Tasks that are active on this day.

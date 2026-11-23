@@ -165,7 +165,7 @@ public class TaskApi extends BaseApi {
      * <p><b>400</b> - Bad Request
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID. (optional)
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     * @param name Only return Users whose name contains this text. (optional)
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      * @param bookable Only return entries that are billable (true) or not billable (false). (optional)
      * @param billable Only return entries that are billable (true) or not billable (false). (optional)
      * @param activeAt Only return Tasks that are active on this day. (optional)
@@ -187,7 +187,7 @@ public class TaskApi extends BaseApi {
      * <p><b>400</b> - Bad Request
      * @param parentTaskId Only return Tasks whose parent is the Task with this ID. (optional)
      * @param traverseTaskTree Include Tasks from the whole subtree (true) or only direct children (false). (optional, default to true)
-     * @param name Only return Users whose name contains this text. (optional)
+     * @param name Only return Tasks whose breadcrumb path contains all words in this query. (optional)
      * @param bookable Only return entries that are billable (true) or not billable (false). (optional)
      * @param billable Only return entries that are billable (true) or not billable (false). (optional)
      * @param activeAt Only return Tasks that are active on this day. (optional)
