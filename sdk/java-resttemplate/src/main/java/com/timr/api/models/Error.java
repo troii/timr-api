@@ -48,7 +48,7 @@ import com.fasterxml.jackson.annotation.*;
   Error.JSON_PROPERTY_TRACE_ID,
   Error.JSON_PROPERTY_ERRORS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class Error {
   public static final String JSON_PROPERTY_TYPE = "type";
   @jakarta.annotation.Nonnull

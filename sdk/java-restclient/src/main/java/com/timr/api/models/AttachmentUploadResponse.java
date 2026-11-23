@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.*;
   AttachmentUploadResponse.JSON_PROPERTY_METADATA,
   AttachmentUploadResponse.JSON_PROPERTY_UPLOAD
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AttachmentUploadResponse {
   public static final String JSON_PROPERTY_ID = "id";
   

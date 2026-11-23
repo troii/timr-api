@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkScheduleModel.JSON_PROPERTY_WEEKS,
   WorkScheduleModel.JSON_PROPERTY_WORKING_TIME_RULES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class WorkScheduleModel {
   public static final String JSON_PROPERTY_ID = "id";
   

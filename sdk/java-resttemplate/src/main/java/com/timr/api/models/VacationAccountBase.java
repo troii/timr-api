@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.*;
 @JsonPropertyOrder({
   VacationAccountBase.JSON_PROPERTY_UNIT
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class VacationAccountBase {
   public static final String JSON_PROPERTY_UNIT = "unit";
   @jakarta.annotation.Nonnull

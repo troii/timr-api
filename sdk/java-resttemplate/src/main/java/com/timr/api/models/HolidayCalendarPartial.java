@@ -32,7 +32,7 @@ import com.fasterxml.jackson.annotation.*;
   HolidayCalendarPartial.JSON_PROPERTY_ID,
   HolidayCalendarPartial.JSON_PROPERTY_DESCRIPTION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class HolidayCalendarPartial {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull

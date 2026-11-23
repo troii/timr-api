@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.*;
   TeamPartial.JSON_PROPERTY_BREADCRUMBS,
   TeamPartial.JSON_PROPERTY_EXTERNAL_ID
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class TeamPartial {
   public static final String JSON_PROPERTY_ID = "id";
   

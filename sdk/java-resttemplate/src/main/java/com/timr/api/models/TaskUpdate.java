@@ -66,7 +66,7 @@ import com.fasterxml.jackson.annotation.*;
   TaskUpdate.JSON_PROPERTY_METADATA,
   TaskUpdate.JSON_PROPERTY_BUDGET_UPDATE_PROJECT_TIMES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class TaskUpdate {
   public static final String JSON_PROPERTY_NAME = "name";
   @jakarta.annotation.Nullable

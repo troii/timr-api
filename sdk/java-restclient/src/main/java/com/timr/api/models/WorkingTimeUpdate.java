@@ -56,7 +56,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkingTimeUpdate.JSON_PROPERTY_START_LOCATION,
   WorkingTimeUpdate.JSON_PROPERTY_END_LOCATION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class WorkingTimeUpdate {
   public static final String JSON_PROPERTY_START = "start";
   

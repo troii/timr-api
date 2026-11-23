@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.*;
   CarCreate.JSON_PROPERTY_USABLE,
   CarCreate.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class CarCreate {
   public static final String JSON_PROPERTY_NAME = "name";
   

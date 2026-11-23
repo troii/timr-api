@@ -35,7 +35,7 @@ import com.fasterxml.jackson.annotation.*;
 @JsonPropertyOrder({
   BreakTimeOngoing.JSON_PROPERTY_START
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class BreakTimeOngoing extends BreakTimeBase implements BreakTime, BreakTimeUpdate {
   public static final String JSON_PROPERTY_START = "start";
   

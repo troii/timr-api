@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.*;
   AttachmentsPage.JSON_PROPERTY_NEXT_PAGE_TOKEN,
   AttachmentsPage.JSON_PROPERTY_DATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class AttachmentsPage {
   public static final String JSON_PROPERTY_NEXT_PAGE_TOKEN = "next_page_token";
   @jakarta.annotation.Nullable

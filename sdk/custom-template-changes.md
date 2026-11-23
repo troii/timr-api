@@ -26,6 +26,10 @@ The RestClient module also ignores `ExceptionProvider.java`, which only applies 
 
 ## Java
 
+Both Java clients override `Java/generatedAnnotation.mustache` to omit the generator version
+from `@Generated`. The generator class and timestamp handling follow upstream. The generator
+version is pinned in `gradle/libs.versions.toml`.
+
 ### Upstream source
 
 The `java` generator resolves `pojo.mustache` **per library**, so the upstream baseline is not the

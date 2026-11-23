@@ -42,7 +42,7 @@ import com.fasterxml.jackson.annotation.*;
   DeletedEntryWithMetadata.JSON_PROPERTY_LAST_MODIFIED_BY,
   DeletedEntryWithMetadata.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class DeletedEntryWithMetadata {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull
