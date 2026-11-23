@@ -32,19 +32,19 @@ import com.google.gson.annotations.SerializedName
  * A user's identity (`firstname`, `lastname`, `email`), employment dates (`entry_date`, `resign_date`), and the assigned `work_schedule_model` and `holiday_calendar`. `login`, `entry_date`, `resign_date` and `work_schedule_model` are omitted unless the caller is an administrator. `holiday_calendar` is returned only to administrators, the user themselves or a group leader of that user. Omission does not mean the corresponding value is not configured.
  *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param firstname 
- * @param lastname 
- * @param fullname 
+ * @param firstname
+ * @param lastname
+ * @param fullname
  * @param email Email address must be either valid or null.
- * @param employeeNumber 
+ * @param employeeNumber
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
- * @param login 
+ * @param login
  * @param entryDate RFC 3339 date (ISO-8601)
  * @param resignDate RFC 3339 date (ISO-8601)
- * @param workScheduleModel 
- * @param holidayCalendar 
+ * @param workScheduleModel
+ * @param holidayCalendar
  * @param vacationYearStart recurring month and day on which the user's vacation year starts
- * @param metadata 
+ * @param metadata
  */
 
 

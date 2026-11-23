@@ -86,7 +86,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -106,11 +106,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Date
-        /// </summary>
-        public string DateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="Holiday" />
@@ -206,7 +201,10 @@ namespace Timr.Api.Model
         /// <param name="jsonSerializerOptions"></param>
         public void WriteProperties(Utf8JsonWriter writer, Holiday holiday, JsonSerializerOptions jsonSerializerOptions)
         {
-            writer.WriteString("date", holiday.Date.ToString(DateFormat));
+            {
+                        writer.WritePropertyName("date");
+                            JsonSerializer.Serialize(writer, holiday.Date, jsonSerializerOptions);
+                        }
 
             writer.WriteString("description", holiday.Description);
 

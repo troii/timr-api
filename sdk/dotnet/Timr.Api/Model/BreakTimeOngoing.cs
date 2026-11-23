@@ -78,7 +78,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -98,11 +98,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="BreakTimeOngoing" />
@@ -191,7 +186,10 @@ namespace Timr.Api.Model
             var typeRawValue = BreakTimeTypeValueConverter.ToJsonValue(breakTimeOngoing.Type);
             writer.WriteString("type", typeRawValue);
 
-            writer.WriteString("start", breakTimeOngoing.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, breakTimeOngoing.Start, jsonSerializerOptions);
+                        }
         }
     }
 }

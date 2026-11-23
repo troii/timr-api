@@ -90,7 +90,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -110,11 +110,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize ExpiresAt
-        /// </summary>
-        public string ExpiresAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="AttachmentUpload" />
@@ -214,7 +209,10 @@ namespace Timr.Api.Model
 
             writer.WritePropertyName("headers");
             JsonSerializer.Serialize(writer, attachmentUpload.Headers, jsonSerializerOptions);
-            writer.WriteString("expires_at", attachmentUpload.ExpiresAt.ToString(ExpiresAtFormat));
+            {
+                        writer.WritePropertyName("expires_at");
+                            JsonSerializer.Serialize(writer, attachmentUpload.ExpiresAt, jsonSerializerOptions);
+                        }
         }
     }
 }

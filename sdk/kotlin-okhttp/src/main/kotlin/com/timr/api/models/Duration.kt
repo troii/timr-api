@@ -28,9 +28,7 @@ import com.timr.api.models.DurationType
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param type 
+ * @param type
  * @param minutes Net minutes of the recording. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User 
  * @param minutesRounded Net minutes rounded to the default setting configured. In case of type 'half_day' or 'full_day' these get calculated automatically, based on WorkTimeSchedule configured for User 
  */

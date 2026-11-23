@@ -28,7 +28,7 @@ export interface CreateTrackRequest {
      */
     id: string;
     /**
-     * 
+     * Working Time Date Span entity
      */
     waypoint: Array<Waypoint>;
 }
@@ -53,7 +53,7 @@ export interface UpdateTrackRequest {
      */
     id: string;
     /**
-     * 
+     * working time date span entity
      */
     waypoint: Array<Waypoint>;
 }

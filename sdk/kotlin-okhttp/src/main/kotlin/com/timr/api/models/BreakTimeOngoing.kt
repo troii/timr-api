@@ -28,9 +28,7 @@ import com.timr.api.models.BreakTimeType
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param type 
+ * @param type
  * @param start RFC 3339 date-time (ISO-8601)
  */
 

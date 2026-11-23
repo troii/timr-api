@@ -31,10 +31,10 @@ import com.google.gson.annotations.SerializedName
  *
  * @param lat Latitude in decimal degrees.
  * @param lon Longitude in decimal degrees.
- * @param address 
- * @param city 
- * @param zipCode 
- * @param state 
+ * @param address
+ * @param city
+ * @param zipCode
+ * @param state
  * @param country the country's international country code
  */
 

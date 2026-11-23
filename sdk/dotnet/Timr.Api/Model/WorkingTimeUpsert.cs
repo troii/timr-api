@@ -207,7 +207,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -227,16 +227,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeUpsert" />
@@ -369,11 +359,17 @@ namespace Timr.Api.Model
                 throw new JsonException("Cannot write null property WorkingTimeUpsert.Status to non-nullable JSON property 'status'.");
 
             if (workingTimeUpsert.StartOption.IsSet)
-                writer.WriteString("start", workingTimeUpsert.StartOption.Value!.Value.ToString(StartFormat));
+                {
+                            writer.WritePropertyName("start");
+                                JsonSerializer.Serialize(writer, workingTimeUpsert.StartOption.Value!.Value, jsonSerializerOptions);
+                            }
 
             if (workingTimeUpsert.EndOption.IsSet)
                 if (workingTimeUpsert.EndOption.Value != null)
-                    writer.WriteString("end", workingTimeUpsert.EndOption.Value!.Value.ToString(EndFormat));
+                    {
+                            writer.WritePropertyName("end");
+                                JsonSerializer.Serialize(writer, workingTimeUpsert.EndOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("end");
 

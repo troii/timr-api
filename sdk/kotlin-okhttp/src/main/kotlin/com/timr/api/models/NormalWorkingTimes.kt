@@ -27,10 +27,8 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param start 
- * @param end 
+ * @param start
+ * @param end
  */
 
 

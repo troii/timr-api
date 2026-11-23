@@ -30,7 +30,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Members shared by every kind of vacation account, including the discriminator.
  *
- * @param unit 
+ * @param unit
  */
 
 

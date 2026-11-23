@@ -30,11 +30,11 @@ import com.google.gson.annotations.SerializedName
  * A vehicle identified by `name` and license `plate`. `usable` says whether it can currently be selected. 
  *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param name 
- * @param plate 
+ * @param name
+ * @param plate
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
- * @param usable 
- * @param metadata 
+ * @param usable
+ * @param metadata
  */
 
 

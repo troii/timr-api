@@ -165,7 +165,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -185,11 +185,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Timestamp
-        /// </summary>
-        public string TimestampFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="Error" />
@@ -329,7 +324,10 @@ namespace Timr.Api.Model
 
             writer.WriteNumber("status", error.Status);
 
-            writer.WriteString("timestamp", error.Timestamp.ToString(TimestampFormat));
+            {
+                        writer.WritePropertyName("timestamp");
+                            JsonSerializer.Serialize(writer, error.Timestamp, jsonSerializerOptions);
+                        }
 
             if (error.DetailOption.IsSet)
                 writer.WriteString("detail", error.Detail);

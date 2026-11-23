@@ -29,7 +29,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Pre-signed URL to download the file directly from the storage, without further authentication. The URL is only valid for a limited time; request the attachment again to get a new URL. 
  *
- * @param url 
+ * @param url
  */
 
 

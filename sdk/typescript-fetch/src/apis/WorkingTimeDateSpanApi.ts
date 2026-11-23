@@ -59,7 +59,7 @@ type QueryArguments<T> = {} extends T
 
 export interface CreateWorkingTimeDateSpanRequest {
     /**
-     * 
+     * Working Time Date Span entity
      */
     workingTimeDateSpanCreate: WorkingTimeDateSpanCreate;
 }
@@ -156,7 +156,7 @@ export interface UpdateWorkingTimeDateSpanRequest {
      */
     id: string;
     /**
-     * 
+     * working time date span entity
      */
     workingTimeDateSpanUpdate: WorkingTimeDateSpanUpdate;
 }

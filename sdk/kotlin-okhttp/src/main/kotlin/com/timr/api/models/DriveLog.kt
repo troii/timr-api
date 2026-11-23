@@ -40,28 +40,28 @@ import com.google.gson.annotations.SerializedName
  * @param id Unique identifier. Treat it as an opaque string.
  * @param start RFC 3339 date-time (ISO-8601)
  * @param end RFC 3339 date-time (ISO-8601)
- * @param duration 
- * @param changed 
- * @param startMileage 
- * @param endMileage 
+ * @param duration
+ * @param changed
+ * @param startMileage
+ * @param endMileage
  * @param distance Driven distance in kilometers
- * @param route 
- * @param purpose 
- * @param visited 
- * @param user 
- * @param car 
- * @param driveLogCategory 
- * @param startVenue 
- * @param endVenue 
- * @param hasTrack 
- * @param startLocation 
- * @param endLocation 
- * @param startPlatform 
- * @param endPlatform 
+ * @param route
+ * @param purpose
+ * @param visited
+ * @param user
+ * @param car
+ * @param driveLogCategory
+ * @param startVenue
+ * @param endVenue
+ * @param hasTrack
+ * @param startLocation
+ * @param endLocation
+ * @param startPlatform
+ * @param endPlatform
  * @param lastModified Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) 
  * @param lastModifiedBy Read-only. The User who last modified the entry, or null if the change was not made in a user context. 
- * @param status 
- * @param metadata 
+ * @param status
+ * @param metadata
  */
 
 

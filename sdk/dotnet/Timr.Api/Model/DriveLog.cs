@@ -303,7 +303,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -323,21 +323,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize LastModified
-        /// </summary>
-        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DriveLog" />
@@ -607,7 +592,10 @@ namespace Timr.Api.Model
         {
             writer.WriteString("id", driveLog.Id);
 
-            writer.WriteString("start", driveLog.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, driveLog.Start, jsonSerializerOptions);
+                        }
 
             writer.WriteBoolean("changed", driveLog.Changed);
 
@@ -621,13 +609,19 @@ namespace Timr.Api.Model
             JsonSerializer.Serialize(writer, driveLog.DriveLogCategory, jsonSerializerOptions);
             writer.WriteBoolean("has_track", driveLog.HasTrack);
 
-            writer.WriteString("last_modified", driveLog.LastModified.ToString(LastModifiedFormat));
+            {
+                        writer.WritePropertyName("last_modified");
+                            JsonSerializer.Serialize(writer, driveLog.LastModified, jsonSerializerOptions);
+                        }
 
             var statusRawValue = DriveLogStatusValueConverter.ToJsonValue(driveLog.Status);
             writer.WriteString("status", statusRawValue);
 
             if (driveLog.End != null)
-                writer.WriteString("end", driveLog.End.Value.ToString(EndFormat));
+                {
+                        writer.WritePropertyName("end");
+                            JsonSerializer.Serialize(writer, driveLog.End.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("end");
 

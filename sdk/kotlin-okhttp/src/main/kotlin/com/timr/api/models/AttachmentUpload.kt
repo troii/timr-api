@@ -29,7 +29,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Pre-signed URL to upload the file directly to the storage, without further authentication. Upload the file with a PUT request, sending exactly the given headers, before `expires_at`. 
  *
- * @param url 
+ * @param url
  * @param headers Headers to send with the upload request, with exactly these values. Which headers are included can change, so send all of them. The upload is also signed for `Host` and `Content-Length` (`metadata.size`), which HTTP clients set automatically; adding them manually can break the request. All values are strings, as HTTP header values are text ([RFC 9110, section 5.5](https://www.rfc-editor.org/rfc/rfc9110#section-5.5)). 
  * @param expiresAt When the URL stops being valid. RFC 3339 date-time (ISO-8601) 
  */

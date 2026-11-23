@@ -31,11 +31,11 @@ import com.google.gson.annotations.SerializedName
  * A team, placed in the hierarchy by `parent_team`, with the full path from the root in `breadcrumbs`. 
  *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param name 
+ * @param name
  * @param breadcrumbs Full path of the entry within its hierarchy, including its own name.
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
- * @param description 
- * @param parentTeam 
+ * @param description
+ * @param parentTeam
  */
 
 

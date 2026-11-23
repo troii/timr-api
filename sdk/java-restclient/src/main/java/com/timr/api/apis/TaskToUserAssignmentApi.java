@@ -31,7 +31,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class TaskToUserAssignmentApi {
     private ApiClient apiClient;
 
@@ -63,7 +63,6 @@ public class TaskToUserAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteTaskToUserAssignmentRequestCreation(String taskId, String userId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling deleteTaskToUserAssignment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -93,7 +92,7 @@ public class TaskToUserAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -159,7 +158,6 @@ public class TaskToUserAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchTaskToUserAssignmentsRequestCreation(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TaskToUserAssignmentsSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling fetchTaskToUserAssignments", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -189,7 +187,7 @@ public class TaskToUserAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToUserAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/users", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -260,7 +258,6 @@ public class TaskToUserAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getTaskToUserAssignmentRequestCreation(String taskId, String userId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling getTaskToUserAssignment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -290,7 +287,7 @@ public class TaskToUserAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToUserAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -356,7 +353,6 @@ public class TaskToUserAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec upsertTaskToUserAssignmentRequestCreation(String taskId, String userId, TaskToUserAssignmentUpsert taskToUserAssignmentUpsert) throws RestClientResponseException {
-        Object postBody = taskToUserAssignmentUpsert;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling upsertTaskToUserAssignment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -392,7 +388,7 @@ public class TaskToUserAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToUserAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.PUT, pathParams, localVarQueryParams, taskToUserAssignmentUpsert, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

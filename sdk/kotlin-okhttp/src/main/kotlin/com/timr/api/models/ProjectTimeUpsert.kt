@@ -29,17 +29,15 @@ import com.timr.api.models.ProjectTimeStatus
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param start RFC 3339 date-time (ISO-8601)
  * @param end RFC 3339 date-time (ISO-8601)
- * @param breakTimes 
- * @param changed 
- * @param notes 
- * @param taskId 
- * @param billable 
- * @param status 
- * @param metadata 
+ * @param breakTimes
+ * @param changed
+ * @param notes
+ * @param taskId
+ * @param billable
+ * @param status
+ * @param metadata
  */
 
 

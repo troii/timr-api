@@ -27,12 +27,10 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param lat Latitude in decimal degrees.
  * @param lon Longitude in decimal degrees.
  * @param timestamp RFC 3339 date-time (ISO-8601)
- * @param formattedAddress 
+ * @param formattedAddress
  * @param accuracy Horizontal GPS accuracy in meters.
  */
 

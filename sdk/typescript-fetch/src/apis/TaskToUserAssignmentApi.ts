@@ -102,7 +102,7 @@ export interface UpsertTaskToUserAssignmentRequest {
      */
     userId: string;
     /**
-     * 
+     * Task to User Assignment entity
      */
     taskToUserAssignmentUpsert: TaskToUserAssignmentUpsert;
 }

@@ -67,7 +67,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkingTime.JSON_PROPERTY_STATUS,
   WorkingTime.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class WorkingTime {
   public static final String JSON_PROPERTY_ID = "id";
   @jakarta.annotation.Nonnull

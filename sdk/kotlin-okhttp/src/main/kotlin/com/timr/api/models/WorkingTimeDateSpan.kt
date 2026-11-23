@@ -36,13 +36,13 @@ import com.google.gson.annotations.SerializedName
  * @param startHalfDay Marks the first day of the working time date span as a half day.
  * @param end RFC 3339 date (ISO-8601)
  * @param endHalfDay Marks the last day of the working time date span as a half day.
- * @param notes 
- * @param user 
- * @param workingTimeType 
+ * @param notes
+ * @param user
+ * @param workingTimeType
  * @param lastModified Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) 
  * @param lastModifiedBy Read-only. The User who last modified the entry, or null if the change was not made in a user context. 
- * @param substitute 
- * @param metadata 
+ * @param substitute
+ * @param metadata
  */
 
 

@@ -64,7 +64,7 @@ type QueryArguments<T> = {} extends T
 
 export interface CreateDriveLogRequest {
     /**
-     * 
+     * Drive Log entity
      */
     driveLogCreate: DriveLogCreate;
 }
@@ -181,7 +181,7 @@ export interface UpdateDriveLogRequest {
      */
     id: string;
     /**
-     * 
+     * Drive Log entity
      */
     driveLogUpdate: DriveLogUpdate;
 }

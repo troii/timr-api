@@ -261,7 +261,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -281,21 +281,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize LastModified
-        /// </summary>
-        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTime" />
@@ -520,7 +505,10 @@ namespace Timr.Api.Model
         {
             writer.WriteString("id", workingTime.Id);
 
-            writer.WriteString("start", workingTime.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, workingTime.Start, jsonSerializerOptions);
+                        }
 
             writer.WriteNumber("break_time_total_minutes", workingTime.BreakTimeTotalMinutes);
 
@@ -532,13 +520,19 @@ namespace Timr.Api.Model
             JsonSerializer.Serialize(writer, workingTime.User, jsonSerializerOptions);
             writer.WritePropertyName("working_time_type");
             JsonSerializer.Serialize(writer, workingTime.WorkingTimeType, jsonSerializerOptions);
-            writer.WriteString("last_modified", workingTime.LastModified.ToString(LastModifiedFormat));
+            {
+                        writer.WritePropertyName("last_modified");
+                            JsonSerializer.Serialize(writer, workingTime.LastModified, jsonSerializerOptions);
+                        }
 
             var statusRawValue = WorkingTimeStatusValueConverter.ToJsonValue(workingTime.Status);
             writer.WriteString("status", statusRawValue);
 
             if (workingTime.End != null)
-                writer.WriteString("end", workingTime.End.Value.ToString(EndFormat));
+                {
+                        writer.WritePropertyName("end");
+                            JsonSerializer.Serialize(writer, workingTime.End.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("end");
 

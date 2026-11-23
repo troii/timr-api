@@ -109,7 +109,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -129,11 +129,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize UploadedAt
-        /// </summary>
-        public string UploadedAtFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="Attachment" />
@@ -247,7 +242,10 @@ namespace Timr.Api.Model
 
             writer.WritePropertyName("metadata");
             JsonSerializer.Serialize(writer, attachment.Metadata, jsonSerializerOptions);
-            writer.WriteString("uploaded_at", attachment.UploadedAt.ToString(UploadedAtFormat));
+            {
+                        writer.WritePropertyName("uploaded_at");
+                            JsonSerializer.Serialize(writer, attachment.UploadedAt, jsonSerializerOptions);
+                        }
 
             if (attachment.Download != null)
             {

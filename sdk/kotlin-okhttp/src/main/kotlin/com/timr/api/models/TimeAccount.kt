@@ -28,16 +28,14 @@ import com.timr.api.models.FlexTimeIndicator
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param balanceLastPeriodMinutes 
+ * @param balanceLastPeriodMinutes
  * @param durationActualMinutes sum of durations in current period
  * @param durationTargetMinutes target duration in current period
  * @param balanceCurrentPeriodMinutes difference between target duration and actual duration
  * @param balanceTotalMinutes total duration until balancing date
  * @param workFromHomeDaysFull complete days worked from home in current period
  * @param workFromHomeDaysPartial partial days worked from home in current period
- * @param flexTimeIndicator 
+ * @param flexTimeIndicator
  */
 
 

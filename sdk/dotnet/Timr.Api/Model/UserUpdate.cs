@@ -204,12 +204,12 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Login (string) minLength
             if (this.Login != null && this.Login.Length < 1)
             {
-                yield return new ValidationResult("Invalid value for Login, length must be greater than 1.", new [] { "Login" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Login, length must be greater than 1.", new [] { "Login" });
             }
 
             if (this.LoginOption.Value != null) {
@@ -225,7 +225,7 @@ namespace Timr.Api.Model
             // Email (string) minLength
             if (this.Email != null && this.Email.Length < 1)
             {
-                yield return new ValidationResult("Invalid value for Email, length must be greater than 1.", new [] { "Email" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be greater than 1.", new [] { "Email" });
             }
 
             yield break;
@@ -246,16 +246,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize EntryDate
-        /// </summary>
-        public string EntryDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize ResignDate
-        /// </summary>
-        public string ResignDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="UserUpdate" />
@@ -386,13 +376,19 @@ namespace Timr.Api.Model
 
             if (userUpdate.EntryDateOption.IsSet)
                 if (userUpdate.EntryDateOption.Value != null)
-                    writer.WriteString("entry_date", userUpdate.EntryDateOption.Value!.Value.ToString(EntryDateFormat));
+                    {
+                            writer.WritePropertyName("entry_date");
+                                JsonSerializer.Serialize(writer, userUpdate.EntryDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("entry_date");
 
             if (userUpdate.ResignDateOption.IsSet)
                 if (userUpdate.ResignDateOption.Value != null)
-                    writer.WriteString("resign_date", userUpdate.ResignDateOption.Value!.Value.ToString(ResignDateFormat));
+                    {
+                            writer.WritePropertyName("resign_date");
+                                JsonSerializer.Serialize(writer, userUpdate.ResignDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("resign_date");
 

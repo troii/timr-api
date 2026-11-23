@@ -431,7 +431,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -451,31 +451,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize StartDate
-        /// </summary>
-        public string StartDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize EndDate
-        /// </summary>
-        public string EndDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize LockDate
-        /// </summary>
-        public string LockDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize ActiveFrom
-        /// </summary>
-        public string ActiveFromFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize ActiveTo
-        /// </summary>
-        public string ActiveToFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="Task" />
@@ -789,18 +764,27 @@ namespace Timr.Api.Model
                 writer.WriteNull("description_external");
 
             if (task.StartDate != null)
-                writer.WriteString("start_date", task.StartDate.Value.ToString(StartDateFormat));
+                {
+                        writer.WritePropertyName("start_date");
+                            JsonSerializer.Serialize(writer, task.StartDate.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("start_date");
 
             if (task.EndDate != null)
-                writer.WriteString("end_date", task.EndDate.Value.ToString(EndDateFormat));
+                {
+                        writer.WritePropertyName("end_date");
+                            JsonSerializer.Serialize(writer, task.EndDate.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("end_date");
 
             if (task.LockDateOption.IsSet)
                 if (task.LockDateOption.Value != null)
-                    writer.WriteString("lock_date", task.LockDateOption.Value!.Value.ToString(LockDateFormat));
+                    {
+                            writer.WritePropertyName("lock_date");
+                                JsonSerializer.Serialize(writer, task.LockDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("lock_date");
 
@@ -817,12 +801,18 @@ namespace Timr.Api.Model
                     writer.WriteNull("latest_end_time");
 
             if (task.ActiveFrom != null)
-                writer.WriteString("active_from", task.ActiveFrom.Value.ToString(ActiveFromFormat));
+                {
+                        writer.WritePropertyName("active_from");
+                            JsonSerializer.Serialize(writer, task.ActiveFrom.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("active_from");
 
             if (task.ActiveTo != null)
-                writer.WriteString("active_to", task.ActiveTo.Value.ToString(ActiveToFormat));
+                {
+                        writer.WritePropertyName("active_to");
+                            JsonSerializer.Serialize(writer, task.ActiveTo.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("active_to");
 

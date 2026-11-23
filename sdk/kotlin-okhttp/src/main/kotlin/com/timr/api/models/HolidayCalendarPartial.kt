@@ -30,7 +30,7 @@ import com.google.gson.annotations.SerializedName
  * A holiday calendar. Its holidays are either generated automatically or maintained manually. 
  *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param description 
+ * @param description
  */
 
 

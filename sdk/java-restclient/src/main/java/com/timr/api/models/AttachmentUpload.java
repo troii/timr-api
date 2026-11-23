@@ -37,7 +37,7 @@ import com.fasterxml.jackson.annotation.*;
   AttachmentUpload.JSON_PROPERTY_HEADERS,
   AttachmentUpload.JSON_PROPERTY_EXPIRES_AT
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class AttachmentUpload {
   public static final String JSON_PROPERTY_URL = "url";
   

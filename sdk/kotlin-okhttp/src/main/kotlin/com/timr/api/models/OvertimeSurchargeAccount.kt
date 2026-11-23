@@ -27,11 +27,9 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param balanceLastPeriodMinutes 
- * @param newMinutes 
- * @param balanceTotalMinutes 
+ * @param balanceLastPeriodMinutes
+ * @param newMinutes
+ * @param balanceTotalMinutes
  */
 
 

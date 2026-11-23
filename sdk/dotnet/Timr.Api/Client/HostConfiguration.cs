@@ -42,10 +42,6 @@ namespace Timr.Api.Client
             _services = services;
             var jsonOptions = new JsonSerializerOptions();
             jsonOptions.Converters.Add(new JsonStringEnumConverter());
-            jsonOptions.Converters.Add(new DateTimeJsonConverter());
-            jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
-            jsonOptions.Converters.Add(new DateOnlyJsonConverter());
-            jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
             jsonOptions.Converters.Add(new AccountsJsonConverter());
             jsonOptions.Converters.Add(new AttachmentJsonConverter());
             jsonOptions.Converters.Add(new AttachmentDownloadJsonConverter());

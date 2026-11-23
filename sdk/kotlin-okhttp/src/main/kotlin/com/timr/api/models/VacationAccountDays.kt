@@ -28,9 +28,7 @@ import com.timr.api.models.VacationUnit
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param unit 
+ * @param unit
  * @param balanceLastPeriodDays vacation balance carried over from the previous vacation period, in days
  * @param consumedDays vacation consumed in the current vacation period, in days
  * @param newDays vacation newly granted in the current vacation period, in days

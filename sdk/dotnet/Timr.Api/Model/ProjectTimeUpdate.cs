@@ -238,7 +238,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -258,16 +258,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="ProjectTimeUpdate" />
@@ -414,11 +404,17 @@ namespace Timr.Api.Model
                 throw new JsonException("Cannot write null property ProjectTimeUpdate.Status to non-nullable JSON property 'status'.");
 
             if (projectTimeUpdate.StartOption.IsSet)
-                writer.WriteString("start", projectTimeUpdate.StartOption.Value!.Value.ToString(StartFormat));
+                {
+                            writer.WritePropertyName("start");
+                                JsonSerializer.Serialize(writer, projectTimeUpdate.StartOption.Value!.Value, jsonSerializerOptions);
+                            }
 
             if (projectTimeUpdate.EndOption.IsSet)
                 if (projectTimeUpdate.EndOption.Value != null)
-                    writer.WriteString("end", projectTimeUpdate.EndOption.Value!.Value.ToString(EndFormat));
+                    {
+                            writer.WritePropertyName("end");
+                                JsonSerializer.Serialize(writer, projectTimeUpdate.EndOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("end");
 

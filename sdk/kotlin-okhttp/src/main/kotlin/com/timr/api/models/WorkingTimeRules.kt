@@ -27,10 +27,8 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param name 
+ * @param name
  */
 
 

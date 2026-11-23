@@ -28,19 +28,17 @@ import com.timr.api.models.DriveLogStatus
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param start RFC 3339 date-time (ISO-8601)
  * @param end RFC 3339 date-time (ISO-8601)
- * @param changed 
- * @param startMileage 
- * @param endMileage 
- * @param route 
- * @param purpose 
- * @param visited 
- * @param driveLogCategoryId 
- * @param status 
- * @param metadata 
+ * @param changed
+ * @param startMileage
+ * @param endMileage
+ * @param route
+ * @param purpose
+ * @param visited
+ * @param driveLogCategoryId
+ * @param status
+ * @param metadata
  */
 
 

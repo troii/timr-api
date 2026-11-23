@@ -27,19 +27,17 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param login 
- * @param firstname 
- * @param lastname 
- * @param email 
+ * @param login
+ * @param firstname
+ * @param lastname
+ * @param email
  * @param entryDate RFC 3339 date (ISO-8601)
  * @param resignDate RFC 3339 date (ISO-8601)
- * @param employeeNumber 
- * @param externalId 
- * @param metadata 
- * @param authProvider 
- * @param authIdentifier 
+ * @param employeeNumber
+ * @param externalId
+ * @param metadata
+ * @param authProvider
+ * @param authIdentifier
  */
 
 

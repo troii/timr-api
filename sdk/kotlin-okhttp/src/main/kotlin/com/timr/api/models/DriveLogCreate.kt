@@ -29,23 +29,21 @@ import com.timr.api.models.LocationCreate
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param start RFC 3339 date-time (ISO-8601)
- * @param changed 
- * @param startMileage 
- * @param driveLogCategoryId 
- * @param status 
- * @param userId 
- * @param carId 
+ * @param changed
+ * @param startMileage
+ * @param driveLogCategoryId
+ * @param status
+ * @param userId
+ * @param carId
  * @param end RFC 3339 date-time (ISO-8601)
- * @param endMileage 
- * @param route 
- * @param purpose 
- * @param visited 
- * @param metadata 
- * @param startLocation 
- * @param endLocation 
+ * @param endMileage
+ * @param route
+ * @param purpose
+ * @param visited
+ * @param metadata
+ * @param startLocation
+ * @param endLocation
  */
 
 

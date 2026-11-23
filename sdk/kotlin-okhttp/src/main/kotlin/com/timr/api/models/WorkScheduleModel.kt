@@ -32,11 +32,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * The weekday targets a user is measured against: `weeks` holds the layout, `type` selects the calculation mode, and `working_time_rules` the recording constraints. 
  *
- * @param id 
- * @param name 
+ * @param id
+ * @param name
  * @param type working-time calculation mode (daily_target_hours or normal_working_time); independent from the internal week layout (fixed_week or alternating_weeks)
  * @param weeks for fixed_week models this array contains exactly one week and week_number/name are omitted;  for alternating_weeks models this array contains all configured weeks and each item includes week_number (0-based) and name 
- * @param workingTimeRules 
+ * @param workingTimeRules
  */
 
 
