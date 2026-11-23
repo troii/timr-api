@@ -86,7 +86,7 @@ export interface AddTeamMemberRequest {
 
 export interface CreateTeamRequest {
     /**
-     * 
+     * Team entity
      */
     teamCreate: TeamCreate;
 }
@@ -239,7 +239,7 @@ export interface UpdateTeamRequest {
      */
     id: string;
     /**
-     * 
+     * Team entity
      */
     teamUpdate: TeamUpdate;
 }

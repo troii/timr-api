@@ -125,12 +125,12 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Email (string) minLength
             if (this.Email != null && this.Email.Length < 1)
             {
-                yield return new ValidationResult("Invalid value for Email, length must be greater than 1.", new [] { "Email" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be greater than 1.", new [] { "Email" });
             }
 
             yield break;

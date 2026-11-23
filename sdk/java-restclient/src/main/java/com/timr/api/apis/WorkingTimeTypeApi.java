@@ -34,7 +34,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class WorkingTimeTypeApi {
     private ApiClient apiClient;
 
@@ -65,7 +65,6 @@ public class WorkingTimeTypeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteWorkingTimeTypeRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling deleteWorkingTimeType", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -90,7 +89,7 @@ public class WorkingTimeTypeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -159,7 +158,6 @@ public class WorkingTimeTypeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchWorkingTimeTypesRequestCreation(@Nullable String name, @Nullable String shortName, @Nullable String description, @Nullable List<WorkingTimeTypeCategory> categories, @Nullable List<WorkingTimeTypeSubCategory> subCategories, @Nullable List<DurationUnit> editUnits, @Nullable Boolean archived, @Nullable List<RecordingModeUser> recordingModes, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable WorkingTimeTypesSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
@@ -191,7 +189,7 @@ public class WorkingTimeTypeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeTypesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-types", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-types", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -279,7 +277,6 @@ public class WorkingTimeTypeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getWorkingTimeTypeRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling getWorkingTimeType", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -304,7 +301,7 @@ public class WorkingTimeTypeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<WorkingTimeType> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/working-time-types/{id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

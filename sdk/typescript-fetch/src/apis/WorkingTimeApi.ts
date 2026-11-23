@@ -69,7 +69,7 @@ type QueryArguments<T> = {} extends T
 
 export interface CreateWorkingTimeRequest {
     /**
-     * 
+     * Working Time entity
      */
     workingTimeCreate: WorkingTimeCreate;
 }
@@ -182,7 +182,7 @@ export interface UpdateWorkingTimeRequest {
      */
     id: string;
     /**
-     * 
+     * Working Time entity
      */
     workingTimeUpdate: WorkingTimeUpdate;
 }

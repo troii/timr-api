@@ -36,7 +36,7 @@ import com.fasterxml.jackson.annotation.*;
   DailyWorkSchedule.JSON_PROPERTY_TARGET_DURATION_MINUTES,
   DailyWorkSchedule.JSON_PROPERTY_NORMAL_WORKING_TIMES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class DailyWorkSchedule {
   public static final String JSON_PROPERTY_TARGET_DURATION_MINUTES = "target_duration_minutes";
   @jakarta.annotation.Nonnull

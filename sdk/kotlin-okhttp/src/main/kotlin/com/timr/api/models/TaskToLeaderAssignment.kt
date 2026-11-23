@@ -28,10 +28,8 @@ import com.timr.api.models.UserPartial
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param user 
- * @param automaticallyAssigned 
+ * @param user
+ * @param automaticallyAssigned
  */
 
 

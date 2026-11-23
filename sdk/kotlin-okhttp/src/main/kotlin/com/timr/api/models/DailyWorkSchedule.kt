@@ -28,8 +28,6 @@ import com.timr.api.models.NormalWorkingTimes
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param targetDurationMinutes value in minutes
  * @param normalWorkingTimes this property is always set, when the WorkScheduleModel is of type normal_working_time, in contrast when the WorkScheduleModel is of type daily_target_hours it is not set
  */

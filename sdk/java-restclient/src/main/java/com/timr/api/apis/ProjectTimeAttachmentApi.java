@@ -33,7 +33,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class ProjectTimeAttachmentApi {
     private ApiClient apiClient;
 
@@ -66,7 +66,6 @@ public class ProjectTimeAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec createProjectTimeAttachmentRequestCreation(String projectTimeId, AttachmentMetadata attachmentMetadata) throws RestClientResponseException {
-        Object postBody = attachmentMetadata;
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
             throw new RestClientResponseException("Missing the required parameter 'projectTimeId' when calling createProjectTimeAttachment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -97,7 +96,7 @@ public class ProjectTimeAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<AttachmentUploadResponse> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.POST, pathParams, localVarQueryParams, attachmentMetadata, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -162,7 +161,6 @@ public class ProjectTimeAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteProjectTimeAttachmentRequestCreation(String projectTimeId, UUID attachmentId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
             throw new RestClientResponseException("Missing the required parameter 'projectTimeId' when calling deleteProjectTimeAttachment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -192,7 +190,7 @@ public class ProjectTimeAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -258,7 +256,6 @@ public class ProjectTimeAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchProjectTimeAttachmentsRequestCreation(String projectTimeId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable AttachmentsSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
             throw new RestClientResponseException("Missing the required parameter 'projectTimeId' when calling fetchProjectTimeAttachments", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -288,7 +285,7 @@ public class ProjectTimeAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<AttachmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -359,7 +356,6 @@ public class ProjectTimeAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getProjectTimeAttachmentRequestCreation(String projectTimeId, UUID attachmentId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
             throw new RestClientResponseException("Missing the required parameter 'projectTimeId' when calling getProjectTimeAttachment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -389,7 +385,7 @@ public class ProjectTimeAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Attachment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

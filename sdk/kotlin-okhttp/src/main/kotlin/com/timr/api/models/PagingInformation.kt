@@ -27,8 +27,6 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param nextPageToken Token for the next page, or null when this is the last page.
  */
 

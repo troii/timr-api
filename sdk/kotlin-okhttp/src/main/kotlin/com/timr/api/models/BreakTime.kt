@@ -31,9 +31,7 @@ import com.timr.api.models.BreakTimeType
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param type 
+ * @param type
  * @param durationMinutes Duration of break in minutes
  * @param start RFC 3339 date-time (ISO-8601)
  * @param end RFC 3339 date-time (ISO-8601)

@@ -28,10 +28,8 @@ import com.timr.api.models.Car
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param nextPageToken Token for the next page, or null when this is the last page.
- * @param `data` 
+ * @param `data`
  */
 
 

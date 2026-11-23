@@ -31,20 +31,18 @@ import com.timr.api.models.WorkingTimeStatus
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param start For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `start` must be midnight (00:00) and on the same day as `end`. RFC 3339 date-time (ISO-8601) 
- * @param changed 
- * @param workingTimeTypeId 
- * @param status 
- * @param userId 
+ * @param changed
+ * @param workingTimeTypeId
+ * @param status
+ * @param userId
  * @param end For WorkingTimeTypes with `edit_unit` `days` or `half_days`, `end` must be midnight (00:00) and on the same day as `start`. RFC 3339 date-time (ISO-8601) 
- * @param breakTimes 
+ * @param breakTimes
  * @param durationType Must be specified for WorkingTimeTypes with `edit_unit` `days` or `half_days` only
- * @param notes 
- * @param metadata 
- * @param startLocation 
- * @param endLocation 
+ * @param notes
+ * @param metadata
+ * @param startLocation
+ * @param endLocation
  */
 
 

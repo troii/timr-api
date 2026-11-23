@@ -176,7 +176,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -196,16 +196,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeDateSpanCreate" />
@@ -343,9 +333,15 @@ namespace Timr.Api.Model
             if (workingTimeDateSpanCreate.EndHalfDayOption.IsSet && workingTimeDateSpanCreate.EndHalfDay == null)
                 throw new JsonException("Cannot write null property WorkingTimeDateSpanCreate.EndHalfDay to non-nullable JSON property 'end_half_day'.");
 
-            writer.WriteString("start", workingTimeDateSpanCreate.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, workingTimeDateSpanCreate.Start, jsonSerializerOptions);
+                        }
 
-            writer.WriteString("end", workingTimeDateSpanCreate.End.ToString(EndFormat));
+            {
+                        writer.WritePropertyName("end");
+                            JsonSerializer.Serialize(writer, workingTimeDateSpanCreate.End, jsonSerializerOptions);
+                        }
 
             writer.WriteString("working_time_type_id", workingTimeDateSpanCreate.WorkingTimeTypeId);
 

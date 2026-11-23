@@ -34,7 +34,7 @@ import com.google.gson.annotations.SerializedName
  *
  * @param id Unique identifier. Treat it as an opaque string.
  * @param download Temporary URL to download the file, or null if the file cannot be downloaded. Clients have to handle null, as future versions may also return attachments whose upload has not completed yet. 
- * @param metadata 
+ * @param metadata
  * @param uploadedBy The User who uploaded the file, or null if that User no longer exists.
  * @param uploadedAt When the upload of the file completed. RFC 3339 date-time (ISO-8601) 
  */

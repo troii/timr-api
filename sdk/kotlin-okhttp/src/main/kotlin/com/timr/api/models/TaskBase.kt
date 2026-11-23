@@ -31,13 +31,13 @@ import com.google.gson.annotations.SerializedName
 /**
  * Common task fields. Task administration requires the Administrator or Task Manager role. Budget fields additionally require the Budgets feature and administrator or task-leader authorization; task leaders also need Corporate Features. Supplying a budget field without this authorization, including false or null for nullable fields, rejects the entire request with HTTP 403.
  *
- * @param name 
+ * @param name
  * @param parentTaskId returns the id of the immediate parent task if the task has one. Use this id when creating or a updating a task in order to locate it at the right place in your task tree.
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
- * @param description 
- * @param descriptionExternal 
+ * @param description
+ * @param descriptionExternal
  * @param bookable when a task is not bookable, no project times can be booked on it. You need to define child tasks, to book on tasks related to this task.
- * @param billable 
+ * @param billable
  * @param projectTimeNotesRequired depending on this property project times booked on this task have to include notes or not
  * @param startDate the task is only available for selection after start_date, however, it can change if a lock_date is set and this is after the start_date. Furthermore, no booking of a project time with date < start or > end is possible.
  * @param endDate the task is only available for selection before end_date, however, it can change if a lock_date is set and this is before the end_date. Furthermore, no booking of a project time with date < start or > end is possible.
@@ -50,12 +50,12 @@ import com.google.gson.annotations.SerializedName
  * @param budgetPlanned the price at which the task was sold set budget_planned to make timr calculate the budget_hours_planned depending on its budget_planning_type:   * task_hourly_rate: out of budget_hourly_rate and budget_planned   * user_hourly_rate: out of fixed hours budget (employee budget) and budget_planned   * fixed_price: out of budget_hourly_rate and budget_planned 
  * @param budgetIncludeNonBillableProjectTimes set this property to true, if you want to include not billable hours for all project times booked on this task
  * @param locationInherited set this property to false if you want to set a child task's location explicitly instead of inheriting it from its parent
- * @param location 
+ * @param location
  * @param locationRestrictionRadiusMeters set this property to make recording of project times for this task via the app on the smartphone only possible within this defined geofence radius
  * @param customField1 you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
  * @param customField2 you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
  * @param customField3 you can configure custom fields for tasks in the settings of timr under Administration/Settings/Tasks. To add a new custom field, simply choose a name for the field.
- * @param metadata 
+ * @param metadata
  */
 
 

@@ -31,7 +31,7 @@ import com.fasterxml.jackson.annotation.*;
 @JsonPropertyOrder({
   AttachmentDownload.JSON_PROPERTY_URL
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class AttachmentDownload {
   public static final String JSON_PROPERTY_URL = "url";
   @jakarta.annotation.Nonnull

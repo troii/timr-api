@@ -253,7 +253,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -273,16 +273,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DriveLogCreate" />
@@ -450,7 +440,10 @@ namespace Timr.Api.Model
         /// <param name="jsonSerializerOptions"></param>
         public void WriteProperties(Utf8JsonWriter writer, DriveLogCreate driveLogCreate, JsonSerializerOptions jsonSerializerOptions)
         {
-            writer.WriteString("start", driveLogCreate.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, driveLogCreate.Start, jsonSerializerOptions);
+                        }
 
             writer.WriteBoolean("changed", driveLogCreate.Changed);
 
@@ -467,7 +460,10 @@ namespace Timr.Api.Model
 
             if (driveLogCreate.EndOption.IsSet)
                 if (driveLogCreate.EndOption.Value != null)
-                    writer.WriteString("end", driveLogCreate.EndOption.Value!.Value.ToString(EndFormat));
+                    {
+                            writer.WritePropertyName("end");
+                                JsonSerializer.Serialize(writer, driveLogCreate.EndOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("end");
 

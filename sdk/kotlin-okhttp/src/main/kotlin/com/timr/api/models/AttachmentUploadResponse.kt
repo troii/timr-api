@@ -32,8 +32,8 @@ import com.google.gson.annotations.SerializedName
  * A registered upload of a file, with the pre-signed URL to upload the file to.
  *
  * @param id Unique identifier of the attachment. Treat it as an opaque string.
- * @param metadata 
- * @param upload 
+ * @param metadata
+ * @param upload
  */
 
 

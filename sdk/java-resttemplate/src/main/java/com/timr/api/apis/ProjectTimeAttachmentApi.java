@@ -34,7 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 @Component("com.timr.api.apis.ProjectTimeAttachmentApi")
 public class ProjectTimeAttachmentApi extends BaseApi {
 
@@ -76,7 +76,6 @@ public class ProjectTimeAttachmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<AttachmentUploadResponse> createProjectTimeAttachmentWithHttpInfo(@jakarta.annotation.Nonnull String projectTimeId, @jakarta.annotation.Nonnull AttachmentMetadata attachmentMetadata) throws RestClientException {
-        Object localVarPostBody = attachmentMetadata;
         
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
@@ -89,13 +88,13 @@ public class ProjectTimeAttachmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("project_time_id", projectTimeId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -108,8 +107,8 @@ public class ProjectTimeAttachmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<AttachmentUploadResponse> localReturnType = new ParameterizedTypeReference<AttachmentUploadResponse>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.POST, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<AttachmentUploadResponse> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.POST, uriVariables, localVarQueryParams, attachmentMetadata, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Delete a Project Time Attachment
@@ -139,7 +138,6 @@ public class ProjectTimeAttachmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<Void> deleteProjectTimeAttachmentWithHttpInfo(@jakarta.annotation.Nonnull String projectTimeId, @jakarta.annotation.Nonnull UUID attachmentId) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
@@ -152,14 +150,14 @@ public class ProjectTimeAttachmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("project_time_id", projectTimeId);
         uriVariables.put("attachment_id", attachmentId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/problem+json"
@@ -170,8 +168,8 @@ public class ProjectTimeAttachmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<Void>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.DELETE, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.DELETE, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * List Project Time Attachments
@@ -206,7 +204,6 @@ public class ProjectTimeAttachmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<AttachmentsPage> fetchProjectTimeAttachmentsWithHttpInfo(@jakarta.annotation.Nonnull String projectTimeId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable AttachmentsSortColumn sortBy) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
@@ -214,13 +211,13 @@ public class ProjectTimeAttachmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("project_time_id", projectTimeId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
         localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
@@ -237,8 +234,8 @@ public class ProjectTimeAttachmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<AttachmentsPage> localReturnType = new ParameterizedTypeReference<AttachmentsPage>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.GET, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<AttachmentsPage> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments", HttpMethod.GET, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Get a Project Time Attachment
@@ -267,7 +264,6 @@ public class ProjectTimeAttachmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<Attachment> getProjectTimeAttachmentWithHttpInfo(@jakarta.annotation.Nonnull String projectTimeId, @jakarta.annotation.Nonnull UUID attachmentId) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'projectTimeId' is set
         if (projectTimeId == null) {
@@ -280,14 +276,14 @@ public class ProjectTimeAttachmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("project_time_id", projectTimeId);
         uriVariables.put("attachment_id", attachmentId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -298,20 +294,19 @@ public class ProjectTimeAttachmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<Attachment> localReturnType = new ParameterizedTypeReference<Attachment>() {};
-        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.GET, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<Attachment> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/project-times/{project_time_id}/attachments/{attachment_id}", HttpMethod.GET, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
 
     @Override
     public <T> ResponseEntity<T> invokeAPI(String url, HttpMethod method, Object request, ParameterizedTypeReference<T> returnType) throws RestClientException {
         String localVarPath = url.replace(apiClient.getBasePath(), "");
-        Object localVarPostBody = request;
 
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final Map<String, Object> uriVariables = new HashMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -322,6 +317,6 @@ public class ProjectTimeAttachmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        return apiClient.invokeAPI(localVarPath, method, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, returnType);
+        return apiClient.invokeAPI(localVarPath, method, uriVariables, localVarQueryParams, request, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, returnType);
     }
 }

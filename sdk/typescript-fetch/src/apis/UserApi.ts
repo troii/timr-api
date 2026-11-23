@@ -64,7 +64,7 @@ type QueryArguments<T> = {} extends T
 
 export interface CreateUserRequest {
     /**
-     * 
+     * User entity
      */
     userCreate: UserCreate;
 }
@@ -197,7 +197,7 @@ export interface UpdateUserRequest {
      */
     id: string;
     /**
-     * 
+     * User entity
      */
     userUpdate: UserUpdate;
 }

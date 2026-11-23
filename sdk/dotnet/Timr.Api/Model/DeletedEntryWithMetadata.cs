@@ -105,7 +105,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -125,11 +125,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize LastModified
-        /// </summary>
-        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="DeletedEntryWithMetadata" />
@@ -228,7 +223,10 @@ namespace Timr.Api.Model
         {
             writer.WriteString("id", deletedEntryWithMetadata.Id);
 
-            writer.WriteString("last_modified", deletedEntryWithMetadata.LastModified.ToString(LastModifiedFormat));
+            {
+                        writer.WritePropertyName("last_modified");
+                            JsonSerializer.Serialize(writer, deletedEntryWithMetadata.LastModified, jsonSerializerOptions);
+                        }
 
             if (deletedEntryWithMetadata.LastModifiedBy != null)
             {

@@ -33,26 +33,26 @@ import com.google.gson.annotations.SerializedName
  * A task with recording-related details. `budget_planning_type` is omitted unless the Budgets feature and administrator or task-leader access to the task are available; task leaders also need Corporate Features. `lock_date` requires Task Locking; `earliest_start_time` and `latest_end_time` require Recording Restrictions; `location` requires Task Locations; `location_restriction_radius_meters` requires Geofence. Fields whose requirements are not met are omitted without an error; omission does not mean no value is configured.
  *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param name 
+ * @param name
  * @param breadcrumbs Full path of the entry within its hierarchy, including its own name.
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
- * @param parentTask 
- * @param description 
- * @param bookable 
- * @param billable 
- * @param projectTimeNotesRequired 
+ * @param parentTask
+ * @param description
+ * @param bookable
+ * @param billable
+ * @param projectTimeNotesRequired
  * @param activeFrom RFC 3339 date (ISO-8601)
  * @param activeTo RFC 3339 date (ISO-8601)
- * @param customField1 
- * @param customField2 
- * @param customField3 
+ * @param customField1
+ * @param customField2
+ * @param customField3
  * @param lockDate RFC 3339 date (ISO-8601)
  * @param earliestStartTime time of day (ISO-8601)
  * @param latestEndTime time of day (ISO-8601)
- * @param budgetPlanningType 
- * @param locationInherited 
- * @param location 
- * @param locationRestrictionRadiusMeters 
+ * @param budgetPlanningType
+ * @param locationInherited
+ * @param location
+ * @param locationRestrictionRadiusMeters
  */
 
 

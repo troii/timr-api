@@ -116,7 +116,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -136,11 +136,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize LastBalanceDate
-        /// </summary>
-        public string LastBalanceDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="Accounts" />
@@ -226,7 +221,10 @@ namespace Timr.Api.Model
         public void WriteProperties(Utf8JsonWriter writer, Accounts accounts, JsonSerializerOptions jsonSerializerOptions)
         {
             if (accounts.LastBalanceDate != null)
-                writer.WriteString("last_balance_date", accounts.LastBalanceDate.Value.ToString(LastBalanceDateFormat));
+                {
+                        writer.WritePropertyName("last_balance_date");
+                            JsonSerializer.Serialize(writer, accounts.LastBalanceDate.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("last_balance_date");
 

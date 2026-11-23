@@ -241,12 +241,12 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             // Email (string) minLength
             if (this.Email != null && this.Email.Length < 1)
             {
-                yield return new ValidationResult("Invalid value for Email, length must be greater than 1.", new [] { "Email" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Email, length must be greater than 1.", new [] { "Email" });
             }
 
             if (this.LoginOption.Value != null) {
@@ -287,16 +287,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize EntryDate
-        /// </summary>
-        public string EntryDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize ResignDate
-        /// </summary>
-        public string ResignDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="User" />
@@ -491,13 +481,19 @@ namespace Timr.Api.Model
 
             if (user.EntryDateOption.IsSet)
                 if (user.EntryDateOption.Value != null)
-                    writer.WriteString("entry_date", user.EntryDateOption.Value!.Value.ToString(EntryDateFormat));
+                    {
+                            writer.WritePropertyName("entry_date");
+                                JsonSerializer.Serialize(writer, user.EntryDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("entry_date");
 
             if (user.ResignDateOption.IsSet)
                 if (user.ResignDateOption.Value != null)
-                    writer.WriteString("resign_date", user.ResignDateOption.Value!.Value.ToString(ResignDateFormat));
+                    {
+                            writer.WritePropertyName("resign_date");
+                                JsonSerializer.Serialize(writer, user.ResignDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("resign_date");
 

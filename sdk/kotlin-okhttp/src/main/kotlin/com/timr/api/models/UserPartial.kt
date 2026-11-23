@@ -27,14 +27,12 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param id Unique identifier. Treat it as an opaque string.
- * @param firstname 
- * @param lastname 
- * @param fullname 
+ * @param firstname
+ * @param lastname
+ * @param fullname
  * @param email Email address must be either valid or null.
- * @param employeeNumber 
+ * @param employeeNumber
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
  */
 

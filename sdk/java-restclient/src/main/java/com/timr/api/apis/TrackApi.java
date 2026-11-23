@@ -25,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class TrackApi {
     private ApiClient apiClient;
 
@@ -58,7 +58,6 @@ public class TrackApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec createTrackRequestCreation(String id, List<Waypoint> waypoint) throws RestClientResponseException {
-        Object postBody = waypoint;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling createTrack", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -89,7 +88,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.POST, pathParams, localVarQueryParams, waypoint, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -153,7 +152,6 @@ public class TrackApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteTrackRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling deleteTrack", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -178,7 +176,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -238,7 +236,6 @@ public class TrackApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getTrackRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling getTrack", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -263,7 +260,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -327,7 +324,6 @@ public class TrackApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec updateTrackRequestCreation(String id, List<Waypoint> waypoint) throws RestClientResponseException {
-        Object postBody = waypoint;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling updateTrack", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -358,7 +354,7 @@ public class TrackApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<List<Waypoint>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.PUT, pathParams, localVarQueryParams, waypoint, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

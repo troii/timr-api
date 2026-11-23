@@ -28,10 +28,8 @@ import com.timr.api.models.TeamPartial
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param team 
- * @param automaticallyAssigned 
+ * @param team
+ * @param automaticallyAssigned
  */
 
 

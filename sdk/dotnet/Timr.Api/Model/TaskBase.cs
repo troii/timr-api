@@ -479,7 +479,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -499,21 +499,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize StartDate
-        /// </summary>
-        public string StartDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize EndDate
-        /// </summary>
-        public string EndDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize LockDate
-        /// </summary>
-        public string LockDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="TaskBase" />
@@ -759,19 +744,28 @@ namespace Timr.Api.Model
 
             if (taskBase.StartDateOption.IsSet)
                 if (taskBase.StartDateOption.Value != null)
-                    writer.WriteString("start_date", taskBase.StartDateOption.Value!.Value.ToString(StartDateFormat));
+                    {
+                            writer.WritePropertyName("start_date");
+                                JsonSerializer.Serialize(writer, taskBase.StartDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("start_date");
 
             if (taskBase.EndDateOption.IsSet)
                 if (taskBase.EndDateOption.Value != null)
-                    writer.WriteString("end_date", taskBase.EndDateOption.Value!.Value.ToString(EndDateFormat));
+                    {
+                            writer.WritePropertyName("end_date");
+                                JsonSerializer.Serialize(writer, taskBase.EndDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("end_date");
 
             if (taskBase.LockDateOption.IsSet)
                 if (taskBase.LockDateOption.Value != null)
-                    writer.WriteString("lock_date", taskBase.LockDateOption.Value!.Value.ToString(LockDateFormat));
+                    {
+                            writer.WritePropertyName("lock_date");
+                                JsonSerializer.Serialize(writer, taskBase.LockDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("lock_date");
 

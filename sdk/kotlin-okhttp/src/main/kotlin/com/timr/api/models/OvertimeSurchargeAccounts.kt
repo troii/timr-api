@@ -29,12 +29,10 @@ import com.timr.api.models.OvertimeSurchargeRule
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param rule 
- * @param percentage 
- * @param overtime 
- * @param surcharge 
+ * @param rule
+ * @param percentage
+ * @param overtime
+ * @param surcharge
  */
 
 

@@ -40,12 +40,6 @@ namespace {{packageName}}.{{clientPackage}}
             _services = services;
             var jsonOptions = new JsonSerializerOptions();
             jsonOptions.Converters.Add(new JsonStringEnumConverter());
-            jsonOptions.Converters.Add(new DateTimeJsonConverter());
-            jsonOptions.Converters.Add(new DateTimeNullableJsonConverter());
-            {{#supportsDateOnly}}
-            jsonOptions.Converters.Add(new DateOnlyJsonConverter());
-            jsonOptions.Converters.Add(new DateOnlyNullableJsonConverter());
-            {{/supportsDateOnly}}
             {{#models}}
             {{#model}}
             {{#isEnum}}

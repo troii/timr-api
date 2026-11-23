@@ -27,7 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 @Component("com.timr.api.apis.TrackApi")
 public class TrackApi extends BaseApi {
 
@@ -69,7 +69,6 @@ public class TrackApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<List<Waypoint>> createTrackWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull List<Waypoint> waypoint) throws RestClientException {
-        Object localVarPostBody = waypoint;
         
         // verify the required parameter 'id' is set
         if (id == null) {
@@ -82,13 +81,13 @@ public class TrackApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("id", id);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -101,8 +100,8 @@ public class TrackApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<List<Waypoint>> localReturnType = new ParameterizedTypeReference<List<Waypoint>>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.POST, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<List<Waypoint>> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.POST, uriVariables, localVarQueryParams, waypoint, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Delete a Drive Log&#39;s Track
@@ -130,7 +129,6 @@ public class TrackApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<Void> deleteTrackWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
         if (id == null) {
@@ -138,13 +136,13 @@ public class TrackApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("id", id);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/problem+json"
@@ -155,8 +153,8 @@ public class TrackApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<Void>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.DELETE, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.DELETE, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Get a Drive Log&#39;s Track
@@ -185,7 +183,6 @@ public class TrackApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<List<Waypoint>> getTrackWithHttpInfo(@jakarta.annotation.Nonnull String id) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'id' is set
         if (id == null) {
@@ -193,13 +190,13 @@ public class TrackApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("id", id);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -210,8 +207,8 @@ public class TrackApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<List<Waypoint>> localReturnType = new ParameterizedTypeReference<List<Waypoint>>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.GET, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<List<Waypoint>> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.GET, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Replace a Drive Log&#39;s Track
@@ -244,7 +241,6 @@ public class TrackApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<List<Waypoint>> updateTrackWithHttpInfo(@jakarta.annotation.Nonnull String id, @jakarta.annotation.Nonnull List<Waypoint> waypoint) throws RestClientException {
-        Object localVarPostBody = waypoint;
         
         // verify the required parameter 'id' is set
         if (id == null) {
@@ -257,13 +253,13 @@ public class TrackApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("id", id);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -276,20 +272,19 @@ public class TrackApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<List<Waypoint>> localReturnType = new ParameterizedTypeReference<List<Waypoint>>() {};
-        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.PUT, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<List<Waypoint>> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/drive-logs/{id}/track", HttpMethod.PUT, uriVariables, localVarQueryParams, waypoint, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
 
     @Override
     public <T> ResponseEntity<T> invokeAPI(String url, HttpMethod method, Object request, ParameterizedTypeReference<T> returnType) throws RestClientException {
         String localVarPath = url.replace(apiClient.getBasePath(), "");
-        Object localVarPostBody = request;
 
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final Map<String, Object> uriVariables = new HashMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -302,6 +297,6 @@ public class TrackApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        return apiClient.invokeAPI(localVarPath, method, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, returnType);
+        return apiClient.invokeAPI(localVarPath, method, uriVariables, localVarQueryParams, request, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, returnType);
     }
 }

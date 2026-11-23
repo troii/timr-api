@@ -32,7 +32,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class HolidayCalendarApi {
     private ApiClient apiClient;
 
@@ -66,7 +66,6 @@ public class HolidayCalendarApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchHolidayCalendarsRequestCreation(@Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable HolidayCalendarsSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
@@ -90,7 +89,7 @@ public class HolidayCalendarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<HolidayCalendarsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/holiday-calendars", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/holiday-calendars", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -161,7 +160,6 @@ public class HolidayCalendarApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchHolidaysRequestCreation(String id, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable HolidaysSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling fetchHolidays", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -191,7 +189,7 @@ public class HolidayCalendarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<HolidaysPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/holiday-calendars/{id}/holidays", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/holiday-calendars/{id}/holidays", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -261,7 +259,6 @@ public class HolidayCalendarApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getHolidayCalendarRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling getHolidayCalendar", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -286,7 +283,7 @@ public class HolidayCalendarApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<HolidayCalendarPartial> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/holiday-calendars/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/holiday-calendars/{id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

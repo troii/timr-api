@@ -27,17 +27,15 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param start RFC 3339 date (ISO-8601)
  * @param end RFC 3339 date (ISO-8601)
- * @param workingTimeTypeId 
- * @param userId 
- * @param startHalfDay 
- * @param endHalfDay 
- * @param notes 
- * @param substituteId 
- * @param metadata 
+ * @param workingTimeTypeId
+ * @param userId
+ * @param startHalfDay
+ * @param endHalfDay
+ * @param notes
+ * @param substituteId
+ * @param metadata
  */
 
 

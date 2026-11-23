@@ -33,7 +33,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class TaskAttachmentApi {
     private ApiClient apiClient;
 
@@ -66,7 +66,6 @@ public class TaskAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec createTaskAttachmentRequestCreation(String taskId, AttachmentMetadata attachmentMetadata) throws RestClientResponseException {
-        Object postBody = attachmentMetadata;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling createTaskAttachment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -97,7 +96,7 @@ public class TaskAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<AttachmentUploadResponse> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/attachments", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/attachments", HttpMethod.POST, pathParams, localVarQueryParams, attachmentMetadata, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -161,7 +160,6 @@ public class TaskAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteTaskAttachmentRequestCreation(String taskId, UUID attachmentId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling deleteTaskAttachment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -191,7 +189,7 @@ public class TaskAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/attachments/{attachment_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/attachments/{attachment_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -254,7 +252,6 @@ public class TaskAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchTaskAttachmentsRequestCreation(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable AttachmentsSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling fetchTaskAttachments", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -284,7 +281,7 @@ public class TaskAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<AttachmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/attachments", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/attachments", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -355,7 +352,6 @@ public class TaskAttachmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getTaskAttachmentRequestCreation(String taskId, UUID attachmentId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling getTaskAttachment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -385,7 +381,7 @@ public class TaskAttachmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Attachment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/attachments/{attachment_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/attachments/{attachment_id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

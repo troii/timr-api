@@ -29,7 +29,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Metadata of the attached file, as provided when it was uploaded.
  *
- * @param fileName 
+ * @param fileName
  * @param contentType Media type of the file.
  * @param propertySize Size of the file in bytes.
  * @param fileLastModified When the file was last modified on the device it was uploaded from. RFC 3339 date-time (ISO-8601) 

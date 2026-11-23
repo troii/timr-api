@@ -37,7 +37,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class ProjectTimeApi {
     private ApiClient apiClient;
 
@@ -69,7 +69,6 @@ public class ProjectTimeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec createProjectTimeRequestCreation(ProjectTimeCreate projectTimeCreate) throws RestClientResponseException {
-        Object postBody = projectTimeCreate;
         // verify the required parameter 'projectTimeCreate' is set
         if (projectTimeCreate == null) {
             throw new RestClientResponseException("Missing the required parameter 'projectTimeCreate' when calling createProjectTime", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -94,7 +93,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times", HttpMethod.POST, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times", HttpMethod.POST, pathParams, localVarQueryParams, projectTimeCreate, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -155,7 +154,6 @@ public class ProjectTimeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteProjectTimeRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling deleteProjectTime", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -180,7 +178,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -242,7 +240,6 @@ public class ProjectTimeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchDeletedProjectTimesRequestCreation(@Nullable OffsetDateTime lastModifiedAfter, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable DeletedEntrySortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
@@ -267,7 +264,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<DeletedEntryWithMetadataPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times:deleted", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times:deleted", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -346,7 +343,6 @@ public class ProjectTimeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchProjectTimesRequestCreation(@Nullable String notes, @Nullable LocalDate startFrom, @Nullable LocalDate startTo, @Nullable OffsetDateTime lastModifiedAfter, @Nullable String task, @Nullable Boolean traverseTaskTree, @Nullable Boolean billable, @Nullable List<ProjectTimeStatus> statuses, @Nullable List<String> users, @Nullable Boolean changed, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable ProjectTimesSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
@@ -380,7 +376,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTimesPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -474,7 +470,6 @@ public class ProjectTimeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getProjectTimeRequestCreation(String id) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling getProjectTime", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -499,7 +494,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -561,7 +556,6 @@ public class ProjectTimeApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec updateProjectTimeRequestCreation(String id, ProjectTimeUpdate projectTimeUpdate) throws RestClientResponseException {
-        Object postBody = projectTimeUpdate;
         // verify the required parameter 'id' is set
         if (id == null) {
             throw new RestClientResponseException("Missing the required parameter 'id' when calling updateProjectTime", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -592,7 +586,7 @@ public class ProjectTimeApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<ProjectTime> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/project-times/{id}", HttpMethod.PATCH, pathParams, localVarQueryParams, projectTimeUpdate, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

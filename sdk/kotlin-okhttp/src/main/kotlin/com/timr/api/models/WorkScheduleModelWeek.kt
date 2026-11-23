@@ -28,16 +28,14 @@ import com.timr.api.models.DailyWorkSchedule
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param targetDurationWeeklyMinutes value in minutes
- * @param monday 
- * @param tuesday 
- * @param wednesday 
- * @param thursday 
- * @param friday 
- * @param saturday 
- * @param sunday 
+ * @param monday
+ * @param tuesday
+ * @param wednesday
+ * @param thursday
+ * @param friday
+ * @param saturday
+ * @param sunday
  * @param weekNumber index of the week in alternating_weeks models (0-based); omitted for fixed_week models
  * @param name display name of the week in alternating_weeks models; omitted for fixed_week models
  */

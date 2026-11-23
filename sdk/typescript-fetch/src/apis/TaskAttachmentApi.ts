@@ -53,7 +53,7 @@ export interface CreateTaskAttachmentRequest {
      */
     taskId: string;
     /**
-     * 
+     * Metadata of the file to upload.
      */
     attachmentMetadata: AttachmentMetadata;
 }

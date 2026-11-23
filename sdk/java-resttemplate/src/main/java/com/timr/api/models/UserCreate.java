@@ -48,7 +48,7 @@ import com.fasterxml.jackson.annotation.*;
   UserCreate.JSON_PROPERTY_AUTH_PROVIDER,
   UserCreate.JSON_PROPERTY_AUTH_IDENTIFIER
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class UserCreate {
   public static final String JSON_PROPERTY_LOGIN = "login";
   @jakarta.annotation.Nonnull

@@ -30,14 +30,14 @@ import com.google.gson.annotations.SerializedName
 /**
  * TIMR error response body, extending the Problem Details base with `timestamp`, `trace_id` and per-field `errors[]` for validation, binding, constraint, request-body deserialization, and reference-not-found errors. The semantic identifier is encoded in the `type` URI (e.g. `https://errors.timr.com/conflict/resource-outdated`).  Slugs in the `type` URI are lowercase kebab-case: a top-level category (`validation`, `reference-not-found`, `conflict`, `forbidden`, `internal`) optionally followed by a specific sub-slug (`conflict/resource-outdated`, `validation/end-time-required`, `reference-not-found/user`). 
  *
- * @param type 
- * @param title 
- * @param status 
- * @param timestamp 
- * @param detail 
- * @param instance 
- * @param traceId 
- * @param errors 
+ * @param type
+ * @param title
+ * @param status
+ * @param timestamp
+ * @param detail
+ * @param instance
+ * @param traceId
+ * @param errors
  */
 
 

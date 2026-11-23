@@ -4,7 +4,7 @@ The Java, .NET, TypeScript, Swift and Python SDK modules override some of the ge
 file records only what **differs** from upstream, so a version bump can be reconciled by diffing our
 copy against the matching upstream file and checking each difference below still applies.
 
-Generator version: **7.26.0** (`libs.plugins.openapi`).
+Generator version: **7.27.0** (`libs.plugins.openapi`).
 
 ## All modules — the specification version leaves the header
 
@@ -49,7 +49,7 @@ position via `nullableDatatypeWithEnum`.
 Extract both from the generator jar rather than GitHub, so the templates match the version we run:
 
 ```bash
-unzip -o ~/.gradle/caches/modules-2/files-2.1/org.openapitools/openapi-generator/7.26.0/*/openapi-generator-7.26.0.jar 'Java/*' -d /tmp/upstream
+unzip -o ~/.gradle/caches/modules-2/files-2.1/org.openapitools/openapi-generator/7.27.0/*/openapi-generator-7.27.0.jar 'Java/*' -d /tmp/upstream
 ```
 
 ### Our changes

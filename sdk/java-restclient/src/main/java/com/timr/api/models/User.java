@@ -54,7 +54,7 @@ import com.fasterxml.jackson.annotation.*;
   User.JSON_PROPERTY_VACATION_YEAR_START,
   User.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class User {
   public static final String JSON_PROPERTY_ID = "id";
   

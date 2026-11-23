@@ -101,7 +101,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -121,11 +121,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize FileLastModified
-        /// </summary>
-        public string FileLastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="AttachmentMetadata" />
@@ -237,7 +232,10 @@ namespace Timr.Api.Model
 
             writer.WriteNumber("size", attachmentMetadata.Size);
 
-            writer.WriteString("file_last_modified", attachmentMetadata.FileLastModified.ToString(FileLastModifiedFormat));
+            {
+                        writer.WritePropertyName("file_last_modified");
+                            JsonSerializer.Serialize(writer, attachmentMetadata.FileLastModified, jsonSerializerOptions);
+                        }
         }
     }
 }

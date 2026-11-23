@@ -30,7 +30,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class TaskToTeamAssignmentApi {
     private ApiClient apiClient;
 
@@ -64,7 +64,6 @@ public class TaskToTeamAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec createTaskToTeamAssignmentRequestCreation(String taskId, String teamId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling createTaskToTeamAssignment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -94,7 +93,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.PUT, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.PUT, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -162,7 +161,6 @@ public class TaskToTeamAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec deleteTaskToTeamAssignmentRequestCreation(String taskId, String teamId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling deleteTaskToTeamAssignment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -192,7 +190,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<Void> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.DELETE, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -258,7 +256,6 @@ public class TaskToTeamAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec fetchTaskToTeamAssignmentsRequestCreation(String taskId, @Nullable String pageToken, @Nullable Integer limit, @Nullable SortDirection sortDirection, @Nullable TaskToTeamAssignmentsSortColumn sortBy) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling fetchTaskToTeamAssignments", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -288,7 +285,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToTeamAssignmentsPage> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -359,7 +356,6 @@ public class TaskToTeamAssignmentApi {
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
     private ResponseSpec getTaskToTeamAssignmentRequestCreation(String taskId, String teamId) throws RestClientResponseException {
-        Object postBody = null;
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
             throw new RestClientResponseException("Missing the required parameter 'taskId' when calling getTaskToTeamAssignment", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
@@ -389,7 +385,7 @@ public class TaskToTeamAssignmentApi {
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
         ParameterizedTypeReference<TaskToTeamAssignment> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/tasks/{task_id}/teams/{team_id}", HttpMethod.GET, pathParams, localVarQueryParams, null, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**

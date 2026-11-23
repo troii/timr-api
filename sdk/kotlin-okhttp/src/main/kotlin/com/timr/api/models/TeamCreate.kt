@@ -27,11 +27,9 @@ package com.timr.api.models
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param name 
- * @param description 
- * @param parentTeamId 
+ * @param name
+ * @param description
+ * @param parentTeamId
  * @param externalId Identifier of the corresponding object in an external system. Set and owned by the client.
  */
 

@@ -188,7 +188,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -208,21 +208,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize LastModified
-        /// </summary>
-        public string LastModifiedFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeDateSpan" />
@@ -392,11 +377,17 @@ namespace Timr.Api.Model
         {
             writer.WriteString("id", workingTimeDateSpan.Id);
 
-            writer.WriteString("start", workingTimeDateSpan.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, workingTimeDateSpan.Start, jsonSerializerOptions);
+                        }
 
             writer.WriteBoolean("start_half_day", workingTimeDateSpan.StartHalfDay);
 
-            writer.WriteString("end", workingTimeDateSpan.End.ToString(EndFormat));
+            {
+                        writer.WritePropertyName("end");
+                            JsonSerializer.Serialize(writer, workingTimeDateSpan.End, jsonSerializerOptions);
+                        }
 
             writer.WriteBoolean("end_half_day", workingTimeDateSpan.EndHalfDay);
 
@@ -404,7 +395,10 @@ namespace Timr.Api.Model
             JsonSerializer.Serialize(writer, workingTimeDateSpan.User, jsonSerializerOptions);
             writer.WritePropertyName("working_time_type");
             JsonSerializer.Serialize(writer, workingTimeDateSpan.WorkingTimeType, jsonSerializerOptions);
-            writer.WriteString("last_modified", workingTimeDateSpan.LastModified.ToString(LastModifiedFormat));
+            {
+                        writer.WritePropertyName("last_modified");
+                            JsonSerializer.Serialize(writer, workingTimeDateSpan.LastModified, jsonSerializerOptions);
+                        }
 
             if (workingTimeDateSpan.Notes != null)
                 writer.WriteString("notes", workingTimeDateSpan.Notes);

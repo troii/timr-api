@@ -100,7 +100,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -120,16 +120,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="BreakTimeAutomatic" />
@@ -235,12 +225,18 @@ namespace Timr.Api.Model
             writer.WriteNumber("duration_minutes", breakTimeAutomatic.DurationMinutes);
 
             if (breakTimeAutomatic.Start != null)
-                writer.WriteString("start", breakTimeAutomatic.Start.Value.ToString(StartFormat));
+                {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, breakTimeAutomatic.Start.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("start");
 
             if (breakTimeAutomatic.End != null)
-                writer.WriteString("end", breakTimeAutomatic.End.Value.ToString(EndFormat));
+                {
+                        writer.WritePropertyName("end");
+                            JsonSerializer.Serialize(writer, breakTimeAutomatic.End.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("end");
         }

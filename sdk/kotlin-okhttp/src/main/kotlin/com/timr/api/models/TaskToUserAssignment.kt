@@ -29,11 +29,9 @@ import com.timr.api.models.UserPartial
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param user 
- * @param recordingLock 
- * @param automaticallyAssigned 
+ * @param user
+ * @param recordingLock
+ * @param automaticallyAssigned
  * @param hoursPlanned Omitted without an error or warning unless the Budgets feature and administrator or task-leader access to this task are available. Task-leader access also requires Corporate Features. An omitted field does not mean no budget is configured.
  */
 

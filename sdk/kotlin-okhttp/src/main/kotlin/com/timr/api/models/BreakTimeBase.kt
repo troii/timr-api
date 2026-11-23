@@ -30,7 +30,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Members shared by every kind of break time, including the discriminator.
  *
- * @param type 
+ * @param type
  */
 
 

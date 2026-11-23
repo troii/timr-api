@@ -306,7 +306,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -326,21 +326,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize LockDate
-        /// </summary>
-        public string LockDateFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize ActiveFrom
-        /// </summary>
-        public string ActiveFromFormat { get; private set; } = "yyyy'-'MM'-'dd";
-
-        /// <summary>
-        /// The format to use to serialize ActiveTo
-        /// </summary>
-        public string ActiveToFormat { get; private set; } = "yyyy'-'MM'-'dd";
 
         /// <summary>
         /// Deserializes json to <see cref="TaskReduced" />
@@ -593,7 +578,10 @@ namespace Timr.Api.Model
 
             if (taskReduced.LockDateOption.IsSet)
                 if (taskReduced.LockDateOption.Value != null)
-                    writer.WriteString("lock_date", taskReduced.LockDateOption.Value!.Value.ToString(LockDateFormat));
+                    {
+                            writer.WritePropertyName("lock_date");
+                                JsonSerializer.Serialize(writer, taskReduced.LockDateOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("lock_date");
 
@@ -610,12 +598,18 @@ namespace Timr.Api.Model
                     writer.WriteNull("latest_end_time");
 
             if (taskReduced.ActiveFrom != null)
-                writer.WriteString("active_from", taskReduced.ActiveFrom.Value.ToString(ActiveFromFormat));
+                {
+                        writer.WritePropertyName("active_from");
+                            JsonSerializer.Serialize(writer, taskReduced.ActiveFrom.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("active_from");
 
             if (taskReduced.ActiveTo != null)
-                writer.WriteString("active_to", taskReduced.ActiveTo.Value.ToString(ActiveToFormat));
+                {
+                        writer.WritePropertyName("active_to");
+                            JsonSerializer.Serialize(writer, taskReduced.ActiveTo.Value, jsonSerializerOptions);
+                        }
             else
                 writer.WriteNull("active_to");
 

@@ -220,7 +220,7 @@ namespace Timr.Api.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }
@@ -240,16 +240,6 @@ namespace Timr.Api.Model
         {
             OnCreated();
         }
-
-        /// <summary>
-        /// The format to use to serialize Start
-        /// </summary>
-        public string StartFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
-
-        /// <summary>
-        /// The format to use to serialize End
-        /// </summary>
-        public string EndFormat { get; private set; } = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'fffffffK";
 
         /// <summary>
         /// Deserializes json to <see cref="WorkingTimeCreate" />
@@ -399,7 +389,10 @@ namespace Timr.Api.Model
             if (workingTimeCreate.BreakTimesOption.IsSet && workingTimeCreate.BreakTimes == null)
                 throw new JsonException("Cannot write null property WorkingTimeCreate.BreakTimes to non-nullable JSON property 'break_times'.");
 
-            writer.WriteString("start", workingTimeCreate.Start.ToString(StartFormat));
+            {
+                        writer.WritePropertyName("start");
+                            JsonSerializer.Serialize(writer, workingTimeCreate.Start, jsonSerializerOptions);
+                        }
 
             writer.WriteBoolean("changed", workingTimeCreate.Changed);
 
@@ -412,7 +405,10 @@ namespace Timr.Api.Model
 
             if (workingTimeCreate.EndOption.IsSet)
                 if (workingTimeCreate.EndOption.Value != null)
-                    writer.WriteString("end", workingTimeCreate.EndOption.Value!.Value.ToString(EndFormat));
+                    {
+                            writer.WritePropertyName("end");
+                                JsonSerializer.Serialize(writer, workingTimeCreate.EndOption.Value!.Value, jsonSerializerOptions);
+                            }
                 else
                     writer.WriteNull("end");
 

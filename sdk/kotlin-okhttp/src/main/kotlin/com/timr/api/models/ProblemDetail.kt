@@ -29,11 +29,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * RFC 9457 Problem Details base members (`type`, `title`, `status`, `detail`, `instance`) — the common shape of all error response bodies. 
  *
- * @param type 
- * @param title 
- * @param status 
- * @param detail 
- * @param instance 
+ * @param type
+ * @param title
+ * @param status
+ * @param detail
+ * @param instance
  */
 
 

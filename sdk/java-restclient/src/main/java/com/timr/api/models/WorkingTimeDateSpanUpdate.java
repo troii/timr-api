@@ -46,7 +46,7 @@ import com.fasterxml.jackson.annotation.*;
   WorkingTimeDateSpanUpdate.JSON_PROPERTY_SUBSTITUTE_ID,
   WorkingTimeDateSpanUpdate.JSON_PROPERTY_METADATA
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 public class WorkingTimeDateSpanUpdate {
   public static final String JSON_PROPERTY_START = "start";
   

@@ -28,9 +28,7 @@ import com.timr.api.models.BreakTimeType
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
- * @param type 
+ * @param type
  * @param durationMinutes Duration of break in minutes. Please make sure it matches the duration between 'start' and 'end' if the properties are also given.
  * @param start start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.
  * @param end start and end are optional. To avoid discrepancies in the duration given in duration_minutes and the time between start and end the preferable way is to only provide duration_minutes.

@@ -32,7 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", comments = "Generator version: 7.27.0")
 @Component("com.timr.api.apis.TaskToUserAssignmentApi")
 public class TaskToUserAssignmentApi extends BaseApi {
 
@@ -73,7 +73,6 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<Void> deleteTaskToUserAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
@@ -86,14 +85,14 @@ public class TaskToUserAssignmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("task_id", taskId);
         uriVariables.put("user_id", userId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/problem+json"
@@ -104,8 +103,8 @@ public class TaskToUserAssignmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<Void>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.DELETE, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<Void> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.DELETE, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * List Task to User Assignments
@@ -140,7 +139,6 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<TaskToUserAssignmentsPage> fetchTaskToUserAssignmentsWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nullable String pageToken, @jakarta.annotation.Nullable Integer limit, @jakarta.annotation.Nullable SortDirection sortDirection, @jakarta.annotation.Nullable TaskToUserAssignmentsSortColumn sortBy) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
@@ -148,13 +146,13 @@ public class TaskToUserAssignmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("task_id", taskId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "page_token", pageToken));
         localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "limit", limit));
@@ -171,8 +169,8 @@ public class TaskToUserAssignmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<TaskToUserAssignmentsPage> localReturnType = new ParameterizedTypeReference<TaskToUserAssignmentsPage>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users", HttpMethod.GET, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<TaskToUserAssignmentsPage> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/tasks/{task_id}/users", HttpMethod.GET, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Get a Task to User Assignment
@@ -201,7 +199,6 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<TaskToUserAssignment> getTaskToUserAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId) throws RestClientException {
-        Object localVarPostBody = null;
         
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
@@ -214,14 +211,14 @@ public class TaskToUserAssignmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("task_id", taskId);
         uriVariables.put("user_id", userId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -232,8 +229,8 @@ public class TaskToUserAssignmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<TaskToUserAssignment> localReturnType = new ParameterizedTypeReference<TaskToUserAssignment>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.GET, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<TaskToUserAssignment> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.GET, uriVariables, localVarQueryParams, null, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
     /**
      * Create or update a Task to User Assignment
@@ -270,7 +267,6 @@ public class TaskToUserAssignmentApi extends BaseApi {
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
     public ResponseEntity<TaskToUserAssignment> upsertTaskToUserAssignmentWithHttpInfo(@jakarta.annotation.Nonnull String taskId, @jakarta.annotation.Nonnull String userId, @jakarta.annotation.Nonnull TaskToUserAssignmentUpsert taskToUserAssignmentUpsert) throws RestClientException {
-        Object localVarPostBody = taskToUserAssignmentUpsert;
         
         // verify the required parameter 'taskId' is set
         if (taskId == null) {
@@ -288,14 +284,14 @@ public class TaskToUserAssignmentApi extends BaseApi {
         }
         
         // create path and map variables
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
+        final Map<String, Object> uriVariables = new HashMap<>();
         uriVariables.put("task_id", taskId);
         uriVariables.put("user_id", userId);
 
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -308,20 +304,19 @@ public class TaskToUserAssignmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        ParameterizedTypeReference<TaskToUserAssignment> localReturnType = new ParameterizedTypeReference<TaskToUserAssignment>() {};
-        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.PUT, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
+        ParameterizedTypeReference<TaskToUserAssignment> localReturnType = new ParameterizedTypeReference<>() {};
+        return apiClient.invokeAPI("/tasks/{task_id}/users/{user_id}", HttpMethod.PUT, uriVariables, localVarQueryParams, taskToUserAssignmentUpsert, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localReturnType);
     }
 
     @Override
     public <T> ResponseEntity<T> invokeAPI(String url, HttpMethod method, Object request, ParameterizedTypeReference<T> returnType) throws RestClientException {
         String localVarPath = url.replace(apiClient.getBasePath(), "");
-        Object localVarPostBody = request;
 
-        final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<String, String>();
+        final Map<String, Object> uriVariables = new HashMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders localVarHeaderParams = new HttpHeaders();
-        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<String, String>();
-        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<String, Object>();
+        final MultiValueMap<String, String> localVarCookieParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, Object> localVarFormParams = new LinkedMultiValueMap<>();
 
         final String[] localVarAccepts = { 
             "application/json", "application/problem+json"
@@ -334,6 +329,6 @@ public class TaskToUserAssignmentApi extends BaseApi {
 
         String[] localVarAuthNames = new String[] { "OAuth2", "OAuth2" };
 
-        return apiClient.invokeAPI(localVarPath, method, uriVariables, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, returnType);
+        return apiClient.invokeAPI(localVarPath, method, uriVariables, localVarQueryParams, request, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, returnType);
     }
 }

@@ -49,7 +49,7 @@ type QueryArguments<T> = {} extends T
 
 export interface CreateCarRequest {
     /**
-     * 
+     * Car entity
      */
     carCreate: CarCreate;
 }
@@ -99,7 +99,7 @@ export interface UpdateCarRequest {
      */
     id: string;
     /**
-     * 
+     * Car entity
      */
     carUpdate: CarUpdate;
 }

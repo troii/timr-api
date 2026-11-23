@@ -28,8 +28,6 @@ import com.timr.api.models.UserPartial
 import com.google.gson.annotations.SerializedName
 
 /**
- * 
- *
  * @param id Unique identifier. Treat it as an opaque string.
  * @param lastModified Read-only. Automatically updated when the entity is persisted. RFC 3339 date-time (ISO-8601) 
  * @param lastModifiedBy Read-only. The User who last modified the entry, or null if the change was not made in a user context. 

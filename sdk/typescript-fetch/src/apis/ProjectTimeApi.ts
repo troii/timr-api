@@ -64,7 +64,7 @@ type QueryArguments<T> = {} extends T
 
 export interface CreateProjectTimeRequest {
     /**
-     * 
+     * Project Time entity
      */
     projectTimeCreate: ProjectTimeCreate;
 }
@@ -181,7 +181,7 @@ export interface UpdateProjectTimeRequest {
      */
     id: string;
     /**
-     * 
+     * Project Time entity
      */
     projectTimeUpdate: ProjectTimeUpdate;
 }
